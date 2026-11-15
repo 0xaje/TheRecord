@@ -13,7 +13,7 @@ The Record lets two parties review an agreement, approve the same version on Qor
 
 ## Build
 
-From the `milestone-1` branch, using Node.js:
+From the repository root, using Node.js:
 
 ```sh
 npm ci
