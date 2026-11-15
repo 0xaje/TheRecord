@@ -98,9 +98,6 @@ form.addEventListener("submit", async (event) => {
 
 const createForm = document.querySelector("#create");
 const createOutput = createForm.querySelector("output");
-const createButton = createForm.querySelector("button");
-const transactionLink = document.querySelector("#transaction");
-const agreementLink = document.querySelector("#agreement");
 const proposedTopic = "0x47167e70ffc8009028dd96fc5952ba8a012a6592c3582840ae312bdb5b416887";
 
 createForm.addEventListener("submit", async event => {
@@ -108,16 +105,32 @@ createForm.addEventListener("submit", async event => {
   const first = createForm.elements.first.value.toLowerCase();
   const second = createForm.elements.second.value.toLowerCase();
   const file = createForm.elements.document.files[0];
+  const word = address => address.slice(2).padStart(64, "0");
+  if (first === second || [first, second].includes("0x" + "0".repeat(40))) {
+    createOutput.textContent = "Enter two distinct signer addresses.";
+    return;
+  }
+  const salt = toHex(crypto.getRandomValues(new Uint8Array(32)));
+  await submitProposal(createForm, file, "0xb9fd4b6d" + salt + word(first) + word(second));
+});
+
+const amendForm = document.querySelector("#amend");
+amendForm.elements.id.value = document.querySelector("#verify").elements.id.value;
+amendForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const id = amendForm.elements.id.value.toLowerCase();
+  await submitProposal(amendForm, amendForm.elements.document.files[0], "0x26283cc7" + id.slice(2), id);
+});
+
+async function submitProposal(form, file, prefix, id) {
+  const createOutput = form.querySelector("output");
+  const createButton = form.querySelector("button");
+  const [transactionLink, agreementLink] = form.querySelectorAll("a");
   const wallet = window.ethereum;
   if (!wallet?.request) {
     createOutput.textContent = "Open this page in a browser with a compatible wallet.";
     return;
   }
-  if (first === second || [first, second].includes("0x" + "0".repeat(40))) {
-    createOutput.textContent = "Enter two distinct signer addresses.";
-    return;
-  }
-
   createButton.disabled = true;
   transactionLink.hidden = true;
   agreementLink.hidden = true;
@@ -125,7 +138,6 @@ createForm.addEventListener("submit", async event => {
   try {
     createOutput.textContent = "Preparing your file fingerprint…";
     const fingerprint = toHex(new Uint8Array(await crypto.subtle.digest("SHA-256", await file.arrayBuffer())));
-    const salt = toHex(crypto.getRandomValues(new Uint8Array(32)));
     const [from] = await wallet.request({ method: "eth_requestAccounts" });
     if (!from) throw new Error("Select a wallet account and try again.");
     const [walletChain, rpcChain] = await Promise.all([
@@ -136,8 +148,14 @@ createForm.addEventListener("submit", async event => {
       throw new Error("Switch your wallet to Diana Testnet (9800).");
     }
 
-    const word = address => address.slice(2).padStart(64, "0");
-    const data = "0xb9fd4b6d" + salt + word(first) + word(second) + fingerprint;
+    const data = prefix + fingerprint;
+    if (id) {
+      try {
+        await rpc("eth_call", [{ from, to: contract, data }, "latest"]);
+      } catch {
+        throw new Error("Could not prepare the amendment. Use the original proposer’s wallet, check that the latest version is finalized, and select a changed file.");
+      }
+    }
     createOutput.textContent = "Review and confirm the transaction in your wallet.";
     hash = await wallet.request({
       method: "eth_sendTransaction",
@@ -165,13 +183,15 @@ createForm.addEventListener("submit", async event => {
     if (receipt.status !== "0x1") throw new Error("Diana rejected the transaction.");
     const proposed = receipt.logs.find(log => log.address.toLowerCase() === contract.toLowerCase()
       && log.topics[0] === proposedTopic && log.data.toLowerCase() === "0x" + fingerprint
-      && /^0x[0-9a-f]{64}$/i.test(log.topics[1]) && log.topics[2] === "0x" + "1".padStart(64, "0"));
+      && /^0x[0-9a-f]{64}$/i.test(log.topics[1]) && /^0x[0-9a-f]{64}$/i.test(log.topics[2])
+      && (id ? log.topics[1] === id && BigInt(log.topics[2]) > 1n : BigInt(log.topics[2]) === 1n));
     if (!proposed) throw new Error("Diana confirmed the transaction. The agreement event could not be verified.");
+    const version = BigInt(proposed.topics[2]).toString();
     const link = new URL(location.href);
-    link.search = new URLSearchParams({ id: proposed.topics[1], version: "1" }).toString();
+    link.search = new URLSearchParams({ id: proposed.topics[1], version }).toString();
     agreementLink.href = link.href;
     agreementLink.hidden = false;
-    createOutput.textContent = "Agreement created. Version 1 is awaiting both approvals.";
+    createOutput.textContent = `Version ${version} is awaiting both approvals.`;
   } catch (error) {
     createOutput.textContent = error.code === 4001
       ? "You declined the wallet request."
@@ -180,7 +200,7 @@ createForm.addEventListener("submit", async event => {
   } finally {
     createButton.disabled = false;
   }
-});
+}
 
 
 const approveForm = document.querySelector("#approve");

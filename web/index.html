@@ -46,6 +46,16 @@ output{overflow-wrap:anywhere}
 <a id="transaction" hidden>View transaction</a>
 <a id="agreement" hidden>Open shareable verification link</a>
 </form>
+<h2>Amend an agreement</h2>
+<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file.</p>
+<form id="amend">
+<label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
+<label>Changed agreement file <input name="document" type="file" required></label>
+<button type="submit">Propose amendment</button>
+<output role="status"></output>
+<a hidden>View amendment transaction</a>
+<a hidden>Open the new version</a>
+</form>
 <details>
 <summary>Set up a Diana test signer</summary>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>

@@ -144,3 +144,21 @@ the new agreement version 1 at Diana block 10102613.
 https://dashboard.qorechain.io/explorer/tx/0xa3de0b1dd9eb6607d39cce393b48cfc2478e9a7c4a22efcb75531d78d3cb9f3f
 Readback: one of two approvals, finalized false. Next: named co-signer
 approves from their own device, then verify finalized file. My space draft ready.
+
+New hosted agreement version 1 finalized on Diana at block 10134396.
+Second approval: https://dashboard.qorechain.io/explorer/tx/0xb8b3895071b1ef1f9afbf665b52482b277ee312dfac5f090117ac50479927487
+Readback: approval mask 3, finalized true, original fingerprint unchanged.
+Co-signer key registered with proof of possession. Browser recheck of original
+and changed files pending. Independent device use not yet confirmed.
+
+Hosted browser checks passed for the new finalized agreement version 1.
+The original agreement-v1 (1).txt matched and agreement-v2.txt was rejected
+against version 1. Both screenshots showed finalized and two approvals.
+Screenshot references: image(20261115-124700).png and image(20261115-124743).png.
+Next: propose version 2 from the original proposer, verify zero approvals,
+collect two fresh approvals, and recheck original version 1.
+
+The amendment form built and deployed to the existing private preview.
+It hashes the changed file locally, submits from the proposer wallet,
+and links to the version emitted by Diana. Live amendment receipt and
+fresh approvals remain pending.
