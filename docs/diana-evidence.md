@@ -226,6 +226,6 @@ Version 1 SHA-256: df672af9112267dd2fd9c9833bf8d11a1faa024490e8b89a6edf4d262b07e
 - [Second approval and finalization](https://dashboard.qorechain.io/explorer/tx/0x627798b94db9daceb0b5e2fbe117f54e3272448de8a85af9953f6d0bacc8ea5f)
 
 Diana returned two distinct approvals and a finalized version with the
-same fingerprint shown during private review. The owner reported that the
-downloaded file matched in the finalized browser verifier. Final screenshot
-and independent participant testing are outstanding. My space update drafted.
+same fingerprint shown during private review. The browser screenshot shows agreement-revision-5.txt matched finalized
+Diana version 1 with 2 of 2 approvals. [Final browser screenshot](evidence/private-review-finalized-match.png).
+Independent participant testing remains deferred. My space update drafted.
