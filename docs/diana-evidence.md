@@ -189,7 +189,7 @@ Milestone 1 review: the hosted Diana workflow passed the original-file,
 changed-file, and fresh-amendment-approval checks. Distinct wallets are
 verified on-chain. Independent participant/device use remains unconfirmed.
 The MetaMask alert, walkthrough for judges on the private preview, and
-Ship Weeks and Developer Fest feed confirmation remain open. My space
+Developer Fest feed confirmation remains open. My space
 closeout draft ready for owner review. Next: confirm independent device use
 and review event evidence before calling the milestone closed.
 
@@ -202,12 +202,12 @@ Diana agreement.
 Owner deferred the independent participant test. Continue Milestone 1
 evidence and event checks in parallel with that open item. Two distinct
 wallets were exercised by one operator. A later separate participant
-test is needed to claim independent use. Next: check the event timeline
-for the GitHub milestone commit and confirm Ship Weeks eligibility with
-the real deployment receipt.
+test is needed to claim independent use. Next: check the event timeline for the GitHub milestone commit.
 
-Ship Weeks PQC contract check rejected the verified deployment hash with
-“The contract does not call the PQC precompiles.” Diana runtime bytecode
-contains PUSH2 references to 0x0A01 and 0x0A02 plus both ABI selectors
-(0xf52bde0a and 0x850dfe51). Badge remains unearned. Next: ask the
-organizer how its checker recognizes PQC calls and provide both receipts.
+## Ship Weeks status
+
+The owner reported that “First contract with a PQC check” now shows green
+and verified in My space. The earlier checker result is superseded.
+The Diana deployment receipt independently confirms contract creation at
+block 10092612.
+https://dashboard.qorechain.io/explorer/tx/0x0cee4b8ec137fa45d2b765ddf2eaff928cd7571a02a9369eb5bff0b7ad9bfbfd
