@@ -10,10 +10,42 @@ main{max-width:36rem;margin:clamp(2rem,10vw,7rem) auto;padding:0 1.25rem}
 form{display:grid;gap:1rem;padding:1.5rem;background:#141517;border:1px solid #35363a;border-radius:.5rem}
 label{display:grid;gap:.35rem}input,button{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
 button{background:#f7f8f8;color:#08090a;font-weight:650;cursor:pointer}
-output{overflow-wrap:anywhere}
+output{overflow-wrap:anywhere}[hidden]{display:none!important}
 </style>
 <main>
 <p class="brand">The Record · Diana Testnet</p>
+<section id="workspace" hidden>
+<h1>Agreements</h1>
+<form id="draft">
+<label>Saved drafts <select name="saved"><option value="">New draft</option></select></label>
+<label>Title <input name="title" maxlength="120" required></label>
+<label>Terms <textarea name="terms" rows="8" maxlength="20000" required></textarea></label>
+<button>Save private draft</button>
+<a id="download-draft" hidden>Download saved revision for Diana</a>
+<output role="status"></output>
+</form>
+<form id="invite" hidden>
+<button>Create invitation link</button>
+<button type="button" id="revoke-invites">Revoke invitations for this draft</button>
+<input name="access" aria-label="Access code" readonly hidden>
+<input name="link" aria-label="Invitation link" readonly hidden>
+<button type="button" id="copy-invite" hidden>Copy link and access code</button>
+<output role="status"></output>
+</form>
+</section>
+<section id="review" hidden>
+<h1>Review agreement</h1>
+<output role="status"></output>
+<form id="review-code">
+<p>Enter the access code shared by the person who sent you this link.</p>
+<label>Access code <input name="code" autocomplete="off" spellcheck="false" required></label>
+<button>Open agreement</button>
+<output role="status"></output>
+</form>
+<a id="download-review" hidden>Download reviewed revision for Diana</a>
+<h2></h2>
+<pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
+</section>
 <h1>Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
 <form id="verify">

@@ -211,3 +211,21 @@ Ship Weeks shows “First contract with a PQC check” as **Earned** in My space
 The Diana deployment receipt independently confirms contract creation at
 block 10092612.
 https://dashboard.qorechain.io/explorer/tx/0x0cee4b8ec137fa45d2b765ddf2eaff928cd7571a02a9369eb5bff0b7ad9bfbfd
+
+## Private review to Diana
+
+The creator reopened a saved draft after refresh, shared a revision using
+an invite link and access code, and confirmed that revocation blocked
+another opening with that link and code. Automated email is a roadmap item.
+The reviewed text was downloaded as UTF-8 and recorded on Diana.
+Agreement ID: 0xe8b3f480cd7fb173442668d550d7096e266362e8ef34410cf0ae77d327d6e044
+Version 1 SHA-256: df672af9112267dd2fd9c9833bf8d11a1faa024490e8b89a6edf4d262b07e45b
+
+- [Creation](https://dashboard.qorechain.io/explorer/tx/0xf4c0c49e7e70ade6743a6c82b1ebed7d7c20485be24d7d28054cfa7255e51c1a)
+- [First approval](https://dashboard.qorechain.io/explorer/tx/0x474ce61b96a7ee08728a8165a53324e66966e46234a76f90976479e9f1d3277a)
+- [Second approval and finalization](https://dashboard.qorechain.io/explorer/tx/0x627798b94db9daceb0b5e2fbe117f54e3272448de8a85af9953f6d0bacc8ea5f)
+
+Diana returned two distinct approvals and a finalized version with the
+same fingerprint shown during private review. The owner reported that the
+downloaded file matched in the finalized browser verifier. Final screenshot
+and independent participant testing are outstanding. My space update drafted.

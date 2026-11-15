@@ -1,3 +1,4 @@
+import "./private-agreements.js";
 import { generateTestSigner, submitApproval } from "./approve.js";
 import { registerSigner } from "./register.js";
 
