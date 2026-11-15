@@ -162,3 +162,33 @@ The amendment form built and deployed to the existing private preview.
 It hashes the changed file locally, submits from the proposer wallet,
 and links to the version emitted by Diana. Live amendment receipt and
 fresh approvals remain pending.
+
+Hosted amendment confirmed at Diana block 10135024.
+https://dashboard.qorechain.io/explorer/tx/0xaffbce6e2ba2a1957c42d8bfff1d829fa92948c49081416e27dc1491c2b68341
+Version 2 fingerprint 0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0,
+approval mask 0 and finalized false. Version 1 retains its original
+fingerprint, approval mask 3 and finalized true. Next: collect two fresh
+browser approvals for version 2. My space draft ready for review.
+
+Version 2 first approval verified at block 10135460, mask 1, finalized false. Next: co-signer approves version 2.
+https://dashboard.qorechain.io/explorer/tx/0x5a4b0020a0a0d8980e63d7045b23594d24b6eb648fb7d8c3c6f23649096bf8b2
+
+The distinct co-signer approved version 2 at Diana block 10135591.
+https://dashboard.qorechain.io/explorer/tx/0xd59158244fd94d9b2a83d9d7d1693fe56887704409538f9c396cb99c3230af70
+The receipt emitted Approved and Finalized for version 2. Both versions
+read back finalized with approval mask 3 and their respective fingerprints.
+Next: capture browser rechecks of both files after amendment finalization.
+My space update drafted for review.
+
+Post-amendment browser rechecks passed: agreement-v2.txt matched finalized
+version 2 and agreement-v1 (1).txt still matched finalized version 1.
+Both screenshots show two of two approvals. Evidence: image(20261115-131137).png
+and image(20261115-131225).png.
+
+Milestone 1 review: the hosted Diana workflow passed the original-file,
+changed-file, and fresh-amendment-approval checks. Distinct wallets are
+verified on-chain. Independent participant/device use remains unconfirmed.
+The MetaMask alert, walkthrough for judges on the private preview, and
+Ship Weeks and Developer Fest feed confirmation remain open. My space
+closeout draft ready for owner review. Next: confirm independent device use
+and review event evidence before calling the milestone closed.
