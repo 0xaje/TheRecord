@@ -33,4 +33,4 @@ The same two signer addresses approved each version. The amendment started at ze
 - [Version 2 first approval](https://dashboard.qorechain.io/explorer/tx/0x5a4b0020a0a0d8980e63d7045b23594d24b6eb648fb7d8c3c6f23649096bf8b2)
 - [Version 2 finalization](https://dashboard.qorechain.io/explorer/tx/0xd59158244fd94d9b2a83d9d7d1693fe56887704409538f9c396cb99c3230af70)
 
-One tester operated both wallets. Independent participant testing is deferred. The wallet warning is unresolved. The project owner reports that Ship Weeks now shows the first PQC contract check as verified. See [the Diana evidence log](diana-evidence.md).
+One tester operated both wallets. Independent participant testing is deferred. The wallet warning is unresolved. Ship Weeks shows the [first PQC contract badge as Earned](evidence/ship-weeks-pqc-earned.png). See [the Diana evidence log](diana-evidence.md).

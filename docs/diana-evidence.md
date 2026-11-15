@@ -206,8 +206,8 @@ test is needed to claim independent use. Next: check the event timeline for the 
 
 ## Ship Weeks status
 
-The owner reported that “First contract with a PQC check” now shows green
-and verified in My space. The earlier checker result is superseded.
+Ship Weeks shows “First contract with a PQC check” as **Earned** in My space.
+[Badge screenshot](evidence/ship-weeks-pqc-earned.png).
 The Diana deployment receipt independently confirms contract creation at
 block 10092612.
 https://dashboard.qorechain.io/explorer/tx/0x0cee4b8ec137fa45d2b765ddf2eaff928cd7571a02a9369eb5bff0b7ad9bfbfd
