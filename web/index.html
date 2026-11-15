@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify a file | The Record</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 Inter,system-ui,sans-serif;background:#08090a;color:#f7f8f8}
+main{max-width:36rem;margin:clamp(2rem,10vw,7rem) auto;padding:0 1.25rem}
+.brand{color:#b4bcd0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1}
+form{display:grid;gap:1rem;padding:1.5rem;background:#141517;border:1px solid #35363a;border-radius:.5rem}
+label{display:grid;gap:.35rem}input,button{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
+button{background:#f7f8f8;color:#08090a;font-weight:650;cursor:pointer}
+output{overflow-wrap:anywhere}
+</style>
+<main>
+<p class="brand">The Record · Diana Testnet</p>
+<h1>Verify an agreement file</h1>
+<p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
+<form id="verify">
+<label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
+<label>Version <input name="version" required pattern="[1-9][0-9]*" inputmode="numeric" value="1"></label>
+<label>Agreement file <input name="file" type="file" required></label>
+<button>Verify file</button>
+<p id="approval-status" aria-live="polite" hidden></p>
+<output role="status" aria-live="polite"></output>
+</form>
+<section id="approval" hidden>
+<h2>Approve the verified version</h2>
+<p>Use a dedicated Diana test signing file you generated for The Record. The file is read on this device.</p>
+<form id="approve">
+<label>Your signer address <input name="signer" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
+<label>Diana test signing file <input name="key" type="file" required></label>
+<button type="submit">Sign and submit approval</button>
+<output role="status" aria-live="polite"></output>
+<a hidden>View approval transaction</a>
+</form>
+</section>
+<h2>Create an agreement</h2>
+<p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p>
+<form id="create">
+<label>First signer (0x address) <input name="first" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
+<label>Second signer (0x address) <input name="second" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
+<label>File to record <input name="document" type="file" required></label>
+<button type="submit">Create agreement</button>
+<output role="status" aria-live="polite"></output>
+<a id="transaction" hidden>View transaction</a>
+<a id="agreement" hidden>Open shareable verification link</a>
+</form>
+<details>
+<summary>Set up a Diana test signer</summary>
+<p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
+<button id="generate-signer" type="button">Generate signing file</button>
+<a id="download-signer" hidden>Download private signing file</a>
+<output id="signer-status" role="status"></output>
+<form id="register-signer">
+<label>Funded Diana address <input name="address" required pattern="qor1[0-9a-z]{38}" spellcheck="false"></label>
+<label>Your private test signing file <input name="key" type="file" required></label>
+<p>Registration costs 0.06 test QOR.</p>
+<button>Register signing key on Diana</button>
+<output role="status"></output>
+<a hidden>View registration transaction</a>
+</form>
+</details>
+</main>
+<script type="module" src="./verify.js"></script>
+</html>

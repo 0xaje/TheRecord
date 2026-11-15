@@ -1,0 +1,33 @@
+{
+  "name": "the-record",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "esbuild web/verify.js --bundle --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html",
+    "build:site": "npm run build && node scripts/build-worker.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0xaje/TheRecord.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/0xaje/TheRecord/issues"
+  },
+  "homepage": "https://github.com/0xaje/TheRecord#readme",
+  "dependencies": {
+    "@qorechain/qoresign": "0.2.0",
+    "cosmjs-types": "0.11.0",
+    "viem": "2.57.19"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  },
+  "private": true
+}
