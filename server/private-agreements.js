@@ -60,8 +60,17 @@ export async function privateAgreements(request, db) {
       .bind(tokenHash, codeHash, Date.now()).first();
     return share ? reply(share) : reply({ error: "Incorrect code or unavailable invitation. Ask the sender for a current link and code." }, 404);
   }
-  const user = request.headers.get("oai-authenticated-user-id");
-  if (!user) return reply({ error: "Sign in to continue." }, 401);
+  const legacyOwner = request.headers.get("oai-authenticated-user-id");
+  const workspaceKey = request.headers.get("X-Record-Workspace");
+  if (workspaceKey !== null && !tokenPattern.test(workspaceKey)) {
+    return reply({ error: "Invalid workspace key." }, 400);
+  }
+  const workspaceOwner = workspaceKey ? "workspace:" + await digest(workspaceKey) : null;
+  const user = workspaceOwner ?? legacyOwner;
+  if (!user) {
+    if (request.method === "GET" && url.pathname === "/api/drafts") return reply([]);
+    return reply({ error: "Open your workspace before saving." }, 401);
+  }
   if (!db) return reply({ error: "Draft storage is unavailable." }, 503);
 
   if (request.method === "GET" && url.pathname === "/api/drafts") {
@@ -82,6 +91,12 @@ export async function privateAgreements(request, db) {
   if (request.headers.get("origin") !== url.origin) return reply({ error: "Request blocked." }, 403);
   const input = await readInput(request);
   if (!input || typeof input !== "object") return reply({ error: "Invalid request." }, 400);
+
+  if (url.pathname === "/api/drafts/move") {
+    if (!legacyOwner || !workspaceOwner) return reply({ error: "Open your original signed-in browser to move these drafts." }, 403);
+    const result = await db.prepare("UPDATE drafts SET owner = ? WHERE owner = ?").bind(workspaceOwner, legacyOwner).run();
+    return reply({ moved: result.meta.changes });
+  }
 
   if (url.pathname === "/api/drafts") {
     const { id, revision, title, terms } = input;

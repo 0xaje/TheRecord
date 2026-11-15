@@ -10,10 +10,29 @@ const copy = document.querySelector("#copy-invite");
 let drafts = [];
 let current;
 
-async function api(path = "", body) {
-  const response = await fetch("/api/drafts" + path, body === undefined ? {} : {
-    method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
-  });
+const storageKey = "the-record-workspace";
+const keyPattern = /^[a-f0-9]{64}$/;
+let workspaceKey = localStorage.getItem(storageKey);
+
+function rememberKey(key) {
+  localStorage.setItem(storageKey, key);
+  workspaceKey = key;
+}
+
+function newWorkspaceKey() {
+  return Array.from(crypto.getRandomValues(new Uint8Array(32)), b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function api(path = "", body, key = workspaceKey) {
+  const headers = {};
+  if (!invitation && key) headers["X-Record-Workspace"] = key;
+  const options = { headers };
+  if (body !== undefined) {
+    headers["Content-Type"] = "application/json";
+    options.method = "POST";
+    options.body = JSON.stringify(body);
+  }
+  const response = await fetch("/api/drafts" + path, options);
   const data = await response.json();
   if (!response.ok) throw new Error(data.error ?? "Request failed.");
   return data;
@@ -68,6 +87,7 @@ function openDraft(id) {
 
 async function loadDrafts(id) {
   drafts = await api();
+  document.querySelector("#move-legacy-drafts").hidden = Boolean(workspaceKey) || !drafts.length;
   const list = draftForm.elements.saved;
   list.replaceChildren(new Option("New draft", ""), ...drafts.map(draft => new Option(draft.title, draft.id)));
   list.value = id ?? "";
@@ -130,6 +150,7 @@ draftForm.addEventListener("submit", event => {
   event.preventDefault();
   submit(draftForm, async () => {
     const { title, terms } = draftForm.elements;
+    if (!workspaceKey && !drafts.length) rememberKey(newWorkspaceKey());
     const saved = await api("", { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value });
     await loadDrafts(saved.id);
     return "Private draft saved.";
@@ -176,5 +197,45 @@ document.querySelector("#revoke-invites").addEventListener("click", () => {
     await api("/revoke", { id: current.id });
     clearLink();
     return "Invitations revoked.";
+  });
+});
+
+const recoveryField = document.querySelector("#workspace-key");
+document.querySelector("#show-workspace-key").addEventListener("click", () => {
+  recoveryField.value = workspaceKey ?? "Save a new draft or move your existing drafts first.";
+  recoveryField.hidden = false;
+  recoveryField.select();
+});
+
+const restoreForm = document.querySelector("#restore-workspace");
+restoreForm.addEventListener("submit", event => {
+  event.preventDefault();
+  submit(restoreForm, async () => {
+    const key = restoreForm.elements.recovery.value.trim().toLowerCase();
+    if (!keyPattern.test(key)) throw new Error("Enter the 64-character recovery code.");
+    const previous = workspaceKey;
+    const records = await api("", undefined, key);
+    if (!records.length) throw new Error("No saved drafts found for that code.");
+    if (previous && previous !== key && !confirm("Open this workspace? Save your current recovery code first if you still need it.")) {
+      return "Workspace kept.";
+    }
+    rememberKey(key);
+    recoveryField.hidden = true;
+    recoveryField.value = "";
+    restoreForm.reset();
+    await loadDrafts();
+    return "Workspace opened.";
+  });
+});
+
+document.querySelector("#move-legacy-drafts").addEventListener("click", () => {
+  submit(draftForm, async () => {
+    if (!confirm("Move your existing drafts to this browser’s recovery workspace? Save its code afterward.")) return "Drafts kept.";
+    const key = workspaceKey ?? newWorkspaceKey();
+    // Persist before the transfer so a dropped response cannot strand drafts.
+    rememberKey(key);
+    await api("/move", {}, key);
+    await loadDrafts();
+    return "Drafts moved. Save your recovery code under Workspace recovery.";
   });
 });

@@ -27,11 +27,23 @@ nav a:hover,nav a:focus-visible{color:#fff}
 </nav>
 <section id="workspace" hidden>
 <h1>Agreements</h1>
+<details>
+<summary>Workspace recovery</summary>
+<p>Save your recovery code to open these private drafts on another device. Keep it private.</p>
+<button type="button" id="show-workspace-key">Show recovery code</button>
+<input id="workspace-key" aria-label="Workspace recovery code" readonly hidden>
+<form id="restore-workspace">
+<label>Recovery code <input name="recovery" spellcheck="false" autocomplete="off" minlength="64" maxlength="64" required></label>
+<button>Open workspace</button>
+<output role="status"></output>
+</form>
+</details>
 <form id="draft">
 <label>Saved drafts <select name="saved"><option value="">New draft</option></select></label>
 <label>Title <input name="title" maxlength="120" required></label>
 <label>Terms <textarea name="terms" rows="8" maxlength="20000" required></textarea></label>
 <button>Save private draft</button>
+<button type="button" id="move-legacy-drafts" hidden>Move existing drafts into a recovery workspace</button>
 <a id="download-draft" hidden>Download saved revision for Diana</a>
 <output role="status"></output>
 </form>
