@@ -11,9 +11,20 @@ form{display:grid;gap:1rem;padding:1.5rem;background:#141517;border:1px solid #3
 label{display:grid;gap:.35rem}input,button{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
 button{background:#f7f8f8;color:#08090a;font-weight:650;cursor:pointer}
 output{overflow-wrap:anywhere}[hidden]{display:none!important}
+nav{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-block:1rem 2rem}
+nav a{color:#b4bcd0;padding-block:.45rem}
+nav a:hover,nav a:focus-visible{color:#fff}
+[id]{scroll-margin-top:1rem}
 </style>
 <main>
 <p class="brand">The Record · Diana Testnet</p>
+<nav id="agreement-navigation" aria-label="Agreement actions">
+<a href="./#workspace">Drafts</a>
+<a href="#verify-title">Verify</a>
+<a href="#create-title">Record on Diana</a>
+<a href="#amend-title">Amend</a>
+<a href="#signer-setup">Signer setup</a>
+</nav>
 <section id="workspace" hidden>
 <h1>Agreements</h1>
 <form id="draft">
@@ -52,7 +63,7 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <output role="status"></output>
 </form>
 </section>
-<h1>Verify an agreement file</h1>
+<h1 id="verify-title">Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
 <form id="verify">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
@@ -73,7 +84,7 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <a hidden>View approval transaction</a>
 </form>
 </section>
-<h2>Create an agreement</h2>
+<h2 id="create-title">Create an agreement</h2>
 <p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p>
 <form id="create">
 <label>First signer (0x address) <input name="first" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
@@ -84,7 +95,7 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <a id="transaction" hidden>View transaction</a>
 <a id="agreement" hidden>Open shareable verification link</a>
 </form>
-<h2>Amend an agreement</h2>
+<h2 id="amend-title">Amend an agreement</h2>
 <p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file.</p>
 <form id="amend">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
@@ -94,7 +105,7 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <a hidden>View amendment transaction</a>
 <a hidden>Open the new version</a>
 </form>
-<details>
+<details id="signer-setup">
 <summary>Set up a Diana test signer</summary>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
 <button id="generate-signer" type="button">Generate signing file</button>

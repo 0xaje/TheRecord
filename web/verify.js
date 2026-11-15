@@ -286,3 +286,15 @@ registerForm.addEventListener("submit", async event => {
     button.disabled = false;
   }
 });
+
+document.querySelector("#agreement-navigation").addEventListener("click", event => {
+  const href = event.target.closest("a")?.getAttribute("href");
+  if (!href?.startsWith("#")) return;
+  const section = document.getElementById(href.slice(1));
+  if (!section) return;
+  event.preventDefault();
+  if (section instanceof HTMLDetailsElement) section.open = true;
+  section.tabIndex = -1;
+  section.focus({ preventScroll: true });
+  section.scrollIntoView();
+});
