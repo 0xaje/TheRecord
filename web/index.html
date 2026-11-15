@@ -24,6 +24,7 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <a id="download-draft" hidden>Download saved revision for Diana</a>
 <output role="status"></output>
 </form>
+<section id="draft-feedback" hidden><h2>Change requests</h2><ul></ul><output role="status"></output></section>
 <form id="invite" hidden>
 <button>Create invitation link</button>
 <button type="button" id="revoke-invites">Revoke invitations for this draft</button>
@@ -45,6 +46,11 @@ output{overflow-wrap:anywhere}[hidden]{display:none!important}
 <a id="download-review" hidden>Download reviewed revision for Diana</a>
 <h2></h2>
 <pre style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
+<form id="review-feedback" hidden>
+<label>What should change? <textarea name="note" maxlength="2000" required></textarea></label>
+<button>Request changes</button>
+<output role="status"></output>
+</form>
 </section>
 <h1>Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>

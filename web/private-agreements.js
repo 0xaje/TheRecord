@@ -5,6 +5,7 @@ const review = document.querySelector("#review");
 const draftForm = document.querySelector("#draft");
 const invite = document.querySelector("#invite");
 const inviteStatus = invite.querySelector("output");
+const feedback = document.querySelector("#draft-feedback");
 const copy = document.querySelector("#copy-invite");
 let drafts = [];
 let current;
@@ -43,6 +44,25 @@ function openDraft(id) {
   invite.hidden = !current;
   setDownload(document.querySelector("#download-draft"), current);
   clearLink();
+  feedback.hidden = !current;
+  const list = feedback.querySelector("ul");
+  const status = feedback.querySelector("output");
+  list.replaceChildren();
+  status.textContent = "";
+  if (current) {
+    const draft = current;
+    api("/feedback?" + new URLSearchParams({ id: draft.id })).then(notes => {
+      if (current !== draft) return;
+      status.textContent = notes.length ? "" : "No change requests yet.";
+      for (const { revision, note } of notes) {
+        const item = document.createElement("li");
+        item.textContent = `Revision ${revision}: ${note}`;
+        list.append(item);
+      }
+    }).catch(error => {
+      if (current === draft) status.textContent = error.message;
+    });
+  }
   inviteStatus.textContent = "";
 }
 
@@ -71,6 +91,16 @@ async function submit(form, run) {
 if (invitation) {
   review.hidden = false;
   const form = document.querySelector("#review-code");
+  const requestForm = document.querySelector("#review-feedback");
+  let accessCode;
+  requestForm.addEventListener("submit", event => {
+    event.preventDefault();
+    submit(requestForm, async () => {
+      await api("/feedback", { token: invitation, code: accessCode, note: requestForm.elements.note.value });
+      requestForm.reset();
+      return "Change request sent to the creator.";
+    });
+  });
   form.addEventListener("submit", event => {
     event.preventDefault();
     submit(form, async () => {
@@ -80,6 +110,8 @@ if (invitation) {
       const fingerprint = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
       if (fingerprint !== version.fingerprint) throw new Error("The shared text does not match its fingerprint.");
       setDownload(document.querySelector("#download-review"), version);
+      accessCode = form.elements.code.value;
+      requestForm.hidden = false;
       form.reset();
       form.hidden = true;
       review.querySelector("h2").textContent = version.title;
