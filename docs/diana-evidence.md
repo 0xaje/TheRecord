@@ -192,3 +192,22 @@ The MetaMask alert, walkthrough for judges on the private preview, and
 Ship Weeks and Developer Fest feed confirmation remain open. My space
 closeout draft ready for owner review. Next: confirm independent device use
 and review event evidence before calling the milestone closed.
+
+The tester confirmed that they submitted both signer approvals themselves.
+This verifies the two-wallet workflow. Independent participant use is still
+pending. Next: grant a participant access to the private preview, have them
+register and control their own signer, and capture their approval on a new
+Diana agreement.
+
+Owner deferred the independent participant test. Continue Milestone 1
+evidence and event checks in parallel with that open item. Two distinct
+wallets were exercised by one operator. A later separate participant
+test is needed to claim independent use. Next: check the event timeline
+for the GitHub milestone commit and confirm Ship Weeks eligibility with
+the real deployment receipt.
+
+Ship Weeks PQC contract check rejected the verified deployment hash with
+“The contract does not call the PQC precompiles.” Diana runtime bytecode
+contains PUSH2 references to 0x0A01 and 0x0A02 plus both ABI selectors
+(0xf52bde0a and 0x850dfe51). Badge remains unearned. Next: ask the
+organizer how its checker recognizes PQC calls and provide both receipts.
