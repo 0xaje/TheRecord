@@ -27,6 +27,19 @@ textarea{width:100%;box-sizing:border-box;resize:vertical}
 nav a{color:#b4bcd0;padding-block:.45rem}
 nav a:hover,nav a:focus-visible{color:#fff}
 [id]{scroll-margin-top:1rem}
+#workspace{max-width:none;margin-block:2.5rem 4rem}
+.workspace-header{display:flex;align-items:start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem}
+.workspace-header h1{margin:0}
+.workspace-header details{max-width:26rem}
+.workspace-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:1.25rem;align-items:start}
+.workspace-side{display:grid;gap:1rem;min-width:0}
+.workspace-side h2{margin:0;font-size:1.125rem}
+.workspace-side section{display:grid;gap:.75rem;padding:1.25rem;border:1px solid #35363a;border-radius:.5rem;background:#141517;overflow-wrap:anywhere}
+.workspace-side p,.workspace-side ul{margin:0}
+.workspace-side ul{padding-inline-start:1.25rem;white-space:pre-wrap}
+#draft-revision{color:#b4bcd0;margin:0}
+#draft-feedback output:empty{display:none}
+@media(max-width:720px){.workspace-grid{grid-template-columns:minmax(0,1fr)}}
 </style>
 <main>
 <header class="site-header">
@@ -48,6 +61,7 @@ nav a:hover,nav a:focus-visible{color:#fff}
 </div>
 </section>
 <section id="workspace" hidden>
+<header class="workspace-header">
 <h1>Agreements</h1>
 <details>
 <summary>Workspace recovery</summary>
@@ -60,17 +74,20 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <output role="status"></output>
 </form>
 </details>
+</header>
+<div class="workspace-grid">
 <form id="draft">
 <label>Saved drafts <select name="saved"><option value="">New draft</option></select></label>
+<p id="draft-revision" aria-live="polite">New draft</p>
 <label>Title <input name="title" maxlength="120" required></label>
 <label>Terms <textarea name="terms" rows="8" maxlength="20000" required></textarea></label>
 <button>Save private draft</button>
 <button type="button" id="move-legacy-drafts" hidden>Move existing drafts into a recovery workspace</button>
-<a id="download-draft" hidden>Download saved revision for Diana</a>
 <output role="status"></output>
 </form>
-<section id="draft-feedback" hidden><h2>Change requests</h2><ul></ul><output role="status"></output></section>
+<aside class="workspace-side" aria-label="Selected draft actions">
 <form id="invite" hidden>
+<h2>Share for review</h2>
 <button>Create invitation link</button>
 <button type="button" id="revoke-invites">Revoke invitations for this draft</button>
 <input name="access" aria-label="Access code" readonly hidden>
@@ -78,6 +95,15 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <button type="button" id="copy-invite" hidden>Copy link and access code</button>
 <output role="status"></output>
 </form>
+<section id="draft-feedback" hidden><h2>Change requests</h2><ul></ul><output role="status"></output></section>
+<section id="draft-record" hidden>
+<h2>Record on Diana</h2>
+<p>Download this revision, then use the file to create a record with your two signer addresses.</p>
+<a id="download-draft" hidden>Download saved revision for Diana</a>
+<a href="#create-title">Open Diana recording form</a>
+</section>
+</aside>
+</div>
 </section>
 <section id="review" hidden>
 <h1>Review agreement</h1>

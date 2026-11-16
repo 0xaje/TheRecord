@@ -61,6 +61,8 @@ function openDraft(id) {
   draftForm.elements.title.value = current?.title ?? "";
   draftForm.elements.terms.value = current?.terms ?? "";
   invite.hidden = !current;
+  document.querySelector("#draft-record").hidden = !current;
+  document.querySelector("#draft-revision").textContent = current ? `Saved revision ${current.revision}` : "New draft";
   setDownload(document.querySelector("#download-draft"), current);
   clearLink();
   feedback.hidden = !current;
@@ -160,6 +162,8 @@ draftForm.addEventListener("submit", event => {
 draftForm.addEventListener("input", event => {
   if (event.target !== draftForm.elements.saved) {
     invite.hidden = true;
+    document.querySelector("#draft-record").hidden = true;
+    document.querySelector("#draft-revision").textContent = "Unsaved changes";
     setDownload(document.querySelector("#download-draft"), null);
     clearLink();
   }
