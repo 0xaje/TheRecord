@@ -11,6 +11,8 @@ The Record lets two parties review an agreement, approve the same version on Qor
 
 [Live testnet app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Judge walkthrough](docs/judge-walkthrough.md) · [Diana evidence](docs/diana-evidence.md)
 
+[QCAI audit reports and regression evidence](docs/AUDIT.md)
+
 ## Build
 
 From the repository root, using Node.js:

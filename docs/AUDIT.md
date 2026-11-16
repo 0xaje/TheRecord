@@ -50,5 +50,17 @@ over history. Storage still grows by one entry per proposed version.
 The proposer-only amendment rule, two-approval finalization rule and
 documented third-party submission behavior remain as described above.
 No contract change followed this review. The two exported reports
-document the two runs. Organizer acceptance of the two-stage evidence
-has not been independently confirmed.
+document the two runs. The organizer confirmed that the second run qualifies as Stage 2.
+
+## Reports and finding-level evidence
+
+- [Stage 1 — 16 November 2026](audit/2026-11-16-stage-1.pdf)
+- [Stage 2 — 16 November 2026](audit/2026-11-16-stage-2.pdf)
+
+| Finding | Evidence |
+| --- | --- |
+| Amendment access | Foundry: `testOutsiderCannotProposeAmendment`, `testProposerCannotAmendPendingVersion`, and `testDianaFinalizedAmendmentPreservesOriginal`. |
+| Version overflow | Source review of the checked Solidity 0.8.28 increment. |
+| PQC return handling | Diana check: `altered signature of valid length`, with a valid signature as the positive control. |
+| Approval submission | Foundry: `testApprovalPayloadBindsSigner`. Diana checks: `duplicate approval` and `version 1 signature reused for version 2`. Third-party submission of a valid approval remains possible as described above. |
+| Storage growth | Source review confirms direct mapping access. Foundry: `testDianaFinalizedAmendmentPreservesOriginal` verifies why historical versions are retained. |
