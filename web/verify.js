@@ -287,7 +287,11 @@ registerForm.addEventListener("submit", async event => {
   }
 });
 
-document.querySelector("#agreement-navigation").addEventListener("click", event => {
+const landing = document.querySelector("#landing");
+landing.hidden = query.has("id") || new URLSearchParams(location.hash.slice(1)).has("invite");
+
+document.querySelector("main").addEventListener("click", event => {
+  if (!event.target.closest("#agreement-navigation, .landing-actions")) return;
   const href = event.target.closest("a")?.getAttribute("href");
   if (!href?.startsWith("#")) return;
   const section = document.getElementById(href.slice(1));

@@ -2,21 +2,34 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Verify a file | The Record</title>
+<title>The Record | Review and verify agreements</title>
 <style>
 :root{color-scheme:dark;font:16px/1.5 Inter,system-ui,sans-serif;background:#08090a;color:#f7f8f8}
-main{max-width:36rem;margin:clamp(2rem,10vw,7rem) auto;padding:0 1.25rem}
-.brand{color:#b4bcd0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1}
+main{max-width:64rem;margin:0 auto;padding:0 clamp(1rem,4vw,3rem) 5rem}
+main > :not(.site-header):not(.landing){max-width:38rem;margin-inline:auto}
+.brand{color:#f7f8f8;font-weight:650;letter-spacing:-.025em;margin:0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1}
 form{display:grid;gap:1rem;padding:1.5rem;background:#141517;border:1px solid #35363a;border-radius:.5rem}
-label{display:grid;gap:.35rem}input,button{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
+label{display:grid;gap:.35rem}input,button,select,textarea{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
 button{background:#f7f8f8;color:#08090a;font-weight:650;cursor:pointer}
 output{overflow-wrap:anywhere}[hidden]{display:none!important}
-nav{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-block:1rem 2rem}
+.site-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;padding-block:1rem;border-bottom:1px solid #26272b}
+nav{display:flex;flex-wrap:wrap;gap:.25rem 1rem;font-size:.875rem}
+.landing{padding:clamp(3rem,9vw,7rem) 0 clamp(2rem,6vw,4rem);border-bottom:1px solid #26272b;margin-bottom:2.5rem}
+.landing h1{font-size:clamp(2.5rem,9vw,5rem);letter-spacing:-.065em;line-height:1.02;max-width:13ch;margin:0 0 1.25rem}
+.landing p{color:#b4bcd0;max-width:37rem;font-size:1.125rem}
+.landing-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.landing-actions a{border:1px solid #53545b;border-radius:.375rem;padding:.65rem 1rem;color:#f7f8f8;text-decoration:none}
+.landing-actions a:first-child{background:#f7f8f8;border-color:#f7f8f8;color:#08090a;font-weight:650}
+:focus-visible{outline:2px solid #a8a4ff;outline-offset:4px}
+form > *{min-width:0}
+textarea{width:100%;box-sizing:border-box;resize:vertical}
+@media(max-width:420px){form{padding:1rem}}
 nav a{color:#b4bcd0;padding-block:.45rem}
 nav a:hover,nav a:focus-visible{color:#fff}
 [id]{scroll-margin-top:1rem}
 </style>
 <main>
+<header class="site-header">
 <p class="brand">The Record · Diana Testnet</p>
 <nav id="agreement-navigation" aria-label="Agreement actions">
 <a href="./#workspace">Drafts</a>
@@ -25,6 +38,15 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <a href="#amend-title">Amend</a>
 <a href="#signer-setup">Signer setup</a>
 </nav>
+</header>
+<section class="landing" id="landing" hidden>
+<h1>Agree on the same version.</h1>
+<p>Share your terms privately, collect both approvals on Diana, and check which version was finalized.</p>
+<div class="landing-actions">
+<a href="#workspace">Create a draft</a>
+<a href="#verify-title">Verify a file</a>
+</div>
+</section>
 <section id="workspace" hidden>
 <h1>Agreements</h1>
 <details>
