@@ -206,7 +206,11 @@ test is needed to claim independent use. Next: check the event timeline for the 
 
 ## Ship Weeks status
 
-Ship Weeks shows “First contract with a PQC check” as **Earned** in My space.
+The project owner confirmed **all four Ship Weeks tasks are complete** in My space on 16 November 2026.
+
+- First swap in a pool: [successful native Pool 2 swap](https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/E33A13E08ACB0A8303D74420E665CD9CD1EE08C72C5460437E6E503D3434C130) at Diana block 10201510.
+- First QoreSeal key: [successful Signer A KEM key registration](https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/E97D59D372ABF9CBDB42B40A8D4E6D29C77ECB2055A29CB6F25B1C337FE253E6) at Diana block 10203138. The key registry returned `found: true`.
+- First contract with a PQC check: **Earned** in My space.
 [Badge screenshot](evidence/ship-weeks-pqc-earned.png).
 The Diana deployment receipt independently confirms contract creation at
 block 10092612.
