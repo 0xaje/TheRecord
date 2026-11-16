@@ -4,72 +4,129 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Record | Review and verify agreements</title>
 <style>
-:root{color-scheme:dark;font:16px/1.5 Inter,system-ui,sans-serif;background:#08090a;color:#f7f8f8}
-main{max-width:64rem;margin:0 auto;padding:0 clamp(1rem,4vw,3rem) 5rem}
-main > :not(.site-header):not(.landing){max-width:38rem;margin-inline:auto}
-.brand{color:#f7f8f8;font-weight:650;letter-spacing:-.025em;margin:0}h1{font-size:clamp(2rem,6vw,3rem);line-height:1.1}
-form{display:grid;gap:1rem;padding:1.5rem;background:#141517;border:1px solid #35363a;border-radius:.5rem}
-label{display:grid;gap:.35rem}input,button,select,textarea{font:inherit;padding:.65rem;border:1px solid #666;border-radius:.35rem;min-width:0}
-button{background:#f7f8f8;color:#08090a;font-weight:650;cursor:pointer}
-output{overflow-wrap:anywhere}[hidden]{display:none!important}
-.site-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem 2rem;padding-block:1rem;border-bottom:1px solid #26272b}
-nav{display:flex;flex-wrap:wrap;gap:.25rem 1rem;font-size:.875rem}
-.landing{padding:clamp(3rem,9vw,7rem) 0 clamp(2rem,6vw,4rem);border-bottom:1px solid #26272b;margin-bottom:2.5rem}
-.landing h1{font-size:clamp(2.5rem,9vw,5rem);letter-spacing:-.065em;line-height:1.02;max-width:13ch;margin:0 0 1.25rem}
-.landing p{color:#b4bcd0;max-width:37rem;font-size:1.125rem}
-.landing-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
-.landing-actions a{border:1px solid #53545b;border-radius:.375rem;padding:.65rem 1rem;color:#f7f8f8;text-decoration:none}
-.landing-actions a:first-child{background:#f7f8f8;border-color:#f7f8f8;color:#08090a;font-weight:650}
-:focus-visible{outline:2px solid #a8a4ff;outline-offset:4px}
-form > *{min-width:0}
-textarea{width:100%;box-sizing:border-box;resize:vertical}
-@media(max-width:420px){form{padding:1rem}}
-nav a{color:#b4bcd0;padding-block:.45rem}
-nav a:hover,nav a:focus-visible{color:#fff}
-[id]{scroll-margin-top:1rem}
-#workspace{max-width:none;margin-block:2.5rem 4rem}
-.workspace-header{display:flex;align-items:start;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem}
-.workspace-header h1{margin:0}
-.workspace-header details{max-width:26rem}
-.workspace-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:1.25rem;align-items:start}
-.workspace-side{display:grid;gap:1rem;min-width:0}
-.workspace-side h2{margin:0;font-size:1.125rem}
-.workspace-side section{display:grid;gap:.75rem;padding:1.25rem;border:1px solid #35363a;border-radius:.5rem;background:#141517;overflow-wrap:anywhere}
-.workspace-side p,.workspace-side ul{margin:0}
-.workspace-side ul{padding-inline-start:1.25rem;white-space:pre-wrap}
-#draft-revision{color:#b4bcd0;margin:0}
-#draft-feedback output:empty{display:none}
-@media(max-width:720px){.workspace-grid{grid-template-columns:minmax(0,1fr)}}
-.verification-panel{display:grid;gap:1rem;margin-block:2.5rem}
-.verification-panel h1,.verification-panel h2,.verification-panel p{margin:0}
-#verification-result{display:grid;gap:.4rem;padding:1rem;border-inline-start:3px solid #aaa;background:#1c1d21;border-radius:.25rem}
-#verification-result[data-state="match"]{border-color:#6cd7a3}
-#verification-result[data-state="mismatch"]{border-color:#f0ad79}
-#approval{display:grid;gap:.75rem}
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+:root{color-scheme:dark;font:16px/1.6 "DM Sans",system-ui,sans-serif;background:#09090b;color:#fafafa;--panel:#151517;--line:#333337;--muted:#b8b8c0;--accent:#b4efce}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+main{max-width:78rem;margin:auto;padding:0 clamp(1rem,4vw,3rem) 4rem}
+h1,h2,h3,p{margin:0}h1,h2,h3,.brand{font-family:Inter,system-ui,sans-serif;letter-spacing:-.035em;line-height:1.12}
+h1{font-size:clamp(2.15rem,5vw,3.7rem)}h2{font-size:clamp(1.35rem,3vw,2rem)}h3{font-size:1.12rem}
+p{color:var(--muted)}a{color:var(--accent);text-underline-offset:.2em}
+:focus-visible{outline:2px solid #a8ddc1;outline-offset:4px}
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:.6rem 2rem;flex-wrap:wrap;padding:1.15rem 0;border-bottom:1px solid var(--line)}
+.brand{color:#fff;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:.65rem;white-space:nowrap}
+.brand::before{content:"";height:1.55rem;width:1.55rem;border-radius:.4rem;background:linear-gradient(135deg,#fff,#acb1b4 50%,#fafafa);box-shadow:0 0 14px #ffffff35}
+nav{display:flex;flex-wrap:wrap;gap:.15rem .4rem}
+nav a{color:var(--muted);text-decoration:none;font-size:.875rem;padding:.55rem .65rem;border-radius:.45rem}
+nav a:hover,nav a[aria-current]{color:white;background:#252527}
+.landing{padding:clamp(2.5rem,7vw,6rem) 0 1rem}
+.hero{display:grid;grid-template-columns:1.08fr minmax(0,.92fr);align-items:center;gap:clamp(1.5rem,5vw,4.5rem)}
+.hero h1{font-size:clamp(2.65rem,6.3vw,5.4rem);letter-spacing:-.075em;max-width:12ch;margin:.6rem 0 1.15rem}
+.hero p{max-width:40ch;font-size:1.08rem}
+.eyebrow{font-size:.78rem!important;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.25rem}
+.button,button{display:inline-block;border:1px solid var(--accent);border-radius:.55rem;background:var(--accent);color:#111114;font:inherit;font-weight:750;padding:.63rem 1rem;text-decoration:none;cursor:pointer;text-align:center}
+button:disabled{opacity:.55;cursor:wait}
+.secondary,#revoke-invites,#show-workspace-key,#move-legacy-drafts{background:#202023;color:#fafafa;border-color:#44444a}
+.hero-card{position:relative;overflow:hidden;padding:clamp(1.25rem,4vw,2.25rem);border:1px solid #535359;border-radius:1.05rem;background:radial-gradient(ellipse at top right,#353537,transparent 68%),#111113;box-shadow:0 22px 65px #0009}
+.hero-card h2{margin:.7rem 0 1.2rem}.hero-card ol{margin:0;padding-left:1.7rem}
+.hero-card li{padding:.85rem .25rem;border-top:1px solid #48484a}.hero-card li::marker{color:var(--accent);font-weight:700}
+.hero-card li strong{display:block}.hero-card li span{color:var(--muted);font-size:.91rem}
+.guide{margin-top:clamp(2rem,6vw,4.5rem);padding-top:1.6rem;border-top:1px solid var(--line)}
+.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem;margin:1.2rem 0}
+.guide-grid article{padding:1.1rem;border:1px solid var(--line);border-radius:.65rem;background:var(--panel)}
+.guide-grid p{margin-top:.6rem}
+.screen{padding-top:clamp(1.8rem,5vw,3rem)}
+.screen-heading{margin-bottom:1.4rem}.screen-heading p{margin-top:.6rem;max-width:62ch}
+.workspace-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
+.workspace-header details{max-width:100%;width:17rem}
+.workspace-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,22rem);align-items:start;gap:1rem}
+.workspace-side{display:grid;gap:.9rem;min-width:0}
+.workspace-side section,.workspace-side form{padding:1.1rem}
+.workspace-side h2{font-size:1.13rem}
+form,.surface{display:grid;gap:1rem;padding:clamp(1rem,3.2vw,1.8rem);background:var(--panel);border:1px solid var(--line);border-radius:.8rem;min-width:0}
+form>*{min-width:0}label{display:grid;gap:.4rem;font-size:.9rem;font-weight:650}
+input,select,textarea{width:100%;min-width:0;font:inherit;font-weight:400;padding:.68rem .8rem;border:1px solid #4b4b51;border-radius:.5rem;background:#202023;color:#fafafa}
+input::placeholder,textarea::placeholder{color:#aaaab2}
+input[type=file]{padding:.4rem;cursor:pointer}
+input::file-selector-button{margin-inline-end:.55rem;border:0;border-radius:.3rem;padding:.45rem .65rem;font:inherit;background:#e5e5e7;color:#141416}
+textarea{resize:vertical}
+.editor-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.editor-paper{display:grid;gap:1.15rem;background:#111113;border:1px solid var(--line);border-radius:.6rem;padding:clamp(.9rem,3vw,1.55rem)}
+.editor-paper input{font-size:1.18rem;font-weight:650}
+.editor-paper textarea{min-height:17rem;line-height:1.8}
+.editor-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem}
+summary{cursor:pointer;font-weight:650}details.surface{display:block}
+details[open]>:not(summary){margin-top:.85rem}
+.narrow{max-width:44rem;margin-inline:auto}
+.verification-panel,#approval,#review{display:grid;gap:1rem}
+#review pre{margin:0;padding:1.2rem;border-radius:.65rem;background:var(--panel);line-height:1.85}
+#verification-result{display:grid;gap:.35rem;padding:1rem;border-inline-start:3px solid #aaa;background:#1d1d20;border-radius:.4rem}
+#verification-result[data-state=match]{border-color:#6cd7a3}
+#verification-result[data-state=mismatch]{border-color:#f0ad79}
+output,p,li{overflow-wrap:anywhere}output:empty{display:none}
+@media(max-width:760px){.hero,.workspace-grid{grid-template-columns:minmax(0,1fr)}.guide-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:450px){.editor-tools{grid-template-columns:minmax(0,1fr)}.site-header{gap:.55rem}nav a{padding:.45rem .45rem}.actions .button{flex:1}.screen{padding-top:1.5rem}.editor-paper textarea{min-height:13rem}}
+.version-stack{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin-bottom:1rem}
+.version-card{border:1px solid #4a4a50;border-radius:.55rem;background:#19191c;padding:.65rem;min-width:0}
+.version-card small{color:var(--muted);display:block}.version-card strong{font-size:.85rem}.version-card:last-child{border-color:#70a889;background:#192820}
+.approval-progress{width:100%;height:.55rem;accent-color:var(--accent)}
+@media(max-width:450px){.version-stack{gap:.35rem}.version-card{padding:.4rem}}
 </style>
 <main>
 <header class="site-header">
-<p class="brand">The Record · Diana Testnet</p>
-<nav id="agreement-navigation" aria-label="Agreement actions">
+<a class="brand" href="./">The Record</a>
+<nav id="agreement-navigation" aria-label="Main navigation">
 <a href="./#workspace">Drafts</a>
-<a href="#verify-title">Verify</a>
-<a href="#create-title">Record on Diana</a>
-<a href="#amend-title">Amend</a>
-<a href="#signer-setup">Signer setup</a>
+<a href="./#verify-title">Verify</a>
+<a href="./#create-title">Record</a>
+<a href="./#amend-title">Amend</a>
+<a href="./#signer-setup">Signer setup</a>
+<a href="./#guide">Guide</a>
 </nav>
 </header>
 <section class="landing" id="landing" hidden>
-<h1>Agree on the same version.</h1>
-<p>Share your terms privately, collect both approvals on Diana, and check which version was finalized.</p>
-<div class="landing-actions">
-<a href="#workspace">Create a draft</a>
-<a href="#verify-title">Verify a file</a>
+<div class="hero">
+<div>
+<p class="eyebrow">QoreChain Diana testnet</p>
+<h1>Know what you agreed to.</h1>
+<p>Draft an agreement privately, share it for review, and prove exactly which version both parties approved.</p>
+<div class="actions">
+<a class="button" href="#workspace">Open workspace</a>
+<a class="button secondary" href="#guide">See how it works</a>
 </div>
+</div>
+<aside class="hero-card" aria-label="Agreement workflow">
+<p class="eyebrow">The agreement workflow</p>
+<h2>From draft to proof</h2>
+<div class="version-stack" aria-hidden="true">
+<div class="version-card"><small>Write</small><strong>Draft</strong></div>
+<div class="version-card"><small>Share</small><strong>Review</strong></div>
+<div class="version-card"><small>Confirm</small><strong>Approve</strong></div>
+</div>
+<ol>
+<li><strong>Draft and share</strong><span>Send the saved revision with an invitation link and access code.</span></li>
+<li><strong>Record and approve</strong><span>Both signers approve the same file on Diana.</span></li>
+<li><strong>Verify a copy</strong><span>Check a file against the recorded fingerprint.</span></li>
+</ol>
+</aside>
+</div>
+<section class="guide" id="guide" aria-labelledby="guide-title">
+<h2 id="guide-title">Guide to The Record</h2>
+<div class="guide-grid">
+<article><h3>For creators</h3><p>Start with a blank draft or a template. Save the terms and create a review invitation. Use your recovery code to reopen your workspace on another device.</p></article>
+<article><h3>For co-signers</h3><p>Open the invitation with its code. Read the terms, request changes if needed, and download the version you agree to. On Diana, use your registered test signing file to approve.</p></article>
+<article><h3>For verifiers</h3><p>Open a verification link and select your copy. The site hashes the file locally and checks the fingerprint and approval status on Diana.</p></article>
+</div>
+<p>The agreement text stays off-chain. Diana records a fingerprint and approval evidence. An amendment needs fresh approvals, and the original remains independently verifiable.</p>
+<div class="actions"><a class="button secondary" href="#verify-title">Verify a file</a><a class="button secondary" href="https://github.com/0xaje/TheRecord">Source and technical docs</a></div>
 </section>
+</section>
+<div class="screen" data-screen="workspace" hidden>
 <section id="workspace" hidden>
-<header class="workspace-header">
-<h1>Agreements</h1>
-<details>
+<header class="workspace-header screen-heading">
+<div><h1>Agreement workspace</h1><p>Write your terms, save a private revision, and share it for review.</p></div>
+<details class="surface">
 <summary>Workspace recovery</summary>
 <p>Save your recovery code to open these private drafts on another device. Keep it private.</p>
 <button type="button" id="show-workspace-key">Show recovery code</button>
@@ -83,11 +140,21 @@ nav a:hover,nav a:focus-visible{color:#fff}
 </header>
 <div class="workspace-grid">
 <form id="draft">
+<div class="editor-tools">
 <label>Saved drafts <select name="saved"><option value="">New draft</option></select></label>
-<p id="draft-revision" aria-live="polite">New draft</p>
-<label>Title <input name="title" maxlength="120" required></label>
-<label>Terms <textarea name="terms" rows="8" maxlength="20000" required></textarea></label>
-<button>Save private draft</button>
+<label>Starter template <select id="draft-template">
+<option value="">Choose a template</option>
+<option value="services">Service agreement</option>
+<option value="project">Project scope</option>
+<option value="amendment">Agreement amendment</option>
+</select></label>
+</div>
+<div class="editor-paper">
+<h2>Agreement terms</h2>
+<label>Title <input name="title" placeholder="Give this agreement a title" maxlength="120" required></label>
+<label>Terms <textarea name="terms" placeholder="Write the terms both parties will review" rows="8" maxlength="20000" required></textarea></label>
+</div>
+<div class="editor-meta"><p id="draft-revision" aria-live="polite">New draft</p><button>Save private draft</button></div>
 <button type="button" id="move-legacy-drafts" hidden>Move existing drafts into a recovery workspace</button>
 <output role="status"></output>
 </form>
@@ -111,6 +178,8 @@ nav a:hover,nav a:focus-visible{color:#fff}
 </aside>
 </div>
 </section>
+</div>
+<div class="screen narrow" data-screen="review" hidden>
 <section id="review" hidden>
 <h1>Review agreement</h1>
 <output role="status"></output>
@@ -129,6 +198,8 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <output role="status"></output>
 </form>
 </section>
+</div>
+<div class="screen narrow" data-screen="verify-title" hidden>
 <section class="verification-panel" aria-labelledby="verify-title">
 <h1 id="verify-title">Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
@@ -141,6 +212,7 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <div id="verification-result" role="status" aria-live="polite" aria-atomic="true" hidden>
 <output form="verify" aria-live="off"></output>
 <p id="approval-status" hidden></p>
+<progress class="approval-progress" id="approval-progress" aria-label="Recorded approvals" max="2" value="0" hidden></progress>
 </div>
 <section id="approval" hidden>
 <h2>Approve the verified version</h2>
@@ -154,8 +226,10 @@ nav a:hover,nav a:focus-visible{color:#fff}
 </form>
 </section>
 </section>
-<h2 id="create-title">Create an agreement</h2>
-<p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p>
+</div>
+<section class="screen narrow" data-screen="create-title" hidden>
+<header class="screen-heading"><h1 id="create-title">Record an agreement</h1>
+<p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p></header>
 <form id="create">
 <label>First signer (0x address) <input name="first" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
 <label>Second signer (0x address) <input name="second" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
@@ -165,8 +239,10 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <a id="transaction" hidden>View transaction</a>
 <a id="agreement" hidden>Open shareable verification link</a>
 </form>
-<h2 id="amend-title">Amend an agreement</h2>
-<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file.</p>
+</section>
+<section class="screen narrow" data-screen="amend-title" hidden>
+<header class="screen-heading"><h1 id="amend-title">Amend an agreement</h1>
+<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file.</p></header>
 <form id="amend">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
 <label>Changed agreement file <input name="document" type="file" required></label>
@@ -175,7 +251,9 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <a hidden>View amendment transaction</a>
 <a hidden>Open the new version</a>
 </form>
-<details id="signer-setup">
+</section>
+<section class="screen narrow" data-screen="signer-setup" hidden>
+<details class="surface" id="signer-setup">
 <summary>Set up a Diana test signer</summary>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
 <button id="generate-signer" type="button">Generate signing file</button>
@@ -190,6 +268,7 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <a hidden>View registration transaction</a>
 </form>
 </details>
+</section>
 </main>
 <script type="module" src="./verify.js"></script>
 </html>

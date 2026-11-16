@@ -27,12 +27,14 @@ const resultPanel = document.querySelector("#verification-result");
 const output = resultPanel.querySelector("output");
 const button = form.querySelector("button");
 const approvalStatus = document.querySelector("#approval-status");
+const approvalProgress = document.querySelector("#approval-progress");
 const approvalSection = document.querySelector("#approval");
 let verifiedVersion;
 let reviewRevision = 0;
 form.addEventListener("input", () => {
   reviewRevision += 1;
   approvalStatus.hidden = true;
+  approvalProgress.hidden = true;
   approvalSection.hidden = true;
   verifiedVersion = undefined;
   resultPanel.hidden = true;
@@ -46,6 +48,7 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const revision = ++reviewRevision;
   approvalStatus.hidden = true;
+  approvalProgress.hidden = true;
   approvalSection.hidden = true;
   verifiedVersion = undefined;
   resultPanel.hidden = false;
@@ -86,6 +89,8 @@ form.addEventListener("submit", async (event) => {
       ? "Finalized · 2 of 2 approvals recorded"
       : `Awaiting approval · ${count} of 2 approvals recorded`;
     approvalStatus.hidden = false;
+    approvalProgress.value = count;
+    approvalProgress.hidden = false;
     if (local === fingerprint && !finalized) {
       verifiedVersion = { id: agreementId, version: BigInt("0x" + versionWord), fingerprint };
       approvalSection.hidden = false;
@@ -195,6 +200,7 @@ async function submitProposal(form, file, prefix, id) {
     const version = BigInt(proposed.topics[2]).toString();
     const link = new URL(location.href);
     link.search = new URLSearchParams({ id: proposed.topics[1], version }).toString();
+    link.hash = "";
     agreementLink.href = link.href;
     agreementLink.hidden = false;
     createOutput.textContent = `Version ${version} is awaiting both approvals.`;
@@ -293,17 +299,33 @@ registerForm.addEventListener("submit", async event => {
 });
 
 const landing = document.querySelector("#landing");
-landing.hidden = query.has("id") || new URLSearchParams(location.hash.slice(1)).has("invite");
+const screens = [...document.querySelectorAll("[data-screen]")];
+const navLinks = document.querySelectorAll("#agreement-navigation a");
 
-document.querySelector("main").addEventListener("click", event => {
-  if (!event.target.closest("#agreement-navigation, .landing-actions, #draft-record")) return;
-  const href = event.target.closest("a")?.getAttribute("href");
-  if (!href?.startsWith("#")) return;
-  const section = document.getElementById(href.slice(1));
-  if (!section) return;
-  event.preventDefault();
-  if (section instanceof HTMLDetailsElement) section.open = true;
-  section.tabIndex = -1;
-  section.focus({ preventScroll: true });
-  section.scrollIntoView();
-});
+if (query.has("id")) {
+  for (const link of navLinks) {
+    if (["#verify-title", "#amend-title"].includes(link.hash)) {
+      link.href = location.pathname + location.search + link.hash;
+    }
+  }
+}
+
+function showScreen() {
+  const hash = location.hash.slice(1);
+  const invite = new URLSearchParams(hash).has("invite");
+  const screen = invite ? "review"
+    : screens.some(panel => panel.dataset.screen === hash) ? hash
+      : query.has("id") ? "verify-title" : "landing";
+  landing.hidden = screen !== "landing";
+  for (const panel of screens) panel.hidden = panel.dataset.screen !== screen;
+  for (const link of navLinks) {
+    if (link.hash.slice(1) === screen) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+  if (screen === "signer-setup") document.querySelector("#signer-setup").open = true;
+  if (hash === "guide" && !landing.hidden) document.querySelector("#guide").scrollIntoView();
+  else window.scrollTo(0, 0);
+}
+
+showScreen();
+window.addEventListener("hashchange", showScreen);

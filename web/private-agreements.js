@@ -159,8 +159,26 @@ draftForm.addEventListener("submit", event => {
   });
 });
 
+const templatePicker = document.querySelector("#draft-template");
+const templates = {
+  services: ["Service agreement", "Parties\n[Client] and [Service provider]\n\nServices and deliverables\n[Describe the work and what will be delivered.]\n\nSchedule\n[Set due dates and review periods.]\n\nFees and payment\n[State the price, currency and payment dates.]\n\nAcceptance\n[Describe how both parties will approve the work.]"],
+  project: ["Project scope", "Objective\n[State the outcome.]\n\nIncluded work\n[List deliverables.]\n\nExcluded work\n[List what is outside scope.]\n\nResponsibilities and deadlines\n[Name the owner and date for each milestone.]\n\nReview\n[Explain how changes and approvals work.]"],
+  amendment: ["Agreement amendment", "Original agreement\n[Identify the agreement and version.]\n\nEffective date\n[Enter the date.]\n\nChanges\n[List each replacement or addition.]\n\nRemaining terms\n[State which existing terms still apply.]"],
+};
+
+templatePicker.addEventListener("change", () => {
+  const template = templates[templatePicker.value];
+  templatePicker.value = "";
+  if (!template) return;
+  const { title, terms } = draftForm.elements;
+  if ((title.value || terms.value) && !confirm("Replace the text in the editor with this template?")) return;
+  [title.value, terms.value] = template;
+  title.dispatchEvent(new Event("input", { bubbles: true }));
+  title.focus();
+});
+
 draftForm.addEventListener("input", event => {
-  if (event.target !== draftForm.elements.saved) {
+  if ([draftForm.elements.title, draftForm.elements.terms].includes(event.target)) {
     invite.hidden = true;
     document.querySelector("#draft-record").hidden = true;
     document.querySelector("#draft-revision").textContent = "Unsaved changes";
