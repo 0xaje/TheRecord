@@ -40,6 +40,12 @@ nav a:hover,nav a:focus-visible{color:#fff}
 #draft-revision{color:#b4bcd0;margin:0}
 #draft-feedback output:empty{display:none}
 @media(max-width:720px){.workspace-grid{grid-template-columns:minmax(0,1fr)}}
+.verification-panel{display:grid;gap:1rem;margin-block:2.5rem}
+.verification-panel h1,.verification-panel h2,.verification-panel p{margin:0}
+#verification-result{display:grid;gap:.4rem;padding:1rem;border-inline-start:3px solid #aaa;background:#1c1d21;border-radius:.25rem}
+#verification-result[data-state="match"]{border-color:#6cd7a3}
+#verification-result[data-state="mismatch"]{border-color:#f0ad79}
+#approval{display:grid;gap:.75rem}
 </style>
 <main>
 <header class="site-header">
@@ -123,6 +129,7 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <output role="status"></output>
 </form>
 </section>
+<section class="verification-panel" aria-labelledby="verify-title">
 <h1 id="verify-title">Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
 <form id="verify">
@@ -130,9 +137,11 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <label>Version <input name="version" required pattern="[1-9][0-9]*" inputmode="numeric" value="1"></label>
 <label>Agreement file <input name="file" type="file" required></label>
 <button>Verify file</button>
-<p id="approval-status" aria-live="polite" hidden></p>
-<output role="status" aria-live="polite"></output>
 </form>
+<div id="verification-result" role="status" aria-live="polite" aria-atomic="true" hidden>
+<output form="verify" aria-live="off"></output>
+<p id="approval-status" hidden></p>
+</div>
 <section id="approval" hidden>
 <h2>Approve the verified version</h2>
 <p>Use a dedicated Diana test signing file you generated for The Record. The file is read on this device.</p>
@@ -143,6 +152,7 @@ nav a:hover,nav a:focus-visible{color:#fff}
 <output role="status" aria-live="polite"></output>
 <a hidden>View approval transaction</a>
 </form>
+</section>
 </section>
 <h2 id="create-title">Create an agreement</h2>
 <p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p>

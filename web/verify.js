@@ -23,7 +23,8 @@ async function rpc(method, params) {
 const toHex = bytes => Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
 
 const form = document.querySelector("#verify");
-const output = form.querySelector("output");
+const resultPanel = document.querySelector("#verification-result");
+const output = resultPanel.querySelector("output");
 const button = form.querySelector("button");
 const approvalStatus = document.querySelector("#approval-status");
 const approvalSection = document.querySelector("#approval");
@@ -34,6 +35,7 @@ form.addEventListener("input", () => {
   approvalStatus.hidden = true;
   approvalSection.hidden = true;
   verifiedVersion = undefined;
+  resultPanel.hidden = true;
   output.textContent = "";
 });
 const query = new URLSearchParams(location.search);
@@ -46,6 +48,8 @@ form.addEventListener("submit", async (event) => {
   approvalStatus.hidden = true;
   approvalSection.hidden = true;
   verifiedVersion = undefined;
+  resultPanel.hidden = false;
+  delete resultPanel.dataset.state;
   const { id, version, file } = form.elements;
   const selectedFile = file.files[0];
   const agreementId = id.value;
@@ -86,6 +90,7 @@ form.addEventListener("submit", async (event) => {
       verifiedVersion = { id: agreementId, version: BigInt("0x" + versionWord), fingerprint };
       approvalSection.hidden = false;
     }
+    resultPanel.dataset.state = local === fingerprint ? "match" : "mismatch";
     output.textContent = local === fingerprint
       ? (finalized ? "File matches the finalized version." : "File matches. This version is awaiting approval.")
       : "File does not match this version.";
