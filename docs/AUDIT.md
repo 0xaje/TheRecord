@@ -1,6 +1,6 @@
 # The Record — QCAI audit response
 
-Stage 1 was run on 16 November 2026 against `contracts/TheRecord.sol` using the auditor’s Ethereum setting. It returned 65/100, Medium risk, and five findings. Quantum readiness was unscored in that setting. Stage 2 is pending.
+Stage 1 was run on 16 November 2026 against `contracts/TheRecord.sol` using the auditor’s Ethereum setting. It returned 65/100, Medium risk, and five findings. Quantum readiness was unscored in that setting.
 
 | Stage 1 finding | Disposition |
 | --- | --- |
@@ -35,3 +35,20 @@ uses read-only calls to Diana and public approval transaction data.
 The valid signature at the same pre-approval block provides a positive
 control for the altered-signature check. The original version 2 approval
 was included in [this successful Diana transaction](https://dashboard.qorechain.io/explorer/tx/0x5a4b0020a0a0d8980e63d7045b23594d24b6eb648fb7d8c3c6f23649096bf8b2).
+
+## Stage 2 comparison
+
+The second QCAI run on 16 November 2026 used the same Ethereum setting
+and contract source. It again scored **65/100 (Medium)** and listed five
+findings. Amendment access, counter overflow and PQC return handling
+retained their ratings. Mapping growth moved from Info to Low and the
+approval submission concern moved from Low to Info.
+
+The mapping finding describes a possible unbounded loop. Version
+creation and lookup access individual mapping entries and do not loop
+over history. Storage still grows by one entry per proposed version.
+The proposer-only amendment rule, two-approval finalization rule and
+documented third-party submission behavior remain as described above.
+No contract change followed this review. The two exported reports
+document the two runs. Organizer acceptance of the two-stage evidence
+has not been independently confirmed.
