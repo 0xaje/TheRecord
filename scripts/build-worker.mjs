@@ -14,6 +14,10 @@ await build({
   outfile: "dist/server/index.js",
   define: {
     SITE_HTML: JSON.stringify(html),
+    STORY_ASSETS: JSON.stringify(Object.fromEntries(await Promise.all(["client", "freelancer", "document"].map(async name => [
+      "/assets/" + name + ".png",
+      (await readFile("web/assets/" + name + ".png")).toString("base64"),
+    ])))) ,
     ORIGINAL_MATCH_IMAGE: JSON.stringify((await readFile("docs/evidence/demo-original-match.png")).toString("base64")),
     CHANGED_MISMATCH_IMAGE: JSON.stringify((await readFile("docs/evidence/demo-changed-mismatch.png")).toString("base64")),
     BROWSER_JS: JSON.stringify(browser),

@@ -356,7 +356,7 @@ function showScreen() {
     else link.removeAttribute("aria-current");
   }
   if (screen === "signer-setup") document.querySelector("#signer-setup").open = true;
-  const articleSection = screen === "blog" && hash ? document.getElementById(hash) : null;
+  const articleSection = (screen === "blog" || screen === "walkthrough") && hash ? document.getElementById(hash) : null;
   if (articleSection) articleSection.scrollIntoView();
   else window.scrollTo(0, 0);
 }

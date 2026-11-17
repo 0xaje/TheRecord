@@ -105,9 +105,8 @@ button,.button{min-height:44px}
 .chapter-list button{background:transparent;color:var(--muted);border:0;text-align:left;font-weight:500}
 .chapter-list button[aria-current=step]{color:var(--accent);background:#24352c}
 .story-main{display:grid;gap:1rem;min-width:0}
-.chapter-heading,.story-visual,.story-controls,.story-evidence{padding:clamp(1rem,3vw,2rem);border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
+.chapter-heading,.story-visual,.story-evidence{padding:clamp(1rem,3vw,2rem);border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
 .chapter-heading h2{font-size:clamp(1.7rem,4vw,2.8rem);margin:.75rem 0}
-.chapter-heading progress{width:100%;height:.3rem;accent-color:var(--accent);margin-bottom:1.2rem}
 .story-visual{min-height:18rem;display:grid;align-content:center;gap:1.25rem}
 .story-visual h3{font-size:1.3rem}
 .story-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
@@ -116,8 +115,6 @@ button,.button{min-height:44px}
 .story-card.good{border-color:#68c99b;background:#13251e}.story-card.bad{border-color:#df9475;background:#2b1b19}
 .story-card strong{display:block;font-size:1.2rem;margin-bottom:.5rem}
 .story-card mark{background:#4b3420;color:#ffdc9b;padding:.1rem .2rem}
-.story-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.story-controls p{font-size:.9rem}.story-controls .actions{margin:0}
 .story-evidence{font-size:.9rem}.story-evidence a{display:inline-block;margin:.5rem 1rem .1rem 0}
 .story-shot{width:100%;max-height:30rem;object-fit:contain;border-radius:.5rem;border:1px solid var(--line)}
 .blog-layout{display:grid;grid-template-columns:14rem minmax(0,48rem);gap:clamp(1.5rem,5vw,4rem)}
@@ -128,8 +125,59 @@ button,.button{min-height:44px}
 .blog-body p+p{margin-top:1rem}.blog-body li{margin:.7rem 0}
 .blog-body table{width:100%;border-collapse:collapse;font-size:.95rem}
 .blog-body th,.blog-body td{padding:.85rem .5rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
-@media(max-width:760px){.story-layout,.blog-layout{grid-template-columns:minmax(0,1fr)}.chapter-list{position:static;display:flex;overflow:auto;padding:.4rem;gap:.4rem}.chapter-list button{flex:none;font-size:.85rem;max-width:12rem}.blog-toc{position:static;display:flex;flex-wrap:wrap;gap:.3rem 1rem;border-bottom:1px solid var(--line);padding-bottom:1rem}.story-pair{grid-template-columns:minmax(0,1fr)}.story-controls{flex-wrap:wrap}.story-visual{min-height:15rem}}
+@media(max-width:760px){.story-layout,.blog-layout{grid-template-columns:minmax(0,1fr)}.chapter-list{position:static;display:flex;overflow:auto;padding:.4rem;gap:.4rem}.chapter-list button{flex:none;font-size:.85rem;max-width:12rem}.blog-toc{position:static;display:flex;flex-wrap:wrap;gap:.3rem 1rem;border-bottom:1px solid var(--line);padding-bottom:1rem}.story-pair{grid-template-columns:minmax(0,1fr)}.story-visual{min-height:15rem}}
 @media(prefers-reduced-motion:no-preference){.story-visual{animation:chapter-reveal .2s ease-out}@keyframes chapter-reveal{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}}
+
+
+.landing{padding-top:clamp(1.75rem,4vw,3.5rem)}
+.hero{align-items:start}.hero-card{align-self:start}
+.built-on{padding:3rem 0 1rem;margin-top:3rem;border-top:1px solid var(--line)}
+.built-on h2{margin:.6rem 0 1rem;max-width:30ch}
+.walkthrough-intro{padding:1.75rem 0 1.5rem;max-width:56rem}
+.walkthrough-intro h1{font-size:clamp(2rem,4vw,3.2rem);margin:.45rem 0 .65rem}
+.chapter-list{gap:.25rem;display:grid;position:sticky;top:1rem;padding:.5rem;overflow:visible;border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
+.chapter-list a{display:block;text-align:left;text-decoration:none;white-space:normal;color:var(--muted);padding:.7rem .8rem;border-radius:.5rem;font-size:.9rem;font-weight:600}
+.chapter-list a[aria-current=location]{color:var(--accent);background:#24352c}
+.chapter-panel{margin:0 0 2rem;border:1px solid var(--line);border-radius:.9rem;overflow:hidden;background:var(--panel);scroll-margin-top:1rem}
+.chapter-panel .chapter-heading{border:0;border-radius:0;padding:1.4rem 1.6rem .4rem;background:transparent}
+.chapter-panel .chapter-heading h2{font-size:clamp(1.5rem,3.2vw,2.25rem);margin:.5rem 0 .75rem}
+.chapter-panel .story-visual{border:0;border-radius:0;min-height:0;padding:1.3rem 1.6rem;background:transparent;animation:none}
+.chapter-panel .story-evidence{border:0;border-top:1px solid var(--line);border-radius:0;padding:1rem 1.6rem;background:#111214}
+.chapter-panel .story-shot{max-height:19rem;width:auto;max-width:100%;justify-self:center}
+.evidence-preview{display:grid;gap:.65rem;justify-items:center;margin:0}
+.evidence-preview a{font-size:.9rem}
+.role-card{margin:0;background:#111316;border:1px solid var(--line);border-radius:.7rem;overflow:hidden}
+.role-image{display:grid;place-items:center;min-height:11rem;background:#dce9df}
+.role-image img{width:9rem;height:9rem;object-fit:contain}
+.role-card figcaption{padding:1rem 1.2rem}.role-card strong{display:block;font-size:1.25rem;margin-bottom:.4rem}
+.role-card p+p{margin-top:.7rem}
+.agreement-paper{background:#f2f0e8;color:#1c2826;border-radius:.35rem;padding:1.4rem;box-shadow:0 10px 25px #0004;max-width:27rem;width:100%;justify-self:center;transform:rotate(-1deg)}
+.agreement-paper p{color:#465650;font-size:.95rem}
+.paper-heading{display:flex;gap:.7rem;align-items:center;border-bottom:1px solid #a1afa7;padding-bottom:.8rem;margin-bottom:1rem}
+.paper-heading img{width:3.5rem;height:3.5rem}.paper-heading strong{font-size:1.2rem}
+.paper-line{height:1px;background:#bec6bf;margin:1rem 0}
+.paper-signers{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:1.5rem;font-size:.8rem}
+.paper-signers span{border-top:1px solid #8c9c91;padding-top:.4rem}
+.paper-status{display:inline-block;padding:.25rem .55rem;border-radius:.3rem;background:#d0e7d6;color:#234b36;font-size:.8rem;font-weight:700;margin-top:1rem}
+.approval-illustration{display:grid;gap:1rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.signer-row{display:flex;align-items:center;gap:.8rem;margin:.8rem 0}
+.signer-row img{width:3.7rem;height:3.7rem;border-radius:50%;background:#e3eee6}
+.signer-row span{display:block;font-size:.9rem}
+.signer-row b{display:block;font-size:.9rem}
+.waiting-mark{color:#ffcd88}.approved-mark{color:#b4efce}
+.story-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;padding:1.25rem;border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
+.story-actions .button{display:grid;place-items:center}
+.art-credit{font-size:.8rem;margin:1rem 0 2rem;color:var(--muted)}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media(max-width:760px){
+.story-layout{gap:1rem}.chapter-list{position:sticky;top:0;z-index:3;display:flex;overflow-x:auto;max-width:100%;overscroll-behavior-x:contain;border-radius:.5rem}
+.chapter-list a{flex:none;max-width:11rem;min-height:44px;display:grid;align-items:center}
+.chapter-panel{scroll-margin-top:6rem}.story-pair,.approval-illustration{grid-template-columns:minmax(0,1fr)}
+.chapter-panel .chapter-heading{padding:1.1rem 1rem .2rem}.chapter-panel .story-visual{padding:1rem}
+.chapter-panel .story-evidence{padding:.85rem 1rem}.story-actions{grid-template-columns:minmax(0,1fr)}
+.agreement-paper{max-width:100%;transform:none}.role-image{min-height:9rem}.role-image img{width:7rem;height:7rem}
+.built-on{margin-top:2rem;padding-top:2rem}
+}
 
 </style>
 <main>
@@ -154,8 +202,8 @@ button,.button{min-height:44px}
 <p>Draft an agreement privately, share it for review, and prove exactly which version both parties approved.</p>
 <div class="actions">
 <a class="button" href="#workspace">Open workspace</a>
-<a class="button secondary" href="/walkthrough">See the walkthrough</a>
-<a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a>
+<a class="button secondary" href="/walkthrough">Walkthrough</a>
+<a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Demo</a>
 </div>
 </div>
 <aside class="hero-card" aria-label="Agreement workflow">
@@ -174,6 +222,15 @@ button,.button{min-height:44px}
 </aside>
 </div>
 
+<section class="built-on" aria-labelledby="built-on-title">
+<p class="eyebrow">Built on QoreChain · Build Before Q-Day</p>
+<h2 id="built-on-title">From a shared file to a verifiable record.</h2>
+<div class="guide-grid">
+<article><h3>Record on Diana</h3><p>QoreChain Diana Testnet records each version’s fingerprint and the two signer addresses.</p></article>
+<article><h3>Approve with QoreX</h3><p>Each person signs the same version through their own wallet. Diana checks the ML-DSA-87 approval.</p></article>
+<article><h3>Check the evidence</h3><p>Verify your copy locally, follow the transaction in QoreChain Explorer, and keep earlier versions available after an amendment.</p></article>
+</div><a href="/blog#qorechain">Read how The Record uses QoreChain</a>
+</section>
 </section>
 <div class="screen" data-screen="workspace" hidden>
 <section id="workspace" hidden>
@@ -340,26 +397,22 @@ button,.button{min-height:44px}
 </section>
 
 <section class="screen" data-screen="walkthrough" hidden>
-<header class="story-header"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
-<h1>One agreement.<br>Every version accounted for.</h1>
-<p>Follow a delivery agreement from review to proof. See why an original file matches, why a changed copy fails, and how both people approve a new version.</p></header>
+<header class="story-header walkthrough-intro"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
+<h1>Follow one agreement.</h1><p>Scroll from the first review to a verified amendment. Each step explains what the file, signers and chain record mean.</p></header>
 <div class="story-layout">
-<div class="chapter-list" role="group" aria-label="Walkthrough chapters">
-<button type="button" data-chapter="0">Agree on the terms</button>
-<button type="button" data-chapter="1">Record the version</button>
-<button type="button" data-chapter="2">Both people approve</button>
-<button type="button" data-chapter="3">Check the original</button>
-<button type="button" data-chapter="4">Change one detail</button>
-<button type="button" data-chapter="5">Approve the amendment</button>
+<nav class="chapter-list" aria-label="Walkthrough chapters">
+<a href="#chapter-1">Agree on the terms</a><a href="#chapter-2">Record the version</a>
+<a href="#chapter-3">Both people approve</a><a href="#chapter-4">Check the original</a>
+<a href="#chapter-5">Change one detail</a><a href="#chapter-6">Approve the amendment</a>
+</nav>
+<div class="story-main"><div id="story-chapters"></div>
+<div class="story-actions" aria-label="Continue with The Record">
+<a class="button" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the real file check</a>
+<a class="button secondary" href="/blog">Read the story</a>
+<a class="button secondary" href="/#workspace">Create your agreement</a>
 </div>
-<div class="story-main">
-<div class="chapter-heading"><progress id="chapter-progress" max="6" value="1" aria-label="Walkthrough progress"></progress>
-<p class="eyebrow" id="chapter-count"></p><h2 id="chapter-title" tabindex="-1"></h2><p id="chapter-description"></p></div>
-<div class="story-visual" id="chapter-visual" aria-live="polite"></div>
-<div class="story-controls"><p id="chapter-context"></p><div class="actions"><button type="button" class="secondary" id="chapter-back">Back</button><button type="button" id="chapter-next">Next</button></div></div>
-<div class="story-evidence"><p id="chapter-evidence"></p><div id="chapter-links"></div></div>
+<p class="art-credit">Illustrations by <a href="https://openmoji.org/">OpenMoji</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. People are illustrative roles.</p>
 </div></div>
-<div class="actions"><a class="button" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the real file check</a><a class="button secondary" href="/blog">Read the story</a><a class="button secondary" href="/#workspace">Create your agreement</a></div>
 </section>
 <section class="screen" data-screen="blog" hidden>
 <header class="story-header"><p class="eyebrow">The Record · Build Before Q-Day</p>
@@ -402,7 +455,7 @@ button,.button{min-height:44px}
 <div class="story-pair"><figure><img class="story-shot" src="/demo/original-match.png" alt="Laptop result showing the original matches finalized version 1 with two approvals" loading="lazy"><figcaption>Original file matches version 1.</figcaption></figure><figure><img class="story-shot" src="/demo/changed-mismatch.png" alt="Laptop result showing the changed file does not match version 1" loading="lazy"><figcaption>Changed copy fails against version 1.</figcaption></figure></div></section>
 <section id="start"><h2>Try it yourself</h2>
 <p>Start with the walkthrough, then try the original and changed files against the same finalized version. To approve an agreement, use your designated wallet in QoreX with Diana Testnet selected and an eligible registered signing key.</p>
-<div class="actions"><a class="button" href="/walkthrough">See the walkthrough</a><a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a><a class="button secondary" href="/#signer-setup">Advanced test options</a></div></section>
+<div class="actions"><a class="button" href="/walkthrough">Walkthrough</a><a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Demo</a><a class="button secondary" href="/#signer-setup">Advanced test options</a></div></section>
 </article></div></section>
 
 </main>

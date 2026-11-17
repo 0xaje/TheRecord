@@ -70,3 +70,31 @@ The story follows one agreement through review, recording on QoreChain
 Diana Testnet, QoreX approvals, original-file verification, a changed-file
 mismatch and an amendment requiring fresh approvals. The pages link to real
 screenshots and Diana receipts. Independent participant testing is next.
+
+## Illustrated scrolling walkthrough correction
+
+Owner approved continuous chapters selected by scrolling, with an active
+chapter list and direct chapter links. Back/Next controls are removed.
+Landing workflow card is top-aligned and hero padding reduced. Buttons read
+Walkthrough and Demo. A QoreChain/Diana/QoreX section follows the hero.
+
+Downloaded unmodified OpenMoji PNG illustrations accompany the client,
+freelancer, approval states and readable agreement-document layouts.
+Credit and CC BY-SA 4.0 links appear on the page and in web/assets/ATTRIBUTION.md.
+Evidence screenshots are compact previews linking to full images.
+One action area follows the final chapter.
+
+Build, syntax, unique-ID and route checks pass. The Worker serves all three
+illustrations byte-for-byte and serves existing evidence images and samples.
+Preview browser access was blocked by browser policy in this pass.
+Scroll highlighting and narrow-screen behavior require visual confirmation.
+Independent friend acceptance remains pending.
+
+Judge review: requested content and navigation are implemented. Visual/device
+acceptance remains open until the scrolling behavior is observed.
+
+My space update READY for owner review, publication unconfirmed:
+I refined The Record’s walkthrough into a continuous illustrated story.
+Scrolling follows the agreement from review through Diana recording,
+QoreX approvals, verification and amendment. The chapter list tracks the
+current step, with real screenshots and receipt links available for inspection.

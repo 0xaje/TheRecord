@@ -16,7 +16,7 @@ export default {
         "Content-Disposition": 'attachment; filename="' + pathname.split("/").pop() + '"',
       } });
     }
-    const images = { "/demo/original-match.png": ORIGINAL_MATCH_IMAGE, "/demo/changed-mismatch.png": CHANGED_MISMATCH_IMAGE };
+    const images = { ...STORY_ASSETS, "/demo/original-match.png": ORIGINAL_MATCH_IMAGE, "/demo/changed-mismatch.png": CHANGED_MISMATCH_IMAGE };
     if (Object.hasOwn(images, pathname)) {
       return new Response(Uint8Array.from(atob(images[pathname]), char => char.charCodeAt(0)), {
         headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=3600" },
