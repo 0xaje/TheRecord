@@ -4,7 +4,7 @@ The Record anchors agreement fingerprints on Diana. Two designated signer addres
 
 ## Reproduce the verification results
 
-The hosted preview requires access. Reviewers with access can run these checks without signing a transaction.
+The public verifier is available without signing a transaction.
 
 | Record | File | Expected result |
 | --- | --- | --- |
@@ -33,4 +33,4 @@ The same two signer addresses approved each version. The amendment started at ze
 - [Version 2 first approval](https://dashboard.qorechain.io/explorer/tx/0x5a4b0020a0a0d8980e63d7045b23594d24b6eb648fb7d8c3c6f23649096bf8b2)
 - [Version 2 finalization](https://dashboard.qorechain.io/explorer/tx/0xd59158244fd94d9b2a83d9d7d1693fe56887704409538f9c396cb99c3230af70)
 
-One tester operated both wallets. Independent participant testing is deferred. The wallet warning is unresolved. All four Ship Weeks tasks are complete, as confirmed by the project owner. See [the Ship Weeks evidence](diana-evidence.md#ship-weeks-status).
+One tester operated both wallets. Independent participant testing on the public site is in progress. All four Ship Weeks tasks are complete, as confirmed by the project owner. See [the Ship Weeks evidence](diana-evidence.md#ship-weeks-status).

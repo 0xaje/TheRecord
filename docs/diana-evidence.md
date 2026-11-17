@@ -233,3 +233,12 @@ Diana returned two distinct approvals and a finalized version with the
 same fingerprint shown during private review. The browser screenshot shows agreement-revision-5.txt matched finalized
 Diana version 1 with 2 of 2 approvals. [Final browser screenshot](evidence/private-review-finalized-match.png).
 Independent participant testing remains deferred. My space update drafted.
+
+### QoreX mobile trial readiness, 17 November 2026
+
+The preview blocked the registered signer ending in `b6AE` with a proof-of-possession message. The eligible signer ending in `B44A` approved version 1 of agreement `0xb1a94e0d8c2321d3a7af4c8c5774f681233b2caab40c132e91fe3a612390495f`. The decoded Approved event identifies the signer at block 10260722. The verifier showed one of two approvals.
+
+- [Creation transaction](https://dashboard.qorechain.io/explorer/tx/0x8d6af154cc6a6203c8e9dabfa22cee8eaab95cfc50c4168891ffecceca7ba132)
+- [Approval transaction](https://dashboard.qorechain.io/explorer/tx/0xcd76db535a46ce8f5385cc97c31011bcf9bb05f30727a44f1b8b7e76d68eac0b)
+
+The source checkout incorporates the trial flow and passes the site build. Publication and independent signer acceptance on the public URL are pending.

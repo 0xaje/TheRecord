@@ -1,5 +1,5 @@
 import "./private-agreements.js";
-import { generateTestSigner, submitApproval } from "./approve.js";
+import { generateTestSigner, SignerReadinessError, submitApproval } from "./approve.js";
 import { registerSigner } from "./register.js";
 
 const contract = "0x25721b3be0f24438da7daed4c800b073ef9bb802";
@@ -220,17 +220,18 @@ approveForm.addEventListener("submit", async event => {
   event.preventDefault();
   if (!verifiedVersion) return;
   const approval = verifiedVersion;
-  const submit = approveForm.querySelector("button");
+  const useQoreX = event.submitter?.name === "qorex";
+  const buttons = approveForm.querySelectorAll("button");
   const status = approveForm.querySelector("output");
   const link = approveForm.querySelector("a");
   const signerAddress = approveForm.elements.signer.value.toLowerCase();
   const keyFile = approveForm.elements.key.files[0];
-  submit.disabled = true;
+  buttons.forEach(button => { button.disabled = true; });
   link.hidden = true;
   status.textContent = "Checking your approval on Diana…";
   try {
     await submitApproval({
-      rpcUrl, contract, ...approval, signerAddress, keyFile,
+      rpcUrl, contract, ...approval, signerAddress, keyFile, useQoreX,
       onSubmitted(hash) {
         link.href = "https://dashboard.qorechain.io/explorer/tx/" + hash;
         link.hidden = false;
@@ -243,18 +244,21 @@ approveForm.addEventListener("submit", async event => {
       status.textContent = "Check the transaction link for the outcome before retrying.";
     } else if (error.code === 4001) {
       status.textContent = "You declined the wallet request.";
+    } else if (error instanceof SignerReadinessError) {
+      status.textContent = error.message;
     } else {
       const details = [error.message, error.data?.message, error.cause?.message];
       const authorizationFailure = details.some(detail =>
-        /EVM authorization window/i.test(detail ?? "")
+        /EVM authori[sz]ation window/i.test(detail ?? "")
       );
       status.textContent = authorizationFailure
         ? "Diana could not submit this approval. Check the EVM authorization window for the sending account in QoreX."
+        : useQoreX ? error.shortMessage ?? error.message ?? "QoreX approval failed."
         : "Could not submit approval. Check your signer, key file, and Diana wallet.";
     }
   } finally {
     approveForm.elements.key.value = "";
-    submit.disabled = false;
+    buttons.forEach(button => { button.disabled = false; });
   }
 });
 

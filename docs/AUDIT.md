@@ -50,7 +50,7 @@ over history. Storage still grows by one entry per proposed version.
 The proposer-only amendment rule, two-approval finalization rule and
 documented third-party submission behavior remain as described above.
 No contract change followed this review. The two exported reports
-document the two runs. The organizer confirmed that the second run qualifies as Stage 2.
+document the two runs. The organizer confirmed that a second run on the same contract can qualify as Stage 2. Confirmation of this specific run is pending after the payment issue was reported.
 
 ## Reports and finding-level evidence
 

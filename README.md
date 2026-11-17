@@ -4,9 +4,9 @@ The Record lets two parties review an agreement, approve the same version on Qor
 
 ## Try the workflow
 
-1. Sign in to save a private draft. Create an invitation and share its link and access code with the reviewer.
+1. Open Drafts and save a private draft. Create an invitation and share its link and access code with the reviewer.
 2. Open the invitation with the code and download the reviewed revision.
-3. Use the exported file to create a Diana record with two registered signer addresses. Each signer approves the same version.
+3. Use the exported file to create a Diana record with two registered signer addresses. Each signer verifies the same exported file and approves the same version. In QoreX Browse, use **Approve with QoreX**.
 4. Verify the exported file against the finalized version. An amendment needs two fresh approvals.
 
 [Live testnet app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Judge walkthrough](docs/judge-walkthrough.md) · [Diana evidence](docs/diana-evidence.md)
@@ -22,7 +22,7 @@ npm ci
 npm run build:site
 ```
 
-The browser build is in `dist/` and the Worker entry point is `dist/server/index.js`. The hosted draft workspace needs a D1 binding named `DB`, the SQL migrations in `migrations/`, and Sites sign-in for creator actions. The reviewer uses the invitation link and code.
+The browser build is in `dist/` and the Worker entry point is `dist/server/index.js`. The hosted draft workspace needs a D1 binding named `DB`, the SQL migrations in `migrations/`. The reviewer uses the invitation link and code.
 
 ## Diana deployment
 
@@ -33,7 +33,7 @@ The browser build is in `dist/` and the Worker entry point is `dist/server/index
 
 Signer key registration and approvals use `@qorechain/qoresign` 0.2.0. The app also uses viem for EVM operations, cosmjs-types for native transaction encoding, and esbuild for bundling.
 
-The hosted workflow has been tested with two distinct wallets operated by one tester. Independent co-signer testing is deferred.
+The hosted workflow has been tested with two distinct wallets operated by one tester. Independent co-signer testing on the public site is in progress.
 
 ## License
 
