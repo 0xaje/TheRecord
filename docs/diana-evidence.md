@@ -242,3 +242,28 @@ The preview blocked the registered signer ending in `b6AE` with a proof-of-posse
 - [Approval transaction](https://dashboard.qorechain.io/explorer/tx/0xcd76db535a46ce8f5385cc97c31011bcf9bb05f30727a44f1b8b7e76d68eac0b)
 
 The source checkout incorporates the trial flow and passes the site build. Publication and independent signer acceptance on the public URL are pending.
+
+### Guided verification demo, 17 November 2026
+
+The public demo opens agreement
+`0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e`,
+version 1. It supplies the original file and a changed copy through HTTPS
+download routes. The original SHA-256 is
+`265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd`.
+The changed copy SHA-256 is
+`66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0`.
+
+The laptop screenshots show the original matching finalized version 1 with
+two approvals and the changed copy failing against that same version.
+
+- [Original match](evidence/demo-original-match.png)
+- [Changed copy mismatch](evidence/demo-changed-mismatch.png)
+- [Finalization receipt](https://dashboard.qorechain.io/explorer/tx/0xb8b3895071b1ef1f9afbf665b52482b277ee312dfac5f090117ac50479927487)
+
+The owner also reports successful downloads, original match and changed-copy
+mismatch inside QoreX on a physical phone after public release 24.
+QoreX blocked screenshots on that device, so mobile outcomes are owner reports.
+Independent participants completing the full agreement workflow remain pending.
+These checks generated no new transactions.
+
+My space update is drafted for owner review. Publication is unconfirmed.

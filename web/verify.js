@@ -302,6 +302,12 @@ registerForm.addEventListener("submit", async event => {
   }
 });
 
+const demo = document.querySelector("#verification-demo");
+if (query.get("id")?.toLowerCase() === "0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e") {
+  demo.hidden = false;
+  demo.open = true;
+}
+
 const landing = document.querySelector("#landing");
 const screens = [...document.querySelectorAll("[data-screen]")];
 const navLinks = document.querySelectorAll("#agreement-navigation a");

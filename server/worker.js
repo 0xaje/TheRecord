@@ -6,6 +6,16 @@ export default {
     const { pathname } = new URL(request.url);
     if (pathname === "/api/drafts" || pathname.startsWith("/api/drafts/")) return privateAgreements(request, env.DB);
     if (pathname.startsWith("/api/diana/")) return relayRegistration(request);
+    const sampleFiles = {
+      "/demo/agreement-v1.txt": "The Record test agreement: deliver one draft by Friday.\n",
+      "/demo/agreement-v2.txt": "The Record test agreement: deliver one draft by Monday.\n",
+    };
+    if (Object.hasOwn(sampleFiles, pathname)) {
+      return new Response(sampleFiles[pathname], { headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Content-Disposition": 'attachment; filename="' + pathname.split("/").pop() + '"',
+      } });
+    }
     if (pathname === "/") {
       return new Response(SITE_HTML, { headers: { "Content-Type": "text/html; charset=utf-8", "Referrer-Policy": "no-referrer" } });
     }

@@ -93,7 +93,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <p>Draft an agreement privately, share it for review, and prove exactly which version both parties approved.</p>
 <div class="actions">
 <a class="button" href="#workspace">Open workspace</a>
-<a class="button secondary" href="#guide">See how it works</a>
+<a class="button secondary" href="./?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a>
 </div>
 </div>
 <aside class="hero-card" aria-label="Agreement workflow">
@@ -203,6 +203,12 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <section class="verification-panel" aria-labelledby="verify-title">
 <h1 id="verify-title">Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
+<details id="verification-demo" hidden>
+<summary>Try the demo without a wallet</summary>
+<p>Download the original, choose it below, and select Verify file. It should match finalized version 1 with two approvals. Then choose the changed copy and verify again with version 1 selected. It should show a mismatch.</p>
+<div class="actions"><a class="button secondary" download="agreement-v1.txt" href="/demo/agreement-v1.txt">Download the original</a>
+<a class="button secondary" download="agreement-v2.txt" href="/demo/agreement-v2.txt">Download the changed copy</a></div>
+</details>
 <form id="verify">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
 <label>Version <input name="version" required pattern="[1-9][0-9]*" inputmode="numeric" value="1"></label>
@@ -230,7 +236,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 </div>
 <section class="screen narrow" data-screen="create-title" hidden>
 <header class="screen-heading"><h1 id="create-title">Record an agreement</h1>
-<p>Use your own Diana wallet to record the file fingerprint. Both signers will need the same file and a registered signing key.</p></header>
+<p>Use your own Diana wallet to record the file fingerprint. Share the verification link and the exact file with both signers after recording. Each signer needs their own Diana wallet and registered signing key.</p></header>
 <form id="create">
 <label>First signer (0x address) <input name="first" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
 <label>Second signer (0x address) <input name="second" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
@@ -243,7 +249,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 </section>
 <section class="screen narrow" data-screen="amend-title" hidden>
 <header class="screen-heading"><h1 id="amend-title">Amend an agreement</h1>
-<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file.</p></header>
+<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file. Both signers must approve the new version. The earlier version can still be verified.</p></header>
 <form id="amend">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
 <label>Changed agreement file <input name="document" type="file" required></label>
