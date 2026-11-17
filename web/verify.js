@@ -1,3 +1,4 @@
+import "./walkthrough.js";
 import "./private-agreements.js";
 import { generateTestSigner, SignerReadinessError, submitApproval } from "./approve.js";
 import { registerSigner } from "./register.js";
@@ -342,17 +343,21 @@ if (query.has("id")) {
 function showScreen() {
   const hash = location.hash.slice(1);
   const invite = new URLSearchParams(hash).has("invite");
+  const page = location.pathname.replace(/\/$/, "");
   const screen = invite ? "review"
     : screens.some(panel => panel.dataset.screen === hash) ? hash
-      : query.has("id") ? "verify-title" : "landing";
+      : page === "/walkthrough" ? "walkthrough"
+        : page === "/blog" || hash === "guide" ? "blog"
+          : query.has("id") ? "verify-title" : "landing";
   landing.hidden = screen !== "landing";
   for (const panel of screens) panel.hidden = panel.dataset.screen !== screen;
   for (const link of navLinks) {
-    if (link.hash.slice(1) === screen) link.setAttribute("aria-current", "page");
+    if (link.hash.slice(1) === screen || new URL(link.href).pathname === "/" + screen) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   }
   if (screen === "signer-setup") document.querySelector("#signer-setup").open = true;
-  if (hash === "guide" && !landing.hidden) document.querySelector("#guide").scrollIntoView();
+  const articleSection = screen === "blog" && hash ? document.getElementById(hash) : null;
+  if (articleSection) articleSection.scrollIntoView();
   else window.scrollTo(0, 0);
 }
 

@@ -46,3 +46,27 @@ My space draft ready for owner review:
 I simplified The Record's approval screen. Approve with QoreX is now the
 main action. The signing-file workflow is available under Advanced test
 options. The updated source is published alongside the working demo.
+
+## Walkthrough and Blog milestone
+
+Owner approved the reference-inspired six-chapter story and a separate Blog.
+The landing Guide has moved into a long-form article. QoreChain, Diana Testnet,
+QoreX and Explorer are explained where they contribute to the agreement flow.
+The walkthrough labels explanatory visuals and links recorded screenshots and receipts.
+
+Build and Worker route checks passed for both pages, scripts, sample files
+and images. Desktop browser checks passed for chapter selection, next/back,
+first/last button states, screenshots, Blog navigation and article anchors.
+Physical-phone acceptance of these new pages remains pending.
+Official event lookup was unavailable. Current Ship Weeks Check results and
+exact category rubric remain unverified. No new chain transactions were made.
+
+Judge review: the product explanation is now easier to follow and inspect.
+Independent participant acceptance and new-page phone checks remain open.
+
+My space update READY for owner review:
+I added a visual walkthrough and a dedicated Blog page to The Record.
+The story follows one agreement through review, recording on QoreChain
+Diana Testnet, QoreX approvals, original-file verification, a changed-file
+mismatch and an amendment requiring fresh approvals. The pages link to real
+screenshots and Diana receipts. Independent participant testing is next.

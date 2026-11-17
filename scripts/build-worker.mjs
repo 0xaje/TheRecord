@@ -14,6 +14,8 @@ await build({
   outfile: "dist/server/index.js",
   define: {
     SITE_HTML: JSON.stringify(html),
+    ORIGINAL_MATCH_IMAGE: JSON.stringify((await readFile("docs/evidence/demo-original-match.png")).toString("base64")),
+    CHANGED_MISMATCH_IMAGE: JSON.stringify((await readFile("docs/evidence/demo-changed-mismatch.png")).toString("base64")),
     BROWSER_JS: JSON.stringify(browser),
   },
 });

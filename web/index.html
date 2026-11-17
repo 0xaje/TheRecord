@@ -97,18 +97,53 @@ input,select,textarea{font-size:16px}
 button,.button{min-height:44px}
 .editor-meta{align-items:stretch;flex-direction:column}
 }
+
+.story-header{padding:clamp(2rem,6vw,4rem) 0 2rem;max-width:52rem}
+.story-header h1{font-size:clamp(2.5rem,6vw,4.8rem);margin:.7rem 0 1rem}
+.story-layout{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:1.25rem;align-items:start}
+.chapter-list{position:sticky;top:1rem;display:grid;gap:.3rem;padding:.65rem;background:var(--panel);border:1px solid var(--line);border-radius:.8rem}
+.chapter-list button{background:transparent;color:var(--muted);border:0;text-align:left;font-weight:500}
+.chapter-list button[aria-current=step]{color:var(--accent);background:#24352c}
+.story-main{display:grid;gap:1rem;min-width:0}
+.chapter-heading,.story-visual,.story-controls,.story-evidence{padding:clamp(1rem,3vw,2rem);border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
+.chapter-heading h2{font-size:clamp(1.7rem,4vw,2.8rem);margin:.75rem 0}
+.chapter-heading progress{width:100%;height:.3rem;accent-color:var(--accent);margin-bottom:1.2rem}
+.story-visual{min-height:18rem;display:grid;align-content:center;gap:1.25rem}
+.story-visual h3{font-size:1.3rem}
+.story-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.story-card{padding:1.2rem;border:1px solid var(--line);border-radius:.65rem;background:#101114}
+.story-card p+ p{margin-top:.75rem}
+.story-card.good{border-color:#68c99b;background:#13251e}.story-card.bad{border-color:#df9475;background:#2b1b19}
+.story-card strong{display:block;font-size:1.2rem;margin-bottom:.5rem}
+.story-card mark{background:#4b3420;color:#ffdc9b;padding:.1rem .2rem}
+.story-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.story-controls p{font-size:.9rem}.story-controls .actions{margin:0}
+.story-evidence{font-size:.9rem}.story-evidence a{display:inline-block;margin:.5rem 1rem .1rem 0}
+.story-shot{width:100%;max-height:30rem;object-fit:contain;border-radius:.5rem;border:1px solid var(--line)}
+.blog-layout{display:grid;grid-template-columns:14rem minmax(0,48rem);gap:clamp(1.5rem,5vw,4rem)}
+.blog-toc{position:sticky;top:1rem;display:grid;gap:.6rem;align-self:start}
+.blog-toc a{color:var(--muted);text-decoration:none;padding:.35rem 0}
+.blog-body section{padding-bottom:2rem;margin-bottom:2rem;border-bottom:1px solid var(--line);scroll-margin-top:1.5rem}
+.blog-body h2{margin-bottom:1rem}.blog-body h3{margin:1.2rem 0 .6rem}
+.blog-body p+p{margin-top:1rem}.blog-body li{margin:.7rem 0}
+.blog-body table{width:100%;border-collapse:collapse;font-size:.95rem}
+.blog-body th,.blog-body td{padding:.85rem .5rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+@media(max-width:760px){.story-layout,.blog-layout{grid-template-columns:minmax(0,1fr)}.chapter-list{position:static;display:flex;overflow:auto;padding:.4rem;gap:.4rem}.chapter-list button{flex:none;font-size:.85rem;max-width:12rem}.blog-toc{position:static;display:flex;flex-wrap:wrap;gap:.3rem 1rem;border-bottom:1px solid var(--line);padding-bottom:1rem}.story-pair{grid-template-columns:minmax(0,1fr)}.story-controls{flex-wrap:wrap}.story-visual{min-height:15rem}}
+@media(prefers-reduced-motion:no-preference){.story-visual{animation:chapter-reveal .2s ease-out}@keyframes chapter-reveal{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}}
+
 </style>
 <main>
 <header class="site-header">
-<a class="brand" href="./"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#b4efce"/><path d="M9 18V9h10l4 4v10h-9M14 18l3 3 6-7" fill="none" stroke="#10251a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The Record</a>
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#b4efce"/><path d="M9 18V9h10l4 4v10h-9M14 18l3 3 6-7" fill="none" stroke="#10251a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The Record</a>
 <button type="button" class="menu-toggle secondary" id="menu-toggle" aria-expanded="false" aria-controls="agreement-navigation">Menu</button>
 <nav id="agreement-navigation" aria-label="Main navigation">
-<a href="./#workspace">Drafts</a>
-<a href="./#verify-title">Verify</a>
-<a href="./#create-title">Record</a>
-<a href="./#amend-title">Amend</a>
+<a href="/#workspace">Drafts</a>
+<a href="/#verify-title">Verify</a>
+<a href="/#create-title">Record</a>
+<a href="/#amend-title">Amend</a>
 
-<a href="./#guide">Guide</a>
+<a href="/walkthrough">Walkthrough</a>
+<a href="/blog">Blog</a>
 </nav>
 </header>
 <section class="landing" id="landing" hidden>
@@ -119,8 +154,8 @@ button,.button{min-height:44px}
 <p>Draft an agreement privately, share it for review, and prove exactly which version both parties approved.</p>
 <div class="actions">
 <a class="button" href="#workspace">Open workspace</a>
-<a class="button secondary" href="#guide">See how it works</a>
-<a class="button secondary" href="./?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a>
+<a class="button secondary" href="/walkthrough">See the walkthrough</a>
+<a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a>
 </div>
 </div>
 <aside class="hero-card" aria-label="Agreement workflow">
@@ -138,16 +173,7 @@ button,.button{min-height:44px}
 </ol>
 </aside>
 </div>
-<section class="guide" id="guide" aria-labelledby="guide-title">
-<h2 id="guide-title">Guide to The Record</h2>
-<div class="guide-grid">
-<article><h3>For creators</h3><p>Start with a blank draft or a template. Save the terms and create a review invitation. Use your recovery code to reopen your workspace on another device.</p></article>
-<article><h3>For co-signers</h3><p>Open the invitation with its code. Read the terms, request changes if needed, and download the version you agree to. Open the verification page in QoreX on Diana Testnet and choose Approve with QoreX.</p></article>
-<article><h3>For verifiers</h3><p>Open a verification link and select your copy. The site hashes the file locally and checks the fingerprint and approval status on Diana.</p></article>
-</div>
-<p>The agreement text stays off-chain. Diana records a fingerprint and approval evidence. An amendment needs fresh approvals, and the original remains independently verifiable.</p>
-<div class="actions"><a class="button secondary" href="#verify-title">Verify a file</a><a class="button secondary" href="https://github.com/0xaje/TheRecord">Source and technical docs</a><a class="button secondary" href="#signer-setup">Advanced test options</a></div>
-</section>
+
 </section>
 <div class="screen" data-screen="workspace" hidden>
 <section id="workspace" hidden>
@@ -233,7 +259,7 @@ button,.button{min-height:44px}
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
 <details id="verification-demo">
 <summary>Try the demo without a wallet</summary>
-<p><a href="./?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Load demo agreement and version 1</a></p><p>Download the original, choose it below, and select Verify file. It should match finalized version 1 with two approvals. Then choose the changed copy and verify again with version 1 selected. It should show a mismatch.</p>
+<p><a href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Load demo agreement and version 1</a></p><p>Download the original, choose it below, and select Verify file. It should match finalized version 1 with two approvals. Then choose the changed copy and verify again with version 1 selected. It should show a mismatch.</p>
 <div class="actions"><a class="button secondary" download="agreement-v1.txt" href="/demo/agreement-v1.txt">Download the original</a>
 <a class="button secondary" download="agreement-v2.txt" href="/demo/agreement-v2.txt">Download the changed copy</a></div>
 </details>
@@ -312,6 +338,73 @@ button,.button{min-height:44px}
 </form>
 </details>
 </section>
+
+<section class="screen" data-screen="walkthrough" hidden>
+<header class="story-header"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
+<h1>One agreement.<br>Every version accounted for.</h1>
+<p>Follow a delivery agreement from review to proof. See why an original file matches, why a changed copy fails, and how both people approve a new version.</p></header>
+<div class="story-layout">
+<div class="chapter-list" role="group" aria-label="Walkthrough chapters">
+<button type="button" data-chapter="0">Agree on the terms</button>
+<button type="button" data-chapter="1">Record the version</button>
+<button type="button" data-chapter="2">Both people approve</button>
+<button type="button" data-chapter="3">Check the original</button>
+<button type="button" data-chapter="4">Change one detail</button>
+<button type="button" data-chapter="5">Approve the amendment</button>
+</div>
+<div class="story-main">
+<div class="chapter-heading"><progress id="chapter-progress" max="6" value="1" aria-label="Walkthrough progress"></progress>
+<p class="eyebrow" id="chapter-count"></p><h2 id="chapter-title" tabindex="-1"></h2><p id="chapter-description"></p></div>
+<div class="story-visual" id="chapter-visual" aria-live="polite"></div>
+<div class="story-controls"><p id="chapter-context"></p><div class="actions"><button type="button" class="secondary" id="chapter-back">Back</button><button type="button" id="chapter-next">Next</button></div></div>
+<div class="story-evidence"><p id="chapter-evidence"></p><div id="chapter-links"></div></div>
+</div></div>
+<div class="actions"><a class="button" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the real file check</a><a class="button secondary" href="/blog">Read the story</a><a class="button secondary" href="/#workspace">Create your agreement</a></div>
+</section>
+<section class="screen" data-screen="blog" hidden>
+<header class="story-header"><p class="eyebrow">The Record · Build Before Q-Day</p>
+<h1>Which version did both people approve?</h1>
+<p>An agreement can change in a single word. The Record connects each file version to its approvals on QoreChain Diana Testnet.</p></header>
+<div class="blog-layout">
+<aside class="blog-toc" aria-label="Article sections">
+<a href="/blog#why">The problem</a><a href="/blog#workflow">From review to proof</a><a href="/blog#qorechain">Why QoreChain</a><a href="/blog#privacy">What stays private</a><a href="/blog#evidence">What we have verified</a><a href="/blog#start">Try it yourself</a>
+</aside>
+<article class="blog-body">
+<section id="why"><h2>A small edit can change the agreement.</h2>
+<p>A client and a freelancer agree to delivery by Friday. Later, someone shares a copy that says Monday. The question is simple. Which file did both people approve?</p>
+<p>The Record lets two parties review terms, approve a specific version, and check a copy against that record later. A file fingerprint ties the approvals to the exact bytes of the document.</p>
+<p>The example in the walkthrough uses the real Friday and Monday sample files available in the demo. The chapter illustrations explain the workflow. Screenshot results and receipt links identify the recorded evidence.</p></section>
+<section id="workflow"><h2>From review to proof</h2>
+<ol><li><strong>Review the terms.</strong> Create a private draft, save a revision and share an invitation with its access code. The reviewer can request changes before signing.</li>
+<li><strong>Record the file.</strong> Download the agreed revision. Use Record to submit its fingerprint and two distinct signer addresses to Diana.</li>
+<li><strong>Approve through QoreX.</strong> Each signer opens the verification link in QoreX, selects Diana Testnet and verifies the exact file before approving. Both approvals must refer to the same version.</li>
+<li><strong>Verify later.</strong> Anyone with the file and agreement ID can compare its fingerprint with the recorded version. Checking a finalized file requires no wallet connection.</li>
+<li><strong>Amend with fresh consent.</strong> The original proposer records a changed file as a new version after the current one finalizes. Both people approve again. Earlier versions remain verifiable.</li></ol></section>
+<section id="qorechain"><h2>Where QoreChain makes the difference</h2>
+<p>The Record is being built for QoreChain’s Build Before Q-Day event in the Post-Quantum dApp track. Its working agreement contract is deployed on QoreChain Diana Testnet.</p>
+<table><thead><tr><th>Component</th><th>Its role in The Record</th></tr></thead><tbody>
+<tr><td>QoreChain Diana Testnet</td><td>Stores version fingerprints, records the two approvals and emits finalization events.</td></tr>
+<tr><td>QoreX</td><td>Lets each party connect their Diana account and sign the approval message in their wallet.</td></tr>
+<tr><td>ML-DSA-87 verification</td><td>The contract checks the approval signature through Diana’s PQC verifier. The app checks that the signer has an eligible registered key with proof of possession before requesting an approval.</td></tr>
+<tr><td>QoreChain Explorer</td><td>Provides inspectable transaction receipts for agreement creation, approval and amendments.</td></tr></tbody></table>
+<p>The approval message binds the signature to the chain, contract, agreement, version, file fingerprint and signer. That connection is the reason the signature belongs to a particular approval.</p>
+<p>These records are on Diana Testnet. The evidence below documents testnet activity.</p>
+<p><a href="https://build.qorechain.io">QoreChain Build Before Q-Day</a> · <a href="https://dashboard.qorechain.io/explorer">QoreChain Explorer</a></p></section>
+<section id="privacy"><h2>What stays private</h2>
+<p>File verification hashes your selected file in your browser. The verification operation sends a chain lookup and compares the result locally. The document itself stays on your device during this check.</p>
+<p>The private draft workspace saves the draft on the service so invited reviewers can read it. Draft access uses invitation links and codes. That storage is a different operation from local file verification.</p>
+<p>The agreement contract stores fingerprints, signer addresses and approval state. A fingerprint helps detect changes. Approval records identify the signing accounts. Keep your own copy of each agreed document.</p></section>
+<section id="evidence"><h2>What we have verified</h2>
+<p>The Diana evidence log records two distinct approvals, finalization, changed-file rejection and fresh approvals for amendments. It also records the earlier version remaining verifiable after an amendment.</p>
+<p>The guided demo’s original and changed-file results were captured on a laptop. The owner repeated both checks inside QoreX on a phone and confirmed working downloads. QoreX blocked screenshots on that phone, so its results are recorded as owner reports.</p>
+<p>Independent participants completing the full workflow are still pending. The latest approval interface has build checks, with a fresh end-to-end approval test still pending.</p>
+<p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md">Read the Diana evidence log</a> · <a href="https://dashboard.qorechain.io/explorer/tx/0xb8b3895071b1ef1f9afbf665b52482b277ee312dfac5f090117ac50479927487">Inspect the demo’s version 1 finalization</a></p>
+<div class="story-pair"><figure><img class="story-shot" src="/demo/original-match.png" alt="Laptop result showing the original matches finalized version 1 with two approvals" loading="lazy"><figcaption>Original file matches version 1.</figcaption></figure><figure><img class="story-shot" src="/demo/changed-mismatch.png" alt="Laptop result showing the changed file does not match version 1" loading="lazy"><figcaption>Changed copy fails against version 1.</figcaption></figure></div></section>
+<section id="start"><h2>Try it yourself</h2>
+<p>Start with the walkthrough, then try the original and changed files against the same finalized version. To approve an agreement, use your designated wallet in QoreX with Diana Testnet selected and an eligible registered signing key.</p>
+<div class="actions"><a class="button" href="/walkthrough">See the walkthrough</a><a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a><a class="button secondary" href="/#signer-setup">Advanced test options</a></div></section>
+</article></div></section>
+
 </main>
-<script type="module" src="./verify.js"></script>
+<script type="module" src="/verify.js"></script>
 </html>
