@@ -15,10 +15,12 @@ p{color:var(--muted)}a{color:var(--accent);text-underline-offset:.2em}
 :focus-visible{outline:2px solid #a8ddc1;outline-offset:4px}
 .site-header{display:flex;align-items:center;justify-content:space-between;gap:.6rem 2rem;flex-wrap:wrap;padding:1.15rem 0;border-bottom:1px solid var(--line)}
 .brand{color:#fff;font-weight:800;text-decoration:none;display:inline-flex;align-items:center;gap:.65rem;white-space:nowrap}
-.brand::before{content:"";height:1.55rem;width:1.55rem;border-radius:.4rem;background:linear-gradient(135deg,#fff,#acb1b4 50%,#fafafa);box-shadow:0 0 14px #ffffff35}
-nav{display:flex;flex-wrap:wrap;gap:.15rem .4rem}
-nav a{color:var(--muted);text-decoration:none;font-size:.875rem;padding:.55rem .65rem;border-radius:.45rem}
-nav a:hover,nav a[aria-current]{color:white;background:#252527}
+.brand-mark{width:2rem;height:2rem;flex:none}
+.menu-toggle{display:none}
+nav{display:flex;flex-wrap:wrap;gap:.25rem;padding:.3rem;border:1px solid var(--line);border-radius:.8rem;background:#131316}
+nav a{display:grid;place-items:center;min-height:44px;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:700;padding:.45rem .72rem;border-radius:.5rem;white-space:nowrap}
+nav a:hover{color:white;background:#252527}
+nav a[aria-current]{color:var(--accent);background:#24352c}
 .landing{padding:clamp(2.5rem,7vw,6rem) 0 1rem}
 .hero{display:grid;grid-template-columns:1.08fr minmax(0,.92fr);align-items:center;gap:clamp(1.5rem,5vw,4.5rem)}
 .hero h1{font-size:clamp(2.65rem,6.3vw,5.4rem);letter-spacing:-.075em;max-width:12ch;margin:.6rem 0 1.15rem}
@@ -39,7 +41,12 @@ button:disabled{opacity:.55;cursor:wait}
 .screen{padding-top:clamp(1.8rem,5vw,3rem)}
 .screen-heading{margin-bottom:1.4rem}.screen-heading p{margin-top:.6rem;max-width:62ch}
 .workspace-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem}
-.workspace-header details{max-width:100%;width:17rem}
+.recovery-dialog{width:min(29rem,calc(100% - 2rem));max-height:calc(100dvh - 2rem);overflow:auto;border:1px solid var(--line);border-radius:1rem;padding:1.25rem;background:var(--panel);color:inherit}
+.recovery-dialog::backdrop{background:#000b}
+.recovery-dialog > * + *{margin-top:.85rem}
+.recovery-dialog form{padding:0;border:0}
+.recovery-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.recovery-heading h2{font-size:1.35rem}
 .workspace-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(15rem,22rem);align-items:start;gap:1rem}
 .workspace-side{display:grid;gap:.9rem;min-width:0}
 .workspace-side section,.workspace-side form{padding:1.1rem}
@@ -72,10 +79,29 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 .version-card small{color:var(--muted);display:block}.version-card strong{font-size:.85rem}.version-card:last-child{border-color:#70a889;background:#192820}
 .approval-progress{width:100%;height:.55rem;accent-color:var(--accent)}
 @media(max-width:450px){.version-stack{gap:.35rem}.version-card{padding:.4rem}}
+@media(max-width:600px){
+body{margin:0}
+.site-header{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.65rem;padding-block:.85rem}
+.menu-toggle{display:inline-flex;align-items:center;gap:.5rem}
+.menu-toggle::after{content:"▾"}
+.menu-toggle[aria-expanded=true]::after{content:"▴"}
+.site-header nav{display:none;grid-column:1/-1;width:100%;max-height:min(19rem,55dvh);overflow:auto;overscroll-behavior:contain}
+.site-header nav[data-open]{display:grid;grid-template-columns:minmax(0,1fr)}
+.site-header nav a{padding:.55rem .8rem;white-space:normal;justify-items:start}
+.hero h1{font-size:clamp(2.55rem,11vw,4rem)}
+.hero-card{padding:1rem}
+.workspace-header{display:grid;grid-template-columns:minmax(0,1fr)}
+.workspace-header > button{justify-self:start}
+.editor-tools{grid-template-columns:minmax(0,1fr)}
+input,select,textarea{font-size:16px}
+button,.button{min-height:44px}
+.editor-meta{align-items:stretch;flex-direction:column}
+}
 </style>
 <main>
 <header class="site-header">
-<a class="brand" href="./">The Record</a>
+<a class="brand" href="./"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#b4efce"/><path d="M9 18V9h10l4 4v10h-9M14 18l3 3 6-7" fill="none" stroke="#10251a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The Record</a>
+<button type="button" class="menu-toggle secondary" id="menu-toggle" aria-expanded="false" aria-controls="agreement-navigation">Menu</button>
 <nav id="agreement-navigation" aria-label="Main navigation">
 <a href="./#workspace">Drafts</a>
 <a href="./#verify-title">Verify</a>
@@ -93,6 +119,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <p>Draft an agreement privately, share it for review, and prove exactly which version both parties approved.</p>
 <div class="actions">
 <a class="button" href="#workspace">Open workspace</a>
+<a class="button secondary" href="#guide">See how it works</a>
 <a class="button secondary" href="./?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the demo</a>
 </div>
 </div>
@@ -126,8 +153,10 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <section id="workspace" hidden>
 <header class="workspace-header screen-heading">
 <div><h1>Agreement workspace</h1><p>Write your terms, save a private revision, and share it for review.</p></div>
-<details class="surface">
-<summary>Workspace recovery</summary>
+<button class="secondary" type="button" id="open-recovery" aria-haspopup="dialog">Workspace recovery</button>
+</header>
+<dialog class="recovery-dialog" id="recovery-dialog" aria-labelledby="recovery-title">
+<div class="recovery-heading"><h2 id="recovery-title">Workspace recovery</h2><button class="secondary" type="button" id="close-recovery" autofocus>Close</button></div>
 <p>Save your recovery code to open these private drafts on another device. Keep it private.</p>
 <button type="button" id="show-workspace-key">Show recovery code</button>
 <input id="workspace-key" aria-label="Workspace recovery code" readonly hidden>
@@ -136,8 +165,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <button>Open workspace</button>
 <output role="status"></output>
 </form>
-</details>
-</header>
+</dialog>
 <div class="workspace-grid">
 <form id="draft">
 <div class="editor-tools">
@@ -203,9 +231,9 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 <section class="verification-panel" aria-labelledby="verify-title">
 <h1 id="verify-title">Verify an agreement file</h1>
 <p>Check your file against the fingerprint recorded on Diana. Your file stays in your browser.</p>
-<details id="verification-demo" hidden>
+<details id="verification-demo">
 <summary>Try the demo without a wallet</summary>
-<p>Download the original, choose it below, and select Verify file. It should match finalized version 1 with two approvals. Then choose the changed copy and verify again with version 1 selected. It should show a mismatch.</p>
+<p><a href="./?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Load demo agreement and version 1</a></p><p>Download the original, choose it below, and select Verify file. It should match finalized version 1 with two approvals. Then choose the changed copy and verify again with version 1 selected. It should show a mismatch.</p>
 <div class="actions"><a class="button secondary" download="agreement-v1.txt" href="/demo/agreement-v1.txt">Download the original</a>
 <a class="button secondary" download="agreement-v2.txt" href="/demo/agreement-v2.txt">Download the changed copy</a></div>
 </details>
@@ -236,7 +264,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 </div>
 <section class="screen narrow" data-screen="create-title" hidden>
 <header class="screen-heading"><h1 id="create-title">Record an agreement</h1>
-<p>Use your own Diana wallet to record the file fingerprint. Share the verification link and the exact file with both signers after recording. Each signer needs their own Diana wallet and registered signing key.</p></header>
+<p>Use your own Diana wallet to record the file fingerprint. Share the verification link and exact file with both signers. Each signer needs their own Diana wallet and registered signing key.</p></header>
 <form id="create">
 <label>First signer (0x address) <input name="first" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
 <label>Second signer (0x address) <input name="second" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
@@ -249,7 +277,7 @@ output,p,li{overflow-wrap:anywhere}output:empty{display:none}
 </section>
 <section class="screen narrow" data-screen="amend-title" hidden>
 <header class="screen-heading"><h1 id="amend-title">Amend an agreement</h1>
-<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file. Both signers must approve the new version. The earlier version can still be verified.</p></header>
+<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file. Both signers must approve the new version. You can still verify the earlier version.</p></header>
 <form id="amend">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
 <label>Changed agreement file <input name="document" type="file" required></label>

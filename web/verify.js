@@ -302,15 +302,28 @@ registerForm.addEventListener("submit", async event => {
   }
 });
 
-const demo = document.querySelector("#verification-demo");
-if (query.get("id")?.toLowerCase() === "0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e") {
-  demo.hidden = false;
-  demo.open = true;
-}
-
 const landing = document.querySelector("#landing");
 const screens = [...document.querySelectorAll("[data-screen]")];
-const navLinks = document.querySelectorAll("#agreement-navigation a");
+const navigation = document.querySelector("#agreement-navigation");
+const navLinks = navigation.querySelectorAll("a");
+const menuToggle = document.querySelector("#menu-toggle");
+
+function setMenu(open) {
+  navigation.toggleAttribute("data-open", open);
+  menuToggle.setAttribute("aria-expanded", String(open));
+}
+menuToggle.addEventListener("click", () => setMenu(!navigation.hasAttribute("data-open")));
+navigation.addEventListener("click", event => {
+  if (!event.target.closest("a") || !navigation.hasAttribute("data-open")) return;
+  menuToggle.focus({ preventScroll: true });
+  setMenu(false);
+});
+navigation.closest("header").addEventListener("keydown", event => {
+  if (event.key !== "Escape" || !navigation.hasAttribute("data-open")) return;
+  menuToggle.focus({ preventScroll: true });
+  setMenu(false);
+});
+window.matchMedia("(max-width: 600px)").addEventListener("change", () => setMenu(false));
 
 if (query.has("id")) {
   for (const link of navLinks) {

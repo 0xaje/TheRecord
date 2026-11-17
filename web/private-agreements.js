@@ -222,6 +222,14 @@ document.querySelector("#revoke-invites").addEventListener("click", () => {
   });
 });
 
+const recoveryDialog = document.querySelector("#recovery-dialog");
+document.querySelector("#open-recovery").addEventListener("click", () => recoveryDialog.showModal());
+document.querySelector("#close-recovery").addEventListener("click", () => recoveryDialog.close());
+recoveryDialog.addEventListener("close", () => {
+  recoveryField.value = "";
+  recoveryField.hidden = true;
+  restoreForm.reset();
+});
 const recoveryField = document.querySelector("#workspace-key");
 document.querySelector("#show-workspace-key").addEventListener("click", () => {
   recoveryField.value = workspaceKey ?? "Save a new draft or move your existing drafts first.";

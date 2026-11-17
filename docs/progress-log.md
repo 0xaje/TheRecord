@@ -15,9 +15,10 @@ See [Diana evidence](diana-evidence.md) for the agreement, receipt and captures.
 ## Open work
 
 - Independent participants must complete creation, review and two approvals.
-- Hosted layout contains mobile navigation and recovery-dialog changes that
-  still need reconciliation with the source build. Workflow and download
-  source are synchronized in this update. Full release reproducibility stays open.
+- Hosted layout and source are reconciled. The built HTML matches exactly.
+  Browser JavaScript matches after dependency-path normalization. The full
+  Worker matches after path and formatting normalization.
+  Physical-phone menu and recovery interactions have not been retested.
 - Official detailed scoring rubric and current Ship Weeks Check results need
   verification. Existing evidence records the PQC contract challenge earned.
 - My space walkthrough update is drafted. Owner publication unconfirmed.
@@ -25,9 +26,9 @@ See [Diana evidence](diana-evidence.md) for the agreement, receipt and captures.
 ## Next action
 
 Collect the independent agreement ID, two signer receipts and final state.
-Reconcile the hosted layout and source before claiming exact reproducibility.
+Save the independent results and retest menu and recovery interactions.
 
 ## Judge review
 
 File matching and changed-file rejection have desktop captures and phone
-confirmation. Independent usability and exact hosted/source parity remain open.
+confirmation. Hosted/source parity passes normalized comparison. Independent usability remains open.
