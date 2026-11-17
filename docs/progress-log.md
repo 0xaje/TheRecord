@@ -32,3 +32,17 @@ Save the independent results and retest menu and recovery interactions.
 
 File matching and changed-file rejection have desktop captures and phone
 confirmation. Hosted/source parity passes normalized comparison. Independent usability remains open.
+
+## QoreX-first approval interface
+
+QoreX approval is the primary action. Signing-file approval and setup are
+under Advanced test options. Closed file controls are disabled. The Guide
+retains a setup link for the supported test-file workflow.
+Build, syntax and form-structure checks passed. Published as Site version 25.
+No new signing transaction was submitted for this interface change.
+Real-device interaction with the advanced controls remains unverified.
+
+My space draft ready for owner review:
+I simplified The Record's approval screen. Approve with QoreX is now the
+main action. The signing-file workflow is available under Advanced test
+options. The updated source is published alongside the working demo.

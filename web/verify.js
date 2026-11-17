@@ -216,6 +216,12 @@ async function submitProposal(form, file, prefix, id) {
 
 
 const approveForm = document.querySelector("#approve");
+const advancedApproval = document.querySelector("#advanced-approval");
+const fileApprovalFields = document.querySelector("#file-approval-fields");
+advancedApproval.addEventListener("toggle", () => {
+  fileApprovalFields.disabled = !advancedApproval.open;
+});
+
 approveForm.addEventListener("submit", async event => {
   event.preventDefault();
   if (!verifiedVersion) return;
@@ -223,7 +229,7 @@ approveForm.addEventListener("submit", async event => {
   const useQoreX = event.submitter?.name === "qorex";
   const buttons = approveForm.querySelectorAll("button");
   const status = approveForm.querySelector("output");
-  const link = approveForm.querySelector("a");
+  const link = approveForm.querySelector(":scope > a");
   const signerAddress = approveForm.elements.signer.value.toLowerCase();
   const keyFile = approveForm.elements.key.files[0];
   buttons.forEach(button => { button.disabled = true; });

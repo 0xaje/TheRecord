@@ -107,7 +107,7 @@ button,.button{min-height:44px}
 <a href="./#verify-title">Verify</a>
 <a href="./#create-title">Record</a>
 <a href="./#amend-title">Amend</a>
-<a href="./#signer-setup">Signer setup</a>
+
 <a href="./#guide">Guide</a>
 </nav>
 </header>
@@ -142,11 +142,11 @@ button,.button{min-height:44px}
 <h2 id="guide-title">Guide to The Record</h2>
 <div class="guide-grid">
 <article><h3>For creators</h3><p>Start with a blank draft or a template. Save the terms and create a review invitation. Use your recovery code to reopen your workspace on another device.</p></article>
-<article><h3>For co-signers</h3><p>Open the invitation with its code. Read the terms, request changes if needed, and download the version you agree to. On Diana, use your registered test signing file to approve.</p></article>
+<article><h3>For co-signers</h3><p>Open the invitation with its code. Read the terms, request changes if needed, and download the version you agree to. Open the verification page in QoreX on Diana Testnet and choose Approve with QoreX.</p></article>
 <article><h3>For verifiers</h3><p>Open a verification link and select your copy. The site hashes the file locally and checks the fingerprint and approval status on Diana.</p></article>
 </div>
 <p>The agreement text stays off-chain. Diana records a fingerprint and approval evidence. An amendment needs fresh approvals, and the original remains independently verifiable.</p>
-<div class="actions"><a class="button secondary" href="#verify-title">Verify a file</a><a class="button secondary" href="https://github.com/0xaje/TheRecord">Source and technical docs</a></div>
+<div class="actions"><a class="button secondary" href="#verify-title">Verify a file</a><a class="button secondary" href="https://github.com/0xaje/TheRecord">Source and technical docs</a><a class="button secondary" href="#signer-setup">Advanced test options</a></div>
 </section>
 </section>
 <div class="screen" data-screen="workspace" hidden>
@@ -250,12 +250,19 @@ button,.button{min-height:44px}
 </div>
 <section id="approval" hidden>
 <h2>Approve the verified version</h2>
-<p>Use a dedicated Diana test signing file you generated for The Record. The file is read on this device.</p>
+<p>Open this page in QoreX with Diana Testnet selected. Approve using the wallet named in this agreement. Your signing key must be registered with proof of possession.</p>
 <form id="approve">
+<button type="submit" name="qorex" formnovalidate>Approve with QoreX</button>
+<details id="advanced-approval">
+<summary>Advanced test options</summary>
+<p>Use a dedicated test signing file if you are following the signing-file workflow.</p>
+<fieldset id="file-approval-fields" disabled style="border:0;padding:0;margin:1rem 0">
 <label>Your signer address <input name="signer" required pattern="0x[0-9a-fA-F]{40}" spellcheck="false"></label>
 <label>Diana test signing file <input name="key" type="file" required></label>
-<button type="submit">Sign and submit approval</button>
-<button type="submit" name="qorex" formnovalidate>Approve with QoreX</button>
+<button class="secondary" type="submit">Approve with signing file</button>
+</fieldset>
+<p><a href="#signer-setup">Set up a test signing file</a></p>
+</details>
 <output role="status" aria-live="polite"></output>
 <a hidden>View approval transaction</a>
 </form>
@@ -289,7 +296,8 @@ button,.button{min-height:44px}
 </section>
 <section class="screen narrow" data-screen="signer-setup" hidden>
 <details class="surface" id="signer-setup">
-<summary>Set up a Diana test signer</summary>
+<summary>Advanced test signer setup</summary>
+<p>For signing-file approvals. For QoreX approval, prepare your signing key inside QoreX.</p>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
 <button id="generate-signer" type="button">Generate signing file</button>
 <a id="download-signer" hidden>Download private signing file</a>
