@@ -15,7 +15,7 @@ await build({
   outfile: "dist/server/index.js",
   define: {
     SITE_HTML: JSON.stringify(html),
-    STORY_ASSETS: JSON.stringify(Object.fromEntries(await Promise.all(["client", "freelancer", "document"].map(async name => [
+    STORY_ASSETS: JSON.stringify(Object.fromEntries(await Promise.all(["client", "freelancer", "document", "save", "revisions", "chain"].map(async name => [
       "/assets/" + name + ".png",
       (await readFile("web/assets/" + name + ".png")).toString("base64"),
     ])))) ,

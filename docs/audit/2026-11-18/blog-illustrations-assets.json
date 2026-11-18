@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/assets/save.png",
+    "exactMatch": true,
+    "sha256": "d49f99aa47f46426b5f8bac3d6c8b778e5404497111a80acc411e646b333cd7d"
+  },
+  {
+    "path": "/assets/revisions.png",
+    "exactMatch": true,
+    "sha256": "134bd7b37f73ce9ee6ebcbc583d9c8c50cab1250defc1d8826b81362dbac9817"
+  },
+  {
+    "path": "/assets/chain.png",
+    "exactMatch": true,
+    "sha256": "313c303005350b30744a61e21fd4d05ef7a112f483326fc6a2e9c6c967aba77d"
+  }
+]

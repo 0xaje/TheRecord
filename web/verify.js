@@ -1,3 +1,4 @@
+import "./blog.js";
 import "./walkthrough.js";
 import "./history.js";
 import "./private-agreements.js";

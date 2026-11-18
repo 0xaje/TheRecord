@@ -257,6 +257,13 @@ main{padding-inline:1rem;padding-bottom:2rem}
 @media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr)}.blog-toc{grid-template-columns:minmax(0,1fr)}.paper-signers{gap:.5rem}}
 
 .history-version code{display:block;overflow-wrap:anywhere;font-size:.85rem}.history-version ol{padding-left:1.25rem}.history-version li{margin:.65rem 0}.history-results{display:grid;gap:1rem;margin-top:1rem}
+
+.blog-navigation{position:sticky;top:1rem;align-self:start;min-width:0}
+.blog-navigation .blog-toc{position:static;max-height:calc(100dvh - 2rem);overflow-y:auto}
+.blog-menu-toggle{display:none}
+.blog-toc a{padding:.55rem .75rem;border-radius:.5rem}
+.blog-toc a[aria-current="location"]{background:#21382c;color:var(--accent);font-weight:700}
+@media(max-width:760px){.blog-navigation{top:0;z-index:5;padding:.45rem 0;background:#09090bf5;margin-bottom:1rem}.blog-menu-toggle{display:block;width:100%;text-align:left;min-height:48px}.blog-navigation .blog-toc{display:none;margin:.4rem 0 0;max-height:55dvh;overflow-y:auto}.blog-navigation[data-open="true"] .blog-toc{display:grid}}
 </style>
 <main>
 <header class="site-header">
@@ -549,9 +556,9 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <h1>Which version did both people approve?</h1>
 <p>An agreement can change in a single word. The Record connects each file version to its approvals on QoreChain Diana Testnet.</p></header>
 <div class="blog-layout">
-<aside class="blog-toc" aria-label="Article sections">
+<div class="blog-navigation"><button type="button" class="blog-menu-toggle secondary" id="blog-menu-toggle" aria-expanded="false" aria-controls="blog-sections">Reading: The problem</button><aside id="blog-sections" class="blog-toc" aria-label="Article sections">
 <a href="/blog#why">The problem</a><a href="/blog#research">Real-world examples</a><a href="/blog#workflow">From review to proof</a><a href="/blog#qorechain">Why QoreChain</a><a href="/blog#version-history">Two kinds of history</a><a href="/blog#privacy">Privacy and recovery</a><a href="/blog#evidence">Evidence and testing</a><a href="/blog#start">Try it yourself</a>
-</aside>
+</aside></div>
 <article class="blog-body">
 <section id="why"><h2>A small edit can change the agreement.</h2>
 <p>Anyone who needs to approve a document version can use this workflow. Our example follows a client and a freelancer who agree to delivery by Friday. Later, someone shares a copy that says Monday. The question is simple. Which file did both people approve?</p>
@@ -582,7 +589,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <p>These records are on Diana Testnet. An ordinary EVM transaction signature, its post-quantum-authorized access window, and the agreement’s ML-DSA-87 approval check are distinct layers. A window alone is not proof that both parties approved an agreement.</p><p>NIST standardized ML-DSA in 2024. That supports the cryptographic direction; it is not a certification of this application or a guarantee of permanent security.</p><p><a href="https://csrc.nist.gov/pubs/fips/204/final">NIST ML-DSA standard</a> · <a href="https://docs.qorechain.io/developer-guide/evm-window-reference/">QoreChain EVM window reference</a></p>
 <p><a href="https://build.qorechain.io">QoreChain Build Before Q-Day</a> · <a href="https://dashboard.qorechain.io/explorer">QoreChain Explorer</a></p></section>
 <section id="version-history"><h2>Keep draft history separate from chain history.</h2>
-<div class="story-pair"><div class="story-card"><h3>Saved private revisions</h3><p>Each new save retains a revision. In Drafts, open Saved revisions to view or download an earlier draft without replacing the editor. These revisions stay in your workspace; saving one does not create a Diana agreement version.</p></div><div class="story-card good"><h3>QoreChain agreement history</h3><p>History reads version, approval and finalization events from Diana and compares them with a contract-state snapshot. Continue an incomplete scan before treating it as the full history. Anyone can inspect the public records without connecting a wallet.</p></div></div>
+<div class="story-pair"><div class="story-card"><img src="/assets/revisions.png" width="96" height="96" alt="Saved revisions illustration"><h3>Saved private revisions</h3><p>Each new save retains a revision. In Drafts, open Saved revisions to view or download an earlier draft without replacing the editor. These revisions stay in your workspace; saving one does not create a Diana agreement version.</p></div><div class="story-card good"><img src="/assets/chain.png" width="96" height="96" alt="Linked records illustration"><h3>QoreChain agreement history</h3><p>History reads version, approval and finalization events from Diana and compares them with a contract-state snapshot. Continue an incomplete scan before treating it as the full history. Anyone can inspect the public records without connecting a wallet.</p></div></div>
 <p><a href="/history">Open agreement history</a> · <a href="/#workspace">Open saved drafts</a></p></section>
 <section id="privacy"><h2>Privacy, recovery and deletion</h2>
 <p>File verification hashes your selected file in your browser. The verification operation sends a chain lookup and compares the result locally. The document itself stays on your device during this check.</p>
@@ -603,7 +610,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 
 <section class="screen narrow" data-screen="credits" hidden>
 <header class="screen-heading"><h1>Illustration credits</h1></header>
-<p>Illustrations by <a href="https://openmoji.org/">OpenMoji</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. The client, freelancer and document PNGs are used unmodified. People are illustrative roles.</p>
+<p>Illustrations by <a href="https://openmoji.org/">OpenMoji</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. All OpenMoji PNGs are used unmodified. People are illustrative roles.</p>
 <p><a href="/walkthrough">Return to the walkthrough</a></p>
 </section>
 </main>

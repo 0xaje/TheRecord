@@ -1,0 +1,62 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 check
+> npm run build:site && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build:site
+> npm run build && node scripts/build-worker.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build
+> esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html
+
+
+  dist/verify.js  1.3mb ⚠️
+
+⚡ Done in 177ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 test
+> node --test test/*.test.mjs
+
+✔ Blog reading location follows down, up, long sections and gaps (1.61632ms)
+✔ built Worker serves pages and persistent private drafts with real local SQLite (149.823466ms)
+✔ draft, review, feedback, revision isolation and revocation (60.445366ms)
+✔ expiry, malformed requests, origins and storage failures (11.472809ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (36.064093ms)
+✔ revision pages have no overlap and do not expose full text in lists (34.496668ms)
+✔ additive migration preserves a legacy current revision without inventing old text (9.480072ms)
+✔ workspace write throttle returns Retry-After without blocking reads (29.046808ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (10.772129ms)
+✔ retained revision and invitation quotas are atomic (25.094266ms)
+✔ review throttling and temporary storage failures fail safely (32.032726ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (26.947768ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (28.093455ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (7.020309ms)
+✔ disposable CLI creates a private file without printing secrets or replacing an account (148.261979ms)
+✔ registration includes a valid address-bound possession proof and signs offline only (45.594031ms)
+✔ paired proof fixes zero-value scope targets and requires the exact successful proposal event (10.701662ms)
+✔ Diana allowed-recipient rejection is recognized without accepting unrelated failures (0.249789ms)
+✔ read-only review requires live matching snapshots and retains original evidence (2.295137ms)
+✔ scoped request bytes exactly match official SDK, with no key derivation or signing (5.763371ms)
+✔ receipt validation refuses unscoped, failed, mismatched and non-hybrid fixtures (0.678508ms)
+✔ read-back distinguishes live restriction from expired or replaced window fixtures (0.408088ms)
+✔ built verifier initializes its controls when storage access throws (95.469123ms)
+✔ expanded walkthrough keeps chapter links, active step count and menu controls aligned (5.768388ms)
+✔ Blog chapter anchors resolve without colliding with application screen routes (0.775655ms)
+✔ blocked storage access and reads do not throw during module setup (1.802981ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (1.331738ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (0.833403ms)
+✔ successful persistence reads back the exact recovery code before returning (0.259734ms)
+✔ failed read-back attempts to restore the previously saved identity (0.203519ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1273.299871
