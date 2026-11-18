@@ -9,6 +9,7 @@ const [html, browser] = await Promise.all([
 await build({
   entryPoints: ["server/worker.js"],
   bundle: true,
+  preserveSymlinks: true,
   platform: "browser",
   format: "esm",
   outfile: "dist/server/index.js",

@@ -476,3 +476,82 @@ New permanent-delete mobile UI acceptance remains OPEN; owner will check cancel,
 typed DELETE and disappearance using a disposable draft. My space draft can add:
 The live disposable-draft deletion test also passed; no existing agreements or
 Diana records were changed. Update READY, not posted.
+
+
+18 November 2026 — permanent deletion phone acceptance PASS (owner-reported).
+User confirmed the requested phone check worked: cancel keeps the disposable
+draft, typed DELETE removes it, and refresh confirms disappearance from Trash.
+No screenshot required because QoreX blocks screenshots. Combined with release
+38 live disposable API evidence and 18 passing isolated tests, this closes the
+permanent-deletion implementation/phone acceptance milestone. No claim of
+hosting backup erasure or independent observer verification. Phone Trash/restore
+also owner-confirmed PASS. My space update READY, not posted.
+Next milestone: reproducible source build/deployment instructions and automated
+regression checks, preserving existing application behavior. Required scoped
+EVM window proof, accepted Stage 2 audit and independent two-person acceptance
+remain open. Ship Weeks four owner-confirmed; fresh portal Check unobserved.
+GitHub code head remains fa80a460d4b1e9b48ee33352df2f95588c40158a; this acceptance
+note is local pending the next documentation publication.
+
+
+## 18 November 2026 — reproducible source build and checks
+
+Required behavior: fresh lockfile install, actual Worker/browser build, isolated
+regression tests, runnable local private drafts, explicit hosted D1 migration
+packaging and automated GitHub checks. No change to product/track/crypto policy.
+
+Added Node24.22.3 pin/engine, npm test/check/start:local/package:site commands,
+loopback-only Node HTTP adapter using the actual built Worker and separate real
+SQLite, transactional startup migrations with immutable hash ledger, a local
+HTTP persistence/identity-isolation test and fresh output deployment packager.
+The local adapter strips caller-supplied sign-in identity. Production hosting
+still relies on its trusted gateway. Applied hosted migration journal values
+are copied unchanged in deploy/migration-journal.json. No private DB is copied.
+
+Verification PASS: separate clean git archive plus selected milestone changes,
+new node_modules from npm ci (30 packages), npm run check (19/19), and package
+preparation (8 migrations). Clean HTML/browser/Worker bytes and lockfile match
+the working build. Public HTML and browser JS also match source byte for byte.
+Evidence: audit/2026-11-18/repro-checks.txt, clean-build.json and
+published-build-match.json. Local test verifies private draft survives restart,
+foreign workspace isolation and spoofed legacy header rejection. No wallets,
+chain transactions or hosted draft writes. Initial comparison exposed dependency-symlink paths in generated code.
+preserve-symlinks is now pinned in browser/Worker builds; clean and working
+outputs match byte for byte. The reproducible bundle is being published.
+Application behavior and hosted database schema are unchanged.
+
+CI: read-only push/PR/manual workflow with full action commit pins runs npm ci
+and npm run check. A passing hosted workflow must be observed separately after
+publication; configuration alone is not proof. Fresh production deployment on
+another provider and fresh Solidity run (forge absent here) remain unverified.
+BUILD_AND_DEPLOY.md states Linux/WSL requirements, migration lifecycle, identity
+boundary, local/hosted storage separation, deployment format and test limits.
+
+Judge review: source-to-hosted asset drift is now disproven for HTML and browser
+JS at this check, and a clean isolated install/build/local-DB run is reproducible.
+Hosted runtime/database equivalence, another person's end-to-end run and backups
+are not attested. CI result will be recorded after push. Prior permanent-delete
+phone acceptance PASS remains owner-reported, not independently observed.
+
+My space update DRAFT READY, not posted:
+I added a documented local setup and automated build/regression workflow for
+The Record. A clean dependency install passed all 19 checks, including saving
+private drafts across a local server restart. Published HTML and JavaScript
+matched the source build byte for byte. Deployment packaging includes all eight
+schema migrations; no private database or wallet secrets are included.
+
+Event/Ship Weeks start/end review: supports public GitHub/README requirements
+without adding new on-chain proof. MIT retained. Four Ship Weeks tasks remain
+owner-confirmed complete, fresh Check unobserved. Q-Day Drill expired without
+confirmed registration. Scoped-window proof, accepted Stage2 audit and
+independent two-person acceptance remain open. Next: verify published GitHub
+workflow result and record it, then tackle the next open contest-proof gate.
+
+
+Reproducible bundle deployed as Site39, hosting source
+347bb58783cab25a2c4a4b6d04235a3ea3aec456. Database/migration state unchanged.
+The clean install needed no private credentials; local SQLite smoke test uses
+only its own temporary file. Clean archive vs working build and package test
+PASS after preserve-symlinks correction. GitHub Actions result is still pending
+publication, not claimed as passing. Phone Trash/deletion owner acceptance
+remains complete; no need to repeat destructive tests for this build-only edit.

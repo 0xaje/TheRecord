@@ -1,0 +1,35 @@
+{
+  "testedAt": "2026-11-18T11:44:12.961244+00:00",
+  "baseGitHubCommit": "fa80a460d4b1e9b48ee33352df2f95588c40158a",
+  "method": "Clean git archive plus selected milestone files; separate node_modules installed with npm ci. Rebuilt with preserve-symlinks after initial dependency-path mismatch was found.",
+  "node": "24.22.3",
+  "npm": "11.9.0",
+  "installExitCode": 0,
+  "checkExitCode": 0,
+  "passedTests": 19,
+  "migrationCount": 8,
+  "checks": [
+    {
+      "path": "dist/index.html",
+      "sha256": "707a62bad11cb46f9375fe6d8c7af0d8d339340a5f0af037a37a8b1f02730d45",
+      "cleanMatchesWorkingBuild": true
+    },
+    {
+      "path": "dist/verify.js",
+      "sha256": "3def202e61c70abcc9cdea79c66a2491521ee0a34c6e967e94acd6dd6e4f82be",
+      "cleanMatchesWorkingBuild": true
+    },
+    {
+      "path": "dist/server/index.js",
+      "sha256": "95edc632ea37a6db9f3437a3fd63646790e7c9e1dfc0bc7fa0743dd750e09c41",
+      "cleanMatchesWorkingBuild": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3e292b7bf4209a207ae01e4fe6088985eb40276a5f11c1aa89c583efecd52aab",
+      "cleanMatchesWorkingBuild": true
+    }
+  ],
+  "walletAction": false,
+  "independentProductionDeployment": false
+}

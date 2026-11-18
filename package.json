@@ -6,8 +6,12 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "esbuild web/verify.js --bundle --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html",
-    "build:site": "npm run build && node scripts/build-worker.mjs"
+    "build": "esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html",
+    "build:site": "npm run build && node scripts/build-worker.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run build:site && npm test",
+    "start:local": "node scripts/serve-local.mjs",
+    "package:site": "node scripts/package-site.mjs"
   },
   "repository": {
     "type": "git",
@@ -29,5 +33,8 @@
   "devDependencies": {
     "esbuild": "0.28.2"
   },
-  "private": true
+  "private": true,
+  "engines": {
+    "node": ">=24.22.3 <25"
+  }
 }

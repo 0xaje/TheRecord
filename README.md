@@ -15,12 +15,15 @@ The Record lets two parties review an agreement, approve the same version on Qor
 
 ## Build
 
-From the repository root, using Node.js:
+From the repository root in Ubuntu/WSL, using Node.js 24.22.3:
 
 ```sh
 npm ci
-npm run build:site
+npm run check
+npm run start:local
 ```
+
+Open **http://127.0.0.1:8788/**. See [build and deployment instructions](docs/BUILD_AND_DEPLOY.md) for database migration, identity boundaries, CI and deployment packaging.
 
 The browser build is in `dist/` and the Worker entry point is `dist/server/index.js`. The hosted draft workspace needs a D1 binding named `DB`, the SQL migrations in `migrations/`. The reviewer uses the invitation link and code.
 
