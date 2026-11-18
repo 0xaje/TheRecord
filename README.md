@@ -119,7 +119,7 @@ Regression: `node --test test/private-agreements.test.mjs`.
 Live acceptance (creates one non-sensitive draft, no wallet action):
 `node scripts/check-draft-trash.mjs --live-write`.
 See `docs/audit/2026-11-18/live-trash-checks.json`. Release 35 API checks passed;
-visual desktop/mobile acceptance is still pending because browser access failed.
+owner-reported phone Trash/restore acceptance passed. Current visual desktop acceptance has not been independently repeated here.
 
 
 ### Browser storage failures
@@ -167,7 +167,7 @@ node scripts/check-draft-delete.mjs --live-disposable-delete
 
 Do not adapt the script to delete existing user drafts. Deletion tests/evidence
 are stored in `docs/audit/2026-11-18/`. Owner reported the phone Trash/restore
-workflow passed; permanent deletion mobile acceptance is a separate open check.
+workflow passed; owner also confirmed permanent deletion worked on the phone. Hosting backup erasure remains unverified.
 
 
 ### Restricted-window helper (advanced test)
@@ -178,5 +178,10 @@ request. It checks public native opening receipts entered by hash. See the
 [Ubuntu disposable-account instructions](docs/compliance/UBUNTU_SCOPED_WINDOW.md)
 for the SDK route. `init`/`plan` print public addresses without signing or sending;
 separate `register`/`open` commands require explicit broadcast/address confirmation.
-No existing QoreX phrase is requested. Real scoped opening/call evidence remains
-open. The SDK is a development dependency for the CLI and codec tests.
+No existing QoreX phrase is requested. The owner completed a real scoped opening, permitted The Record creation and outside-recipient rejection on Diana. See the [scoped proof record](docs/compliance/UBUNTU_SCOPED_WINDOW.md#live-owner-result-and-read-only-review--18-november-2026). This SDK proof does not establish website-based QoreX window-opening support. The SDK is a development dependency for the CLI and codec tests.
+
+## Submission readiness
+
+See the [18 November readiness review](docs/compliance/SUBMISSION_READINESS.md) and [ready-to-paste project listing text](docs/compliance/PROJECT_LISTING_COPY.md). The public listing's original planning copy needs updating. Final demo video/listing fields, independent participant testing and exact event audit acceptance remain unverified.
+
+Additional dependencies used in the scoped helper/CLI: @qorechain/evm 0.14.0 and @qorechain/sdk 0.14.0. The latter is development-only. Their use does not imply QoreSeal encryption or smart-account spending rules are implemented by this product.

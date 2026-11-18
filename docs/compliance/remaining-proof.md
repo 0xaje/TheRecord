@@ -1,3 +1,15 @@
+# Current status — 18 November 2026
+
+The preparation log below is historical and superseded by these results:
+
+- Scoped SDK opening, permitted contract creation and outside-recipient refusal: owner live evidence reviewed PASS. See [Ubuntu proof record](UBUNTU_SCOPED_WINDOW.md#live-owner-result-and-read-only-review--18-november-2026). QoreX website native-window requests remain unsupported.
+- First audit and latest Stage2 re-audit retrieved and source-matched after removing only the final newline; [both links and finding dispositions](../AUDIT.md).
+- Fresh owner Solidity6/6 and Diana historical signature4/4 logs preserved [in the audit record](../AUDIT.md#fresh-owner-regression-evidence--18-november-2026).
+- Exact event acceptance of this same-source Stage2 run remains unverified. Current rules state two-stage audit; the workshop describes fixing findings with tests and auditing the final version. Our findings are disputed with evidence, not marked resolved by the auditor. No additional payment requested.
+- Independent participant acceptance, final video/listing fields and current complete rubric remain open. [Submission readiness](SUBMISSION_READINESS.md) is the current checklist.
+
+## Historical preparation log — not the current status
+
 # Remaining window and audit proof — 18 November 2026
 
 Status: **OPEN**. This check reads real receipts and existing reports; it submits
