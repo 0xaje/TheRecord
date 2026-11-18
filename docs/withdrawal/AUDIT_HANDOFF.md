@@ -1,5 +1,7 @@
 # Exact V2 audit input and remediation record
 
+Current update19November: new source-matched report QCAIA-1795043785188-4A004387 has been provided and reviewed. See [finding response and retained reports](AUDIT_RESPONSE.md). Earlier submission instructions below are historical preparation; no automatic rerun/payment is needed. Event acceptance is still unverified.
+
 Prepared19November2026 WAT. No audit was submitted or paid for by the agent.
 
 ## Exact input

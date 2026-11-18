@@ -3,6 +3,7 @@ pragma solidity 0.8.28;
 import {TheRecordV2} from '../contracts/TheRecordV2.sol';
 interface VmV2 {
     function expectRevert(bytes4) external;
+    function expectRevert(bytes calldata) external;
     function prank(address) external;
     function store(address, bytes32, bytes32) external;
     function chainId(uint256) external;
@@ -49,4 +50,15 @@ contract TheRecordV2Test {
     function testCorrectionApprovalPayloadDiffers() public { pending();bytes memory oldData=r.approvalData(id,2,FIRST);flags(2,256);r.amend(id,FIXED);require(keccak256(oldData)!=keccak256(r.approvalData(id,3,FIRST))); }
     function testChainBindingChangesWithdrawalPayload() public { pending();bytes32 oldHash=keccak256(r.withdrawalData(id,2));vm.chainId(block.chainid+1);require(oldHash!=keccak256(r.withdrawalData(id,2))); }
     function testOriginalContractRemainsIndependent() public { TheRecordV2 another=new TheRecordV2();bytes32 other=another.create(bytes32(uint256(1)),FIRST,SECOND,ORIGINAL);pending();require(keccak256(r.approvalData(id,1,FIRST))!=keccak256(another.approvalData(other,1,FIRST))); }
+    function testVersionOverflowRevertsWithCheckedArithmetic() public {
+        finalizeFirst();
+        uint256 maximum = type(uint256).max;
+        vm.store(address(r), bytes32(base()+3), bytes32(maximum));
+        vm.store(address(r), bytes32(base()+4), bytes32(maximum));
+        vm.store(address(r), versionSlot(maximum), ORIGINAL);
+        flags(maximum,3);
+        vm.expectRevert(abi.encodeWithSignature("Panic(uint256)",uint256(0x11)));
+        r.amend(id,FIXED);
+    }
+
 }

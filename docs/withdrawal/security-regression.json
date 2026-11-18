@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-18T23:08:32.932Z",
+  "checkedAt": "2026-11-18T23:20:02.175Z",
   "chainId": 9800,
   "address": "0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f",
   "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
@@ -94,8 +94,20 @@
       "block": "10341772",
       "expected": "InvalidVersion",
       "result": "PASS"
+    },
+    {
+      "label": "valid approval may be relayed without changing its signed meaning",
+      "block": "10341666",
+      "expected": "accepted",
+      "result": "PASS"
+    },
+    {
+      "label": "relayer cannot substitute the other designated signer",
+      "block": "10341666",
+      "expected": "InvalidApproval",
+      "result": "PASS"
     }
   ],
-  "passed": 14,
+  "passed": 16,
   "scope": "Read-only historical calls against real deployed Diana contract and PQ precompiles using publicly recorded signatures. No new transactions, mocked precompiles, keys or signatures generated. Not an independent security certification."
 }

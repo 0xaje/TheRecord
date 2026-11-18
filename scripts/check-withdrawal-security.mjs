@@ -48,6 +48,9 @@ await check('delayed withdrawal cannot target superseded version2','withdraw',wi
 await check('duplicate fresh approval rejected','approve',fresh.decoded.args,fresh.tx.from,fresh.receipt.blockNumber,'InvalidApproval');
 await check('finalized correction cannot be withdrawn','withdraw',[id,3n,withdrawal.decoded.args[2]],withdrawal.tx.from,final.receipt.blockNumber,'InvalidVersion');
 await check('original finalized version cannot be withdrawn','withdraw',[id,1n,withdrawal.decoded.args[2]],withdrawal.tx.from,final.receipt.blockNumber,'InvalidVersion');
+await check('valid approval may be relayed without changing its signed meaning','approve',fresh.decoded.args,other,beforeFresh);
+const changedSigner=[...fresh.decoded.args];changedSigner[2]=other;
+await check('relayer cannot substitute the other designated signer','approve',changedSigner,other,beforeFresh,'InvalidApproval');
 const artifact=JSON.parse(readFileSync('deploy/withdrawal-v2-artifact.json','utf8'));
 const result={checkedAt:new Date().toISOString(),chainId:9800,address,agreementId:id,sourceSha256:artifact.sourceSha256,transactions:hashes,checks,passed:checks.length,scope:'Read-only historical calls against real deployed Diana contract and PQ precompiles using publicly recorded signatures. No new transactions, mocked precompiles, keys or signatures generated. Not an independent security certification.'};
 writeFileSync('docs/withdrawal/security-regression.json',JSON.stringify(result,null,2)+'\n');

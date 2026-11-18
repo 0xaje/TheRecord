@@ -98,3 +98,8 @@ Owner supplied the full terminal logs, preserved unchanged:
 - [Diana approval regression: 4 passed](audit/2026-11-18/diana-approval-regression.txt): valid recorded version2 approval accepted before inclusion at block10135459; duplicate rejected at10135460; version1signature reused forversion2 rejected at10135459; altered signature of valid length rejected at10135459.
 
 The second log comes from read-only calls against historical Diana state, not four newly committed transactions. The Foundry fork reads finalized historical records; it does not execute custom PQC precompiles locally. These are owner-executed results with uploaded raw logs, not a fresh independent rerun by the agent. No contract code changed in this evidence update. This strengthens finding-level regression evidence without changing QCAIA's Open finding statuses or claiming organizer acceptance.
+
+
+## Withdrawal-enabled V2 report — 19 November 2026 WAT
+
+The new report QCAIA-1795043785188-4A004387 binds the deployed V2 raw source exactly (688545ad...3193980). It reports65/100High,1High2Medium1Low1Info,allOpen. [HTML/PDF, source verification, finding dispositions and additional tests](withdrawal/AUDIT_RESPONSE.md) are preserved separately from legacy reports. No clean audit or event acceptance claim is made.

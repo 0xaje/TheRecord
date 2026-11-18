@@ -12,3 +12,5 @@ PASS: delayed withdrawal cannot target superseded version2 10341666
 PASS: duplicate fresh approval rejected 10341667
 PASS: finalized correction cannot be withdrawn 10341772
 PASS: original finalized version cannot be withdrawn 10341772
+PASS: valid approval may be relayed without changing its signed meaning 10341666
+PASS: relayer cannot substitute the other designated signer 10341666
