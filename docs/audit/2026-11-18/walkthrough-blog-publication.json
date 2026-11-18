@@ -1,0 +1,15 @@
+{
+  "siteVersion": 42,
+  "deploymentStatus": "succeeded",
+  "url": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "siteSourceCommit": "8d50dae2f47438a042f180ba6f468e98311af12f",
+  "scope": "Walkthrough/Blog content and navigation, existing design retained",
+  "localChecks": {
+    "passed": 29,
+    "failed": 0
+  },
+  "desktopPreview": "Ten chapters rendered, chapter10 reached and active, eight Blog sections rendered, version-history anchor remains on Blog",
+  "mobileVisualAcceptance": "OPEN: not exercised in mobile viewport or on phone",
+  "chainTransactionsSent": false,
+  "independentParticipantAcceptance": "pending"
+}

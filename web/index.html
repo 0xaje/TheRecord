@@ -4,6 +4,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Record | Review and verify agreements</title>
 <style>
+.blog-body .story-card{margin:1rem 0}.story-card>strong{display:block}.story-card img{display:block;margin-bottom:.8rem}.chapter-list{max-height:calc(100dvh - 2rem);overflow-y:auto}.blog-body a{overflow-wrap:anywhere}
+
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
 :root{color-scheme:dark;font:16px/1.6 "DM Sans",system-ui,sans-serif;background:#09090b;color:#fafafa;--panel:#151517;--line:#333337;--muted:#b8b8c0;--accent:#b4efce}
 *{box-sizing:border-box}
@@ -491,7 +493,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <section class="screen narrow" data-screen="signer-setup" hidden>
 <details class="surface" id="signer-setup">
 <summary>Advanced test signer setup</summary>
-<p><a href="#evm-window">Set up restricted EVM access with QoreX</a></p>
+<p><a href="#evm-window">Inspect restricted EVM access</a></p>
 <p>For signing-file approvals. For QoreX approval, prepare your signing key inside QoreX.</p>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
 <button id="generate-signer" type="button">Generate signing file</button>
@@ -512,7 +514,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <div class="surface" id="scoped-window">
 <h1>Restricted EVM access</h1>
 <p>Advanced Diana test. The Ubuntu SDK tool prepares access only to The Record, for 600 blocks, up to 5 transactions and a total 1 QOR allowance including maximum EVM fees. This replaces your previous window. Opening has a separate network fee.</p>
-<p>This does not approve an agreement or transfer QOR. Use a disposable test account. Inspection keeps keys inside QoreX. The Ubuntu route uses a separate local test account. Scoped-call evidence is still being collected.</p>
+<p>This does not approve an agreement or transfer QOR. Use a disposable test account. Inspection keeps keys inside QoreX. The Ubuntu route uses a separate local test account. The owner completed a real Diana scoped-window test: a permitted The Record transaction succeeded and an outside recipient was rejected. This page checks opening receipts; it does not repeat that test.</p>
 <button type="button" id="window-connect">Inspect QoreX test account</button>
 <pre id="window-preview" hidden style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
 <p>QoreX refused website window changes in the real mobile test. This page now only inspects accounts and checks public receipts. No signing request is made here.</p>
@@ -527,14 +529,12 @@ main{padding-inline:1rem;padding-bottom:2rem}
 
 <section class="screen" data-screen="walkthrough" hidden>
 <header class="story-header walkthrough-intro"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
-<h1>Follow one agreement.</h1><p>Scroll from the first review to a verified amendment. Each step explains what the file, signers and chain record mean.</p></header>
+<h1>Follow one agreement.</h1><p>Follow a document from saved draft to approval, verification and history on QoreChain Diana Testnet. Then learn how to manage private drafts and keep access to your files.</p></header>
 <div class="story-layout">
 <div class="chapter-navigation">
 <button type="button" class="chapter-menu-toggle secondary" id="chapter-menu-toggle" aria-expanded="false" aria-controls="walkthrough-chapters">Choose a step</button>
 <nav class="chapter-list" id="walkthrough-chapters" aria-label="Walkthrough chapters">
-<a href="#chapter-1">Agree on the terms</a><a href="#chapter-2">Record the version</a>
-<a href="#chapter-3">Both people approve</a><a href="#chapter-4">Check the original</a>
-<a href="#chapter-5">Change one detail</a><a href="#chapter-6">Approve the amendment</a>
+<a href="#chapter-1">Save draft revisions</a><a href="#chapter-2">Agree on the terms</a><a href="#chapter-3">Record on Diana</a><a href="#chapter-4">Both people approve</a><a href="#chapter-5">Check the original</a><a href="#chapter-6">Change one detail</a><a href="#chapter-7">Approve the amendment</a><a href="#chapter-8">Read agreement history</a><a href="#chapter-9">Trash and deletion</a><a href="#chapter-10">Files and recovery</a>
 </nav></div>
 <div class="story-main"><div id="story-chapters"></div>
 <div class="story-actions" aria-label="Continue with The Record">
@@ -545,20 +545,27 @@ main{padding-inline:1rem;padding-bottom:2rem}
 </div></div>
 </section>
 <section class="screen" data-screen="blog" hidden>
-<header class="story-header article-intro"><p class="eyebrow">The Record · Build Before Q-Day</p>
+<header class="story-header article-intro"><p class="eyebrow">Built on QoreChain · Build Before Q-Day</p>
 <h1>Which version did both people approve?</h1>
 <p>An agreement can change in a single word. The Record connects each file version to its approvals on QoreChain Diana Testnet.</p></header>
 <div class="blog-layout">
 <aside class="blog-toc" aria-label="Article sections">
-<a href="/blog#why">The problem</a><a href="/blog#workflow">From review to proof</a><a href="/blog#qorechain">Why QoreChain</a><a href="/blog#privacy">What stays private</a><a href="/blog#evidence">What we have verified</a><a href="/blog#start">Try it yourself</a>
+<a href="/blog#why">The problem</a><a href="/blog#research">Real-world examples</a><a href="/blog#workflow">From review to proof</a><a href="/blog#qorechain">Why QoreChain</a><a href="/blog#version-history">Two kinds of history</a><a href="/blog#privacy">Privacy and recovery</a><a href="/blog#evidence">Evidence and testing</a><a href="/blog#start">Try it yourself</a>
 </aside>
 <article class="blog-body">
 <section id="why"><h2>A small edit can change the agreement.</h2>
-<p>A client and a freelancer agree to delivery by Friday. Later, someone shares a copy that says Monday. The question is simple. Which file did both people approve?</p>
+<p>Anyone who needs to approve a document version can use this workflow. Our example follows a client and a freelancer who agree to delivery by Friday. Later, someone shares a copy that says Monday. The question is simple. Which file did both people approve?</p>
 <p>The Record lets two parties review terms, approve a specific version, and check a copy against that record later. A file fingerprint ties the approvals to the exact bytes of the document.</p>
 <p>The example in the walkthrough uses the real Friday and Monday sample files available in the demo. The chapter illustrations explain the workflow. Screenshot results and receipt links identify the recorded evidence.</p></section>
+<section id="research"><h2>The question appears in real disputes.</h2>
+<p>The Record addresses a specific uncertainty: which file version did the designated signing accounts approve? These examples explain why clear agreement records matter. They are not claims that this app would have prevented a lawsuit or guaranteed payment.</p>
+<div class="story-card"><h3>United Kingdom: which terms applied?</h3><p>In RTS Flexible Systems v Müller, work began before the intended formal contract was signed. The dispute reached the UK Supreme Court over whether a contract existed and which terms governed it.</p><p><a href="https://www.supremecourt.uk/cases/uksc-2009-0048">Read the official case summary</a></p></div>
+<div class="story-card"><h3>Canada: did a reply mean approval?</h3><p>In Achter v South West Terminal, a photographed contract received a thumbs-up reply. The meaning of that response became disputed. The result depended on the parties’ circumstances and earlier dealings.</p><p><a href="https://www.scc-csc.ca/cases-dossiers/search-recherche/41671/">Read the Canadian court’s case record</a></p></div>
+<div class="story-card"><h3>Nigeria: keeping contract records inspectable</h3><p>Nigeria’s Open Contracting Portal already publishes procurement information. OGP’s April 2026 review records improvements alongside remaining data-entry and paperwork work. This is local context for the importance of accessible records, not a claim that public procurement and everyday agreements have identical needs.</p><p><a href="https://www.opengovpartnership.org/documents/nigeria-results-report-2023-2025/">Read the Nigeria assessment</a></p></div>
+<p>Our conclusion is narrower than these disputes: explicit approvals tied to an exact file can provide a clearer reference. A wallet signature does not by itself establish legal identity, authority, informed consent, delivery or payment.</p>
+<p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/research/WHY_THE_RECORD.md">Read the research, comparison with existing signing tools and its limits</a></p></section>
 <section id="workflow"><h2>From review to proof</h2>
-<ol><li><strong>Review the terms.</strong> Create a private draft, save a revision and share an invitation with its access code. The reviewer can request changes before signing.</li>
+<ol><li><strong>Review the terms.</strong> Create a private draft, keep your workspace recovery code, save a revision and share an invitation with its access code. The reviewer can request changes before signing.</li>
 <li><strong>Record the file.</strong> Download the agreed revision. Use Record to submit its fingerprint and two distinct signer addresses to Diana.</li>
 <li><strong>Approve through QoreX.</strong> Each signer opens the verification link in QoreX, selects Diana Testnet and verifies the exact file before approving. Both approvals must refer to the same version.</li>
 <li><strong>Verify later.</strong> Anyone with the file and agreement ID can compare its fingerprint with the recorded version. Checking a finalized file requires no wallet connection.</li>
@@ -569,19 +576,25 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <tr><td>QoreChain Diana Testnet</td><td>Stores version fingerprints, records the two approvals and emits finalization events.</td></tr>
 <tr><td>QoreX</td><td>Lets each party connect their Diana account and sign the approval message in their wallet.</td></tr>
 <tr><td>ML-DSA-87 verification</td><td>The contract checks the approval signature through Diana’s PQC verifier. The app checks that the signer has an eligible registered key with proof of possession before requesting an approval.</td></tr>
+<tr><td>QoreChain SDK and scoped EVM access</td><td>A separate disposable-account SDK test opened an EVM window restricted to The Record. The permitted contract call succeeded; an outside recipient was rejected while capacity remained. QoreX mobile refused website window-opening requests, so that advanced test uses the documented Ubuntu route.</td></tr>
 <tr><td>QoreChain Explorer</td><td>Provides inspectable transaction receipts for agreement creation, approval and amendments.</td></tr></tbody></table>
 <p>The approval message binds the signature to the chain, contract, agreement, version, file fingerprint and signer. That connection is the reason the signature belongs to a particular approval.</p>
-<p>These records are on Diana Testnet. The evidence below documents testnet activity.</p>
+<p>These records are on Diana Testnet. An ordinary EVM transaction signature, its post-quantum-authorized access window, and the agreement’s ML-DSA-87 approval check are distinct layers. A window alone is not proof that both parties approved an agreement.</p><p>NIST standardized ML-DSA in 2024. That supports the cryptographic direction; it is not a certification of this application or a guarantee of permanent security.</p><p><a href="https://csrc.nist.gov/pubs/fips/204/final">NIST ML-DSA standard</a> · <a href="https://docs.qorechain.io/developer-guide/evm-window-reference/">QoreChain EVM window reference</a></p>
 <p><a href="https://build.qorechain.io">QoreChain Build Before Q-Day</a> · <a href="https://dashboard.qorechain.io/explorer">QoreChain Explorer</a></p></section>
-<section id="privacy"><h2>What stays private</h2>
+<section id="version-history"><h2>Keep draft history separate from chain history.</h2>
+<div class="story-pair"><div class="story-card"><h3>Saved private revisions</h3><p>Each new save retains a revision. In Drafts, open Saved revisions to view or download an earlier draft without replacing the editor. These revisions stay in your workspace; saving one does not create a Diana agreement version.</p></div><div class="story-card good"><h3>QoreChain agreement history</h3><p>History reads version, approval and finalization events from Diana and compares them with a contract-state snapshot. Continue an incomplete scan before treating it as the full history. Anyone can inspect the public records without connecting a wallet.</p></div></div>
+<p><a href="/history">Open agreement history</a> · <a href="/#workspace">Open saved drafts</a></p></section>
+<section id="privacy"><h2>Privacy, recovery and deletion</h2>
 <p>File verification hashes your selected file in your browser. The verification operation sends a chain lookup and compares the result locally. The document itself stays on your device during this check.</p>
-<p>The private draft workspace saves the draft on the service so invited reviewers can read it. Draft access uses invitation links and codes. That storage is a different operation from local file verification.</p>
-<p>The agreement contract stores fingerprints, signer addresses and approval state. A fingerprint helps detect changes. Approval records identify the signing accounts. Keep your own copy of each agreed document.</p></section>
+<p>The private draft workspace saves the draft on the service so invited reviewers can read it. Draft access uses invitation links and codes. Workspace access uses a private recovery code; anyone holding it can access the workspace. These drafts are not end-to-end encrypted. Server storage is a different operation from local file verification.</p>
+<p>The agreement contract stores fingerprints, signer addresses and approval state. A fingerprint helps detect changes. Approval records identify the signing accounts. Keep your own copy of each agreed document.</p><p>Save your workspace recovery code outside the browser. Clearing browser data can remove its saved copy. If storage is blocked, file checking can still work, while workspace actions stop if a recovery identity cannot be safely saved.</p><p>Trash keeps revisions and revokes old review links. Restore a draft and create a new invitation to share it again. Permanent deletion requires typing DELETE and removes that draft, revisions, invitations and feedback from the live database. It cannot be restored. Downloaded copies and public QoreChain records remain; backup erasure is unverified.</p><p>A public fingerprint is not encryption: someone who guesses the exact file can compare its hash. Keep the original file; the chain fingerprint cannot recreate it.</p></section>
 <section id="evidence"><h2>What we have verified</h2>
 <p>The Diana evidence log records two distinct approvals, finalization, changed-file rejection and fresh approvals for amendments. It also records the earlier version remaining verifiable after an amendment.</p>
 <p>The guided demo’s original and changed-file results were captured on a laptop. The owner repeated both checks inside QoreX on a phone and confirmed working downloads. QoreX blocked screenshots on that phone, so its results are recorded as owner reports.</p>
-<p>Independent participants completing the full workflow are still pending. The latest approval interface has build checks, with a fresh end-to-end approval test still pending.</p>
+<p>The owner completed the agreement flow using two distinct wallets. Independent participants completing the full workflow are still pending. The separate scoped-window admission test passed; that test created a record but did not approve or finalize it.</p>
 <p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md">Read the Diana evidence log</a> · <a href="https://dashboard.qorechain.io/explorer/tx/0xb8b3895071b1ef1f9afbf665b52482b277ee312dfac5f090117ac50479927487">Inspect the demo’s version 1 finalization</a></p>
+<div class="story-card"><h3>Audit and regression evidence</h3><p>Both QCAIA reports match the contract source after final-newline normalization. The first scored 65/100 Medium and the latest re-audit scored 65/100 High. Findings remain Open in those reports; the repository records our finding-by-finding responses and remaining design tradeoffs.</p><p>Six owner-run Solidity tests passed, plus four read-only historical Diana checks covering a valid approval and rejection of duplicate, wrong-version and altered signatures. Local JavaScript checks cover the workspace and verification controls. These are test results, not an independent security certification.</p><p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md">Audit reports and raw regression logs</a> · <a href="https://github.com/0xaje/TheRecord/blob/main/docs/compliance/UBUNTU_SCOPED_WINDOW.md">Scoped-window receipts and rejection evidence</a></p></div>
+<details class="story-evidence"><summary>Build, service limits and technical checks</summary><p>The repository includes a pinned Node version, local Worker/SQLite setup and automated checks. Hosted private drafts use a Worker and D1. The service limits workspaces to 50 drafts, 200 revisions per draft and 100 invitations per draft, with paginated lists and request throttling. Limits are operational controls, not protection against every abuse scenario.</p><p>Legacy sign-in relies on a trusted hosting identity header. Moving the backend to a different host requires preserving that trust boundary. Backup erasure and independent full-workflow acceptance remain unverified.</p><p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/BUILD_AND_DEPLOY.md">Reproduce the build</a> · <a href="https://github.com/0xaje/TheRecord/actions">Automated checks</a></p></details>
 <div class="story-pair"><figure><img class="story-shot" src="/demo/original-match.png" alt="Laptop result showing the original matches finalized version 1 with two approvals" loading="lazy"><figcaption>Original file matches version 1.</figcaption></figure><figure><img class="story-shot" src="/demo/changed-mismatch.png" alt="Laptop result showing the changed file does not match version 1" loading="lazy"><figcaption>Changed copy fails against version 1.</figcaption></figure></div></section>
 <section id="start"><h2>Try it yourself</h2>
 <p>Start with the walkthrough, then try the original and changed files against the same finalized version. To approve an agreement, use your designated wallet in QoreX with Diana Testnet selected and an eligible registered signing key.</p>
