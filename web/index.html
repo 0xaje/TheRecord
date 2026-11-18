@@ -487,7 +487,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 </section>
 <section class="screen narrow" data-screen="amend-title" hidden>
 <header class="screen-heading"><h1 id="amend-title">Amend an agreement</h1>
-<p>Use the wallet that created the agreement. The latest version must be finalized before you can propose a changed file. Both signers must approve the new version. You can still verify the earlier version.</p></header>
+<p>Use the wallet that created the agreement. On the original contract, the latest version must be finalized before you can propose a changed file. Withdrawal-enabled contracts also allow a correction after a pending amendment is withdrawn. Both signers must approve the new version. You can still verify the earlier version.</p></header>
 <form id="amend">
 <label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
 <label>Changed agreement file <input name="document" type="file" required></label>
@@ -495,6 +495,15 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <output role="status"></output>
 <a hidden>View amendment transaction</a>
 <a hidden>Open the new version</a>
+</form>
+<p id="withdrawal-availability" role="status"></p>
+<form id="withdraw-update" hidden>
+<h2>Withdraw a pending update</h2>
+<p>Use the original proposer’s QoreX account. Withdrawal is recorded in history and needs its own post-quantum signature. Finalized agreements stay unchanged.</p>
+<label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label>
+<label>Pending version <input name="version" required pattern="[1-9][0-9]*" inputmode="numeric"></label>
+<button type="submit" class="secondary">Withdraw pending update with QoreX</button>
+<output role="status"></output><a hidden>View withdrawal transaction</a>
 </form>
 </section>
 <section class="screen narrow" data-screen="signer-setup" hidden>

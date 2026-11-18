@@ -4,3 +4,7 @@ dist/
 
 .record-local/
 site-bundle/
+
+# Foundry compiler output (source and test evidence are kept separately)
+out/
+cache/

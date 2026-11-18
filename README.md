@@ -189,3 +189,7 @@ Additional dependencies used in the scoped helper/CLI: @qorechain/evm 0.14.0 and
 ## Problem evidence
 
 [Why The Record exists](docs/research/WHY_THE_RECORD.md) maps primary court/regulator evidence to the exact-version approval problem, compares existing signing approaches and states what remains unvalidated. [Founder explanation draft](docs/research/FOUNDER_PITCH.md). Technical test results do not establish customer demand or payment enforcement.
+
+## Pending-update withdrawal development
+
+The withdrawal-amendments branch prepares a separate TheRecordV2 deployment. Existing contracts and records remain unchanged. The candidate is not activated on the public site. See [implementation, tests and owner checkpoint](docs/withdrawal/IMPLEMENTATION.md).

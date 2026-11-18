@@ -1,0 +1,68 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 check
+> npm run build:site && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build:site
+> npm run build && node scripts/build-worker.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build
+> esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html
+
+
+  dist/verify.js  1.3mb ⚠️
+
+⚡ Done in 89ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 test
+> node --test test/*.test.mjs
+
+✔ Blog reading location follows down, up, long sections and gaps (1.201659ms)
+✔ built Worker serves pages and persistent private drafts with real local SQLite (142.389715ms)
+✔ draft, review, feedback, revision isolation and revocation (59.02788ms)
+✔ expiry, malformed requests, origins and storage failures (10.025302ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (19.149891ms)
+✔ revision pages have no overlap and do not expose full text in lists (53.068141ms)
+✔ additive migration preserves a legacy current revision without inventing old text (12.321896ms)
+✔ workspace write throttle returns Retry-After without blocking reads (30.832712ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (20.386392ms)
+✔ retained revision and invitation quotas are atomic (49.108903ms)
+✔ review throttling and temporary storage failures fail safely (37.080626ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (30.350155ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (20.508537ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (14.324128ms)
+✔ disposable CLI creates a private file without printing secrets or replacing an account (139.417688ms)
+✔ registration includes a valid address-bound possession proof and signs offline only (51.529813ms)
+✔ paired proof fixes zero-value scope targets and requires the exact successful proposal event (5.861651ms)
+✔ Diana allowed-recipient rejection is recognized without accepting unrelated failures (0.195196ms)
+✔ read-only review requires live matching snapshots and retains original evidence (0.560087ms)
+✔ scoped request bytes exactly match official SDK, with no key derivation or signing (3.971551ms)
+✔ receipt validation refuses unscoped, failed, mismatched and non-hybrid fixtures (0.571465ms)
+✔ read-back distinguishes live restriction from expired or replaced window fixtures (0.253403ms)
+✔ built verifier initializes its controls when storage access throws (146.485153ms)
+✔ expanded walkthrough keeps chapter links, active step count and menu controls aligned (12.52137ms)
+✔ Blog chapter anchors resolve without colliding with application screen routes (0.862796ms)
+✔ legacy links stay pinned and unknown deployments never fall back (1.735967ms)
+✔ matching withdrawn file is never approvable or finalized (1.209911ms)
+✔ history retains original, withdrawal receipt and fresh zero-approval correction (1.636726ms)
+✔ history rejects missing withdrawal evidence and post-withdrawal approvals (0.557354ms)
+✔ deployment artifact is source-bound and preserves the legacy source (0.737587ms)
+✔ owner deployment plan is offline, one creation transaction, and never changes legacy routing (542.63423ms)
+✔ blocked storage access and reads do not throw during module setup (1.378416ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (1.239206ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (0.835504ms)
+✔ successful persistence reads back the exact recovery code before returning (0.316108ms)
+✔ failed read-back attempts to restore the previously saved identity (0.531845ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1161.121222

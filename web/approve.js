@@ -3,6 +3,8 @@ import { addressFromPublicKey, deriveCanonicalPqKey, deriveClassicalKey, signMes
 import { bytesToHex, createPublicClient, encodeFunctionData, hexToBytes, http, parseAbi } from "viem";
 
 const abi = parseAbi([
+  "function withdrawalData(bytes32,uint256) view returns (bytes)",
+  "function withdraw(bytes32,uint256,bytes)",
   "function approvalData(bytes32,uint256,address) view returns (bytes)",
   "function approve(bytes32,uint256,address,bytes)",
   "error InvalidApproval()",
@@ -59,7 +61,10 @@ export function generateTestSigner() {
   return { signer, derivedAddress, file };
 }
 
-export async function submitApproval({ rpcUrl, contract, id, version, fingerprint, signerAddress, keyFile, useQoreX = false, onSubmitted }) {
+export const submitApproval = options => submitSignedAction(options);
+export const submitWithdrawal = options => submitSignedAction({ ...options, withdrawal: true, useQoreX: true });
+
+async function submitSignedAction({ rpcUrl, contract, id, version, fingerprint, signerAddress, keyFile, useQoreX = false, onSubmitted, withdrawal = false }) {
   const wallet = window.ethereum;
   if (!wallet?.request) throw new Error("Open this page in a browser with a compatible wallet.");
   const client = createPublicClient({ transport: http(rpcUrl, { timeout: 15000 }) });
@@ -87,14 +92,16 @@ export async function submitApproval({ rpcUrl, contract, id, version, fingerprin
       throw new Error("Select the same Diana account in QoreX and your EVM wallet.");
     }
   }
+  if (withdrawal && signerAddress !== from.toLowerCase()) throw new Error("Use the original proposer’s account to withdraw.");
   const payload = await client.readContract({
-    address: contract, abi, functionName: "approvalData", args: [id, version, signerAddress],
+    address: contract, abi, functionName: withdrawal ? "withdrawalData" : "approvalData", args: withdrawal ? [id, version] : [id, version, signerAddress],
   });
   const data = hexToBytes(payload);
   if (data.length !== 224 || bytesToHex(data.slice(160, 192)) !== "0x" + fingerprint) {
     throw new Error("The recorded fingerprint changed. Verify your file again.");
   }
 
+  if (withdrawal && bytesToHex(data.slice(204, 224)).toLowerCase() !== signerAddress.toLowerCase()) throw new Error("Use the original proposer’s QoreX account.");
   await checkSignerReadiness(client, signerAddress);
   let signed;
   if (useQoreX) {
@@ -112,14 +119,17 @@ export async function submitApproval({ rpcUrl, contract, id, version, fingerprin
   const bytes = Uint8Array.from(atob(signed.pq?.signature ?? ""), char => char.charCodeAt(0));
   if (bytes.length !== 4627) throw new Error("Could not create the ML-DSA-87 approval.");
 
-  const args = [id, version, signerAddress, bytesToHex(bytes)];
-  await client.simulateContract({ address: contract, abi, functionName: "approve", account: from, args });
+  const args = withdrawal ? [id, version, bytesToHex(bytes)] : [id, version, signerAddress, bytesToHex(bytes)];
+  const functionName = withdrawal ? "withdraw" : "approve";
+  await client.simulateContract({ address: contract, abi, functionName, account: from, args });
   if (BigInt(await wallet.request({ method: "eth_chainId" })) !== 9800n) {
     throw new Error("Switch your wallet back to Diana Testnet.");
   }
+  const [currentAccount] = await wallet.request({ method: "eth_accounts" });
+  if (currentAccount?.toLowerCase() !== from.toLowerCase()) throw new Error("Wallet account changed. Start again with the intended account.");
   const hash = await wallet.request({
     method: "eth_sendTransaction",
-    params: [{ from, to: contract, data: encodeFunctionData({ abi, functionName: "approve", args }), value: "0x0" }],
+    params: [{ from, to: contract, data: encodeFunctionData({ abi, functionName, args }), value: "0x0" }],
   });
   onSubmitted(hash);
   const receipt = await client.waitForTransactionReceipt({ hash, timeout: 60000 });
