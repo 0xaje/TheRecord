@@ -576,3 +576,29 @@ permanent-delete acceptance PASS. Backups remain unverified.
 My space update READY (not posted), add:
 GitHub Actions also passed the clean install and all 19 regression checks:
 https://github.com/0xaje/TheRecord/actions/runs/44297789979
+
+
+## 18 November — window/audit evidence review (OPEN)
+
+Read official window reference and Workshop2 audit guidance. Fest Rules page
+retrieval failed; previously supplied category wording retained with that limit.
+Decoded real native opening B1D0858D… code0 at10221360: blocks300,max_txs5,
+max_value1000000uqor,native_onlyfalse,allowed_targets empty. Hybrid extension
+present, not independently crypto-verified. This known window is unscoped;
+do not generalize to every historical project window. 7DD5E889… was a key
+registration, not opening. Evidence: docs/compliance/window-audit-check.json;
+repeatable read-only script scripts/check-window-evidence.mjs.
+
+Read both existing November16 PDF reports (repo and Library): each65/100,
+Medium,Ethereum,5findings. Latest already-paid run acceptance/payment/source
+binding still missing. No later report resolved by focused search; do not claim
+none exists. Do not ask for another150QOR audit payment solely to get evidence.
+
+Judge: evidence review done, compliance milestone stays OPEN. Next exact owner
+checkpoint: inspect QoreX EVM-window controls for allowed targets; proposedtarget
+0x25721b3be0f24438da7daed4c800b073ef9bb802. Need real scopedopening+permitted
+call+outside-scopechainrejection on disposable account. Also latest paid report
+or runID/dashboardstatus; specificorganizerreplyonlyifdashboardcannotestablish.
+No new wallet action, no product/contract change. Myspace draft recorded in
+remaining-proof.md, not posted. ShipWeeks4owner-confirmed;freshCheckunobserved.
+QDayregistrationexpired;independent2personacceptanceopen;walletwarningresolved.

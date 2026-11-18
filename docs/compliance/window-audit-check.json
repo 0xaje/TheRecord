@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-18T11:53:41.782Z",
+  "openingReceipt": {
+    "hash": "B1D0858D43C9B5DA7C40D1B085DB7F7D11427E95B3B52F5BDA3C41002C632BC4",
+    "endpoint": "https://api-testnet.qore.host/cosmos/tx/v1beta1/txs/B1D0858D43C9B5DA7C40D1B085DB7F7D11427E95B3B52F5BDA3C41002C632BC4",
+    "height": "10221360",
+    "code": 0,
+    "sender": "qor1ap9phrpqk83nlswkm4r9pt6n0qljjy0dvatfll",
+    "blocks": "300",
+    "maxTxs": "5",
+    "maxValueUqor": "1000000",
+    "nativeOnly": false,
+    "allowedTargets": [],
+    "hybridExtensionPresent": true
+  },
+  "expectedContract": "0x25721b3be0f24438da7daed4c800b073ef9bb802",
+  "contractRestricted": false,
+  "conclusion": "This historical window was unscoped. It does not close the contract-restricted-window evidence gate.",
+  "availableAuditReports": [
+    {
+      "name": "2026-11-16-stage-1.pdf",
+      "sha256": "10ceea0959ab08c565db438c3527ae2bc5ce79a0c607755140244f407b7f84d5"
+    },
+    {
+      "name": "2026-11-16-stage-2.pdf",
+      "sha256": "e4e2b06a916b6b14f92d7d360d1792fa3302014e104e947f2a35f8d60984b406"
+    }
+  ],
+  "stage2Accepted": null,
+  "limits": "A hybrid extension is present; this script does not independently verify its cryptography. PDF hashes do not establish payment or organizer acceptance. No new transaction submitted."
+}
