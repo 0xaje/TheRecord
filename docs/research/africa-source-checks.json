@@ -1,0 +1,15 @@
+{
+  "checkedDate": "2026-11-18",
+  "trackaPdf": {
+    "url": "https://budgit.org/wp-content/uploads/2025/01/Tracka2024AnnualReport-copy.pdf",
+    "sha256": "068c4d6e90bc1866a1b253938f6e75055b53233577eb98d6cdeb4383542c70e6",
+    "bytes": 19504528,
+    "method": "Direct HTTP PDF download and pdftotext; printed pages1,7; no source PDF republished"
+  },
+  "limits": [
+    "Nigerian promise tracker no readable direct page: no counts or current ratings relied upon",
+    "South Africa example explicitly dated 2023\u201324, not latest series",
+    "Use-case sectors are product-fit hypotheses, not actual integrations",
+    "No new chain transaction, political outreach or application change"
+  ]
+}

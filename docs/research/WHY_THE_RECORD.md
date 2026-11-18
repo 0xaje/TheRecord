@@ -118,3 +118,7 @@ All accessed 18 November 2026. Court documents are illustrative case evidence, n
 - S9 — Docusign, Use of Transaction Data: https://www.docusign.com/trust/security/transaction-data-use
 - S10 — Documenso Community Edition: https://docs.documenso.com/docs/policies/community-edition
 - S11 — WorldCC Foundation, Contract value erosion: the story so far (context/caution, not headline evidence): https://www.worldcc.foundation/Portals/IACCM/Resources/10655_0_Overcoming-the-10-pitfalls.pdf
+
+## Nigeria and Africa expansion
+
+[Evidence on Nigerian contracting, public commitments and African accountability](NIGERIA_AFRICA_AND_PUBLIC_ACCOUNTABILITY.md) includes Tracka, NOCOPO/OGP, Nigeria–P&ID, existing civic promise trackers and South African audit observations. It separates approved terms from delivery and authority, and labels broader sectors as potential uses rather than implemented features.
