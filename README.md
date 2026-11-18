@@ -101,3 +101,19 @@ records or chain transactions:
 ```sh
 node scripts/check-backend-bounds.mjs --live-limit-check
 ```
+
+
+### Reversible private draft Trash
+
+Use **Move saved draft to Trash** in Drafts. Saved revisions are retained and
+review links are revoked atomically. Open **Trash** to restore; issue a new
+invitation afterward. Nothing is automatically deleted. Trash counts toward the
+50-draft workspace limit. Diana agreement records cannot be deleted this way.
+Permanent deletion and the full retention policy remain pending.
+
+Apply additive migration `0007_draft_trash.sql` after migrations 0001–0006.
+Regression: `node --test test/private-agreements.test.mjs`.
+Live acceptance (creates one non-sensitive draft, no wallet action):
+`node scripts/check-draft-trash.mjs --live-write`.
+See `docs/audit/2026-11-18/live-trash-checks.json`. Release 35 API checks passed;
+visual desktop/mobile acceptance is still pending because browser access failed.

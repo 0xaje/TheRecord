@@ -313,3 +313,48 @@ and accepted second-stage audit remain open. Wallet warning owner-resolved.
 Exact next milestone: define and implement safe draft retention and owner
 removal/restore without implying that on-chain proofs can be deleted; then
 isolate public verification from browser storage failures.
+
+
+## 18 November 2026 — reversible draft Trash (release 35)
+
+Required behavior: owner-only Trash and restore, no edits/sharing while trashed,
+atomic invitation revocation, saved revisions preserved, no chain changes.
+Migration 0007 adds a nullable timestamp and revocation trigger. Active and Trash
+lists are separately paginated. Restore does not reactivate old invitations.
+Workspace recovery also works when every draft is in Trash.
+
+Retention policy for this release: no automatic deletion. Trash retains text,
+saved revisions and feedback; it counts toward the existing 50-draft quota.
+Permanent deletion and a full retention/backup policy remain unfinished. This
+milestone must not be described as erasure or full privacy completion.
+
+Verification: all 10 SQLite regression tests pass, including legacy migration,
+foreign-owner/stale requests, blocked writes, revoked review/feedback and exact
+restored revisions. Build passes. Live release 35 API check PASS at
+2026-11-18T10:39:23Z using one non-sensitive test draft, no wallet action.
+Evidence: audit/2026-11-18/trash-tests.txt and live-trash-checks.json.
+Hosting source bcea74f0b220ba8f505f62559c525f7155630d91.
+Browser navigation failed and then browser security policy blocked inspection;
+no bypass attempted. Visible desktop controls and physical-phone acceptance
+are unverified. Keep milestone acceptance open for this UI check.
+
+Judge review: server behavior has local and live proof; accidental removal is
+recoverable and invitations fail closed. UI code is built/published but not
+visually accepted. Permanent deletion/retention, storage-failure isolation,
+encryption decision and independent acceptance still cost confidence. No new
+cryptographic or contest qualification claim is made.
+
+My space update DRAFT READY, not posted:
+I added reversible Trash to The Record's private draft workspace. Live API tests
+confirmed owner checks, blocked editing while trashed, revoked review links and
+restoration of both saved revisions. Old links stay revoked after restore.
+Desktop/mobile visual acceptance is still pending; no Diana records were changed.
+
+Event/Ship Weeks start and end review: this is reliability work supporting the
+Post-Quantum dApp workflow, not new proof of PQC approval. Four Ship Weeks tasks
+remain owner-confirmed complete; fresh portal Check is unobserved. Q-Day Drill
+registration expired without confirmed participation. Scoped-window evidence
+and accepted second-stage audit remain open. Wallet warning owner-resolved.
+Exact next action: verify the published Trash UI in an available browser/phone,
+then isolate public verification from browser storage failures. No milestone
+advance until required UI acceptance is recorded or its blocker remains explicit.

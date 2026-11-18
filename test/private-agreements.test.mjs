@@ -9,7 +9,7 @@ function database({ legacy = false } = {}) {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec('PRAGMA foreign_keys = ON');
   for (const file of readdirSync(new URL('../migrations/', import.meta.url)).sort()) {
-    if (!legacy || (!file.startsWith('0005') && !file.startsWith('0006'))) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
+    if (!legacy || (!file.startsWith('0005') && !file.startsWith('0006') && !file.startsWith('0007'))) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
   }
   return { sqlite, prepare(sql) { return { bind(...args) {
     const statement = sqlite.prepare(sql);
@@ -126,6 +126,7 @@ test('additive migration preserves a legacy current revision without inventing o
     db.sqlite.prepare('UPDATE drafts SET revision = 5 WHERE id = ?').run(draft.id);
     db.sqlite.exec(readFileSync(new URL('../migrations/0005_draft_revisions.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0006_backend_bounds.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0007_draft_trash.sql', import.meta.url), 'utf8'));
     const before = await (await call(db, '/revisions?id=' + draft.id)).json();
     assert.deepEqual(before.revisions.map(r => r.revision), [5]);
     assert.equal(before.revisions[0].saved_at, null);
@@ -198,5 +199,38 @@ test('review throttling and temporary storage failures fail safely', async () =>
     const failure = await call(broken);
     assert.equal(failure.status, 503);
     assert.equal((await failure.text()).includes('Internal SQL'), false);
+  } finally { db.sqlite.close(); }
+});
+
+
+test('Trash is owner-scoped, revokes invitations atomically and restores every revision', async () => {
+  const db = database();
+  try {
+    const draft = await (await call(db, '', { title: 'Trash check', terms: 'Friday' })).json();
+    await call(db, '', { ...draft, title: 'Trash check', terms: 'Monday' });
+    const saved = { id: draft.id, revision: 2 };
+    const invite = await (await call(db, '/share', saved)).json();
+    assert.equal((await call(db, '/trash', saved, stranger)).status, 409);
+    assert.equal((await call(db, '/trash', draft)).status, 409);
+    assert.equal((await call(db, '/trash', saved)).status, 200);
+    assert.deepEqual(await (await call(db)).json(), []);
+    const trash = await (await call(db, '/trash')).json();
+    assert.equal(trash.length, 1); assert.equal(trash[0].id, draft.id);
+    assert.equal('terms' in trash[0], false);
+    assert.deepEqual(await (await call(db, '/trash', undefined, stranger)).json(), []);
+    assert.equal((await call(db, '/item?id=' + draft.id)).status, 404);
+    assert.equal((await call(db, '', { ...saved, title: 'Blocked', terms: 'Blocked' })).status, 409);
+    assert.equal((await call(db, '/share', saved)).status, 409);
+    assert.equal((await call(db, '/review', invite, null)).status, 404);
+    assert.equal((await call(db, '/feedback', { ...invite, note: 'Blocked' }, null)).status, 409);
+    assert.equal(db.sqlite.prepare('SELECT revoked FROM shares').get().revoked, 1);
+    assert.equal((await call(db, '/restore', saved, stranger)).status, 409);
+    assert.equal((await call(db, '/restore', saved)).status, 200);
+    assert.equal((await (await call(db)).json())[0].revision, 2);
+    assert.equal((await (await call(db, '/revision?id=' + draft.id + '&revision=1')).json()).terms, 'Friday');
+    assert.equal((await (await call(db, '/revision?id=' + draft.id + '&revision=2')).json()).terms, 'Monday');
+    assert.equal((await call(db, '/review', invite, null)).status, 404);
+    const fresh = await (await call(db, '/share', saved)).json();
+    assert.equal((await call(db, '/review', fresh, null)).status, 200);
   } finally { db.sqlite.close(); }
 });

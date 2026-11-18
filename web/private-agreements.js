@@ -63,6 +63,7 @@ function openDraft(id) {
   draftForm.elements.title.value = current?.title ?? "";
   draftForm.elements.terms.value = current?.terms ?? "";
   invite.hidden = !current;
+  document.querySelector("#trash-draft").hidden = !current;
   document.querySelector("#draft-record").hidden = !current;
   document.querySelector("#draft-revision").textContent = current ? `Saved revision ${current.revision}` : "New draft";
   setDownload(document.querySelector("#download-draft"), current);
@@ -100,6 +101,7 @@ async function loadDrafts(id) {
   list.replaceChildren(new Option("New draft", ""), ...drafts.map(draft => new Option(draft.title, draft.id)));
   list.value = id ?? "";
   openDraft(list.value);
+  if (trashPanel.open) await loadTrash();
 }
 
 async function submit(form, run) {
@@ -251,7 +253,7 @@ restoreForm.addEventListener("submit", event => {
     if (!keyPattern.test(key)) throw new Error("Enter the 64-character recovery code.");
     const previous = workspaceKey;
     const records = await api("", undefined, key);
-    if (!records.length) throw new Error("No saved drafts found for that code.");
+    if (!records.length && !(await api("/trash", undefined, key)).length) throw new Error("No saved drafts found for that code.");
     if (previous && previous !== key && !confirm("Open this workspace? Save your current recovery code first if you still need it.")) {
       return "Workspace kept.";
     }
@@ -371,4 +373,57 @@ document.querySelector("#load-more-drafts").addEventListener("click", async even
     button.hidden = !draftCursor;
   } catch (error) { draftForm.querySelector("output").textContent = error.message; }
   finally { button.disabled = false; }
+});
+
+
+const trashPanel = document.querySelector("#draft-trash");
+const trashStatus = document.querySelector("#trash-status");
+const trashList = document.querySelector("#trash-list");
+const trashMore = document.querySelector("#trash-more");
+let trashCursor;
+let trashRequest = 0;
+async function loadTrash(older = false) {
+  const request = ++trashRequest;
+  const key = workspaceKey;
+  trashStatus.textContent = "Loading Trash…";
+  trashMore.disabled = true;
+  try {
+    const page = await api("/trash" + (older && trashCursor ? "?" + new URLSearchParams({ before: trashCursor }) : ""));
+    if (request !== trashRequest || key !== workspaceKey) return;
+    if (!older) trashList.replaceChildren();
+    for (const draft of page) {
+      const item = document.createElement("li");
+      const label = document.createElement("span");
+      label.textContent = draft.title + " · Saved revision " + draft.revision + " ";
+      const button = document.createElement("button");
+      button.type = "button"; button.className = "secondary"; button.textContent = "Restore";
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+        try {
+          await api("/restore", { id: draft.id, revision: draft.revision });
+          await loadDrafts(draft.id);
+          await loadTrash();
+          trashStatus.textContent = "Draft restored. Create a new invitation if needed.";
+        } catch (error) { trashStatus.textContent = error.message; }
+        finally { button.disabled = false; }
+      });
+      item.append(label, button); trashList.append(item);
+    }
+    trashCursor = page.nextCursor;
+    trashMore.hidden = !trashCursor;
+    trashStatus.textContent = trashList.children.length ? "Restore a draft to edit it again." : "Trash is empty.";
+  } catch (error) { if (request === trashRequest) trashStatus.textContent = error.message; }
+  finally { trashMore.disabled = false; }
+}
+trashPanel.addEventListener("toggle", () => { if (trashPanel.open) loadTrash(); });
+document.querySelector("#refresh-trash").addEventListener("click", () => loadTrash());
+trashMore.addEventListener("click", () => loadTrash(true));
+document.querySelector("#trash-draft").addEventListener("click", () => {
+  if (!current || !confirm("Move this saved draft to Trash? Unsaved edits will be discarded. Review links will be revoked. Saved revisions can be restored; Diana records stay unchanged.")) return;
+  submit(draftForm, async () => {
+    await api("/trash", { id: current.id, revision: current.revision });
+    await loadDrafts();
+    if (trashPanel.open) await loadTrash();
+    return "Draft moved to Trash. You can restore it there.";
+  });
 });

@@ -1,0 +1,17 @@
+{
+  "testedAt": "2026-11-18T10:39:23.003Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "result": "PASS",
+  "checks": [
+    "foreign owner rejected",
+    "Trash hides active draft",
+    "Trash blocks edits and sharing",
+    "Trash revokes invitations",
+    "restore preserves both revisions",
+    "restore does not reopen revoked links",
+    "new invitation works"
+  ],
+  "draftId": "960293c5-d43c-4969-9716-fc93c2dee6bb",
+  "sensitiveData": false,
+  "walletAction": false
+}

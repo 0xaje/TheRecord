@@ -82,7 +82,7 @@ async function handlePrivateAgreements(request, db) {
       const saved = await db.prepare(`INSERT INTO review_feedback (token_hash, note, created_at)
         SELECT s.token_hash, ?, ? FROM shares s JOIN drafts d ON d.id = s.draft_id
         WHERE s.token_hash = ? AND s.access_code_hash = ? AND s.revoked = 0
-        AND s.expires > ? AND s.revision = d.revision
+        AND s.expires > ? AND s.revision = d.revision AND d.trashed_at IS NULL
         ON CONFLICT(token_hash) DO NOTHING RETURNING token_hash`)
         .bind(note, Date.now(), tokenHash, codeHash, Date.now()).first();
       return saved ? reply({ ok: true }, 201) : reply({ error: "This invitation is unavailable or a request was already sent." }, 409);
@@ -90,7 +90,7 @@ async function handlePrivateAgreements(request, db) {
     const share = await db.prepare(`SELECT s.title, s.terms, s.revision, s.fingerprint
       FROM shares s JOIN drafts d ON d.id = s.draft_id
       WHERE s.token_hash = ? AND s.access_code_hash = ? AND s.revoked = 0
-      AND s.expires > ? AND s.revision = d.revision`)
+      AND s.expires > ? AND s.revision = d.revision AND d.trashed_at IS NULL`)
       .bind(tokenHash, codeHash, Date.now()).first();
     return share ? reply(share) : reply({ error: "Incorrect code or unavailable invitation. Ask the sender for a current link and code." }, 404);
   }
@@ -110,10 +110,11 @@ async function handlePrivateAgreements(request, db) {
 
   await limitRequests(db, (request.method === "GET" ? "read:" : "write:") + await digest(user), request.method === "GET" ? 120 : 30);
 
-  if (request.method === "GET" && url.pathname === "/api/drafts") {
+  if (request.method === "GET" && ["/api/drafts", "/api/drafts/trash"].includes(url.pathname)) {
     const before = url.searchParams.get("before");
     if (before !== null && !/^[1-9][0-9]{0,14}$/.test(before)) return reply({ error: "Invalid page." }, 400);
-    const { results } = await db.prepare("SELECT rowid AS cursor, id, title, terms, revision FROM drafts WHERE owner = ? AND rowid < ? ORDER BY rowid DESC LIMIT 21")
+    const inTrash = url.pathname === "/api/drafts/trash";
+    const { results } = await db.prepare(`SELECT rowid AS cursor, id, title, ${inTrash ? "trashed_at" : "terms"}, revision FROM drafts WHERE owner = ? AND trashed_at IS ${inTrash ? "NOT " : ""}NULL AND rowid < ? ORDER BY rowid DESC LIMIT 21`)
       .bind(user, before === null ? Number.MAX_SAFE_INTEGER : Number(before)).all();
     const page = results.slice(0, 20);
     return Response.json(page, { headers: { ...headers, ...(results.length > 20 ? { "X-Next-Draft": String(page.at(-1).cursor) } : {}) } });
@@ -121,7 +122,7 @@ async function handlePrivateAgreements(request, db) {
   if (request.method === "GET" && url.pathname === "/api/drafts/item") {
     const id = url.searchParams.get("id") ?? "";
     if (!uuid.test(id)) return reply({ error: "Invalid draft." }, 400);
-    const row = await db.prepare("SELECT id, title, terms, revision FROM drafts WHERE id = ? AND owner = ?").bind(id, user).first();
+    const row = await db.prepare("SELECT id, title, terms, revision FROM drafts WHERE id = ? AND owner = ? AND trashed_at IS NULL").bind(id, user).first();
     return row ? reply(row) : reply({ error: "Draft unavailable." }, 404);
   }
 
@@ -169,6 +170,17 @@ async function handlePrivateAgreements(request, db) {
   const input = await readInput(request);
   if (!input || typeof input !== "object") return reply({ error: "Invalid request." }, 400);
 
+  if (["/api/drafts/trash", "/api/drafts/restore"].includes(url.pathname)) {
+    if (typeof input.id !== "string" || !uuid.test(input.id) || !Number.isSafeInteger(input.revision)) {
+      return reply({ error: "Invalid draft." }, 400);
+    }
+    const trashing = url.pathname === "/api/drafts/trash";
+    const changed = await db.prepare(`UPDATE drafts SET trashed_at = ?
+      WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS ${trashing ? "" : "NOT "}NULL RETURNING id`)
+      .bind(trashing ? Date.now() : null, input.id, user, input.revision).first();
+    return changed ? reply({ ok: true }) : reply({ error: "Draft unavailable or changed. Refresh and try again." }, 409);
+  }
+
   if (url.pathname === "/api/drafts/move") {
     if (!legacyOwner || !workspaceOwner) return reply({ error: "Open your original signed-in browser to move these drafts." }, 403);
     const result = await db.prepare("UPDATE drafts SET owner = ? WHERE owner = ?").bind(workspaceOwner, legacyOwner).run();
@@ -187,7 +199,7 @@ async function handlePrivateAgreements(request, db) {
       return reply({ id: draftId, revision: 1 }, 201);
     }
     if (typeof id !== "string" || !uuid.test(id) || !Number.isSafeInteger(revision)) return reply({ error: "Invalid draft." }, 400);
-    const updated = await db.prepare("UPDATE drafts SET title = ?, terms = ?, revision = revision + 1 WHERE id = ? AND owner = ? AND revision = ? RETURNING revision")
+    const updated = await db.prepare("UPDATE drafts SET title = ?, terms = ?, revision = revision + 1 WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS NULL RETURNING revision")
       .bind(title.trim(), terms, id, user, revision).first();
     if (!updated) return reply({ error: "Draft unavailable or changed. Reopen it and try again." }, 409);
     return reply({ id, revision: updated.revision });
@@ -198,14 +210,14 @@ async function handlePrivateAgreements(request, db) {
     if (typeof id !== "string" || !uuid.test(id) || !Number.isSafeInteger(revision)) {
       return reply({ error: "Save the draft first." }, 400);
     }
-    const draft = await db.prepare("SELECT title, terms FROM drafts WHERE id = ? AND owner = ? AND revision = ?").bind(id, user, revision).first();
+    const draft = await db.prepare("SELECT title, terms FROM drafts WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS NULL").bind(id, user, revision).first();
     if (!draft) return reply({ error: "Draft unavailable or changed. Reopen it first." }, 409);
     const token = hex(crypto.getRandomValues(new Uint8Array(32)));
     const code = hex(crypto.getRandomValues(new Uint8Array(12)));
     const fingerprint = await digest(draft.title + "\n\n" + draft.terms);
     const expiry = Date.now() + 7 * 86400000;
     const share = await db.prepare(`INSERT INTO shares (token_hash, draft_id, revision, reviewer_email, title, terms, fingerprint, expires, access_code_hash)
-      SELECT ?, id, revision, '', title, terms, ?, ?, ? FROM drafts WHERE id = ? AND owner = ? AND revision = ? RETURNING token_hash`)
+      SELECT ?, id, revision, '', title, terms, ?, ?, ? FROM drafts WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS NULL RETURNING token_hash`)
       .bind(await digest(token), fingerprint, expiry, await digest(code), id, user, revision).first();
     return share ? reply({ token, code }) : reply({ error: "Draft changed. Reopen it first." }, 409);
   }

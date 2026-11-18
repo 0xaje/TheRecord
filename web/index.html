@@ -337,6 +337,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <option value="amendment">Agreement amendment</option>
 </select></label>
 </div>
+<button type="button" class="secondary" id="trash-draft" hidden>Move saved draft to Trash</button>
 <button type="button" class="secondary" id="load-more-drafts" hidden>Load older drafts</button>
 <div class="editor-paper">
 <h2>Agreement terms</h2>
@@ -348,6 +349,14 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <output role="status"></output>
 </form>
 <aside class="workspace-side" aria-label="Selected draft actions">
+<details class="surface" id="draft-trash">
+<summary>Trash</summary>
+<p>Trashed drafts keep all saved revisions and count toward the 50-draft limit. Restore them here. Old review links stay revoked. Nothing is automatically deleted. Diana records are unchanged.</p>
+<button type="button" id="refresh-trash" class="secondary">Refresh Trash</button>
+<ul id="trash-list"></ul>
+<button type="button" id="trash-more" class="secondary" hidden>Load older trashed drafts</button>
+<output id="trash-status" role="status"></output>
+</details>
 <form id="invite" hidden>
 <h2>Share for review</h2>
 <button>Create invitation link</button>
