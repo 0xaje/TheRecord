@@ -26,11 +26,13 @@
   },
   "homepage": "https://github.com/0xaje/TheRecord#readme",
   "dependencies": {
+    "@qorechain/evm": "0.14.0",
     "@qorechain/qoresign": "0.2.0",
     "cosmjs-types": "0.11.0",
     "viem": "2.57.19"
   },
   "devDependencies": {
+    "@qorechain/sdk": "0.14.0",
     "esbuild": "0.28.2"
   },
   "private": true,

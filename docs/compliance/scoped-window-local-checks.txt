@@ -1,0 +1,54 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 check
+> npm run build:site && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build:site
+> npm run build && node scripts/build-worker.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build
+> esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html
+
+
+  dist/verify.js  1.3mb ⚠️
+
+⚡ Done in 763ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 test
+> node --test test/*.test.mjs
+
+✔ built Worker serves pages and persistent private drafts with real local SQLite (1164.023953ms)
+✔ draft, review, feedback, revision isolation and revocation (343.381118ms)
+✔ expiry, malformed requests, origins and storage failures (239.639133ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (172.743503ms)
+✔ revision pages have no overlap and do not expose full text in lists (516.094024ms)
+✔ additive migration preserves a legacy current revision without inventing old text (142.155493ms)
+✔ workspace write throttle returns Retry-After without blocking reads (601.053028ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (223.293693ms)
+✔ retained revision and invitation quotas are atomic (437.914888ms)
+✔ review throttling and temporary storage failures fail safely (237.16311ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (168.356122ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (177.805334ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (94.320609ms)
+✔ scoped request bytes exactly match official SDK, with no key derivation or signing (6.028488ms)
+✔ receipt validation refuses unscoped, failed, mismatched and non-hybrid fixtures (0.851437ms)
+✔ read-back distinguishes live restriction from expired or replaced window fixtures (0.673399ms)
+✔ built verifier initializes its controls when storage access throws (543.369376ms)
+✔ blocked storage access and reads do not throw during module setup (7.218687ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (3.930374ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (4.626207ms)
+✔ successful persistence reads back the exact recovery code before returning (4.73409ms)
+✔ failed read-back attempts to restore the previously saved identity (5.15078ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4940.410228

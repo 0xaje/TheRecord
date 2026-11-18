@@ -602,3 +602,37 @@ or runID/dashboardstatus; specificorganizerreplyonlyifdashboardcannotestablish.
 No new wallet action, no product/contract change. Myspace draft recorded in
 remaining-proof.md, not posted. ShipWeeks4owner-confirmed;freshCheckunobserved.
 QDayregistrationexpired;independent2personacceptanceopen;walletwarningresolved.
+
+
+Owner mobile opening46A355821C1A70784050414F484058BB3EE7A3C802C91FF859212BB38BFFD504 verified via Diana REST: code0,height10314419,2026-11-18T12:03:15Z. MsgOpenEVMWindow blocks300,max_txs5,max_value1000000uqor,native_onlyfalse,allowed_targets empty; hybrid extension present. Opening succeeded, but it is unscoped; current liveness not checked. Saved docs/compliance/mobile-window-opening.json. Restricted-window milestone remains OPEN. No need to open another ordinary window; next prepare supported scoped SDK/native signing route without collecting wallet phrases. This note/evidence awaits next GitHub documentation publication.
+
+
+## Scoped-window request preparation — implementation ready, live proof OPEN
+
+User authorized supported wallet route. Confirmed official provider accepts
+protobuf signAndBroadcast requests and wallet holds keys. Mobile card cannot
+set allowed targets. Added advanced #evm-window helper, inspect-first account
+and Diana/PQC readiness checks, explicit fixed600blocks/5tx/1000000uqor policy
+for only0x25721b3be0f24438da7daed4c800b073ef9bb802, review consent and separate
+wallet request. Never collects phrases or signs/broadcasts automatically.
+Reuses existing readiness checks; adds narrow read-only window relay path.
+
+Local22tests PASS, including byte-identical encoding vs official SDK registry,
+receipt/read-back rejection fixtures and prior regressions. Fixtures are not
+chain evidence. Full SDK browser trial was discarded (6.3MB); focused official
+window helper plus existing protobuf writer keeps browser near1.4MB. SDK is
+only a dev dependency for codec comparison. Source and lockfile updated.
+Unknown wallet outcomes retain submitted state and never auto-repeat. Actual
+receipt+readback are required for scope verification; no wallet result badge is
+accepted by itself. Still need real mobile message acceptance, scopedopening,
+permittedcall and outside-scopechainrejection; milestone stays OPEN.
+
+Prior owner opening46A35582… stored in mobile-window-opening.json is unscoped.
+Read-only current window check also returned livefalse,allowedTargets empty.
+No new wallet transaction was performed by the agent. Stage2acceptance remains
+open; phoneTrash/deletion ownerPASS; backupsunverified;independenttestingopen.
+ShipWeeks4owner-confirmed,freshCheckunobserved;QDayexpired. Myspace update DRAFT
+not posted: I prepared a key-preserving QoreX request for contract-restricted
+EVM access and validated its bytes against the official SDK. Real mobile
+signing and on-chain scope proof are still pending. Exact next owner action:
+open #evm-window inside QoreX Browse/Diana and inspect account only first.

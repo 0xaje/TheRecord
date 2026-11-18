@@ -102,3 +102,42 @@ One historical authorization window has verified time, transaction and value
 bounds but no target restriction. I am collecting a contract-restricted window
 and its permitted/rejected-call evidence. The two audit reports are preserved;
 acceptance of the latest paid second-stage run is still being verified.
+
+## Prepared wallet route — scoped-window helper
+
+The advanced `/#evm-window` screen now prepares one native
+`MsgOpenEVMWindow` through QoreChain's focused `@qorechain/evm/window` 0.14.0
+builder. The protobuf bytes use the existing cosmjs writer and are checked byte
+for byte against `@qorechain/sdk` 0.14.0's registry encoder in local tests. The
+full SDK is a dev dependency; importing it into the browser made a needlessly
+large bundle, so it is not shipped in the browser. The scoped policy is fixed:
+600 blocks, five transactions, 1,000,000 uqor and only The Record contract.
+No validator/delegation/key changes or arbitrary targets are requested.
+
+The screen checks provider capability, Diana chain IDs, native/EVM account
+agreement and possession-proven ML-DSA-87 readiness, then displays the proposed
+policy. A separate checkbox/button requests QoreX approval. The page holds no
+phrase, private key or signing file for this path. QoreX sets and displays the
+native fee. The previous window is replaced, not added to. The allowance also
+covers maximum EVM fees; it is not a fee quotation or a per-function contract
+restriction.
+
+A wallet result alone is not labelled verified. The helper retrieves the
+committed native receipt, validates sender, hash, scope, bounds, successful code
+and hybrid-extension presence, then checks the current window read-back against
+the opening height and limits. It distinguishes an expired window. Downloadable
+JSON contains public receipt/read-back fields. It refuses to automatically
+resubmit after unknown outcome. A read-back is not a permitted transaction or
+negative broadcast proof; those remain open.
+
+Official provider contract: [QoreX integrations](https://docs.qorechain.io/developer-tools/qorex-integrations/),
+Sending a transaction on QoreChain. Messages must be protobuf bytes; unsupported
+message displays are refused by the wallet. We have not yet verified this
+specific message with the owner's real mobile build. If QoreX refuses it or
+cannot show the target restriction, reject/stop and retain the error. Do not
+fall back to unscoped access or expose recovery phrases.
+
+Owner checkpoint: open the helper in QoreX Browse on Diana and press **Inspect
+QoreX test account** first. Check the displayed account and limits before any
+opening request. No claim of wallet compatibility or scoped on-chain success
+is made until that real interaction and its receipt are verified.

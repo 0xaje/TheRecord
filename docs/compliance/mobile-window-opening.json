@@ -1,0 +1,16 @@
+{
+  "hash": "46A355821C1A70784050414F484058BB3EE7A3C802C91FF859212BB38BFFD504",
+  "code": 0,
+  "height": "10314419",
+  "timestamp": "2026-11-18T12:03:15Z",
+  "type": "/qorechain.pqc.v1.MsgOpenEVMWindow",
+  "sender": "qor1ap9phrpqk83nlswkm4r9pt6n0qljjy0dvatfll",
+  "blocks": "300",
+  "max_txs": "5",
+  "max_value_uqor": "1000000",
+  "native_only": false,
+  "allowed_targets": [],
+  "hybridExtensionPresent": true,
+  "scopeConclusion": "Unscoped opening; not restricted to The Record",
+  "currentLivenessChecked": false
+}

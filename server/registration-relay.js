@@ -2,6 +2,7 @@ import { TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 const upstream = "https://api-testnet.qore.host";
 const paths = [
+  /^\/qorechain\/pqc\/v1\/evm_window\/qor1[0-9a-z]{38}$/,
   /^\/cosmos\/base\/tendermint\/v1beta1\/node_info$/,
   /^\/cosmos\/auth\/v1beta1\/accounts\/qor1[0-9a-z]{38}$/,
   /^\/cosmos\/tx\/v1beta1\/txs\/[A-F0-9]{64}$/,

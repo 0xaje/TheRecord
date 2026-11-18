@@ -1,0 +1,22 @@
+{
+  "testedAt": "2026-11-18T12:19:54.729Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "result": "PASS",
+  "checks": [
+    {
+      "path": "/",
+      "sha256": "2616adac643b0fcc63e3c8a3bc387963c541002e710f9853aa44816b6c27ff28",
+      "exactMatch": true
+    },
+    {
+      "path": "/verify.js",
+      "sha256": "337b357e7156bd508cd05193d7e3a9123df948b3195b97fe2f86f65d8603cbe8",
+      "exactMatch": true
+    }
+  ],
+  "scope": "Published HTML and browser JavaScript match this source build byte for byte. Does not attest private database contents or platform runtime.",
+  "siteVersion": 40,
+  "hostingSourceCommit": "427f24cb2849b57014a92fbcad1d4ff560b45769",
+  "localTestsPassed": 22,
+  "realWalletScopedOpeningVerified": false
+}

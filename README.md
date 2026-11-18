@@ -168,3 +168,16 @@ node scripts/check-draft-delete.mjs --live-disposable-delete
 Do not adapt the script to delete existing user drafts. Deletion tests/evidence
 are stored in `docs/audit/2026-11-18/`. Owner reported the phone Trash/restore
 workflow passed; permanent deletion mobile acceptance is a separate open check.
+
+
+### Restricted-window helper (advanced test)
+
+Open `/#evm-window` inside QoreX Browse on Diana. **Inspect QoreX test account**
+checks the connected account and signing-key readiness without requesting a
+window transaction. The separate reviewed action requests only The Record
+contract, 600 blocks, five transactions and a 1 QOR allowance; opening replaces
+the previous window and pays a separate wallet-displayed native fee. No phrase
+or private signing file is requested for this route. Wallet support for this
+message and real scoped-call evidence remain unverified until owner testing.
+See [remaining proof](docs/compliance/remaining-proof.md). The full SDK is used
+only in development to verify the focused helper's encoded message bytes.

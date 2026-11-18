@@ -15,7 +15,7 @@ const keyStatusAbi = parseAbi([
 
 export class SignerReadinessError extends Error {}
 
-async function checkSignerReadiness(client, signerAddress) {
+export async function checkSignerReadiness(client, signerAddress) {
   let status;
   try {
     status = await client.readContract({

@@ -1,6 +1,7 @@
 import "./walkthrough.js";
 import "./history.js";
 import "./private-agreements.js";
+import "./scoped-window.js";
 import { generateTestSigner, SignerReadinessError, submitApproval } from "./approve.js";
 import { registerSigner } from "./register.js";
 

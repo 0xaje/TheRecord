@@ -491,6 +491,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <section class="screen narrow" data-screen="signer-setup" hidden>
 <details class="surface" id="signer-setup">
 <summary>Advanced test signer setup</summary>
+<p><a href="#evm-window">Set up restricted EVM access with QoreX</a></p>
 <p>For signing-file approvals. For QoreX approval, prepare your signing key inside QoreX.</p>
 <p>Generate a new test signing file on this device. Keep it private. Share only your public signer address with the person creating the agreement.</p>
 <button id="generate-signer" type="button">Generate signing file</button>
@@ -506,6 +507,22 @@ main{padding-inline:1rem;padding-bottom:2rem}
 </form>
 </details>
 </section>
+
+<section class="screen narrow" data-screen="evm-window" hidden>
+<div class="surface" id="scoped-window">
+<h1>Restricted EVM access</h1>
+<p>Advanced Diana test. Ask QoreX to allow calls only to The Record, for 600 blocks, up to 5 transactions and a total 1 QOR allowance including maximum EVM fees. This replaces your previous window. Opening has a separate network fee.</p>
+<p>This does not approve an agreement or transfer QOR. Use a disposable test account. Keys stay inside QoreX. Real wallet compatibility and scoped-call evidence are still being verified.</p>
+<button type="button" id="window-connect">Inspect QoreX test account</button>
+<pre id="window-preview" hidden style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
+<label><input type="checkbox" id="window-consent"> I reviewed the account, contract, limits and replacement of the previous window.</label>
+<button type="button" id="window-open" disabled>Request restricted window in QoreX</button>
+<button type="button" id="window-check" hidden>Check submitted window receipt</button>
+<output id="window-status" role="status"></output>
+<a id="window-receipt" hidden>View opening transaction</a>
+<a id="window-evidence" hidden>Download window evidence</a>
+<p>If the wallet refuses or cannot display the target restriction, stop. Do not replace it with an unrestricted window.</p>
+</div></section>
 
 <section class="screen" data-screen="walkthrough" hidden>
 <header class="story-header walkthrough-intro"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
