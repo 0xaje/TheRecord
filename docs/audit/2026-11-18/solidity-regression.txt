@@ -1,0 +1,14 @@
+Compiling 2 files with Solc 0.8.28
+Solc 0.8.28 finished in 380.63ms
+Compiler run successful!
+
+Ran 6 tests for test/TheRecord.t.sol:TheRecordTest
+[PASS] testApprovalPayloadBindsSigner() (gas: 13312)
+[PASS] testDianaFinalizedAmendmentPreservesOriginal() (gas: 18916)
+[PASS] testOutsiderCannotProposeAmendment() (gas: 12934)
+[PASS] testProposerCannotAmendPendingVersion() (gas: 16942)
+[PASS] testRejectsMalformedSignature() (gas: 17473)
+[PASS] testRejectsUndesignatedSigner() (gas: 19460)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 2.66s (2.66s CPU time)
+
+Ran 1 test suite in 2.67s (2.66s CPU time): 6 tests passed, 0 failed, 0 skipped (6 total tests)

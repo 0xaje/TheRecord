@@ -86,6 +86,15 @@ Both HTML reports identify Ethereum / Solidity and SHA256 b681ec487f2254dabb3d9b
 | ETH-004 front-running | Current source has no block.timestamp. Signed payload binds chain/contract/id/version/fingerprint/signer. | Valid signatures can be relayed by another sender. Duplicate-submission gas loss remains; signer attribution cannot be changed by relaying. Existing duplicate/stale/altered-signature checks above. |
 | ETH-005 mappings | No loop over historical mapping entries in create/amend/approve/getVersion. Historical storage grows intentionally. | Direct source inspection and historical version lookup. Pagination is relevant to off-chain history retrieval; deleting finalized on-chain versions would break historical verification. |
 
-No deployed contract policy was changed merely to improve the AI score. The six Foundry results above are historical, not a fresh run: Forge is unavailable in this review environment. Current JavaScript checks do not replace Solidity/PQC regression evidence. Latest report retrieval and source binding are complete; specific-run event acceptance remains unverified, and independent user testing remains pending. No additional audit payment is requested.
+No deployed contract policy was changed merely to improve the AI score. The historical six-test result above has now been repeated by the owner on 18 November; see the retained fresh logs below. Forge remains unavailable in the agent environment. Current JavaScript checks do not replace Solidity/PQC regression evidence. Latest report retrieval and source binding are complete; specific-run event acceptance remains unverified, and independent user testing remains pending. No additional audit payment is requested.
 
 My space update draft — READY, NOT POSTED: The Record now retains direct links and source-matched copies of its first QCAIA audit and latest Stage 2 re-audit. Each finding has an explicit disposition, evidence reference and remaining limitation. Both reports cover the same source; real Diana scoped-window admission evidence is documented separately.
+
+## Fresh owner regression evidence — 18 November 2026
+
+Owner supplied the full terminal logs, preserved unchanged:
+
+- [Solidity regression: 6 passed, 0 failed, 0 skipped](audit/2026-11-18/solidity-regression.txt), compiled with Solidity 0.8.28. Owner used $HOME/.foundry/bin/forge (Foundry0.2.0); PATH's other forge executable belongs to Atlassian.
+- [Diana approval regression: 4 passed](audit/2026-11-18/diana-approval-regression.txt): valid recorded version2 approval accepted before inclusion at block10135459; duplicate rejected at10135460; version1signature reused forversion2 rejected at10135459; altered signature of valid length rejected at10135459.
+
+The second log comes from read-only calls against historical Diana state, not four newly committed transactions. The Foundry fork reads finalized historical records; it does not execute custom PQC precompiles locally. These are owner-executed results with uploaded raw logs, not a fresh independent rerun by the agent. No contract code changed in this evidence update. This strengthens finding-level regression evidence without changing QCAIA's Open finding statuses or claiming organizer acceptance.
