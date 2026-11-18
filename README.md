@@ -38,3 +38,18 @@ The hosted workflow has been tested with two distinct wallets operated by one te
 ## License
 
 [MIT](LICENSE)
+
+## Review and regression checks
+
+[Engineering and judge review — 18 November 2026](docs/audit/2026-11-18/review.md) records passing checks, open risks and release gates.
+
+Use Node.js 24 for the isolated SQLite backend regression tests:
+
+```sh
+node --test test/private-agreements.test.mjs
+node scripts/check-diana-approvals.mjs
+```
+
+The second command makes read-only Diana calls. Solidity test instructions are in [AUDIT.md](docs/AUDIT.md).
+
+Walkthrough illustrations are by [OpenMoji](https://openmoji.org/), used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). See [asset credits](web/assets/ATTRIBUTION.md).

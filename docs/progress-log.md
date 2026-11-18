@@ -133,3 +133,42 @@ checks passed; independent participant and refreshed phone checks are pending.
 Next action: open the published landing, walkthrough, Blog and Drafts inside
 QoreX on the phone; confirm readable content, expandable step selection and
 no sideways overflow. Then capture independent participant results.
+
+## Engineering/judge audit — 18 November 2026
+
+Reviewed main f57bd5e23a311691d18fd6da72108e81487a8150 and public Site 30.
+Read the master plan and supplied category conditions. Full findings and
+ordered completion gates: audit/2026-11-18/review.md.
+Clean checkout install/build passed; hosted HTML/JS byte parity passed.
+Nine live draft/invitation/revision/revocation checks passed after one timed-out
+attempt. Isolated SQLite regressions passed. Four historical Diana signature
+checks passed. Current agreement versions 1/2 both finalized; fingerprints match.
+Dependency audit: zero known advisories. No obvious tracked secret patterns.
+Added backend tests and README test/illustration credit instructions.
+No production code, contract, schema or real user draft was changed.
+
+Open gates: scoped window proof; accepted Stage 2 audit; legacy identity gateway
+boundary; historical wallet warning closure; actual history UI; retained private
+revision/storage policy; backend quotas/pagination/retention; reproducible deploy
+and CI; physical-phone layout and independent two-person acceptance; final video
+and current portal checks. Foundry rerun blocked because forge is not installed.
+
+Correction to stale challenge summaries: docs/diana-evidence.md records owner
+confirmation of ALL FOUR Ship Weeks tasks complete on 16 November. Fresh direct
+portal Check verification is still absent. Q-Day Drill registration is not
+confirmed; its supplied 17 November deadline has elapsed. Do not claim the award.
+
+Judge review: roughly 6.5–7/10 subjective hackathon readiness, not official
+rubric scoring. Core purpose proven in controlled-wallet cases; full product
+and release acceptance remain OPEN. No predicted rank among 70 competitors.
+
+My space update READY, not posted:
+I completed a fresh engineering review of The Record, reproduced the build from
+GitHub, checked the live draft/review workflow and reran Diana signature
+regressions. Valid approval passed; duplicate, cross-version and altered
+signatures were rejected. I documented remaining release gates and added
+repeatable backend tests. Independent participant testing is still pending.
+
+Exact next action: verify scoped-window evidence and Stage 2 acceptance before
+claiming category compliance, then close the legacy identity boundary and history
+view gaps in separately tested milestones.

@@ -1,0 +1,52 @@
+{
+  "testedAt": "2026-11-18T00:42:38.628Z",
+  "base": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "checks": [
+    {
+      "check": "Create live draft",
+      "status": "PASS",
+      "http": 201
+    },
+    {
+      "check": "Create invitation",
+      "status": "PASS",
+      "http": 200
+    },
+    {
+      "check": "Review correct code",
+      "status": "PASS",
+      "http": 200
+    },
+    {
+      "check": "Reject wrong code",
+      "status": "PASS",
+      "http": 404
+    },
+    {
+      "check": "Save new revision",
+      "status": "PASS",
+      "http": 200
+    },
+    {
+      "check": "Reject stale invitation",
+      "status": "PASS",
+      "http": 404
+    },
+    {
+      "check": "Invite current revision",
+      "status": "PASS",
+      "http": 200
+    },
+    {
+      "check": "Revoke invites",
+      "status": "PASS",
+      "http": 200
+    },
+    {
+      "check": "Reject revoked invite",
+      "status": "PASS",
+      "http": 404
+    }
+  ],
+  "notes": "Non-sensitive isolated audit draft only. No wallet action. Credentials omitted. Earlier attempt timed out at an unidentified stage."
+}

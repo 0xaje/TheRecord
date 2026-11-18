@@ -1,0 +1,7 @@
+{
+  "testedAt": "2026-11-18T00:42:48.959Z",
+  "legacyIdentityHeaderAcceptedByHandler": true,
+  "boundary": "Local handler only; whether the live gateway strips/overwrites caller-supplied identity headers is not verified. No attempt made to access another user on the public service.",
+  "plaintextDraftColumns": true,
+  "applicationRateLimitsPresent": false
+}

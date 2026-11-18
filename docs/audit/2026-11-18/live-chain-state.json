@@ -1,0 +1,18 @@
+{
+  "testedAt": "2026-11-18T00:41:34.450Z",
+  "agreementId": "0x7579231974eb436db32c687b8d89cc0ddf39434156d7aa99131fb309a03c678e",
+  "versions": [
+    {
+      "version": "1",
+      "fingerprint": "0x91804a34261a4f7a6b5baf984a211b3aaeace3b8a2996af2dc72e657d490ca74",
+      "mask": 3,
+      "finalized": true
+    },
+    {
+      "version": "2",
+      "fingerprint": "0xec60c8c9aef0e0f8e8771a3fcb634936c6bbefd0f1ac7874f392295460a0a6fe",
+      "mask": 3,
+      "finalized": true
+    }
+  ]
+}
