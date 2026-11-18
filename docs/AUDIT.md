@@ -36,7 +36,7 @@ The valid signature at the same pre-approval block provides a positive
 control for the altered-signature check. The original version 2 approval
 was included in [this successful Diana transaction](https://dashboard.qorechain.io/explorer/tx/0x5a4b0020a0a0d8980e63d7045b23594d24b6eb648fb7d8c3c6f23649096bf8b2).
 
-## Stage 2 comparison
+## Earlier second run — 16 November (historical)
 
 The second QCAI run on 16 November 2026 used the same Ethereum setting
 and contract source. It again scored **65/100 (Medium)** and listed five
@@ -64,3 +64,28 @@ document the two runs. The organizer confirmed that a second run on the same con
 | PQC return handling | Diana check: `altered signature of valid length`, with a valid signature as the positive control. |
 | Approval submission | Foundry: `testApprovalPayloadBindsSigner`. Diana checks: `duplicate approval` and `version 1 signature reused for version 2`. Third-party submission of a valid approval remains possible as described above. |
 | Storage growth | Source review confirms direct mapping access. Foundry: `testDianaFinalizedAmendmentPreservesOriginal` verifies why historical versions are retained. |
+
+## Public report links and latest Stage 2 re-audit
+
+These are the owner-supplied auditor-hosted verification links, with repository copies for retention:
+
+| Run | Date | Auditor-hosted report | Saved HTML | Score / risk |
+| --- | --- | --- | --- | --- |
+| First audit | 16 November 2026 | [QCAIA-1794848833603-D57F7095](https://qorechain-audit-reports-362958365954.s3.amazonaws.com/audits/QCAIA-1794848833603-D57F7095/report.html) | [First report](audit/2026-11-16-stage-1.html) | 65 / Medium |
+| Latest Stage 2 re-audit | 18 November 2026 | [QCAIA-1794963565431-6D3EAE14](https://qorechain-audit-reports-362958365954.s3.amazonaws.com/audits/QCAIA-1794963565431-6D3EAE14/report.html) | [Latest report](audit/2026-11-18/QCAIA-1794963565431-6D3EAE14.html) | 65 / High |
+
+Both HTML reports identify Ethereum / Solidity and SHA256 b681ec487f2254dabb3d9ba61da4c93ef73a82e69c44b99fce05937c9b0bf05e. This exactly matches contracts/TheRecord.sol after removing only its final newline. The repository file's unmodified SHA256 is 78fe9ca23d4ae051a5db1d21dfa2122714b43596921c75920d775c812d3f6dc7. Source text is therefore bound to both reports; the rating change is not evidence of a contract change. The latest report has two High, two Medium and one Low finding; all remain Open in the auditor's report. Our dispositions below do not alter the auditor's statuses or certify safety.
+
+### Latest finding dispositions and remaining checks
+
+| Finding | Current source assessment | Evidence / remaining limitation |
+| --- | --- | --- |
+| ETH-001 amendment authorization | Proposer-only amendment, finalized-current-version gate, new version begins unapproved; old records retained. | Existing access-control tests and genuine two-wallet amendment evidence. A malicious/compromised proposer can still create an unwanted pending version, with no cancel/reject path. Latest-only approvals then prevent further amendments until that pending version finalizes. This is a real liveness/design tradeoff, not authority to forge final approval. Changing that policy needs separate scope review. |
+| ETH-002 counter overflow | Solidity 0.8.28 checked arithmetic rejects overflow; no unchecked increment. | Compiler/source review. No fresh overflow execution test claimed. |
+| ETH-003 PQC results | Registration, algorithm, possession, key length and verify boolean explicitly checked. | Source plus historical real Diana valid/altered-signature regression evidence above. Custom precompiles are not implemented by a standard local EVM. |
+| ETH-004 front-running | Current source has no block.timestamp. Signed payload binds chain/contract/id/version/fingerprint/signer. | Valid signatures can be relayed by another sender. Duplicate-submission gas loss remains; signer attribution cannot be changed by relaying. Existing duplicate/stale/altered-signature checks above. |
+| ETH-005 mappings | No loop over historical mapping entries in create/amend/approve/getVersion. Historical storage grows intentionally. | Direct source inspection and historical version lookup. Pagination is relevant to off-chain history retrieval; deleting finalized on-chain versions would break historical verification. |
+
+No deployed contract policy was changed merely to improve the AI score. The six Foundry results above are historical, not a fresh run: Forge is unavailable in this review environment. Current JavaScript checks do not replace Solidity/PQC regression evidence. Latest report retrieval and source binding are complete; specific-run event acceptance remains unverified, and independent user testing remains pending. No additional audit payment is requested.
+
+My space update draft — READY, NOT POSTED: The Record now retains direct links and source-matched copies of its first QCAIA audit and latest Stage 2 re-audit. Each finding has an explicit disposition, evidence reference and remaining limitation. Both reports cover the same source; real Diana scoped-window admission evidence is documented separately.
