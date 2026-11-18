@@ -377,7 +377,7 @@ window.addEventListener("hashchange", showScreen);
 const withdrawalForm = document.querySelector('#withdraw-update');
 const withdrawalInfo = document.querySelector('#withdrawal-availability');
 withdrawalForm.elements.id.value = query.get('id') ?? '';
-withdrawalForm.elements.version.value = query.get('version') ?? ''; 
+withdrawalForm.elements.version.value = query.get('version') ?? '';
 withdrawalForm.hidden = !deployment?.withdrawals;
 withdrawalInfo.textContent = deployment?.withdrawals
   ? 'You can withdraw a pending amendment with the original proposer’s QoreX account. Any correction needs two fresh approvals. Finalized versions cannot be withdrawn.'
