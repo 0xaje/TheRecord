@@ -117,3 +117,24 @@ Live acceptance (creates one non-sensitive draft, no wallet action):
 `node scripts/check-draft-trash.mjs --live-write`.
 See `docs/audit/2026-11-18/live-trash-checks.json`. Release 35 API checks passed;
 visual desktop/mobile acceptance is still pending because browser access failed.
+
+
+### Browser storage failures
+
+Public file verification initializes even when localStorage access is denied.
+Drafts show a recovery warning. A new workspace, recovery switch or legacy move
+stops if the recovery code cannot be persisted and read back; it does not write
+new drafts under a temporary, unsaved identity. Save your recovery code outside
+the browser: clearing site data can still remove the browser's copy.
+
+Run `npm run build:site` before the combined regression checks:
+
+```sh
+node --test test/private-agreements.test.mjs test/workspace-storage.test.mjs test/verification-storage.test.mjs
+node scripts/check-verifier-storage.mjs
+```
+
+The last command downloads the published JavaScript and checks startup in an
+isolated DOM harness with denied storage. It does not prove visual mobile
+acceptance or simulate a Diana approval. Current evidence is in
+`docs/audit/2026-11-18/`.

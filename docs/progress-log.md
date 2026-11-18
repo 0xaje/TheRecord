@@ -358,3 +358,50 @@ and accepted second-stage audit remain open. Wallet warning owner-resolved.
 Exact next action: verify the published Trash UI in an available browser/phone,
 then isolate public verification from browser storage failures. No milestone
 advance until required UI acceptance is recorded or its blocker remains explicit.
+
+
+## 18 November 2026 — browser storage failure isolation (release 37)
+
+Must work: denied localStorage must not abort public verifier initialization;
+new/recovered/moved workspaces must not send writes before their recovery code
+is persisted and read back. Existing identity stays in memory on failure; a
+failed read-back attempts to restore the prior stored value. No new volatile-only
+workspace fallback. Invalid saved codes show a clear recovery message.
+Legacy signed-in drafts remain discoverable/movable when all are in Trash.
+
+Verification: clean site build and 16 isolated tests PASS. Coverage includes
+storage getter/getItem errors, malformed saved codes, quota/denied/silently
+ignored writes, prior identity preservation, failed read-back rollback and the
+built verifier registering its input/submit handlers despite denied storage.
+A draft-save attempt in the isolated startup harness sends no POST when code
+persistence fails. This is a DOM startup harness, not a real browser acceptance
+run and not proof of the Diana agreement workflow. No chain responses mocked.
+Evidence: audit/2026-11-18/storage-tests.txt. Published-code startup check result
+is recorded separately; never infer mobile acceptance from that harness.
+Hosting source fd2d538489f473cd932fd897d37a8eedf3b16f90, Site version 37 deployed.
+
+Judge review: removes one shared startup failure point and prevents new drafts
+from being written under an unpersisted workspace identity. Storage can still
+be cleared later by browser/user action: users must save their recovery code.
+Best-effort rollback is not a guarantee when the storage API is fully broken.
+Draft text remains server-readable; no encryption claim. Real embedded-browser
+acceptance and the Trash UI check remain OPEN due to earlier browser restriction.
+Permanent deletion/full retention policy and independent testing remain open.
+
+My space update DRAFT READY, not posted:
+I fixed a reliability issue where blocked browser storage could stop The Record's
+public verifier from loading. The verifier's built-code startup check now passes
+with storage denied. Draft saves stop before a server write if the recovery code
+cannot be stored. All 16 isolated regression checks pass; embedded-wallet visual
+acceptance remains pending. No new on-chain workflow claim is made.
+
+Event and Ship Weeks start/end review: no scope/track change. Public repo and
+MIT license retained; existing real Diana evidence remains the basis for workflow
+claims. Four Ship Weeks tasks owner-confirmed complete, fresh Check unobserved.
+Q-Day Drill expired without confirmed participation. Scoped-window proof and
+accepted Stage 2 audit still open; wallet warning owner-resolved.
+Next: owner verifies published Trash/restore and storage warning in QoreX/browser;
+then complete deletion/retention and deployment reproducibility work. Keep
+blocked UI acceptance explicit; do not call the whole product finished.
+
+Published-code check PASS at 2026-11-18T10:48:57.526Z; evidence: audit/2026-11-18/published-storage-startup.json. No wallet or chain transaction.

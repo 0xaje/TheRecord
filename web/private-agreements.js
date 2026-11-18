@@ -1,3 +1,4 @@
+import { readWorkspaceKey, saveWorkspaceKey } from "./workspace-storage.js";
 const query = new URLSearchParams(location.search);
 const invitation = new URLSearchParams(location.hash.slice(1)).get("invite");
 const workspace = document.querySelector("#workspace");
@@ -11,13 +12,19 @@ let drafts = [];
 let current;
 let draftCursor;
 
-const storageKey = "the-record-workspace";
 const keyPattern = /^[a-f0-9]{64}$/;
-let workspaceKey = localStorage.getItem(storageKey);
+const initialStorage = readWorkspaceKey();
+let workspaceKey = initialStorage.key;
+const storageStatus = document.querySelector("#workspace-storage-status");
+storageStatus.textContent = initialStorage.warning;
+storageStatus.hidden = !initialStorage.warning;
+let hasLegacyDrafts = false;
 
 function rememberKey(key) {
-  localStorage.setItem(storageKey, key);
-  workspaceKey = key;
+  // Persist and read back before changing identity or sending any write.
+  workspaceKey = saveWorkspaceKey(key);
+  storageStatus.textContent = "";
+  storageStatus.hidden = true;
 }
 
 function newWorkspaceKey() {
@@ -96,7 +103,8 @@ async function loadDrafts(id) {
   draftCursor = drafts.nextCursor;
   document.querySelector("#load-more-drafts").hidden = !draftCursor;
   if (id && !drafts.some(draft => draft.id === id)) drafts.unshift(await api("/item?" + new URLSearchParams({ id })));
-  document.querySelector("#move-legacy-drafts").hidden = Boolean(workspaceKey) || !drafts.length;
+  hasLegacyDrafts = !workspaceKey && (drafts.length > 0 || (await api("/trash")).length > 0);
+  document.querySelector("#move-legacy-drafts").hidden = !hasLegacyDrafts;
   const list = draftForm.elements.saved;
   list.replaceChildren(new Option("New draft", ""), ...drafts.map(draft => new Option(draft.title, draft.id)));
   list.value = id ?? "";
@@ -160,7 +168,7 @@ draftForm.addEventListener("submit", event => {
   event.preventDefault();
   submit(draftForm, async () => {
     const { title, terms } = draftForm.elements;
-    if (!workspaceKey && !drafts.length) rememberKey(newWorkspaceKey());
+    if (!workspaceKey && !hasLegacyDrafts) rememberKey(newWorkspaceKey());
     const saved = await api("", { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value });
     await loadDrafts(saved.id);
     return "Private draft saved.";

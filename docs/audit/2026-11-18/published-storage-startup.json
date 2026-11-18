@@ -1,0 +1,15 @@
+{
+  "testedAt": "2026-11-18T10:48:57.526Z",
+  "url": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/verify.js",
+  "result": "PASS",
+  "sha256": "ac42f52f00feaf42b067d00ff5e3a44ba44198e8e53a504defdd8559bb83d78c",
+  "method": "Published JavaScript in an isolated DOM startup harness with denied localStorage; not real browser or chain acceptance",
+  "checks": [
+    "verification handlers installed",
+    "verification input reset works",
+    "storage warning shown",
+    "failed recovery-code save sends no POST"
+  ],
+  "walletAction": false,
+  "chainResponsesSimulated": false
+}
