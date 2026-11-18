@@ -1,5 +1,6 @@
+import { deploymentArgument, proofDeployment, proofNames } from './scoped-window-target.mjs';
 import { loadAccount, main as windowCommand, defaultSecret } from './scoped-window-cli.mjs';
-import { WINDOW_CONTRACT, verifyWindowReadback } from '../web/scoped-window-data.js';
+import { verifyWindowReadback } from '../web/scoped-window-data.js';
 import { privateKeyToAccount } from 'viem/accounts';
 import { createPublicClient, http, encodeFunctionData, parseAbi, decodeEventLog, keccak256, encodeAbiParameters } from 'viem';
 import { randomBytes, createHash } from 'node:crypto';
@@ -17,11 +18,12 @@ export function isTargetRestriction(message, target) {
     'the window does not list ' + target.toLowerCase() + ' as an allowed recipient');
 }
 export function reviewSavedProof(evidence) {
+  const target=proofDeployment(evidence.deployment).address;
   const opening=evidence.opening?.opening;
   const before=evidence.beforeOutside, after=evidence.afterOutside;
   if (!opening || evidence.opening.code!==0 || !evidence.permitted?.proposedEventVerified || evidence.permitted.status!=='success'
-      || evidence.plan.to.toLowerCase()!==WINDOW_CONTRACT || evidence.outside.target.toLowerCase()!==evidence.evmAddress.toLowerCase()
-      || !verifyWindowReadback(before,opening) || !verifyWindowReadback(after,opening)
+      || evidence.plan.to.toLowerCase()!==target || evidence.outside.target.toLowerCase()!==evidence.evmAddress.toLowerCase()
+      || !verifyWindowReadback(before,opening,target) || !verifyWindowReadback(after,opening,target)
       || before.used_txs!==after.used_txs || before.used_value!==after.used_value
       || !evidence.outside.rejected || evidence.outside.acceptedHash
       || !isTargetRestriction(evidence.outside.rpcError?.message,evidence.outside.target)) throw new Error('Saved evidence does not establish target-scope rejection. Keep the original for diagnosis.');
@@ -29,16 +31,19 @@ export function reviewSavedProof(evidence) {
     review:{method:'Read-only review of saved owner evidence; no transaction sent.',originalPreserved:true},
     instruction:'Target restriction confirmed from the specific Diana error and live before/after snapshots. Do not repeat the live run.' };
 }
-export function callPlan(address, salt) {
-  if (address.toLowerCase() === FIRST || address.toLowerCase() === WINDOW_CONTRACT) throw new Error('Unexpected disposable address.');
+export function callPlan(address, salt, deploymentId = 'legacy') {
+  const target = proofDeployment(deploymentId).address;
+  if (address.toLowerCase() === FIRST || address.toLowerCase() === target) throw new Error('Unexpected disposable address.');
   const id = keccak256(encodeAbiParameters([{type:'address'},{type:'address'},{type:'address'},{type:'bytes32'}], [address,FIRST,address,salt]));
-  return { id, salt, fingerprint, text: TEST_TEXT, to: WINDOW_CONTRACT,
+  return { id, salt, fingerprint, text: TEST_TEXT, deployment: deploymentId, to: target,
     data: encodeFunctionData({abi,functionName:'create',args:[salt,FIRST,address,fingerprint]}),
     outsideTarget: address, value: '0', gas: '300000', maxFeePerTransactionWei: '100000000000000000' };
 }
 export function verifyProposal(receipt, plan) {
-  if (receipt.status !== 'success' || receipt.to?.toLowerCase() !== WINDOW_CONTRACT) throw new Error('Permitted transaction did not succeed at The Record.');
-  const found = receipt.logs.filter(l => l.address.toLowerCase() === WINDOW_CONTRACT).some(l => {
+  const target = proofDeployment(plan.deployment).address;
+  if (plan.to.toLowerCase() !== target) throw new Error('Plan deployment mismatch.');
+  if (receipt.status !== 'success' || receipt.to?.toLowerCase() !== target) throw new Error('Permitted transaction did not succeed at The Record.');
+  const found = receipt.logs.filter(l => l.address.toLowerCase() === target).some(l => {
     try { const e = decodeEventLog({abi,data:l.data,topics:l.topics}); return e.eventName === 'Proposed' && e.args.id === plan.id && e.args.version === 1n && e.args.fingerprint === plan.fingerprint; } catch { return false; }
   });
   if (!found) throw new Error('Expected Proposed event missing.');
@@ -49,44 +54,47 @@ async function readWindow(address) {
   return r.json();
 }
 const pause = () => new Promise(r => setTimeout(r,2000));
-export async function main(args=process.argv.slice(2)) {
+export async function main(args=process.argv.slice(2), filename=defaultSecret) {
+  const deployment=deploymentArgument(args);
+  const names=proofNames(deployment.id);
   const command=args[0];
   if (!['plan','run','review'].includes(command)) throw new Error('Use plan, review, or run --broadcast --confirm-address DISPOSABLE_ADDRESS.');
-  const account=await loadAccount();
-  const directory=dirname(defaultSecret);
-  const proofPath=join(directory,'scoped-proof.json');
-  const journalPath=join(directory,'scoped-proof-started.json');
+  const account=await loadAccount(filename);
+  const directory=dirname(filename);
+  const proofPath=join(directory,names.proof);
+  const journalPath=join(directory,names.journal);
   if(command==='review') {
     const original=JSON.parse(readFileSync(proofPath,'utf8'));
     if(original.evmAddress?.toLowerCase()!==account.evm.toLowerCase() || original.nativeAddress!==account.cosmos) throw new Error('Saved proof account mismatch.');
+    if ((original.deployment ?? 'legacy') !== deployment.id) throw new Error('Saved deployment mismatch.');
     const reviewed=reviewSavedProof(original);
-    const reviewedFile=join(directory,'scoped-proof-reviewed.json');
+    const reviewedFile=join(directory,names.reviewed);
     writeFileSync(reviewedFile,JSON.stringify(reviewed,null,2)+'\n',{mode:0o600});
     return {...reviewed,reviewedFile,transactionSent:false};
   }
-  if (command==='plan') return {nativeAddress:account.cosmos,evmAddress:account.evm,onlyAllowedContract:WINDOW_CONTRACT,blocks:600,maxTransactions:5,windowAllowanceQor:'1',permittedAction:'Create one new public test record; no existing agreement changes and no approval.',outsideAction:'Attempt a zero-value transfer to this same disposable account, outside the target list.',testText:TEST_TEXT,maximumEvmFeePerAttemptQor:'0.1',openingFeeQor:'0.08',evidenceFile:proofPath,transactionSent:false};
+  if (command==='plan') return {nativeAddress:account.cosmos,evmAddress:account.evm,deployment:deployment.id,onlyAllowedContract:deployment.address,blocks:600,maxTransactions:5,windowAllowanceQor:'1',permittedAction:'Create one new public test record; no existing agreement changes and no approval.',outsideAction:'Attempt a zero-value transfer to this same disposable account, outside the target list.',testText:TEST_TEXT,maximumEvmFeePerAttemptQor:'0.1',openingFeeQor:'0.08',evidenceFile:proofPath,transactionSent:false};
   const at=args.indexOf('--confirm-address');
   if (!args.includes('--broadcast') || at<0 || args[at+1]?.toLowerCase()!==account.evm.toLowerCase()) throw new Error('No transaction sent. Explicit broadcast and disposable address confirmation required.');
   if (existsSync(journalPath) || existsSync(proofPath)) throw new Error('A proof run already exists. Do not delete or repeat; inspect its public evidence first.');
   if (existsSync(join(directory,'pending-transaction.json'))) throw new Error('Resolve the pending native transaction with status first.');
   const client=createPublicClient({transport:http(EVM,{retryCount:0,timeout:15000})});
   if (await client.getChainId()!==9800) throw new Error('Wrong EVM network.');
-  const status=await windowCommand(['status']);
+  const status=await windowCommand(['status','--deployment',deployment.id],filename);
   if (!status.pqcRegistered || !status.possessionProven || !status.pqcKeyMatches || BigInt(status.balanceUqor)<1000000n) throw new Error('Registered matching proven key and at least 1 test QOR required.');
   const wallet=privateKeyToAccount(account.privateKey);
   if (wallet.address.toLowerCase()!==account.evm.toLowerCase()) throw new Error('Signing address mismatch.');
-  const plan=callPlan(account.evm,'0x'+randomBytes(32).toString('hex'));
-  const evidence={kind:'the-record-scoped-proof/v1',createdAt:new Date().toISOString(),nativeAddress:account.cosmos,evmAddress:account.evm,plan,complete:false};
+  const plan=callPlan(account.evm,'0x'+randomBytes(32).toString('hex'),deployment.id);
+  const evidence={kind:'the-record-scoped-proof/v1',deployment:deployment.id,createdAt:new Date().toISOString(),nativeAddress:account.cosmos,evmAddress:account.evm,plan,complete:false};
   const save=()=>writeFileSync(proofPath,JSON.stringify(evidence,null,2)+'\n',{mode:0o600});
   writeFileSync(journalPath,JSON.stringify({createdAt:evidence.createdAt,nativeAddress:account.cosmos})+'\n',{flag:'wx',mode:0o600});
   save();
   try {
-    evidence.openingBroadcast=await windowCommand(['open','--broadcast','--confirm-address',account.evm]); save();
+    evidence.openingBroadcast=await windowCommand(['open','--deployment',deployment.id,'--broadcast','--confirm-address',account.evm],filename); save();
     let committed;
-    for(let attempt=0;attempt<30;attempt++) { const s=await windowCommand(['status']); if(s.pending?.committed) {committed=s.pending;break;} await pause(); }
+    for(let attempt=0;attempt<30;attempt++) { const s=await windowCommand(['status','--deployment',deployment.id],filename); if(s.pending?.committed) {committed=s.pending;break;} await pause(); }
     if (!committed || committed.code!==0 || !committed.windowLive) throw new Error('Opening not confirmed live. Stop; inspect status and evidence, do not rerun.');
     evidence.opening=committed; save();
-    const live=async()=>{const w=await readWindow(account.cosmos);if(!verifyWindowReadback(w,committed.opening))throw new Error('Expected scoped window is not live.');return w;};
+    const live=async()=>{const w=await readWindow(account.cosmos);if(!verifyWindowReadback(w,committed.opening,deployment.address))throw new Error('Expected scoped window is not live.');return w;};
     evidence.beforePermitted=await live(); save();
     const sign=async(to,data,gas)=>{
       const [nonce,gasPrice]=await Promise.all([client.getTransactionCount({address:account.evm,blockTag:'pending'}),client.getGasPrice()]);
@@ -94,7 +102,7 @@ export async function main(args=process.argv.slice(2)) {
       return wallet.signTransaction({chainId:9800,type:'legacy',nonce,to,data,value:0n,gas,gasPrice});
     };
     // Journal hashes BEFORE broadcast. Never print private keys, signed raw bytes, or auto-retry a send.
-    const raw=await sign(WINDOW_CONTRACT,plan.data,300000n);
+    const raw=await sign(deployment.address,plan.data,300000n);
     const allowedHash=keccak256(raw);
     evidence.permitted={hash:allowedHash,submitted:false};save();
     const returned=await client.request({method:'eth_sendRawTransaction',params:[raw]});
@@ -117,7 +125,7 @@ export async function main(args=process.argv.slice(2)) {
     // Keep classification conservative: unrelated nonce/gas/fee failures are not scope proof.
     evidence.outside.submitted=true;
     evidence.outside.targetRestrictionConfirmed=isTargetRestriction(result.error.message,account.evm);
-    evidence.complete=evidence.outside.targetRestrictionConfirmed;
+    evidence.complete=evidence.outside.targetRestrictionConfirmed && evidence.beforeOutside.used_txs===evidence.afterOutside.used_txs && evidence.beforeOutside.used_value===evidence.afterOutside.used_value;
     save();
     return {...evidence,evidenceFile:proofPath,instruction:evidence.complete?'Retain this evidence. Window expires automatically; no approvals were performed.':'Rejection saved but target scope needs manual diagnosis. Do not repeat.'};
   } catch(error) {
