@@ -68,7 +68,14 @@ Close with: organizer confirmation of this specific second run, or a genuine
 accepted rerun with its report, run identifier/payment evidence if applicable,
 reviewed source commit and disposition of findings.
 
-### R3 — High conditional risk: legacy identity trust is outside the source
+### R3 — Legacy identity trust: deployment boundary checked
+
+**Follow-up, 18 November:** the hosting identity guidance documents this as a
+trusted sign-in header. A live anonymous POST remained 401 both without a
+header and with a fabricated identity header; see `identity-gateway-check.json`.
+The deployed boundary is supported by this evidence. Direct deployment behind
+an arbitrary proxy remains unsafe without equivalent header protection.
+Original audit observation follows.
 
 `server/private-agreements.js` trusts `oai-authenticated-user-id` as a fallback
 owner and uses it in the legacy move endpoint. A local handler probe confirms
@@ -122,7 +129,14 @@ solved. It is removed from active blockers. The earlier occurrence remains in
 the chronological evidence; this closure is owner-confirmed, not a new provider
 classification or a fresh independent reproduction.
 
-### R7 — Medium: backend resource and retention controls are missing
+### R7 — Backend bounds implemented; document retention remains open
+
+**Follow-up, 18 November:** release 34 adds atomic draft/revision/invitation
+quotas, fixed-window owner/reviewer/service limits, generic storage errors and
+20-item workspace pagination. Nine SQLite test cases pass. See
+`backend-bounds-tests.txt` and `live-backend-bounds.json` for the separate live
+verification status. There is no claim of full DDoS resistance. Document
+retention and delete/restore remain unfinished. Original audit observation follows.
 
 Request bodies and individual terms are bounded, queries are parameterized,
 workspace ownership is scoped, invitation tokens/codes have strong entropy,

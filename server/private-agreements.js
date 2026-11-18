@@ -29,7 +29,40 @@ async function readInput(request) {
   }
 }
 
+class RequestLimit extends Error {
+  constructor(retryAfter) { super("Too many requests. Please wait before trying again."); this.retryAfter = retryAfter; }
+}
+async function limitRequests(db, scope, maximum) {
+  const now = Date.now();
+  const window = Math.floor(now / 60000) * 60000;
+  const row = await db.prepare(`INSERT INTO request_limits(scope, window_start, hits) VALUES (?, ?, 1)
+    ON CONFLICT(scope) DO UPDATE SET hits = CASE WHEN window_start = excluded.window_start THEN hits + 1 ELSE 1 END,
+    window_start = excluded.window_start RETURNING hits`).bind(scope, window).first();
+  if (row.hits > maximum) throw new RequestLimit(Math.max(1, Math.ceil((window + 60000 - now) / 1000)));
+}
+
 export async function privateAgreements(request, db) {
+  try {
+    if (db) {
+      await limitRequests(db, "service", 600);
+      await db.prepare("DELETE FROM request_limits WHERE scope IN (SELECT scope FROM request_limits WHERE window_start < ? LIMIT 100)")
+        .bind(Date.now() - 3600000).run();
+    }
+    return await handlePrivateAgreements(request, db);
+  } catch (error) {
+    if (error instanceof RequestLimit) return Response.json({ error: error.message }, {
+      status: 429, headers: { ...headers, "Retry-After": String(error.retryAfter) },
+    });
+    const message = String(error.message ?? "");
+    const quota = message.includes("workspace_draft_quota") ? "This workspace has reached its 50-draft limit. Existing drafts are still available."
+      : message.includes("draft_invitation_quota") ? "This draft has reached its 100-invitation limit. Existing invitations are unchanged."
+      : message.includes("draft_revision_quota") ? "This draft has reached its 200-revision limit. Saved revisions are still available." : null;
+    if (quota) return reply({ error: quota }, 409);
+    return reply({ error: "Draft service is temporarily unavailable. Try again." }, 503);
+  }
+}
+
+async function handlePrivateAgreements(request, db) {
   const url = new URL(request.url);
   if (url.pathname === "/api/drafts/review" || (url.pathname === "/api/drafts/feedback" && request.method === "POST")) {
     if (request.method !== "POST") return reply({ error: "Page not found." }, 404);
@@ -41,6 +74,7 @@ export async function privateAgreements(request, db) {
       return reply({ error: "Enter the access code from the sender." }, 400);
     }
     const tokenHash = await digest(input.token);
+    await limitRequests(db, "review:" + tokenHash, 30);
     const codeHash = await digest(code);
     if (url.pathname === "/api/drafts/feedback") {
       const note = typeof input.note === "string" ? input.note.trim() : "";
@@ -60,6 +94,7 @@ export async function privateAgreements(request, db) {
       .bind(tokenHash, codeHash, Date.now()).first();
     return share ? reply(share) : reply({ error: "Incorrect code or unavailable invitation. Ask the sender for a current link and code." }, 404);
   }
+  // Trust this header only behind Sites dispatch, which provides sign-in identity.
   const legacyOwner = request.headers.get("oai-authenticated-user-id");
   const workspaceKey = request.headers.get("X-Record-Workspace");
   if (workspaceKey !== null && !tokenPattern.test(workspaceKey)) {
@@ -73,9 +108,21 @@ export async function privateAgreements(request, db) {
   }
   if (!db) return reply({ error: "Draft storage is unavailable." }, 503);
 
+  await limitRequests(db, (request.method === "GET" ? "read:" : "write:") + await digest(user), request.method === "GET" ? 120 : 30);
+
   if (request.method === "GET" && url.pathname === "/api/drafts") {
-    const { results } = await db.prepare("SELECT id, title, terms, revision FROM drafts WHERE owner = ? ORDER BY rowid DESC").bind(user).all();
-    return reply(results);
+    const before = url.searchParams.get("before");
+    if (before !== null && !/^[1-9][0-9]{0,14}$/.test(before)) return reply({ error: "Invalid page." }, 400);
+    const { results } = await db.prepare("SELECT rowid AS cursor, id, title, terms, revision FROM drafts WHERE owner = ? AND rowid < ? ORDER BY rowid DESC LIMIT 21")
+      .bind(user, before === null ? Number.MAX_SAFE_INTEGER : Number(before)).all();
+    const page = results.slice(0, 20);
+    return Response.json(page, { headers: { ...headers, ...(results.length > 20 ? { "X-Next-Draft": String(page.at(-1).cursor) } : {}) } });
+  }
+  if (request.method === "GET" && url.pathname === "/api/drafts/item") {
+    const id = url.searchParams.get("id") ?? "";
+    if (!uuid.test(id)) return reply({ error: "Invalid draft." }, 400);
+    const row = await db.prepare("SELECT id, title, terms, revision FROM drafts WHERE id = ? AND owner = ?").bind(id, user).first();
+    return row ? reply(row) : reply({ error: "Draft unavailable." }, 404);
   }
 
   if (request.method === "GET" && ["/api/drafts/revisions", "/api/drafts/revision"].includes(url.pathname)) {

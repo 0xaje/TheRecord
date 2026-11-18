@@ -1,0 +1,9 @@
+{
+  "testedDate": "2026-11-18",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "method": "POST /api/drafts using non-sensitive test data, no workspace key",
+  "anonymousStatus": 401,
+  "fabricatedIdentityHeaderStatus": 401,
+  "result": "The supplied arbitrary legacy identity header did not authorize a write.",
+  "boundary": "Sites documents oai-authenticated-user-id as its sign-in identity. This handler must remain behind that trusted dispatch. The test does not certify unrelated hosting or every proxy configuration. No other user's identity was used."
+}

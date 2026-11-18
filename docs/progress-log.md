@@ -260,3 +260,56 @@ fresh portal Check not observed. Scoped-window evidence and Stage 2 acceptance
 remain open. Wallet warning remains resolved per owner confirmation.
 Exact next milestone: verify the legacy identity boundary and implement bounded
 backend access, preserving existing workspace recovery and invitation access.
+
+## Backend bounds and access boundary — 18 November 2026
+
+Deployed Site version 34 with additive migration 0006_backend_bounds. Atomic
+triggers cap 50 drafts per workspace, 200 retained revisions per draft and
+100 invitations per draft. Existing records are not deleted. Draft lists use
+20-item keyset pages and Load older drafts; saving a selected older draft
+fetches it explicitly if it is outside the first page.
+
+Fixed-minute limits: owner reads 120, owner writes 30, review attempts per
+invitation 30, shared Draft API ceiling 600. A 429 includes Retry-After.
+Expired rate-accounting buckets are removed in bounded batches; no document
+cleanup is performed. Generic 503 errors hide internal database details.
+No claim of DDoS resistance or person-level anti-Sybil enforcement is made.
+The shared ceiling can affect all users under heavy traffic.
+
+The hosting identity guidance documents the sign-in header. Live anonymous
+POST probes, with and without fabricated legacy identity, both returned 401.
+Keep the handler behind this trusted dispatch; arbitrary proxy deployment
+still needs equivalent protection. Existing signed-in fallback is retained.
+
+Verification: 9 isolated SQLite cases pass, covering quotas, atomic rejection,
+throttle/recovery, revision preservation, pagination and ownership. The initial
+live limiter attempt hit an egress/proxy failure; a later slow sequential
+attempt was stopped without claiming a result. A bounded concurrent retest
+passed: 31 invalid requests, one 429, Retry-After 22, reads still available.
+Evidence: backend-bounds-tests.txt, identity-gateway-check.json and
+live-backend-bounds.json in audit/2026-11-18. No documents created by this
+limiter check and no wallet/chain action occurred.
+
+Browser acceptance on release 34: existing Revision history browser check
+reopened at saved revision 2 (Monday), and Saved revisions listed revisions
+2 and 1. Workspace recovery identity access is preserved; fresh-device restore
+and physical-phone acceptance remain unverified. No other user's draft read.
+
+Judge review: application quota/rate-limit/pagination gaps are addressed, with
+live enforcement proof. Retention and deletion/restore policy, storage-failure
+isolation, encryption decision, deployment/CI, independent testing and contest
+acceptance evidence remain open. Current milestone implementation is complete;
+full product release acceptance remains open.
+
+My space update READY, not posted:
+I added bounded draft storage, revision and invitation quotas to The Record,
+plus paginated workspace lists and request throttling. Local regression tests
+passed. On the live service, the 31st write was throttled with Retry-After while
+reads remained available. Existing draft and revision access still worked.
+
+Event/challenges: no new category/award claim. All four Ship Weeks tasks remain
+owner-confirmed complete; fresh portal Check not observed. Scoped-window proof
+and accepted second-stage audit remain open. Wallet warning owner-resolved.
+Exact next milestone: define and implement safe draft retention and owner
+removal/restore without implying that on-chain proofs can be deleted; then
+isolate public verification from browser storage failures.

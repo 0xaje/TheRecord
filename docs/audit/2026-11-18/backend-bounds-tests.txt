@@ -1,0 +1,17 @@
+✔ draft, review, feedback, revision isolation and revocation (60.091531ms)
+✔ expiry, malformed requests, origins and storage failures (9.584863ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (14.409387ms)
+✔ revision pages have no overlap and do not expose full text in lists (27.386024ms)
+✔ additive migration preserves a legacy current revision without inventing old text (6.309838ms)
+✔ workspace write throttle returns Retry-After without blocking reads (28.796926ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (11.586998ms)
+✔ retained revision and invitation quotas are atomic (34.843809ms)
+✔ review throttling and temporary storage failures fail safely (35.33225ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 422.011529

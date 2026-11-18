@@ -1,0 +1,10 @@
+{
+  "testedAt": "2026-11-18T10:29:38.484Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "result": "PASS",
+  "requests": 31,
+  "limitResponses": 1,
+  "retryAfter": "22",
+  "readsStillWork": true,
+  "note": "Dedicated random workspace. No documents created, no wallet operation, no credentials retained."
+}

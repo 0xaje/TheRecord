@@ -9,6 +9,7 @@ const feedback = document.querySelector("#draft-feedback");
 const copy = document.querySelector("#copy-invite");
 let drafts = [];
 let current;
+let draftCursor;
 
 const storageKey = "the-record-workspace";
 const keyPattern = /^[a-f0-9]{64}$/;
@@ -35,6 +36,7 @@ async function api(path = "", body, key = workspaceKey) {
   const response = await fetch("/api/drafts" + path, options);
   const data = await response.json();
   if (!response.ok) throw new Error(data.error ?? "Request failed.");
+  if (Array.isArray(data)) data.nextCursor = response.headers.get("X-Next-Draft");
   return data;
 }
 
@@ -90,6 +92,9 @@ function openDraft(id) {
 
 async function loadDrafts(id) {
   drafts = await api();
+  draftCursor = drafts.nextCursor;
+  document.querySelector("#load-more-drafts").hidden = !draftCursor;
+  if (id && !drafts.some(draft => draft.id === id)) drafts.unshift(await api("/item?" + new URLSearchParams({ id })));
   document.querySelector("#move-legacy-drafts").hidden = Boolean(workspaceKey) || !drafts.length;
   const list = draftForm.elements.saved;
   list.replaceChildren(new Option("New draft", ""), ...drafts.map(draft => new Option(draft.title, draft.id)));
@@ -346,3 +351,24 @@ revisionPanel.addEventListener("toggle", () => {
   if (revisionPanel.open && !revisionList.children.length) loadRevisions();
 });
 revisionMore.addEventListener("click", () => loadRevisions(true));
+
+
+document.querySelector("#load-more-drafts").addEventListener("click", async event => {
+  const button = event.currentTarget;
+  if (!draftCursor) return;
+  button.disabled = true;
+  const key = workspaceKey;
+  try {
+    const page = await api("?" + new URLSearchParams({ before: draftCursor }));
+    if (key !== workspaceKey) return;
+    const options = draftForm.elements.saved;
+    for (const draft of page) {
+      if (!drafts.some(existing => existing.id === draft.id)) {
+        drafts.push(draft); options.add(new Option(draft.title, draft.id));
+      }
+    }
+    draftCursor = page.nextCursor;
+    button.hidden = !draftCursor;
+  } catch (error) { draftForm.querySelector("output").textContent = error.message; }
+  finally { button.disabled = false; }
+});

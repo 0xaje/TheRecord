@@ -70,3 +70,34 @@ node scripts/check-private-revisions.mjs --live-write
 ```
 
 No wallet or chain transaction is used. See the [live revision evidence](docs/audit/2026-11-18/live-revision-checks.json).
+
+## Draft service limits and access boundary
+
+Draft lists use 20-item pages; **Load older drafts** retrieves the next page.
+Existing owners can still open a selected older draft after saving it.
+The service permits up to 50 drafts per workspace, 200 retained revisions per
+draft and 100 invitations per draft. Database triggers enforce these bounds
+atomically. Existing content is not deleted when a limit is reached.
+
+Fixed one-minute windows allow 120 owner reads, 30 owner writes and 30 review
+attempts per invitation; a shared 600-request Draft API ceiling bounds overall
+traffic. A 429 response supplies `Retry-After`. The shared ceiling can affect
+all users under heavy traffic. These are application controls, not proof of
+DDoS resistance; rotating recovery identities does not establish a real person.
+Only expired rate-accounting buckets are cleaned here. Document retention and
+delete/restore policy remain separate work.
+
+Legacy signed-in identity relies on the hosting platform's trusted
+`oai-authenticated-user-id` header. The live anonymous spoof probe returned 401.
+Do not expose this handler through another host that forwards arbitrary caller
+identity headers. Workspace recovery codes remain bearer secrets.
+
+Migration `0006_backend_bounds.sql` is additive. It does not rewrite old
+migrations or remove documents. Storage errors return a generic 503 rather
+than exposing internal SQL details. The explicit live check below sends at most
+63 invalid, non-sensitive requests to one random test workspace and creates no
+records or chain transactions:
+
+```sh
+node scripts/check-backend-bounds.mjs --live-limit-check
+```
