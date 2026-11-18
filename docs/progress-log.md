@@ -98,3 +98,38 @@ I refined The Record’s walkthrough into a continuous illustrated story.
 Scrolling follows the agreement from review through Diana recording,
 QoreX approvals, verification and amendment. The chapter list tracks the
 current step, with real screenshots and receipt links available for inspection.
+
+## Footer, Blog and responsive layout pass — 18 November 2026
+
+Scope: finish the approved six-point presentation correction, preserving the
+walkthrough illustrations. Added a grouped footer with GitHub, evidence,
+license, Credits and QoreChain links plus a faint wordmark. Blog headings now
+follow walkthrough sizing, with slightly heavier body text. Added compact
+expandable mobile chapter navigation and responsive single-column document,
+workspace and action layouts. Draft editor alignment is straight on desktop;
+no editor rotation was found. Prominent illustration attribution remains
+removed from the walkthrough, with licensing retained on Credits.
+
+Verification: npm run build:site, node --check web/walkthrough.js and
+ git diff --check passed. Site version 30 published successfully. Live desktop
+browser inspection confirmed landing, footer, Blog and Drafts rendering.
+Scrolling changed the walkthrough's active chapter to Both people approve.
+No horizontal overflow was detected at the inspected desktop width.
+Physical-phone acceptance of the new responsive layout remains OPEN; independent
+friend testing remains OPEN. No new transaction or end-to-end approval claim
+is made by this UI release.
+
+Judge review: the presentation corrections are implemented and published.
+Do not call the milestone fully accepted until phone layout and independent
+participant checks pass. Exact official rubric and current Ship Weeks Check
+results remain unverified; existing challenge status is unchanged.
+
+My space update READY, not posted:
+I improved The Record's walkthrough, Blog and responsive layouts, and added
+clear links to the GitHub source and Diana evidence. The illustrated story
+keeps QoreChain, Diana and QoreX's roles visible. Desktop inspection and build
+checks passed; independent participant and refreshed phone checks are pending.
+
+Next action: open the published landing, walkthrough, Blog and Drafts inside
+QoreX on the phone; confirm readable content, expandable step selection and
+no sideways overflow. Then capture independent participant results.

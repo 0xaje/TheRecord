@@ -79,9 +79,33 @@ const sections = chapters.map((chapter, index) => {
   return section;
 });
 
+const chapterMenu = document.querySelector('#chapter-menu-toggle');
+const chapterNavigation = document.querySelector('#walkthrough-chapters');
+function closeChapterMenu() {
+  chapterNavigation.removeAttribute('data-open');
+  chapterMenu.setAttribute('aria-expanded', 'false');
+}
+chapterMenu.addEventListener('click', () => {
+  const open = chapterNavigation.toggleAttribute('data-open');
+  chapterMenu.setAttribute('aria-expanded', String(open));
+});
+chapterNavigation.addEventListener('click', event => {
+  if (event.target.closest('a')) closeChapterMenu();
+});
+chapterNavigation.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {
+    closeChapterMenu();
+    chapterMenu.focus();
+  }
+});
+window.matchMedia('(max-width: 760px)').addEventListener('change', closeChapterMenu);
+
 function markChapter(id) {
   for (const link of chapterLinks) {
-    if (link.hash === '#' + id) link.setAttribute('aria-current', 'location');
+    if (link.hash === '#' + id) {
+      link.setAttribute('aria-current', 'location');
+      chapterMenu.textContent = 'Step ' + id.split('-')[1] + ' of 6 · ' + link.textContent;
+    }
     else link.removeAttribute('aria-current');
   }
 }

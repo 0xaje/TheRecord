@@ -178,6 +178,82 @@ button,.button{min-height:44px}
 .built-on{margin-top:2rem;padding-top:2rem}
 }
 
+
+.article-intro{padding:1.75rem 0 1.5rem;max-width:56rem}
+.article-intro h1{font-size:clamp(2rem,4vw,3.2rem);margin:.45rem 0 .65rem;max-width:23ch}
+.blog-body{min-width:0;font-size:1rem;line-height:1.8;font-weight:500}
+.blog-body p,.blog-body li,.blog-body td{color:#d0d0d7}
+.blog-body h2{font-size:clamp(1.5rem,3.2vw,2.25rem);font-weight:700}
+.blog-body h3{font-size:1.2rem}.blog-body strong{color:#fafafa;font-weight:700}
+.blog-body ol{padding-left:1.3rem}
+.blog-body figure{margin:0;min-width:0}
+.blog-body table{table-layout:fixed;overflow-wrap:break-word}
+.blog-body th:first-child{width:30%}
+.blog-toc a{font-size:.9rem;font-weight:600;min-height:44px;display:flex;align-items:center}
+.chapter-navigation{position:sticky;top:1rem;align-self:start;min-width:0}
+.chapter-navigation .chapter-list{position:static}
+.chapter-menu-toggle{display:none}
+.site-footer{max-width:78rem;margin:3.5rem auto 0;padding:2.75rem clamp(1rem,4vw,3rem) 1.5rem;border-top:1px solid var(--line)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.1fr;gap:2rem}
+.footer-about p{margin-top:1rem;line-height:1.75;font-size:.95rem}
+.footer-network{font-size:.8rem!important;color:var(--accent)}
+.footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:.4rem}
+.footer-links h2{font:600 .8rem/1.4 "DM Sans",sans-serif;letter-spacing:0;color:#b8b8c0;margin-bottom:.65rem}
+.footer-links a{font-size:.9rem;min-height:36px;display:flex;align-items:center;color:#d3d3d8;text-decoration:none}
+.footer-links a:hover{color:var(--accent)}
+.footer-wordmark{font-family:Inter,sans-serif;font-weight:800;letter-spacing:-.075em;line-height:1.15;font-size:clamp(3rem,15vw,12rem);white-space:nowrap;color:#242428;margin:2.5rem 0 1.5rem;user-select:none}
+.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;padding-top:1rem;border-top:1px solid var(--line);font-size:.8rem;color:#b8b8c0}
+.workspace-grid{grid-template-columns:minmax(0,1fr) minmax(15rem,22rem);gap:1.25rem;align-items:start}
+.workspace-grid>form,.workspace-side{min-width:0;margin:0}
+.workspace-side section,.workspace-side form{margin:0}
+.editor-tools{align-items:end}.editor-paper{transform:none}
+@media(max-width:1000px){.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-grid{grid-template-columns:minmax(0,1fr)}.workspace-side{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-side #draft-record{grid-column:1/-1}}
+@media(max-width:760px){
+main{padding-inline:1rem;padding-bottom:2rem}
+.site-header{padding-block:.85rem;gap:.65rem}
+.story-header,.article-intro{padding:1.3rem 0 1.2rem}
+.story-header h1,.article-intro h1{font-size:clamp(1.85rem,7vw,2.6rem);line-height:1.12}
+.story-header p{font-size:1rem;line-height:1.65}
+.chapter-navigation{top:0;z-index:5;display:block;padding:.45rem 0;background:#09090bf5}
+.chapter-menu-toggle{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;text-align:left;font-size:.9rem;min-height:48px}
+.chapter-menu-toggle::after{content:"▾";flex:none}
+.chapter-menu-toggle[aria-expanded=true]::after{content:"▴"}
+.chapter-navigation .chapter-list{display:none;max-height:55vh;overflow-y:auto;margin-top:.45rem;grid-template-columns:minmax(0,1fr);padding:.4rem}
+.chapter-navigation .chapter-list[data-open]{display:grid}
+.chapter-navigation .chapter-list a{max-width:none;padding:.65rem .8rem;font-size:.95rem}
+.story-layout{display:block}.story-main{margin-top:.6rem}
+.chapter-panel{scroll-margin-top:5rem;margin-bottom:1.25rem}
+.chapter-panel .chapter-heading h2{font-size:1.6rem}
+.chapter-panel p{font-size:.98rem;line-height:1.7}
+.role-card figcaption{padding:1rem}.story-card{padding:1rem}
+.signer-row img{flex:none}.paper-heading{align-items:center}.paper-heading strong{font-size:1.05rem}
+.paper-status{white-space:normal}.agreement-paper{padding:1.1rem}
+.blog-layout{display:block}
+.blog-toc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.3rem .75rem;margin-bottom:1.5rem}
+.blog-toc a{padding:.5rem .65rem;border:1px solid var(--line);border-radius:.4rem;line-height:1.4}
+.blog-body section{padding-bottom:1.5rem;margin-bottom:1.5rem}
+.blog-body h2{font-size:1.6rem;line-height:1.2}
+.blog-body th,.blog-body td{padding:.7rem .4rem;font-size:.9rem}
+.blog-body .story-pair{gap:1.5rem}
+.hero h1{font-size:clamp(2.5rem,10vw,3.6rem)}
+.hero .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.hero .actions .button:first-child{grid-column:1/-1}
+.hero-card h2{font-size:1.65rem}.hero-card li{padding:.7rem .1rem}
+.workspace-header{gap:1rem}.workspace-header>button{width:100%}
+.workspace-side{grid-template-columns:minmax(0,1fr)}
+.editor-tools{grid-template-columns:minmax(0,1fr)}
+.editor-paper textarea{min-height:18rem}
+.editor-meta button{width:100%}
+#invite button,#draft-record .button{width:100%}
+.site-footer{margin-top:2rem;padding-top:2rem}
+.footer-grid{gap:1.75rem 1rem}
+.footer-about{grid-column:1/-1}
+.footer-links a{min-height:44px}
+.footer-wordmark{font-size:clamp(2.8rem,15vw,6.5rem);margin:1.5rem 0}
+.footer-bottom{flex-direction:column}
+}
+@media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr)}.blog-toc{grid-template-columns:minmax(0,1fr)}.paper-signers{gap:.5rem}}
+
 </style>
 <main>
 <header class="site-header">
@@ -399,11 +475,13 @@ button,.button{min-height:44px}
 <header class="story-header walkthrough-intro"><p class="eyebrow">Built on QoreChain · Diana Testnet</p>
 <h1>Follow one agreement.</h1><p>Scroll from the first review to a verified amendment. Each step explains what the file, signers and chain record mean.</p></header>
 <div class="story-layout">
-<nav class="chapter-list" aria-label="Walkthrough chapters">
+<div class="chapter-navigation">
+<button type="button" class="chapter-menu-toggle secondary" id="chapter-menu-toggle" aria-expanded="false" aria-controls="walkthrough-chapters">Choose a step</button>
+<nav class="chapter-list" id="walkthrough-chapters" aria-label="Walkthrough chapters">
 <a href="#chapter-1">Agree on the terms</a><a href="#chapter-2">Record the version</a>
 <a href="#chapter-3">Both people approve</a><a href="#chapter-4">Check the original</a>
 <a href="#chapter-5">Change one detail</a><a href="#chapter-6">Approve the amendment</a>
-</nav>
+</nav></div>
 <div class="story-main"><div id="story-chapters"></div>
 <div class="story-actions" aria-label="Continue with The Record">
 <a class="button" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Try the real file check</a>
@@ -413,7 +491,7 @@ button,.button{min-height:44px}
 </div></div>
 </section>
 <section class="screen" data-screen="blog" hidden>
-<header class="story-header"><p class="eyebrow">The Record · Build Before Q-Day</p>
+<header class="story-header article-intro"><p class="eyebrow">The Record · Build Before Q-Day</p>
 <h1>Which version did both people approve?</h1>
 <p>An agreement can change in a single word. The Record connects each file version to its approvals on QoreChain Diana Testnet.</p></header>
 <div class="blog-layout">
@@ -462,5 +540,17 @@ button,.button{min-height:44px}
 <p><a href="/walkthrough">Return to the walkthrough</a></p>
 </section>
 </main>
+
+<footer class="site-footer" id="site-footer">
+<div class="footer-grid">
+<div class="footer-about"><a class="brand" href="/">The Record</a><p>Review the terms.<br>Approve the version.<br>Keep the proof.</p><p class="footer-network">Built on QoreChain Diana Testnet.</p></div>
+<div class="footer-links"><h2>Use The Record</h2><a href="/#workspace">Drafts</a><a href="/walkthrough">Walkthrough</a><a href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Demo</a><a href="/blog">Blog</a></div>
+<div class="footer-links"><h2>Project</h2><a href="https://github.com/0xaje/TheRecord">GitHub</a><a href="https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md">Diana evidence</a><a href="https://github.com/0xaje/TheRecord/blob/main/LICENSE">MIT license</a><a href="/credits">Credits</a></div>
+<div class="footer-links"><h2>Built on QoreChain</h2><a href="https://build.qorechain.io">Build Before Q-Day</a><a href="https://dashboard.qorechain.io/explorer">QoreChain Explorer</a><a href="/blog#qorechain">Diana and QoreX</a></div>
+</div>
+<div class="footer-wordmark" aria-hidden="true">The Record</div>
+<div class="footer-bottom"><span>© 2026 The Record</span><span>Agreement records on Diana Testnet</span></div>
+</footer>
+
 <script type="module" src="/verify.js"></script>
 </html>
