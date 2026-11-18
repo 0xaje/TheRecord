@@ -3,10 +3,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Record | Review and verify agreements</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap">
 <style>
 .blog-body .story-card{margin:1rem 0}.story-card>strong{display:block}.story-card img{display:block;margin-bottom:.8rem}.chapter-list{max-height:calc(100dvh - 2rem);overflow-y:auto}.blog-body a{overflow-wrap:anywhere}
 
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap");
+
 :root{color-scheme:dark;font:16px/1.6 "DM Sans",system-ui,sans-serif;background:#09090b;color:#fafafa;--panel:#151517;--line:#333337;--muted:#b8b8c0;--accent:#b4efce}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -266,6 +267,8 @@ main{padding-inline:1rem;padding-bottom:2rem}
 @media(max-width:760px){.blog-navigation{top:0;z-index:5;padding:.45rem 0;background:#09090bf5;margin-bottom:1rem}.blog-menu-toggle{display:block;width:100%;text-align:left;min-height:48px}.blog-navigation .blog-toc{display:none;margin:.4rem 0 0;max-height:55dvh;overflow-y:auto}.blog-navigation[data-open="true"] .blog-toc{display:grid}}
 </style>
 <main>
+<p id="app-startup" role="status">Loading The Record. If this message stays here, reload the page. If it still does not open, please report the page address and error.</p>
+<noscript><p>The Record needs JavaScript to show its tools and walkthrough. Enable JavaScript, then reload this page.</p></noscript>
 <p id="deployment-context" role="status" hidden></p>
 <header class="site-header">
 <a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#b4efce"/><path d="M9 18V9h10l4 4v10h-9M14 18l3 3 6-7" fill="none" stroke="#10251a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The Record</a>
@@ -353,7 +356,8 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <div class="editor-paper">
 <h2>Agreement terms</h2>
 <label>Title <input name="title" placeholder="Give this agreement a title" maxlength="120" required></label>
-<label>Terms <textarea name="terms" placeholder="Write the terms both parties will review" rows="8" maxlength="20000" required></textarea></label>
+<p id="draft-privacy-note">Drafts are stored on this service and are not end-to-end encrypted. Anyone with your recovery code can access your workspace. Do not enter sensitive information.</p>
+<label>Terms <textarea aria-describedby="draft-privacy-note" name="terms" placeholder="Write the terms both parties will review" rows="8" maxlength="20000" required></textarea></label>
 </div>
 <div class="editor-meta"><p id="draft-revision" aria-live="polite">New draft</p><button>Save private draft</button></div>
 <button type="button" id="move-legacy-drafts" hidden>Move existing drafts into a recovery workspace</button>

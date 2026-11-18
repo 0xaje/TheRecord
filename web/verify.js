@@ -359,6 +359,8 @@ function showScreen() {
         : page === "/walkthrough" ? "walkthrough"
         : page === "/blog" || hash === "guide" ? "blog"
           : query.has("id") ? "verify-title" : "landing";
+  const startup = document.querySelector("#app-startup");
+  if (startup) startup.hidden = true;
   landing.hidden = screen !== "landing";
   for (const panel of screens) panel.hidden = panel.dataset.screen !== screen;
   for (const link of navLinks) {
