@@ -1,0 +1,16 @@
+{
+  "preparedDateWAT": "2026-11-19",
+  "contract": "TheRecordV2",
+  "chainId": 9800,
+  "address": "0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f",
+  "sourceFile": "contracts/TheRecordV2.sol",
+  "copyFile": "docs/withdrawal/audit-source.sol",
+  "sha256": "688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df3193980",
+  "sha256WithoutFinalNewline": "63a475d91aad55e1675f5d2d334ef14b5a9b090e54c463cf87154a4710249c03",
+  "legacySourceSha256": "78fe9ca23d4ae051a5db1d21dfa2122714b43596921c75920d775c812d3f6dc7",
+  "legacyAddress": "0x25721b3be0f24438da7daed4c800b073ef9bb802",
+  "compiler": "0.8.28",
+  "newSourceAuditorReport": "NOT YET PROVIDED",
+  "paymentSentByAgent": false,
+  "eventAcceptance": "UNVERIFIED"
+}

@@ -50,3 +50,10 @@ Next engineering action: save real historical negative-signature/read-only regre
 ## My space update — READY, NOT POSTED
 
 I tested The Record's pending-update withdrawal on QoreChain Diana. An update with one approval was withdrawn, then re-proposed as a new version requiring two fresh approvals. The original finalized file remains verifiable, and History shows all three versions with receipts. Public evidence is retained in the repository. New-contract audit and additional security checks remain open.
+
+
+## Read-only security checkpoint — 19 November 2026 WAT
+
+All14historicalDiana checks passed:3positivecontrols and11negativecases. See [raw output](security-regression.txt), [structured results](security-regression.json) and [repeatable script](../../scripts/check-withdrawal-security.mjs). The old version2 signature was rejected for version3 even though the fingerprints were identical. Withdrawal/approval signatures were not interchangeable; altered, unauthorized, duplicate, withdrawn and finalized-version cases failed with the expected contract errors. These are actual historical eth_call responses using public recorded signatures, not newly broadcast failed transactions.
+
+The earlier replay-check gate above is now resolved for these tested cases. New-source auditor report/event acceptance, V2-targeted scope proof and independent users remain open. Exact input and remaining limits: [audit handoff](AUDIT_HANDOFF.md).
