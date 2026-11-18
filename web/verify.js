@@ -1,4 +1,5 @@
 import "./walkthrough.js";
+import "./history.js";
 import "./private-agreements.js";
 import { generateTestSigner, SignerReadinessError, submitApproval } from "./approve.js";
 import { registerSigner } from "./register.js";
@@ -334,6 +335,7 @@ window.matchMedia("(max-width: 600px)").addEventListener("change", () => setMenu
 
 if (query.has("id")) {
   for (const link of navLinks) {
+    if (new URL(link.href).pathname === "/history") link.href = "/history?" + new URLSearchParams({ id: query.get("id") });
     if (["#verify-title", "#amend-title"].includes(link.hash)) {
       link.href = location.pathname + location.search + link.hash;
     }
@@ -346,6 +348,7 @@ function showScreen() {
   const page = location.pathname.replace(/\/$/, "");
   const screen = invite ? "review"
     : screens.some(panel => panel.dataset.screen === hash) ? hash
+      : page === "/history" ? "history"
       : page === "/credits" ? "credits"
         : page === "/walkthrough" ? "walkthrough"
         : page === "/blog" || hash === "guide" ? "blog"
@@ -353,7 +356,7 @@ function showScreen() {
   landing.hidden = screen !== "landing";
   for (const panel of screens) panel.hidden = panel.dataset.screen !== screen;
   for (const link of navLinks) {
-    if (link.hash.slice(1) === screen || new URL(link.href).pathname === "/" + screen) link.setAttribute("aria-current", "page");
+    if (link.hash ? link.hash.slice(1) === screen : new URL(link.href).pathname === "/" + screen) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
   }
   if (screen === "signer-setup") document.querySelector("#signer-setup").open = true;

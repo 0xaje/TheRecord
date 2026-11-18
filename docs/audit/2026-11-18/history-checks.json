@@ -1,0 +1,37 @@
+{
+  "testedAt": "2026-11-18T01:17:55.069Z",
+  "agreementId": "0x7579231974eb436db32c687b8d89cc0ddf39434156d7aa99131fb309a03c678e",
+  "snapshot": "10254760",
+  "complete": true,
+  "events": 8,
+  "checks": [
+    "two finalized versions",
+    "two distinct approvers per version",
+    "expected fingerprints",
+    "pending amendment shows zero approvals",
+    "bounded incomplete scan",
+    "invalid ID rejection"
+  ],
+  "versions": [
+    {
+      "version": "2",
+      "fingerprint": "0xec60c8c9aef0e0f8e8771a3fcb634936c6bbefd0f1ac7874f392295460a0a6fe",
+      "finalized": true,
+      "signers": [
+        "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+        "0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A"
+      ],
+      "finalizationTransaction": "0x2d6340d2699b0b8b6b34057bbaebd69a463b67c4dd0f09b0299218052c79e222"
+    },
+    {
+      "version": "1",
+      "fingerprint": "0x91804a34261a4f7a6b5baf984a211b3aaeace3b8a2996af2dc72e657d490ca74",
+      "finalized": true,
+      "signers": [
+        "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+        "0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A"
+      ],
+      "finalizationTransaction": "0x2f6bba2c7a1b757f24d7738ba1cbb9cbb25cc6416a8b657f98c4f04643682fd9"
+    }
+  ]
+}

@@ -172,3 +172,48 @@ repeatable backend tests. Independent participant testing is still pending.
 Exact next action: verify scoped-window evidence and Stage 2 acceptance before
 claiming category compliance, then close the legacy identity boundary and history
 view gaps in separately tested milestones.
+
+## Real on-chain history milestone — 18 November 2026
+
+Implemented /history with an agreement ID lookup, version fingerprints,
+distinct signer approval events, proposal/finalization receipts and links to
+verify each version. Reads are pinned to one Diana snapshot. Logs use 10,000-
+block ranges, up to 100,000 blocks per resumable batch. Partial scans never
+claim complete history or not-found. State checks reject gaps and missing
+approval/finalization events. Results display ten versions per page.
+
+Read-only live regression script scripts/check-history.mjs passed for the real
+agreement 0x7579231974eb436db32c687b8d89cc0ddf39434156d7aa99131fb309a03c678e:
+two finalized versions, expected fingerprints, distinct approvers, and a
+historical amendment before approvals. Invalid ID and incomplete scan checks
+passed. Evidence: audit/2026-11-18/history-checks.json. Build, syntax, diff check
+and existing isolated backend regressions pass. Site version 31 published.
+Browser acceptance result is recorded in the follow-up entry below.
+
+Wallet warning is RESOLVED based on explicit owner confirmation. Historical
+records remain; no fresh provider classification is claimed.
+
+Private draft revision retention is NOT implemented in this milestone.
+Scoped-window evidence and Stage 2 audit acceptance remain open. Ship Weeks:
+all four complete per owner confirmation; fresh portal Check not observed.
+No new chain transaction was made. Official category rubric weights remain
+unverified; real Diana history supports inspectable evidence, not a new award.
+
+My space update READY, not posted:
+The Record now has a real agreement history page. It reads Diana's recorded
+versions, checks approvals and finalization against contract state, and links
+to the receipts. I verified both finalized versions and an earlier pending
+amendment using real testnet data. Private draft revision history is next.
+
+Judge review: on-chain proof is now accessible through the product. Long scans
+can require Continue; phone acceptance and independent users remain pending.
+Next milestone: preserve private draft revisions with additive migration,
+owner-scoped access and export tests, preserving current drafts/invitations.
+
+History browser acceptance: the live page loaded both finalized versions at
+snapshot 10287354 with proposal/approval/finalization receipt links and both
+public signer addresses. Visual inspection found and corrected a shared-path
+active-navigation issue; the final release highlights only the active screen.
+Physical-phone acceptance remains open. No wallet connection was requested.
+Final history release: Site version 32 published successfully. Browser readback
+confirmed that only History is active in navigation after the correction.

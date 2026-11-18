@@ -83,6 +83,11 @@ preserves existing owners' drafts. Do not delete legacy access blindly.
 
 ### R4 — High product gap: history is not a usable app feature
 
+**Follow-up, 18 November:** the on-chain history view is implemented in release
+31 with real event/state regression evidence in `history-checks.json`. The
+private draft retention portion below remains open. Original audit observation:
+
+
 On-chain `Proposed`, `Approved` and `Finalized` events preserve evidence and
 `getVersion` returns a requested historical version. The UI has no real
 history/timeline showing versions, signer approvals and receipt links.
@@ -108,16 +113,12 @@ same bytes, approve the same version, verify mismatch, amend with fresh
 approvals and recheck the original. Save agreement ID, both public signer
 addresses, receipts, observed errors and final readback. Never collect phrases.
 
-### R6 — High unresolved trust item: historical wallet warning
+### R6 — Resolved by owner confirmation: historical wallet warning
 
-`docs/diana-evidence.md` records a MetaMask “Malicious site” / “High-risk
-request” warning and no documented closure. It was not reproduced in this
-review, and it is not evidence by itself that the current site is malicious.
-QoreX success does not prove that the earlier warning has been resolved.
-
-Close with: current reproduction details, affected origin/transaction,
-provider review/classification and documented outcome. Do not tell testers to
-bypass the warning. Current hosted bundle/source parity now passes.
+On 18 November the owner explicitly confirmed that the wallet warning has been
+solved. It is removed from active blockers. The earlier occurrence remains in
+the chronological evidence; this closure is owner-confirmed, not a new provider
+classification or a fresh independent reproduction.
 
 ### R7 — Medium: backend resource and retention controls are missing
 
@@ -279,7 +280,7 @@ The strongest next work is proof and reliability, not a new feature category.
 
 ## Ordered completion plan
 
-1. Close required window scope and second-audit acceptance; clarify warning status.
+1. Close required window scope and second-audit acceptance.
 2. Verify/document the legacy identity gateway and add backend abuse bounds.
 3. Implement the real read-only agreement/version/approval history view.
 4. Agree and implement retained private revision/storage policy where required.

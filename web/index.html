@@ -254,6 +254,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 }
 @media(max-width:360px){.footer-grid{grid-template-columns:minmax(0,1fr)}.blog-toc{grid-template-columns:minmax(0,1fr)}.paper-signers{gap:.5rem}}
 
+.history-version code{display:block;overflow-wrap:anywhere;font-size:.85rem}.history-version ol{padding-left:1.25rem}.history-version li{margin:.65rem 0}.history-results{display:grid;gap:1rem;margin-top:1rem}
 </style>
 <main>
 <header class="site-header">
@@ -264,6 +265,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <a href="/#verify-title">Verify</a>
 <a href="/#create-title">Record</a>
 <a href="/#amend-title">Amend</a>
+<a href="/history">History</a>
 
 <a href="/walkthrough">Walkthrough</a>
 <a href="/blog">Blog</a>
@@ -385,6 +387,15 @@ main{padding-inline:1rem;padding-bottom:2rem}
 </form>
 </section>
 </div>
+<section class="screen narrow" data-screen="history" hidden>
+<header class="screen-heading"><h1>Agreement history</h1><p>See the versions, approvals and receipts recorded on QoreChain Diana Testnet. No wallet or document upload is needed.</p></header>
+<form id="history-form"><label>Agreement ID <input name="id" required pattern="0x[0-9a-fA-F]{64}" spellcheck="false"></label><button>Load history</button></form>
+<p id="history-status" role="status" aria-live="polite"></p>
+<button id="history-more" class="secondary" hidden>Continue checking older blocks</button>
+<div id="history-results" class="history-results"></div>
+<button id="history-next" class="secondary" hidden>Next 10 versions</button>
+<p>These are on-chain versions. Private draft revisions are separate. The recorded fingerprint does not reveal the document text.</p>
+</section>
 <div class="screen narrow" data-screen="verify-title" hidden>
 <section class="verification-panel" aria-labelledby="verify-title">
 <h1 id="verify-title">Verify an agreement file</h1>

@@ -267,3 +267,9 @@ Independent participants completing the full agreement workflow remain pending.
 These checks generated no new transactions.
 
 My space update is drafted for owner review. Publication is unconfirmed.
+
+### Wallet warning closure — 18 November 2026
+
+The owner explicitly confirmed that the earlier wallet warning is solved. It
+is removed from active blockers. Historical observations are retained above.
+This is owner-confirmed closure, not a fresh provider-classification check.

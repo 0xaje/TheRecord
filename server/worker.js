@@ -22,7 +22,7 @@ export default {
         headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=3600" },
       });
     }
-    if (["/", "/walkthrough", "/walkthrough/", "/blog", "/blog/", "/credits", "/credits/"].includes(pathname)) {
+    if (["/", "/history", "/history/", "/walkthrough", "/walkthrough/", "/blog", "/blog/", "/credits", "/credits/"].includes(pathname)) {
       return new Response(SITE_HTML, { headers: { "Content-Type": "text/html; charset=utf-8", "Referrer-Policy": "no-referrer" } });
     }
     if (pathname === "/verify.js") {
