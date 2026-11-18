@@ -55,4 +55,18 @@ The second command makes read-only Diana calls. Solidity test instructions are i
 
 Walkthrough illustrations are by [OpenMoji](https://openmoji.org/), used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). See [asset credits](web/assets/ATTRIBUTION.md).
 
-The [agreement history page](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/history) reads real version and approval events from Diana and checks them against a fixed contract-state snapshot. It requires no wallet. Long scans can be resumed; incomplete results are labelled. Private draft revision history is a separate pending feature.
+The [agreement history page](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/history) reads real version and approval events from Diana and checks them against a fixed contract-state snapshot. It requires no wallet. Long scans can be resumed; incomplete results are labelled. Private draft revisions are available separately under Drafts → Saved revisions.
+
+## Saved private revisions
+
+Each new save retains a revision. Under **Drafts → Saved revisions**, open or download an earlier revision without changing the editor. Revision summaries are paginated, and content access uses the same workspace ownership checks as the draft. A workspace recovery code grants access to this history too.
+
+Migration `0005_draft_revisions.sql` adds a table and atomic save triggers without rewriting earlier migrations or backfilling invented history. For existing drafts, the current text is the earliest available baseline; its original save time may be unknown. Text overwritten before this feature cannot be reconstructed. These private revisions are separate from Diana versions and are not end-to-end encrypted.
+
+The optional live regression creates a non-sensitive test draft and requires explicit acknowledgement:
+
+```sh
+node scripts/check-private-revisions.mjs --live-write
+```
+
+No wallet or chain transaction is used. See the [live revision evidence](docs/audit/2026-11-18/live-revision-checks.json).

@@ -1,0 +1,58 @@
+{
+  "testedAt": "2026-11-18T01:35:53.634Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "draftId": "9bc7d1be-9a2c-42fb-9597-7769536e4b2a",
+  "checks": [
+    {
+      "check": "Create isolated draft",
+      "http": 201,
+      "result": "PASS"
+    },
+    {
+      "check": "Save revision 2",
+      "http": 200,
+      "result": "PASS"
+    },
+    {
+      "check": "Reject stale save",
+      "http": 409,
+      "result": "PASS"
+    },
+    {
+      "check": "List owner revisions",
+      "http": 200,
+      "result": "PASS"
+    },
+    {
+      "check": "Read revision 1",
+      "http": 200,
+      "result": "PASS"
+    },
+    {
+      "check": "Deny another workspace list",
+      "http": 404,
+      "result": "PASS"
+    },
+    {
+      "check": "Deny another workspace content",
+      "http": 404,
+      "result": "PASS"
+    },
+    {
+      "check": "Deny anonymous history",
+      "http": 401,
+      "result": "PASS"
+    },
+    {
+      "check": "Read current revision",
+      "http": 200,
+      "result": "PASS"
+    }
+  ],
+  "revisions": [
+    2,
+    1
+  ],
+  "originalFingerprint": "0a136aba08199021c0e4203ea36eaaf17f7c6e581667617447ed8f8e66c65e1b",
+  "note": "Non-sensitive dedicated test draft only. No invitations or wallet actions. Workspace credentials omitted."
+}

@@ -217,3 +217,46 @@ active-navigation issue; the final release highlights only the active screen.
 Physical-phone acceptance remains open. No wallet connection was requested.
 Final history release: Site version 32 published successfully. Browser readback
 confirmed that only History is active in navigation after the correction.
+
+## Private draft revision retention — 18 November 2026
+
+Site version 33 published with additive migration 0005_draft_revisions.
+Existing migration files were not rewritten. New revision rows are captured
+by database triggers in the same statement transaction as draft creation/save;
+a failed or stale save creates no false history entry. The current legacy text
+is available as a baseline with unknown save time, and preserved before its next
+update. Older overwritten content is not invented. Owner-only GET endpoints
+list 20 revision summaries per page and return one exact revision/fingerprint.
+
+The Saved revisions panel previews read-only text and downloads exact UTF-8
+(title, two newlines, terms). Opening old text does not change the editor.
+Draft revision numbers remain distinct from on-chain version numbers.
+Current invitation expiry/revocation/current-revision rules remain enforced.
+
+Verification: 5 isolated SQLite test cases pass, including legacy migration,
+ownership, 23-revision pagination and stale-write behavior. Build and diff
+checks pass. Deployed migration succeeded; 9 live API checks passed for revision
+retention, exact fingerprint and owner/anonymous denial. Desktop browser saved
+Friday then Monday, reopened Friday with Monday still in editor, and completed
+the revision-1 download. Sanitized evidence: live-revision-checks.json,
+revision-browser-checks.json and revision-tests.txt under audit/2026-11-18.
+No real user document was used, no regular wallet or phrase accessed, and no
+chain transaction submitted. Test drafts remain as non-sensitive test content.
+
+Judge review: future private revision retention is implemented and proved on
+live storage. This is not end-to-end encryption or a fix for the unresolved
+legacy identity gateway boundary. Phone acceptance remains open. Retention,
+delete policy, quotas/rate limits and workspace-list pagination are next.
+
+My space update READY, not posted:
+The Record now preserves saved draft revisions. Owners can open and download
+an older revision without changing their current editor. I tested the additive
+migration, stale writes, private access and pagination, then repeated save/open/
+download on the live service. On-chain agreement history remains separate.
+
+Event/challenges: same Post-Quantum dApp category; no new award claimed by this
+storage feature. All four Ship Weeks tasks remain owner-confirmed complete;
+fresh portal Check not observed. Scoped-window evidence and Stage 2 acceptance
+remain open. Wallet warning remains resolved per owner confirmation.
+Exact next milestone: verify the legacy identity boundary and implement bounded
+backend access, preserving existing workspace recovery and invitation access.

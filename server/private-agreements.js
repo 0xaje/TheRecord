@@ -78,6 +78,36 @@ export async function privateAgreements(request, db) {
     return reply(results);
   }
 
+  if (request.method === "GET" && ["/api/drafts/revisions", "/api/drafts/revision"].includes(url.pathname)) {
+    const id = url.searchParams.get("id") ?? "";
+    if (!uuid.test(id)) return reply({ error: "Invalid draft." }, 400);
+    const owned = await db.prepare("SELECT id FROM drafts WHERE id = ? AND owner = ?").bind(id, user).first();
+    if (!owned) return reply({ error: "Draft unavailable." }, 404);
+    if (url.pathname === "/api/drafts/revision") {
+      const revision = url.searchParams.get("revision") ?? "";
+      if (!/^[1-9][0-9]{0,14}$/.test(revision)) return reply({ error: "Invalid revision." }, 400);
+      const row = await db.prepare(`SELECT r.revision, r.title, r.terms, r.saved_at FROM draft_revisions r
+        JOIN drafts d ON d.id = r.draft_id WHERE d.id = ? AND d.owner = ? AND r.revision = ?
+        UNION ALL SELECT d.revision, d.title, d.terms, NULL FROM drafts d
+        WHERE d.id = ? AND d.owner = ? AND d.revision = ?
+        AND NOT EXISTS (SELECT 1 FROM draft_revisions r WHERE r.draft_id = d.id AND r.revision = d.revision)
+        LIMIT 1`).bind(id, user, Number(revision), id, user, Number(revision)).first();
+      if (!row) return reply({ error: "Revision unavailable. Earlier overwritten text cannot be recovered." }, 404);
+      return reply({ ...row, fingerprint: await digest(row.title + "\n\n" + row.terms) });
+    }
+    const before = url.searchParams.get("before");
+    if (before !== null && !/^[1-9][0-9]{0,14}$/.test(before)) return reply({ error: "Invalid page." }, 400);
+    const limit = before === null ? Number.MAX_SAFE_INTEGER : Number(before);
+    const { results } = await db.prepare(`SELECT r.revision, r.title, r.saved_at FROM draft_revisions r
+      JOIN drafts d ON d.id = r.draft_id WHERE d.id = ? AND d.owner = ? AND r.revision < ?
+      UNION ALL SELECT d.revision, d.title, NULL FROM drafts d
+      WHERE d.id = ? AND d.owner = ? AND d.revision < ?
+      AND NOT EXISTS (SELECT 1 FROM draft_revisions r WHERE r.draft_id = d.id AND r.revision = d.revision)
+      ORDER BY revision DESC LIMIT 21`).bind(id, user, limit, id, user, limit).all();
+    const revisions = results.slice(0, 20);
+    return reply({ revisions, nextBefore: results.length > 20 ? revisions.at(-1).revision : null });
+  }
+
   if (request.method === "GET" && url.pathname === "/api/drafts/feedback") {
     const id = url.searchParams.get("id") ?? "";
     if (!uuid.test(id)) return reply({ error: "Invalid draft." }, 400);

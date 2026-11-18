@@ -356,6 +356,20 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <button type="button" id="copy-invite" hidden>Copy link and access code</button>
 <output role="status"></output>
 </form>
+<details class="surface" id="draft-history" hidden>
+<summary>Saved revisions</summary>
+<p>Open or download an earlier saved revision without changing the editor. Draft revision numbers are separate from Diana version numbers.</p>
+<p>History starts with the text available when this feature was added. Previously overwritten text is unavailable.</p>
+<output id="revision-status" role="status"></output>
+<ul id="revision-list"></ul>
+<button type="button" class="secondary" id="revision-more" hidden>Load older revisions</button>
+<section id="revision-preview" hidden aria-label="Saved revision preview">
+<h3 id="revision-title"></h3><p id="revision-meta"></p>
+<pre id="revision-terms" style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;max-height:24rem;overflow-y:auto"></pre>
+<p id="revision-fingerprint" style="overflow-wrap:anywhere"></p>
+<a id="download-revision" hidden>Download this saved revision</a>
+</section>
+</details>
 <section id="draft-feedback" hidden><h2>Change requests</h2><ul></ul><output role="status"></output></section>
 <section id="draft-record" hidden>
 <h2>Record on Diana</h2>

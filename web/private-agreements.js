@@ -85,6 +85,7 @@ function openDraft(id) {
     });
   }
   inviteStatus.textContent = "";
+  openRevisionHistory(current);
 }
 
 async function loadDrafts(id) {
@@ -269,3 +270,79 @@ document.querySelector("#move-legacy-drafts").addEventListener("click", () => {
     return "Drafts moved. Save your recovery code under Workspace recovery.";
   });
 });
+
+
+const revisionPanel = document.querySelector("#draft-history");
+const revisionStatus = document.querySelector("#revision-status");
+const revisionList = document.querySelector("#revision-list");
+const revisionMore = document.querySelector("#revision-more");
+const revisionPreview = document.querySelector("#revision-preview");
+let revisionCursor;
+let revisionRequest = 0;
+
+function openRevisionHistory(draft) {
+  revisionRequest++;
+  revisionPanel.hidden = !draft;
+  revisionPanel.open = false;
+  revisionList.replaceChildren();
+  revisionPreview.hidden = true;
+  setDownload(document.querySelector("#download-revision"), null);
+  revisionMore.hidden = true;
+  revisionCursor = null;
+  revisionStatus.textContent = "";
+}
+
+async function loadRevisions(older = false) {
+  const draft = current;
+  if (!draft) return;
+  const request = ++revisionRequest;
+  revisionStatus.textContent = "Loading saved revisions…";
+  revisionMore.disabled = true;
+  try {
+    const query = new URLSearchParams({ id: draft.id });
+    if (older && revisionCursor !== null) query.set("before", String(revisionCursor));
+    const data = await api("/revisions?" + query);
+    if (current !== draft || request !== revisionRequest) return;
+    if (!older) revisionList.replaceChildren();
+    for (const revision of data.revisions) {
+      const item = document.createElement("li");
+      const button = document.createElement("button");
+      button.type = "button"; button.className = "secondary";
+      button.textContent = "Open revision " + revision.revision + " · " + revision.title;
+      button.addEventListener("click", () => showSavedRevision(draft, revision.revision));
+      item.append(button); revisionList.append(item);
+    }
+    revisionCursor = data.nextBefore;
+    revisionMore.hidden = revisionCursor === null;
+    revisionStatus.textContent = data.revisions.length ? "Select a revision to read or download." : "No earlier saved revisions available.";
+  } catch (error) {
+    if (current === draft && request === revisionRequest) revisionStatus.textContent = error.message;
+  } finally { revisionMore.disabled = false; }
+}
+
+async function showSavedRevision(draft, revision) {
+  const request = ++revisionRequest;
+  revisionPreview.hidden = true;
+  setDownload(document.querySelector("#download-revision"), null);
+  revisionStatus.textContent = "Opening saved revision…";
+  try {
+    const saved = await api("/revision?" + new URLSearchParams({ id: draft.id, revision }));
+    const bytes = new TextEncoder().encode(saved.title + "\n\n" + saved.terms);
+    const hash = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes)), b => b.toString(16).padStart(2, "0")).join("");
+    if (hash !== saved.fingerprint) throw new Error("This revision failed its fingerprint check.");
+    if (current !== draft || request !== revisionRequest) return;
+    document.querySelector("#revision-title").textContent = saved.title;
+    document.querySelector("#revision-meta").textContent = "Draft revision " + saved.revision + (saved.saved_at ? " · Saved " + new Date(saved.saved_at).toLocaleString() : " · Original save time unavailable");
+    document.querySelector("#revision-terms").textContent = saved.terms;
+    document.querySelector("#revision-fingerprint").textContent = "SHA-256: " + saved.fingerprint;
+    setDownload(document.querySelector("#download-revision"), saved);
+    revisionPreview.hidden = false;
+    revisionStatus.textContent = "Saved revision opened. Your editor has not changed.";
+  } catch (error) {
+    if (current === draft && request === revisionRequest) revisionStatus.textContent = error.message;
+  }
+}
+revisionPanel.addEventListener("toggle", () => {
+  if (revisionPanel.open && !revisionList.children.length) loadRevisions();
+});
+revisionMore.addEventListener("click", () => loadRevisions(true));

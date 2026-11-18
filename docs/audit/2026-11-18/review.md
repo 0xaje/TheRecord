@@ -85,7 +85,9 @@ preserves existing owners' drafts. Do not delete legacy access blindly.
 
 **Follow-up, 18 November:** the on-chain history view is implemented in release
 31 with real event/state regression evidence in `history-checks.json`. The
-private draft retention portion below remains open. Original audit observation:
+private draft retention portion was subsequently implemented in release 33,
+with additive migration and live revision/browser evidence in this directory.
+Original audit observation:
 
 
 On-chain `Proposed`, `Approved` and `Finalized` events preserve evidence and
