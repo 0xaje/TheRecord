@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-18T22:48:54.722Z",
+  "nativeHash": "2137F64F6794D50B4A26ED791D48AE980D916C77217F227CBB8660F242ADBBEE",
+  "block": "10341402",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "evmHash": "0x0051ef529b077ac550c22b6b57ea30ac197f5ecd017527c4eda70b72fecea257",
+  "versions": [
+    {
+      "version": 1,
+      "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+      "approvalMask": 3,
+      "finalized": true,
+      "withdrawn": false
+    },
+    {
+      "version": 2,
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "approvalMask": 1,
+      "finalized": false,
+      "withdrawn": true
+    },
+    {
+      "version": 3,
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "approvalMask": 0,
+      "finalized": false,
+      "withdrawn": false
+    }
+  ],
+  "scope": "Native receipt and matching proposal at receipt block; current states independently read. No separate native-to-EVM hash mapping or signature-replay check claimed."
+}

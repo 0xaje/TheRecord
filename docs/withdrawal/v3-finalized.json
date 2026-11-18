@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-11-18T22:55:26.709Z",
+  "nativeHash": "FAFDB07ACCA3B22B2DF59F100B9B194E0F903E07A705C357FA61422D4D38A98E",
+  "block": "10341772",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "events": [
+    {
+      "event": "Approved",
+      "signer": "0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A",
+      "evmHash": "0xab11d9e3409fd974af93039a7d30abee1f409027c183cdbb1e61ad8c32086960"
+    },
+    {
+      "event": "Finalized",
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "evmHash": "0xab11d9e3409fd974af93039a7d30abee1f409027c183cdbb1e61ad8c32086960"
+    }
+  ],
+  "versions": [
+    {
+      "version": 1,
+      "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+      "approvalMask": 3,
+      "finalized": true,
+      "withdrawn": false
+    },
+    {
+      "version": 2,
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "approvalMask": 1,
+      "finalized": false,
+      "withdrawn": true
+    },
+    {
+      "version": 3,
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "approvalMask": 3,
+      "finalized": true,
+      "withdrawn": false
+    }
+  ],
+  "scope": "Successful native receipt and matching block-level approval/finalization events with current state independently checked. Native-to-EVM hash mapping not separately asserted; physical-phone file re-verification still owner checkpoint."
+}

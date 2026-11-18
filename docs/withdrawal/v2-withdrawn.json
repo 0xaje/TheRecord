@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-11-18T22:42:23.717Z",
+  "nativeHash": "9FD8851E4174011FB225CBD5FE040508D02F0AACE0DC4B5BC8996F4BD75A5B4C",
+  "block": "10341213",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "version": 2,
+  "proposer": "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+  "evmHash": "0x7b41df12ed1e2dee4ddc680b13cc35cbece6c48d3af7102074838b3f2f2b465e",
+  "versions": [
+    {
+      "version": 1,
+      "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+      "historicalApprovalMask": 3,
+      "finalized": true,
+      "withdrawn": false
+    },
+    {
+      "version": 2,
+      "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+      "historicalApprovalMask": 1,
+      "finalized": false,
+      "withdrawn": true
+    }
+  ],
+  "withdrawnApprovalPayloadRejected": true,
+  "scope": "Native receipt, same-block Withdrawn event and current state independently checked. Payload rejection is a read-only call, not a failed broadcast. Native-to-EVM hash mapping not separately asserted."
+}

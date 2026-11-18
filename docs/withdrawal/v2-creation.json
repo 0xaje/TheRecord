@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-11-18T22:15:45.385Z",
+  "hash": "0x15bce8b18a7753426f5d6637ff742046f9ed0740ed732c75dfd6cc1167865924",
+  "status": "success",
+  "block": "10340116",
+  "proposer": "0xe84a1b8c20b1e33fc1d6dd4650af53783f2911ed",
+  "contract": "0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f",
+  "first": "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+  "second": "0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "version": "1",
+  "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+  "state": {
+    "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+    "approvals": 0,
+    "finalized": false,
+    "withdrawn": false
+  }
+}
