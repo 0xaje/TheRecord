@@ -185,3 +185,7 @@ No existing QoreX phrase is requested. The owner completed a real scoped opening
 See the [18 November readiness review](docs/compliance/SUBMISSION_READINESS.md) and [ready-to-paste project listing text](docs/compliance/PROJECT_LISTING_COPY.md). The public listing's original planning copy needs updating. Final demo video/listing fields, independent participant testing and exact event audit acceptance remain unverified.
 
 Additional dependencies used in the scoped helper/CLI: @qorechain/evm 0.14.0 and @qorechain/sdk 0.14.0. The latter is development-only. Their use does not imply QoreSeal encryption or smart-account spending rules are implemented by this product.
+
+## Problem evidence
+
+[Why The Record exists](docs/research/WHY_THE_RECORD.md) maps primary court/regulator evidence to the exact-version approval problem, compares existing signing approaches and states what remains unvalidated. [Founder explanation draft](docs/research/FOUNDER_PITCH.md). Technical test results do not establish customer demand or payment enforcement.
