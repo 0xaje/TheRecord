@@ -3,7 +3,7 @@ import { WINDOW_CONTRACT, verifyWindowReadback } from '../web/scoped-window-data
 import { privateKeyToAccount } from 'viem/accounts';
 import { createPublicClient, http, encodeFunctionData, parseAbi, decodeEventLog, keccak256, encodeAbiParameters } from 'viem';
 import { randomBytes, createHash } from 'node:crypto';
-import { existsSync, writeFileSync } from 'node:fs';
+import { existsSync, writeFileSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 const REST = 'https://api-testnet.qore.host';
@@ -12,6 +12,23 @@ const FIRST = '0xe84a1b8c20b1e33fc1d6dd4650af53783f2911ed';
 export const TEST_TEXT = 'The Record disposable scoped-window admission test. No private agreement content.\n';
 const fingerprint = '0x' + createHash('sha256').update(TEST_TEXT).digest('hex');
 const abi = parseAbi(['function create(bytes32 salt,address first,address second,bytes32 fingerprint) returns (bytes32)', 'event Proposed(bytes32 indexed id,uint256 indexed version,bytes32 fingerprint)']);
+export function isTargetRestriction(message, target) {
+  return typeof message === 'string' && message.toLowerCase().includes(
+    'the window does not list ' + target.toLowerCase() + ' as an allowed recipient');
+}
+export function reviewSavedProof(evidence) {
+  const opening=evidence.opening?.opening;
+  const before=evidence.beforeOutside, after=evidence.afterOutside;
+  if (!opening || evidence.opening.code!==0 || !evidence.permitted?.proposedEventVerified || evidence.permitted.status!=='success'
+      || evidence.plan.to.toLowerCase()!==WINDOW_CONTRACT || evidence.outside.target.toLowerCase()!==evidence.evmAddress.toLowerCase()
+      || !verifyWindowReadback(before,opening) || !verifyWindowReadback(after,opening)
+      || before.used_txs!==after.used_txs || before.used_value!==after.used_value
+      || !evidence.outside.rejected || evidence.outside.acceptedHash
+      || !isTargetRestriction(evidence.outside.rpcError?.message,evidence.outside.target)) throw new Error('Saved evidence does not establish target-scope rejection. Keep the original for diagnosis.');
+  return { ...evidence, complete:true, outside:{...evidence.outside,targetRestrictionConfirmed:true},
+    review:{method:'Read-only review of saved owner evidence; no transaction sent.',originalPreserved:true},
+    instruction:'Target restriction confirmed from the specific Diana error and live before/after snapshots. Do not repeat the live run.' };
+}
 export function callPlan(address, salt) {
   if (address.toLowerCase() === FIRST || address.toLowerCase() === WINDOW_CONTRACT) throw new Error('Unexpected disposable address.');
   const id = keccak256(encodeAbiParameters([{type:'address'},{type:'address'},{type:'address'},{type:'bytes32'}], [address,FIRST,address,salt]));
@@ -34,11 +51,19 @@ async function readWindow(address) {
 const pause = () => new Promise(r => setTimeout(r,2000));
 export async function main(args=process.argv.slice(2)) {
   const command=args[0];
-  if (!['plan','run'].includes(command)) throw new Error('Use plan or run --broadcast --confirm-address DISPOSABLE_ADDRESS.');
+  if (!['plan','run','review'].includes(command)) throw new Error('Use plan, review, or run --broadcast --confirm-address DISPOSABLE_ADDRESS.');
   const account=await loadAccount();
   const directory=dirname(defaultSecret);
   const proofPath=join(directory,'scoped-proof.json');
   const journalPath=join(directory,'scoped-proof-started.json');
+  if(command==='review') {
+    const original=JSON.parse(readFileSync(proofPath,'utf8'));
+    if(original.evmAddress?.toLowerCase()!==account.evm.toLowerCase() || original.nativeAddress!==account.cosmos) throw new Error('Saved proof account mismatch.');
+    const reviewed=reviewSavedProof(original);
+    const reviewedFile=join(directory,'scoped-proof-reviewed.json');
+    writeFileSync(reviewedFile,JSON.stringify(reviewed,null,2)+'\n',{mode:0o600});
+    return {...reviewed,reviewedFile,transactionSent:false};
+  }
   if (command==='plan') return {nativeAddress:account.cosmos,evmAddress:account.evm,onlyAllowedContract:WINDOW_CONTRACT,blocks:600,maxTransactions:5,windowAllowanceQor:'1',permittedAction:'Create one new public test record; no existing agreement changes and no approval.',outsideAction:'Attempt a zero-value transfer to this same disposable account, outside the target list.',testText:TEST_TEXT,maximumEvmFeePerAttemptQor:'0.1',openingFeeQor:'0.08',evidenceFile:proofPath,transactionSent:false};
   const at=args.indexOf('--confirm-address');
   if (!args.includes('--broadcast') || at<0 || args[at+1]?.toLowerCase()!==account.evm.toLowerCase()) throw new Error('No transaction sent. Explicit broadcast and disposable address confirmation required.');
@@ -90,7 +115,8 @@ export async function main(args=process.argv.slice(2)) {
     evidence.afterOutside=await live();
     evidence.outside.rejected=true;
     // Keep classification conservative: unrelated nonce/gas/fee failures are not scope proof.
-    evidence.outside.targetRestrictionConfirmed=/(target|recipient|destination)/i.test(result.error.message) && /(not allowed|not permitted|outside|restrict|scope|allowlist|allow.list|unauthori[sz]ed)/i.test(result.error.message);
+    evidence.outside.submitted=true;
+    evidence.outside.targetRestrictionConfirmed=isTargetRestriction(result.error.message,account.evm);
     evidence.complete=evidence.outside.targetRestrictionConfirmed;
     save();
     return {...evidence,evidenceFile:proofPath,instruction:evidence.complete?'Retain this evidence. Window expires automatically; no approvals were performed.':'Rejection saved but target scope needs manual diagnosis. Do not repeat.'};

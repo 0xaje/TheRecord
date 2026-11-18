@@ -147,3 +147,19 @@ node scripts/scoped-window-proof.mjs run --broadcast --confirm-address YOUR_DISP
 Public evidence is stored in ~/.local/share/the-record-window-test/scoped-proof.json, separately from account.secret. A started marker prevents automatic repetition. Unknown outcomes stop the run. Do not delete the marker or rerun blindly. Raw signed bytes and secret keys are not written to evidence or printed. Only share the public proof JSON, never account.secret. A generic gas/nonce/window-expiry error is not target-scope proof. Target-specific rejection text is conservatively classified; otherwise retain the response for manual diagnosis.
 
 Local preparation: npm run check passes 25 tests, including exact proposal-event validation and rejection of wrong IDs/fingerprints/status/targets. No live paired run has been performed by the agent. The scoped-window milestone stays OPEN until actual evidence is reviewed. My space update draft READY, NOT POSTED: Fresh disposable Diana account registered with possession proof; Ubuntu checks pass; paired scoped-admission test prepared. Live allowed-call/outside-target evidence still pending.
+
+## Live owner result and read-only review — 18 November 2026
+
+Owner supplied successful scoped opening AEC0DA9D1B75BB795CA4A16781E74580DA991F6B2803115CF6E048F6DBFD60DB, code 0 at block 10325763, one allowed target (The Record), 600 blocks/5 transactions/1000000 uqor. Permitted creation 0x389c084db6f9b64d3c97413f6f94b2c0851ec16ed4e33519b2b2740ae1403f01 succeeded at block 10325767 with matching Proposed event. Agreement ID 0xf6d7e510ed5b847540d256c607d264bbf49bbac10a16bd7e5ac16bdb372aea74; fingerprint 0x64d36259f6bff15f3fde0af30c0507c668de39284d952dbf81a893251641177c.
+
+The outside self-recipient attempt (locally calculated hash 0x7ded98d016e2bdec559be21c1d8450321bfd7d8891e2b76d87546e54fb7e5a95, not a committed receipt) was refused by eth_sendRawTransaction, code -32000, specifically: the window does not list 0x4B1666D805A7879Aa8599DDD58606c0FCc303A1f as an allowed recipient. Before/after snapshots remained live with 4 remaining transactions and 966250 uqor; used count stayed 1 and used value 33750. The suffix "window exhausted" is generic wrapping, not evidence of depleted bounds here.
+
+The initial checker missed the chain's specific text and incorrectly left complete false. The outside.submitted false field also meant no successful acknowledgement, not that the RPC attempt was never made. Fixed classifier now recognizes the exact recipient-specific wording. Preserve the original owner JSON and run the read-only review (no signing, no broadcasting):
+
+```bash
+node scripts/scoped-window-proof.mjs review
+```
+
+It writes scoped-proof-reviewed.json alongside the original, checks matching live snapshots, unchanged usage and target-specific refusal, and never repeats the live run. These results are owner-supplied, not an independent fresh endpoint retrieval. Judge review: scoped admission behavior demonstrated in supplied evidence; no claim that this test finalized an agreement or proves mobile provider support. Earlier two-wallet agreement evidence is separate. Stage 2 audit acceptance and independent friend testing remain open.
+
+My space update draft READY, NOT POSTED: The Record passed a real Diana scoped-window test: its allowed contract call succeeded, while a signed zero-value transaction outside the allowed recipient list was rejected. The opening and permitted transaction receipts are listed above. The checker wording bug was corrected without repeating transactions.
