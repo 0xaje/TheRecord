@@ -527,3 +527,24 @@ only its own temporary file. Clean archive vs working build and package test
 PASS after preserve-symlinks correction. GitHub Actions result is still pending
 publication, not claimed as passing. Phone Trash/deletion owner acceptance
 remains complete; no need to repeat destructive tests for this build-only edit.
+
+
+Build milestone closed — verified GitHub Actions SUCCESS:
+https://github.com/0xaje/TheRecord/actions/runs/44297789979
+Commit c8a8db1715b2ff3c0616b643f0ffbda27b1063c5; completed 2026-11-18T11:47:15Z.
+Checkout, pinned Node setup, npm ci and npm run check passed on GitHub-hosted
+Linux. Evidence: audit/2026-11-18/github-actions.json. All 19 tests passed.
+Site39 public HTML/JS match the reproducible build. Implementation inputs match
+published source. This evidence-only documentation follow-up changes no runtime
+or test code. Independent cross-provider deployment and Solidity rerun remain
+unverified, explicitly scoped outside the completed JS/local-setup milestone.
+
+Judge closeout: reproducibility gap materially addressed with clean/local/hosted
+CI proof; no guarantee of full production readiness or contest win. Next required
+milestone: audit the scoped EVM-window evidence and second-stage QCAI acceptance;
+independent two-person workflow testing remains pending. Owner mobile Trash and
+permanent-delete acceptance PASS. Backups remain unverified.
+
+My space update READY (not posted), add:
+GitHub Actions also passed the clean install and all 19 regression checks:
+https://github.com/0xaje/TheRecord/actions/runs/44297789979
