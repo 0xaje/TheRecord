@@ -67,3 +67,13 @@ This remains an OPEN milestone until those results, phone acceptance and audit r
 Judge review: implementation is concrete and state-rule tests pass; live PQ withdrawal, website activation and new-source audit acceptance remain unverified. Do not call this feature live yet.
 
 My space draft — READY, NOT POSTED: I implemented a separately versioned pending-amendment withdrawal design that preserves existing Diana records, requires the proposer's post-quantum signature and fresh approvals for corrections. Local contract/interface checks pass. Deployment and real Diana withdrawal/correction evidence are next; this is not yet a live-feature claim.
+
+## Deployment checkpoint — 18 November 2026
+
+Owner deployed V2 at **0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f**, block10339744, receipt0xf6b25c6c56ff940c854596c3a9284606d34f1c092379ac5ec09df90fd30d22ce. Native opening9BBFC64EC9D6C500A97B355FA41D49F47191D1CDD38286F434AEB64FBF16A9F8 committed block10339741. The owner reports the one-transaction window is exhausted after creation. Independent script scripts/check-withdrawal-deployment.mjs verified chain9800, successful receipt, deployer/nonce/address, exact creation input, runtime equality and opening limits. Public evidence: deployment-verified.json.
+
+This supersedes the earlier deployment-pending status above; it does NOT close actual withdrawal/correction acceptance. The verified V2 entry is now allowlisted only for explicit `deployment=withdrawal-v2` links. Legacy default remains unchanged. 37 JavaScript checks pass. No approval/withdrawal transaction has been submitted by the agent. Source branch remains a draft while live lifecycle and new-source audit acceptance are pending.
+
+Next owner checkpoint after website publication: open the V2 Record link in QoreX with wallet0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD selected on Diana. Create one NEW non-sensitive agreement with that first signer and second signer0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A. This makes the first wallet the original proposer for later withdrawal. Use the unchanged original public sample file. Do not reuse an existing agreement ID. Save its creation receipt and newly generated V2 verification link; bring those public results before the approval step. The wallet may need a fresh EVM window; the disposable deployer's exhausted window does not authorize either signer account.
+
+My space draft — NOT POSTED: The withdrawal-enabled contract is deployed on Diana and its runtime matches the source-bound build. Existing records remain on their original contract. Actual withdrawal and two-signer correction acceptance are next; deployment is not a claim that the full new workflow has passed.

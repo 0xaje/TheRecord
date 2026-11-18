@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-11-18T22:07:16.276Z",
+  "chainId": 9800,
+  "contractAddress": "0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f",
+  "deploymentHash": "0xf6b25c6c56ff940c854596c3a9284606d34f1c092379ac5ec09df90fd30d22ce",
+  "deploymentBlock": "10339744",
+  "sourceSha256": "688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df3193980",
+  "creationCodeHash": "0x9a3f517bf931726a4be9153fd5c719fa6011cb6a7e53ab97c30c1be057dc478e",
+  "runtimeHash": "0x297f4c9f566b4f9a95992134ae9fda05cca18510e66ec15f75f2247f9ab9cf8b",
+  "runtimeMatches": true,
+  "nativeOpening": {
+    "hash": "9BBFC64EC9D6C500A97B355FA41D49F47191D1CDD38286F434AEB64FBF16A9F8",
+    "block": "10339741",
+    "code": 0,
+    "blocks": "60",
+    "maxTxs": "1",
+    "allowedTargets": []
+  },
+  "scope": "Independent read-only receipt, creation-input, address derivation and runtime verification. No V2 agreement/withdrawal/approval test performed."
+}

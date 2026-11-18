@@ -4,7 +4,12 @@ export const LEGACY_DEPLOYMENT = Object.freeze({
   address: '0x25721b3be0f24438da7daed4c800b073ef9bb802',
   fromBlock: 10092612n, withdrawals: false,
 });
-export const DEPLOYMENTS = Object.freeze([LEGACY_DEPLOYMENT]);
+export const WITHDRAWAL_DEPLOYMENT = Object.freeze({
+  id: 'withdrawal-v2', label: 'Withdrawal test contract',
+  address: '0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f',
+  fromBlock: 10339744n, withdrawals: true,
+});
+export const DEPLOYMENTS = Object.freeze([LEGACY_DEPLOYMENT, WITHDRAWAL_DEPLOYMENT]);
 export function resolveDeployment(search, deployments = DEPLOYMENTS) {
   const id = new URLSearchParams(search).get('deployment');
   const deployment = deployments.find(item => item.id === (id ?? 'legacy'));

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {resolveDeployment,agreementQuery,LEGACY_DEPLOYMENT,versionPresentation} from '../web/deployments.js';
+import {resolveDeployment,agreementQuery,LEGACY_DEPLOYMENT,WITHDRAWAL_DEPLOYMENT,versionPresentation} from '../web/deployments.js';
 import {readHistoryVersions} from '../web/history-data.js';
 const id='0x'+'11'.repeat(32),fp=n=>'0x'+String(n).repeat(64),hash='0x'+'aa'.repeat(32),first='0x'+'12'.repeat(20);
 const v2={id:'test-fixture',address:'0x'+'34'.repeat(20),fromBlock:1n,withdrawals:true};
@@ -43,4 +43,13 @@ test('owner deployment plan is offline, one creation transaction, and never chan
  const {initAccount}=await import('../scripts/scoped-window-cli.mjs');const {main}=await import('../scripts/withdrawal-deploy.mjs');
  const directory=mkdtempSync(join(tmpdir(),'record-v2-plan-'));const secret=join(directory,'account.secret');
  try {initAccount(secret);const plan=await main(['plan'],secret);assert.equal(plan.transactionSent,false);assert.equal(plan.window.maxTransactions,1);assert.deepEqual(plan.window.allowedTargets,[]);assert.equal(plan.maximumDeploymentFeeQor,'1');assert.equal(plan.contract,'TheRecordV2');assert.equal(JSON.stringify(plan).includes('mnemonic'),false);assert.equal(LEGACY_DEPLOYMENT.withdrawals,false);}finally{rmSync(directory,{recursive:true,force:true});}
+});
+
+test('verified V2 receipt activates only explicit V2 links; original default is preserved',()=>{
+ const proof=JSON.parse(readFileSync(new URL('../docs/withdrawal/deployment-verified.json',import.meta.url)));
+ assert.equal(resolveDeployment('?deployment=withdrawal-v2'),WITHDRAWAL_DEPLOYMENT);
+ assert.equal(WITHDRAWAL_DEPLOYMENT.address.toLowerCase(),proof.contractAddress.toLowerCase());
+ assert.equal(String(WITHDRAWAL_DEPLOYMENT.fromBlock),proof.deploymentBlock);
+ assert.equal(proof.runtimeMatches,true);
+ assert.equal(resolveDeployment('?id='+id).withdrawals,false);
 });

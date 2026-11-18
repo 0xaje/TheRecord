@@ -171,7 +171,7 @@ async function submitProposal(form, file, prefix, id) {
       try {
         await rpc("eth_call", [{ from, to: contract, data }, "latest"]);
       } catch {
-        throw new Error("Could not prepare the amendment. Use the original proposer’s wallet, check that the latest version is finalized, and select a changed file.");
+        throw new Error("Could not prepare the amendment. Use the original proposer’s wallet, check that the latest version is finalized or (on the withdrawal contract) withdrawn, and select a changed file.");
       }
     }
     createOutput.textContent = "Review and confirm the transaction in your wallet.";
@@ -381,7 +381,7 @@ withdrawalForm.elements.version.value = query.get('version') ?? '';
 withdrawalForm.hidden = !deployment?.withdrawals;
 withdrawalInfo.textContent = deployment?.withdrawals
   ? 'You can withdraw a pending amendment with the original proposer’s QoreX account. Any correction needs two fresh approvals. Finalized versions cannot be withdrawn.'
-  : 'This agreement uses the original contract, which cannot withdraw updates. Your existing records remain verifiable. The withdrawal-enabled contract has not been activated here.';
+  : 'This agreement uses the original contract, which cannot withdraw updates. Existing records stay on their original contract and remain verifiable.';
 withdrawalForm.addEventListener('submit', async event => {
   event.preventDefault();
   if (!deployment?.withdrawals) return;
@@ -419,4 +419,10 @@ if (!deployment) {
     const message = f.querySelector('output');
     if (message) message.textContent = 'Unknown agreement contract. Use a verified agreement link.';
   }
+}
+
+const context = document.querySelector('#deployment-context');
+if (deployment?.withdrawals) {
+  context.hidden = false;
+  context.textContent = 'Withdrawal test contract on Diana. New workflow acceptance is in progress. Existing agreement links keep using their original contract.';
 }
