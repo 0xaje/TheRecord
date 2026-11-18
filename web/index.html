@@ -167,7 +167,6 @@ button,.button{min-height:44px}
 .waiting-mark{color:#ffcd88}.approved-mark{color:#b4efce}
 .story-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;padding:1.25rem;border:1px solid var(--line);border-radius:.8rem;background:var(--panel)}
 .story-actions .button{display:grid;place-items:center}
-.art-credit{font-size:.8rem;margin:1rem 0 2rem;color:var(--muted)}
 @media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 @media(max-width:760px){
 .story-layout{gap:1rem}.chapter-list{position:sticky;top:0;z-index:3;display:flex;overflow-x:auto;max-width:100%;overscroll-behavior-x:contain;border-radius:.5rem}
@@ -411,7 +410,6 @@ button,.button{min-height:44px}
 <a class="button secondary" href="/blog">Read the story</a>
 <a class="button secondary" href="/#workspace">Create your agreement</a>
 </div>
-<p class="art-credit">Illustrations by <a href="https://openmoji.org/">OpenMoji</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. People are illustrative roles.</p>
 </div></div>
 </section>
 <section class="screen" data-screen="blog" hidden>
@@ -456,8 +454,13 @@ button,.button{min-height:44px}
 <section id="start"><h2>Try it yourself</h2>
 <p>Start with the walkthrough, then try the original and changed files against the same finalized version. To approve an agreement, use your designated wallet in QoreX with Diana Testnet selected and an eligible registered signing key.</p>
 <div class="actions"><a class="button" href="/walkthrough">Walkthrough</a><a class="button secondary" href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Demo</a><a class="button secondary" href="/#signer-setup">Advanced test options</a></div></section>
-</article></div></section>
+<p><a href="/credits">Illustration credits</a></p></article></div></section>
 
+<section class="screen narrow" data-screen="credits" hidden>
+<header class="screen-heading"><h1>Illustration credits</h1></header>
+<p>Illustrations by <a href="https://openmoji.org/">OpenMoji</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. The client, freelancer and document PNGs are used unmodified. People are illustrative roles.</p>
+<p><a href="/walkthrough">Return to the walkthrough</a></p>
+</section>
 </main>
 <script type="module" src="/verify.js"></script>
 </html>

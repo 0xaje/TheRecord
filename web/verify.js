@@ -346,7 +346,8 @@ function showScreen() {
   const page = location.pathname.replace(/\/$/, "");
   const screen = invite ? "review"
     : screens.some(panel => panel.dataset.screen === hash) ? hash
-      : page === "/walkthrough" ? "walkthrough"
+      : page === "/credits" ? "credits"
+        : page === "/walkthrough" ? "walkthrough"
         : page === "/blog" || hash === "guide" ? "blog"
           : query.has("id") ? "verify-title" : "landing";
   landing.hidden = screen !== "landing";
