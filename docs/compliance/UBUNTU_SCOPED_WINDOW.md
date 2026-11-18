@@ -127,3 +127,23 @@ QCAI audit remain separate requirements.
 
 Official API references: [SDK window reference](https://docs.qorechain.io/developer-guide/evm-window-reference/),
 [post-quantum registration](https://docs.qorechain.io/developer-guide/post-quantum-signing/).
+
+## Paired admission test (after committed registration)
+
+Owner supplied registration A890AEFB5AA163B952134504E2B92C4D5855145384A1655FFEEBDC9E2349AF78: code 0 at height 10325363; registered, possession-proven and key-match checks true. Native account qor1fvtxdkq957re42zenhw4scrvplxrqwslf6lt4v; EVM 0x4B1666D805A7879Aa8599DDD58606c0FCc303A1f. Owner also ran all 24 earlier checks successfully on Ubuntu. These are owner-supplied outputs, not a fresh independent chain lookup.
+
+Review the offline plan first:
+
+```bash
+node scripts/scoped-window-proof.mjs plan
+```
+
+The paired run (only after plan review) opens the fixed 600-block/5-transaction/1-QOR window scoped only to The Record; waits for its committed receipt and live read-back; creates a separate public test record with the script's exact test text and the existing first signer plus the disposable account; verifies its Proposed event; then submits a signed zero-value transfer to the disposable account itself, outside allowed_targets. It does not approve agreements or change existing records. Each EVM attempt has a maximum fee cap of 0.1 test QOR, plus the separate 0.08 test QOR native opening fee. The window expires automatically.
+
+```bash
+node scripts/scoped-window-proof.mjs run --broadcast --confirm-address YOUR_DISPOSABLE_EVM_ADDRESS
+```
+
+Public evidence is stored in ~/.local/share/the-record-window-test/scoped-proof.json, separately from account.secret. A started marker prevents automatic repetition. Unknown outcomes stop the run. Do not delete the marker or rerun blindly. Raw signed bytes and secret keys are not written to evidence or printed. Only share the public proof JSON, never account.secret. A generic gas/nonce/window-expiry error is not target-scope proof. Target-specific rejection text is conservatively classified; otherwise retain the response for manual diagnosis.
+
+Local preparation: npm run check passes 25 tests, including exact proposal-event validation and rejection of wrong IDs/fingerprints/status/targets. No live paired run has been performed by the agent. The scoped-window milestone stays OPEN until actual evidence is reviewed. My space update draft READY, NOT POSTED: Fresh disposable Diana account registered with possession proof; Ubuntu checks pass; paired scoped-admission test prepared. Live allowed-call/outside-target evidence still pending.
