@@ -1,0 +1,9 @@
+{
+  "runId": 44303101500,
+  "url": "https://github.com/0xaje/TheRecord/actions/runs/44303101500",
+  "head": "eecbd0d9cc0080f910dfb8e09775411a0f38fe0f",
+  "status": "completed",
+  "conclusion": "success",
+  "localTestsPassed": 22,
+  "realScopedWindowOpeningVerified": false
+}

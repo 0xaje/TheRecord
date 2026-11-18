@@ -511,13 +511,14 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <section class="screen narrow" data-screen="evm-window" hidden>
 <div class="surface" id="scoped-window">
 <h1>Restricted EVM access</h1>
-<p>Advanced Diana test. Ask QoreX to allow calls only to The Record, for 600 blocks, up to 5 transactions and a total 1 QOR allowance including maximum EVM fees. This replaces your previous window. Opening has a separate network fee.</p>
-<p>This does not approve an agreement or transfer QOR. Use a disposable test account. Keys stay inside QoreX. Real wallet compatibility and scoped-call evidence are still being verified.</p>
+<p>Advanced Diana test. The Ubuntu SDK tool prepares access only to The Record, for 600 blocks, up to 5 transactions and a total 1 QOR allowance including maximum EVM fees. This replaces your previous window. Opening has a separate network fee.</p>
+<p>This does not approve an agreement or transfer QOR. Use a disposable test account. Inspection keeps keys inside QoreX. The Ubuntu route uses a separate local test account. Scoped-call evidence is still being collected.</p>
 <button type="button" id="window-connect">Inspect QoreX test account</button>
 <pre id="window-preview" hidden style="white-space:pre-wrap;overflow-wrap:anywhere;font:inherit"></pre>
-<label><input type="checkbox" id="window-consent"> I reviewed the account, contract, limits and replacement of the previous window.</label>
-<button type="button" id="window-open" disabled>Request restricted window in QoreX</button>
-<button type="button" id="window-check" hidden>Check submitted window receipt</button>
+<p>QoreX refused website window changes in the real mobile test. This page now only inspects accounts and checks public receipts. No signing request is made here.</p>
+<p><a href="https://github.com/0xaje/TheRecord/blob/main/docs/compliance/UBUNTU_SCOPED_WINDOW.md">Open the Ubuntu SDK instructions</a></p>
+<label>Native opening transaction hash <input id="window-hash" spellcheck="false" autocomplete="off" maxlength="64" placeholder="Paste the 64-character hash from Ubuntu"></label>
+<button type="button" id="window-check" disabled>Check opening receipt</button>
 <output id="window-status" role="status"></output>
 <a id="window-receipt" hidden>View opening transaction</a>
 <a id="window-evidence" hidden>Download window evidence</a>

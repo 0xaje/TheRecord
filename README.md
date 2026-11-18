@@ -172,12 +172,11 @@ workflow passed; permanent deletion mobile acceptance is a separate open check.
 
 ### Restricted-window helper (advanced test)
 
-Open `/#evm-window` inside QoreX Browse on Diana. **Inspect QoreX test account**
-checks the connected account and signing-key readiness without requesting a
-window transaction. The separate reviewed action requests only The Record
-contract, 600 blocks, five transactions and a 1 QOR allowance; opening replaces
-the previous window and pays a separate wallet-displayed native fee. No phrase
-or private signing file is requested for this route. Wallet support for this
-message and real scoped-call evidence remain unverified until owner testing.
-See [remaining proof](docs/compliance/remaining-proof.md). The full SDK is used
-only in development to verify the focused helper's encoded message bytes.
+The real mobile test showed QoreX refuses website `MsgOpenEVMWindow` requests.
+The `/#evm-window` page is now **inspect/check-only**, with no window-signing
+request. It checks public native opening receipts entered by hash. See the
+[Ubuntu disposable-account instructions](docs/compliance/UBUNTU_SCOPED_WINDOW.md)
+for the SDK route. `init`/`plan` print public addresses without signing or sending;
+separate `register`/`open` commands require explicit broadcast/address confirmation.
+No existing QoreX phrase is requested. Real scoped opening/call evidence remains
+open. The SDK is a development dependency for the CLI and codec tests.

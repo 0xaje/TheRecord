@@ -141,3 +141,19 @@ Owner checkpoint: open the helper in QoreX Browse on Diana and press **Inspect
 QoreX test account** first. Check the displayed account and limits before any
 opening request. No claim of wallet compatibility or scoped on-chain success
 is made until that real interaction and its receipt are verified.
+
+
+## Real mobile result supersedes prepared website-signing route
+
+Owner's November18 phone test reached the request but QoreX explicitly refused
+`MsgOpenEVMWindow`: managed by the wallet, not by a website. No opening hash was
+returned. The receipt-check button shown then was a UI state error, not proof of
+submission. The new page removes the blocked request altogether and accepts
+only public opening hashes for read-only checking. Existing proposals in the
+preceding section are historical preparation, not a supported wallet claim.
+
+The reviewed fallback is a fresh disposable SDK account on the owner's Ubuntu
+machine; see UBUNTU_SCOPED_WINDOW.md. No old account phrase or key rotation is
+needed. Registration/opening require explicit owner-run commands. Preparation
+and offline tests do not close the scoped-opening or permitted/rejected-call
+evidence gate. The exact next owner action is `init` and review of public addresses.

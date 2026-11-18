@@ -636,3 +636,42 @@ not posted: I prepared a key-preserving QoreX request for contract-restricted
 EVM access and validated its bytes against the official SDK. Real mobile
 signing and on-chain scope proof are still pending. Exact next owner action:
 open #evm-window inside QoreX Browse/Diana and inspect account only first.
+
+Scoped-helper CI subsequently completed SUCCESS (run44303101500, commit eecbd0d9cc0080f910dfb8e09775411a0f38fe0f). Live narrow REST relay returned HTTP200 for the prior window, livefalse,allowed_targets empty; new scoped opening still absent. Source/preparation verified, actual wallet checkpoint remains OPEN. CI note/evidence awaits next documentation publication.
+
+
+## 18 November — actual wallet refusal and Ubuntu SDK fallback (OPEN)
+
+Owner photo/statement established QoreX refused website MsgOpenEVMWindow:
+managed by wallet itself, not a website. No hash returned; website receipt button
+was mistakenly shown. Replaced blocked website action with inspect/check-only
+UI. No native signAndBroadcast request remains in this screen; public opening
+hash is required before the receipt check is enabled. Owner photos themselves
+are not published because they contain personal images; technical error only.
+
+Prepared scripts/scoped-window-cli.mjs using SDK0.14.0 for a fresh disposable
+eth-native unified account, with canonical PQC derivation. init/plan only create
+or read a0600 private file on owner's computer and print public plan; status
+reads fixed Diana endpoints. No existing QoreX phrase is requested. Separate
+register/open require --broadcast plus exact disposable EVM address confirmation,
+network/funding/key checks and public pending-hash journal before submission.
+No auto-repeat on ambiguous outcomes; status reconciles committed receipts.
+Registration PoP is locally verified; offline signing tested. These are not live
+registration/scoped-window proof. No agent wallet transaction performed.
+
+Build and24localtests PASS, including private-file permissions/non-overwrite,
+secret-free output, refusal without flags/correctaddress, valid address-bound
+PoP and offline signing, plus22previouschecks. Docs:
+docs/compliance/UBUNTU_SCOPED_WINDOW.md; evidence sdk-fallback-tests.txt.
+
+Judge: actual wallet path is unsupported, so removed instead of advertising a
+working signature flow. Ubuntu signing path is prepared/offline-tested, not
+chain-proven. Keep scope milestone OPEN until owner generates disposable public
+addresses, funds it, registers with PoP, and then paired scopedcall/refusal test.
+Secondauditacceptance/independent2person/backupsremainopen. ShipWeeks4owner-
+confirmed,freshCheckunobserved;QDayexpired. Myspace draft READY(notposted):
+Real mobile testing exposed a wallet-reserved window operation. I removed the
+blocked website action and added a disposable-account Ubuntu route with explicit
+broadcast confirmation. All24localchecks pass; live scope proof is still pending.
+Exact next owner checkpoint: freshcheckout, npmci, CLIinit; sharepublicaddresses
+only. Do not fund or sign anything until those addresses/plan are reviewed.

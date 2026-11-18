@@ -1,12 +1,10 @@
 import { createPublicClient, http } from 'viem';
 import { checkSignerReadiness } from './approve.js';
-import { WINDOW_CHAIN, WINDOW_CONTRACT, WINDOW_POLICY, scopedWindowMessage, qorToEvm, verifyWindowReceipt, verifyWindowReadback } from './scoped-window-data.js';
+import { WINDOW_CHAIN, WINDOW_CONTRACT, qorToEvm, verifyWindowReceipt, verifyWindowReadback } from './scoped-window-data.js';
 const panel = document.querySelector('#scoped-window');
 const status = document.querySelector('#window-status');
 const preview = document.querySelector('#window-preview');
-const open = document.querySelector('#window-open');
 const check = document.querySelector('#window-check');
-const consent = document.querySelector('#window-consent');
 const link = document.querySelector('#window-receipt');
 const download = document.querySelector('#window-evidence');
 const client = createPublicClient({ transport: http('https://evm-testnet.qore.host', { timeout: 15000 }) });
@@ -21,7 +19,7 @@ async function read(path) {
 async function connected() {
   const native = window.qorex?.native;
   const evm = window.qorex?.evm ?? window.ethereum;
-  if (!native?.capabilities?.includes('signAndBroadcast') || typeof native.signAndBroadcast !== 'function' || !evm?.request) throw new Error('Open this page inside QoreX Browse with native signAndBroadcast support.');
+  if (typeof native?.enable !== 'function' || typeof native.getKey !== 'function' || !evm?.request) throw new Error('Open this page inside QoreX Browse to inspect its test account.');
   await native.enable(WINDOW_CHAIN);
   const key = await native.getKey(WINDOW_CHAIN);
   const [addresses, chain, network] = await Promise.all([
@@ -41,7 +39,7 @@ async function run(action) {
   const buttons = [...panel.querySelectorAll('button')]; buttons.forEach(b => { b.disabled = true; });
   try { await action(); }
   catch (error) { status.textContent = error.shortMessage ?? error.message; }
-  finally { busy = false; buttons.forEach(b => { b.disabled = false; }); open.disabled = !account || !!submitted; check.hidden = !submitted; }
+  finally { busy = false; buttons.forEach(b => { b.disabled = false; }); check.disabled = !/^[a-fA-F0-9]{64}$/.test(document.querySelector('#window-hash').value.trim()); }
 }
 async function verify() {
   if (!submitted) throw new Error('No opening transaction to check yet.');
@@ -54,30 +52,22 @@ async function verify() {
   status.textContent = live ? 'Diana receipt and read-back match: access is restricted to The Record. Download the evidence. A permitted call and outside-scope rejection still need testing.' : 'The restricted opening is verified, but its window is no longer live. Keep this receipt; a new opening is needed before a permitted-call test.';
 }
 document.querySelector('#window-connect').addEventListener('click', () => run(async () => {
-  if (submitted) { status.textContent = 'Check the submitted transaction before starting another request. Reload only after reviewing its result.'; return; }
   status.textContent = 'Checking Diana account and registered signing key…';
-  account = null; account = await connected(); consent.checked = false;
+  account = null; account = await connected();
   preview.textContent = 'Native account: ' + account.sender + '\nEVM account: ' + account.address + '\nOnly allowed contract: ' + WINDOW_CONTRACT + '\n600 blocks · 5 transactions · 1 QOR total allowance (value plus maximum EVM fees).\nOpening also pays a separate native transaction fee shown by QoreX. This replaces the account’s previous window. Contract functions are not individually restricted.';
-  preview.hidden = false; status.textContent = 'Account checked. Review the restriction and confirm below. No window transaction has been requested.';
+  preview.hidden = false; status.textContent = 'Account checked. QoreX refused website window changes in the real mobile test. Use the documented Ubuntu SDK route; this page does not request signing.';
 }));
-open.addEventListener('click', () => run(async () => {
-  if (!account || !consent.checked) throw new Error('Inspect the account and tick the review box first.');
-  const current = await connected();
-  if (current.sender !== account.sender) { account = null; throw new Error('Account changed. Inspect it again before signing.'); }
-  const message = scopedWindowMessage(current.sender);
-  status.textContent = 'Review the exact contract and limits in QoreX. If the wallet cannot display the restriction, reject the request.';
-  // Never automatically repeat a wallet request after an unknown broadcast outcome.
-  submitted = { sender: current.sender, hash: null };
-  let result;
-  try { result = await current.native.signAndBroadcast({ chainId: WINDOW_CHAIN, messages: [message], memo: 'The Record restricted EVM window', gasLimit: 400000 }); }
-  catch (error) { throw new Error((error.message ?? 'Wallet request failed.') + ' Check QoreX activity before retrying; this page will not automatically submit again.'); }
-  if (!/^[a-fA-F0-9]{64}$/.test(result?.txHash ?? '')) throw new Error('Wallet returned no recognized transaction hash. Check QoreX activity before another request.');
-  submitted.hash = result.txHash.toUpperCase(); link.href = 'https://dashboard.qorechain.io/explorer/tx/' + submitted.hash; link.hidden = false;
-  if (Number(result.code) !== 0) throw new Error('Wallet reports a failed transaction. Review its receipt.');
-  status.textContent = 'Submitted ' + submitted.hash + '. Checking the committed receipt and scope…';
-  await verify();
-}));
+document.querySelector('#window-hash').addEventListener('input', event => {
+  const hash = event.target.value.trim(); check.disabled = !/^[a-fA-F0-9]{64}$/.test(hash);
+  submitted = null; download.hidden = true; link.hidden = true;
+});
 check.addEventListener('click', () => run(async () => {
-  if (!submitted?.hash) throw new Error('No hash returned. Find the opening transaction in QoreX activity before retrying.');
+  const hash = document.querySelector('#window-hash').value.trim().toUpperCase();
+  if (!/^[A-F0-9]{64}$/.test(hash)) throw new Error('Enter the 64-character native opening hash from the Ubuntu tool.');
+  const data = await read('/cosmos/tx/v1beta1/txs/' + hash);
+  const sender = data.tx?.body?.messages?.[0]?.sender;
+  qorToEvm(sender);
+  submitted = { hash, sender };
+  link.href = 'https://dashboard.qorechain.io/explorer/tx/' + hash; link.hidden = false;
   await verify();
 }));
