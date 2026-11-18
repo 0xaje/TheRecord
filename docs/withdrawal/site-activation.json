@@ -1,0 +1,10 @@
+{
+  "version": 44,
+  "hostingCommit": "08bbe997832915d963ad73494f976e5d22e78646",
+  "sourceCommit": "712a2ae763434494f11c389cf28c3cdfc1b12c81",
+  "liveUrl": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "explicitDeployment": "withdrawal-v2",
+  "defaultDeployment": "legacy",
+  "status": "Published test route; real withdrawal and two-signer correction acceptance pending",
+  "visualAcceptance": "Not freshly observed by agent; owner QoreX checkpoint next"
+}
