@@ -109,7 +109,7 @@ Use **Move saved draft to Trash** in Drafts. Saved revisions are retained and
 review links are revoked atomically. Open **Trash** to restore; issue a new
 invitation afterward. Nothing is automatically deleted. Trash counts toward the
 50-draft workspace limit. Diana agreement records cannot be deleted this way.
-Permanent deletion and the full retention policy remain pending.
+Permanent deletion is now available inside Trash; see the policy below. Hosting backup retention remains unverified.
 
 Apply additive migration `0007_draft_trash.sql` after migrations 0001–0006.
 Regression: `node --test test/private-agreements.test.mjs`.
@@ -138,3 +138,30 @@ The last command downloads the published JavaScript and checks startup in an
 isolated DOM harness with denied storage. It does not prove visual mobile
 acceptance or simulate a Diana approval. Current evidence is in
 `docs/audit/2026-11-18/`.
+
+
+### Permanent deletion policy (current)
+
+Inside **Trash**, select **Delete permanently** and type `DELETE` in the
+confirmation. The owner-only operation removes the draft, all saved revisions,
+review invitations, legacy invitation codes and feedback from the live database
+in one atomic statement. Cancellation keeps the draft. A changed revision or
+Trash timestamp requires refreshing. Permanent deletion cannot be restored.
+
+Downloaded copies, files already read by reviewers and public Diana records
+remain. Hosting backup and infrastructure log retention/erasure are unverified;
+this feature does not promise erasure of those copies. Request-limit accounting
+is removed separately by bounded expiry cleanup. Nothing is automatically purged.
+
+Apply additive migration `0008_draft_delete.sql` after migrations 0001–0007.
+Checks: `npm run build:site` then the regression commands above.
+The explicit live acceptance command creates one new non-sensitive draft and
+permanently deletes only that disposable draft:
+
+```sh
+node scripts/check-draft-delete.mjs --live-disposable-delete
+```
+
+Do not adapt the script to delete existing user drafts. Deletion tests/evidence
+are stored in `docs/audit/2026-11-18/`. Owner reported the phone Trash/restore
+workflow passed; permanent deletion mobile acceptance is a separate open check.

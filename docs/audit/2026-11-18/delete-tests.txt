@@ -1,0 +1,26 @@
+✔ draft, review, feedback, revision isolation and revocation (134.641232ms)
+✔ expiry, malformed requests, origins and storage failures (23.318619ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (33.727083ms)
+✔ revision pages have no overlap and do not expose full text in lists (73.624196ms)
+✔ additive migration preserves a legacy current revision without inventing old text (18.8261ms)
+✔ workspace write throttle returns Retry-After without blocking reads (65.394605ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (35.192949ms)
+✔ retained revision and invitation quotas are atomic (92.970676ms)
+✔ review throttling and temporary storage failures fail safely (91.507042ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (74.052936ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (76.511421ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (34.143093ms)
+✔ built verifier initializes its controls when storage access throws (175.7196ms)
+✔ blocked storage access and reads do not throw during module setup (4.520581ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (1.149572ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (0.766641ms)
+✔ successful persistence reads back the exact recovery code before returning (0.790979ms)
+✔ failed read-back attempts to restore the previously saved identity (0.356971ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 954.815625

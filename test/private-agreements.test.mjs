@@ -9,7 +9,7 @@ function database({ legacy = false } = {}) {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec('PRAGMA foreign_keys = ON');
   for (const file of readdirSync(new URL('../migrations/', import.meta.url)).sort()) {
-    if (!legacy || (!file.startsWith('0005') && !file.startsWith('0006') && !file.startsWith('0007'))) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
+    if (!legacy || (!file.startsWith('0005') && !file.startsWith('0006') && !file.startsWith('0007') && !file.startsWith('0008'))) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
   }
   return { sqlite, prepare(sql) { return { bind(...args) {
     const statement = sqlite.prepare(sql);
@@ -127,6 +127,7 @@ test('additive migration preserves a legacy current revision without inventing o
     db.sqlite.exec(readFileSync(new URL('../migrations/0005_draft_revisions.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0006_backend_bounds.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0007_draft_trash.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0008_draft_delete.sql', import.meta.url), 'utf8'));
     const before = await (await call(db, '/revisions?id=' + draft.id)).json();
     assert.deepEqual(before.revisions.map(r => r.revision), [5]);
     assert.equal(before.revisions[0].saved_at, null);
@@ -232,5 +233,48 @@ test('Trash is owner-scoped, revokes invitations atomically and restores every r
     assert.equal((await call(db, '/review', invite, null)).status, 404);
     const fresh = await (await call(db, '/share', saved)).json();
     assert.equal((await call(db, '/review', fresh, null)).status, 200);
+  } finally { db.sqlite.close(); }
+});
+
+test('permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows', async () => {
+  const db = database();
+  try {
+    const draft = await (await call(db, '', { title: 'Delete acceptance', terms: 'First' })).json();
+    const other = await (await call(db, '', { title: 'Keep this', terms: 'Untouched' })).json();
+    const invite = await (await call(db, '/share', draft)).json();
+    await call(db, '/feedback', { ...invite, note: 'Test feedback' }, null);
+    const token = db.sqlite.prepare('SELECT token_hash FROM shares').get().token_hash;
+    db.sqlite.prepare('INSERT INTO invite_codes(token_hash,code_hash,expires,sent_at,sends) VALUES(?,?,?,?,?)').run(token,'old-code',1,1,1);
+    await call(db, '', { ...draft, title: 'Delete acceptance', terms: 'Second' });
+    const payload = { id: draft.id, revision: 2, trashedAt: 1, confirmation: 'DELETE' };
+    assert.equal((await call(db, '/delete', payload)).status, 409);
+    await call(db, '/trash', { id: draft.id, revision: 2 });
+    payload.trashedAt = (await (await call(db, '/trash')).json())[0].trashed_at;
+    assert.equal((await call(db, '/delete', { ...payload, confirmation: '' })).status, 400);
+    assert.equal((await call(db, '/delete', payload, stranger)).status, 409);
+    assert.equal((await call(db, '/delete', { ...payload, revision: 1 })).status, 409);
+    assert.equal((await call(db, '/delete', { ...payload, trashedAt: payload.trashedAt - 1 })).status, 409);
+    assert.equal((await call(db, '/delete', payload, owner, { origin: 'https://other.test' })).status, 403);
+    assert.equal((await call(db, '/delete', payload)).status, 200);
+    for (const table of ['shares', 'invite_codes', 'review_feedback']) assert.equal(db.sqlite.prepare('SELECT COUNT(*) AS n FROM ' + table).get().n, 0);
+    assert.equal(db.sqlite.prepare('SELECT COUNT(*) AS n FROM draft_revisions WHERE draft_id = ?').get(draft.id).n, 0);
+    assert.equal((await call(db, '/item?id=' + draft.id)).status, 404);
+    assert.equal((await call(db, '/revision?id=' + draft.id + '&revision=1')).status, 404);
+    assert.equal((await call(db, '/restore', { id: draft.id, revision: 2 })).status, 409);
+    assert.equal((await call(db, '/review', invite, null)).status, 404);
+    assert.equal((await (await call(db, '/item?id=' + other.id)).json()).terms, 'Untouched');
+  } finally { db.sqlite.close(); }
+});
+
+test('permanent deletion rolls back dependent removals when final delete fails', async () => {
+  const db = database();
+  try {
+    const d = await (await call(db, '', { title: 'Rollback', terms: 'Keep if failure' })).json();
+    await call(db, '/share', d);
+    await call(db, '/trash', d);
+    const trash = (await (await call(db, '/trash')).json())[0];
+    db.sqlite.exec("CREATE TRIGGER fail_delete AFTER DELETE ON drafts BEGIN SELECT RAISE(ABORT, 'injected_failure'); END");
+    assert.equal((await call(db, '/delete', { ...d, trashedAt: trash.trashed_at, confirmation: 'DELETE' })).status, 503);
+    for (const table of ['drafts', 'shares', 'draft_revisions']) assert.equal(db.sqlite.prepare('SELECT COUNT(*) AS n FROM ' + table).get().n, 1);
   } finally { db.sqlite.close(); }
 });

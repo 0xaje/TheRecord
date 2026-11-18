@@ -1,0 +1,19 @@
+{
+  "testedAt": "2026-11-18T11:13:18.818Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "result": "PASS",
+  "draftId": "b697189b-50be-40ca-8bf7-aba32b062e81",
+  "checks": [
+    "active draft cannot be deleted",
+    "confirmation required",
+    "foreign owner rejected",
+    "stale revision rejected",
+    "trashed draft deleted",
+    "both revisions inaccessible",
+    "review and feedback inaccessible",
+    "restore rejected after permanent deletion"
+  ],
+  "scope": "One newly created disposable non-sensitive test draft only; no existing user drafts",
+  "walletAction": false,
+  "backupErasureVerified": false
+}

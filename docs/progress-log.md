@@ -405,3 +405,74 @@ then complete deletion/retention and deployment reproducibility work. Keep
 blocked UI acceptance explicit; do not call the whole product finished.
 
 Published-code check PASS at 2026-11-18T10:48:57.526Z; evidence: audit/2026-11-18/published-storage-startup.json. No wallet or chain transaction.
+
+
+18 November 2026 — owner phone acceptance: user confirmed the complete described
+Trash/restore phone test worked successfully. This closes owner-reported mobile
+Trash acceptance, including restored saved revisions. No screenshot is required
+because QoreX blocks screenshots. This is owner-reported, not independently
+observed. New permanent deletion UI is separate and still needs acceptance.
+
+
+## 18 November 2026 — permanent private draft deletion (release 38)
+
+Required behavior: only the owner may permanently delete a draft already in
+Trash, after explicit DELETE confirmation. Remove draft text, saved revisions,
+review invitations, legacy invitation codes and feedback atomically. Reject stale
+revision/Trash timestamp, wrong origin and wrong workspace. Diana unchanged.
+
+Implementation: additive schema-only migration 0008 installs a BEFORE DELETE
+trigger. One owner/snapshot-scoped DELETE statement invokes child cleanup in the
+same database transaction. An injected failure proves rollback of parent and
+children in isolated SQLite. No scheduled purge or automatic deletion is added.
+Trash offers Restore and Delete permanently; prompt names the draft, explains
+irreversibility and requires the exact word DELETE. Changing workspace invalidates
+the listed delete action. Reviewers have no delete route.
+
+Retention limits: deletion removes live application rows; restore is then
+unavailable. Downloaded files, third-party copies and Diana's immutable public
+records remain. Hosting backups/log retention and erasure are NOT verified;
+no universal erasure, regulatory compliance or immediate physical purge claim.
+Short-lived rate-limit accounting may remain until normal bounded cleanup.
+No private text or secret code is added to public evidence.
+
+Verification: build PASS; 18 isolated tests PASS including dependent legacy
+rows, foreign-owner/origin rejection, explicit confirmation, stale revision and
+Trash timestamp, active-draft rejection, unavailable restore/review/revisions,
+unrelated draft preservation and injected-failure rollback. Evidence:
+audit/2026-11-18/delete-tests.txt. Hosted source
+0c4a2474510a8492b7dcd16f153215d5ea1960ad; Site release 38 succeeded.
+Live check is recorded separately; only its newly created disposable test draft
+is in scope. No existing user draft or chain transaction is used.
+
+Judge review: deletion implementation and atomicity have local proof. The new
+permanent-delete mobile prompt still needs owner acceptance; previous phone
+Trash/restore acceptance is owner-confirmed PASS. Full backup erasure remains
+unverified. Product-wide independent acceptance, deployment reproduction,
+scoped-window evidence and accepted Stage 2 audit still remain open.
+
+My space update DRAFT READY, not posted:
+I added owner-controlled permanent deletion for private drafts already in Trash.
+Deletion requires typing DELETE and removes saved revisions, invitations and
+feedback together. Eighteen isolated regression checks passed, including failure
+rollback and protection of another workspace's drafts. Public Diana records and
+downloaded copies remain. Hosting backup erasure is not claimed.
+
+Event/Ship Weeks start/end review: supports reliability of the existing
+Post-Quantum dApp; no new PQC workflow proof or award claim. MIT/public repo
+requirements retained. Four Ship Weeks tasks owner-confirmed complete; fresh
+portal Check unobserved. Q-Day Drill expired without confirmed registration.
+Wallet warning resolved by owner. Required scoped-window and accepted Stage 2
+proof remain open. Next: record live disposable deletion result, update GitHub,
+then ask owner to test only a disposable draft's permanent-delete UI.
+
+
+Live permanent-delete acceptance PASS at 2026-11-18T11:13:18.818Z on release38.
+Evidence: audit/2026-11-18/live-delete-checks.json. Script created and deleted
+only its own disposable non-sensitive draft. Both revisions, review/feedback and
+restore were inaccessible afterward; wrong owner, active draft and stale
+revision were rejected. Backend implementation/live verification complete.
+New permanent-delete mobile UI acceptance remains OPEN; owner will check cancel,
+typed DELETE and disappearance using a disposable draft. My space draft can add:
+The live disposable-draft deletion test also passed; no existing agreements or
+Diana records were changed. Update READY, not posted.

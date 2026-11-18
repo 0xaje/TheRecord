@@ -170,6 +170,18 @@ async function handlePrivateAgreements(request, db) {
   const input = await readInput(request);
   if (!input || typeof input !== "object") return reply({ error: "Invalid request." }, 400);
 
+  if (url.pathname === "/api/drafts/delete") {
+    if (typeof input.id !== "string" || !uuid.test(input.id) || !Number.isSafeInteger(input.revision)
+      || !Number.isSafeInteger(input.trashedAt) || input.trashedAt <= 0 || input.confirmation !== "DELETE") {
+      return reply({ error: "Open Trash and confirm permanent deletion by typing DELETE." }, 400);
+    }
+    // Dependent private rows are removed by the trigger in this atomic statement.
+    const deleted = await db.prepare(`DELETE FROM drafts WHERE id = ? AND owner = ?
+      AND revision = ? AND trashed_at = ? RETURNING id`)
+      .bind(input.id, user, input.revision, input.trashedAt).first();
+    return deleted ? reply({ ok: true }) : reply({ error: "Draft unavailable or changed. Refresh Trash before trying again." }, 409);
+  }
+
   if (["/api/drafts/trash", "/api/drafts/restore"].includes(url.pathname)) {
     if (typeof input.id !== "string" || !uuid.test(input.id) || !Number.isSafeInteger(input.revision)) {
       return reply({ error: "Invalid draft." }, 400);

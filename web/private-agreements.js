@@ -415,7 +415,21 @@ async function loadTrash(older = false) {
         } catch (error) { trashStatus.textContent = error.message; }
         finally { button.disabled = false; }
       });
-      item.append(label, button); trashList.append(item);
+      const remove = document.createElement("button");
+      remove.type = "button"; remove.className = "secondary"; remove.textContent = "Delete permanently";
+      remove.addEventListener("click", async () => {
+        if (key !== workspaceKey) { trashStatus.textContent = "Workspace changed. Refresh Trash first."; return; }
+        const confirmation = prompt('Permanently delete "' + draft.title + '" and all its saved revisions, invitations and feedback? This cannot be undone. Downloaded copies and Diana records remain. Hosting backups may retain copies; retention is not yet verified. Type DELETE to confirm.');
+        if (confirmation !== "DELETE") { trashStatus.textContent = "Deletion cancelled. Draft kept in Trash."; return; }
+        remove.disabled = true; button.disabled = true;
+        try {
+          await api("/delete", { id: draft.id, revision: draft.revision, trashedAt: draft.trashed_at, confirmation }, key);
+          await loadTrash();
+          trashStatus.textContent = "Private draft permanently deleted from the live service. Downloaded copies and Diana records are unchanged.";
+        } catch (error) { trashStatus.textContent = error.message + " Refresh Trash to check its current state."; }
+        finally { remove.disabled = false; button.disabled = false; }
+      });
+      item.append(label, button, remove); trashList.append(item);
     }
     trashCursor = page.nextCursor;
     trashMore.hidden = !trashCursor;
