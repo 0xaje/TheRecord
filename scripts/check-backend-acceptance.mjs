@@ -12,7 +12,7 @@ const recoveryFile='.record-local/backend-acceptance-'+Date.now()+'.secret';
 writeFileSync(recoveryFile,JSON.stringify({origin:base,workspaceKey:key})+'\n',{mode:0o600,flag:'wx'});
 const checks=[];
 async function request(path,method='GET',body,extra={}){
- const response=await fetch(base+'/api/drafts'+path,{method,headers:{'X-Record-Workspace':key,Origin:base,'Content-Type':'application/json',...extra},...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(15000)});
+ const response=await fetch(base+'/api/drafts'+path,{method,headers:{Authorization:'Bearer workspace:'+key,Origin:base,'Content-Type':'application/json',...extra},...(body===undefined?{}:{body:JSON.stringify(body)}),signal:AbortSignal.timeout(15000)});
  return response;
 }
 try{

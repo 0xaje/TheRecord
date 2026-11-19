@@ -350,3 +350,19 @@ test('competing legacy moves cannot exceed the shared destination quota',async()
   assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts').get().n,51);
  }finally{db.sqlite.close();}
 });
+
+test('redacted transport preserves workspace identity, recovery and isolation; conflicts fail closed',async()=>{
+ const db=database();
+ try{
+  const created=await call(db,'',{title:'Transport test',terms:'Same private owner.'});
+  const draft=await created.json();
+  const request=(key,legacy)=>privateAgreements(new Request(origin+'/api/drafts',{headers:{Authorization:'Bearer workspace:'+key,...(legacy?{'X-Record-Workspace':legacy}:{})}}),db);
+  const recovered=await request(owner);assert.equal(recovered.status,200);assert.equal((await recovered.json())[0].id,draft.id);
+  assert.deepEqual(await (await request(stranger)).json(),[]);
+  assert.equal((await request(owner,stranger)).status,400);
+  assert.equal((await request('invalid',owner)).status,400);
+  assert.equal((await request(owner,owner)).status,200);
+  const updated=await privateAgreements(new Request(origin+'/api/drafts',{method:'POST',headers:{Origin:origin,Authorization:'Bearer workspace:'+owner},body:JSON.stringify({...draft,title:'Updated',terms:'Same owner updated.'})}),db);
+  assert.equal(updated.status,200);assert.equal((await (await call(db)).json())[0].title,'Updated');
+ }finally{db.sqlite.close();}
+});

@@ -34,7 +34,7 @@ function newWorkspaceKey() {
 
 async function api(path = "", body, key = workspaceKey) {
   const headers = {};
-  if (!invitation && key) headers["X-Record-Workspace"] = key;
+  if (!invitation && key) headers.Authorization = "Bearer workspace:" + key;
   const options = { headers };
   if (body !== undefined) {
     headers["Content-Type"] = "application/json";

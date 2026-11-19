@@ -70,7 +70,7 @@ test('public policy exposes only configured sitekey and binding, not provider se
 test('browser helper does not load a widget in off mode and does not retry a failed policy',async()=>{
  const {collectAdmissionToken}=await import('../web/admission.js');const originalFetch=globalThis.fetch,originalLocation=globalThis.location;let calls=0;
  try{
-  globalThis.location={search:''};globalThis.fetch=async(url,options)=>{calls++;assert.equal(url,'/api/admission/policy');assert.equal(options.headers['X-Record-Workspace'],'a'.repeat(64));return Response.json({mode:'off',required:false});};
+  globalThis.location={search:''};globalThis.fetch=async(url,options)=>{calls++;assert.equal(url,'/api/admission/policy');assert.equal(options.headers.Authorization,'Bearer workspace:'+'a'.repeat(64));assert.equal(Object.hasOwn(options.headers,'X-Record-Workspace'),false);return Response.json({mode:'off',required:false});};
   assert.equal(await collectAdmissionToken('a'.repeat(64)),undefined);assert.equal(calls,1);
   calls=0;globalThis.fetch=async()=>{calls++;return Response.json({error:'Policy unavailable'},{status:503});};
   await assert.rejects(collectAdmissionToken('a'.repeat(64)),/Policy unavailable/);assert.equal(calls,1);

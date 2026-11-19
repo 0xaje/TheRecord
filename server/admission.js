@@ -1,3 +1,4 @@
+import { workspaceCredential } from "./workspace-credential.js";
 export class AdmissionError extends Error {constructor(message,status=403,code){super(message);this.status=status;this.code=code;}}
 export const admissionMode=env=>!env.RECORD_ADMISSION_MODE || env.RECORD_ADMISSION_MODE==='off'?'off':['preview','enforce'].includes(env.RECORD_ADMISSION_MODE)?env.RECORD_ADMISSION_MODE:'invalid';
 const action='new-workspace';
@@ -14,7 +15,7 @@ async function existing(db,owner){
 export async function admissionPolicy(request,env){
  const mode=admissionMode(env);const headers={'Cache-Control':'no-store','Referrer-Policy':'no-referrer'};
  if(mode==='off')return Response.json({mode,required:false},{headers});
- const key=request.headers.get('X-Record-Workspace');
+ const key=workspaceCredential(request);
  if(!/^[a-f0-9]{64}$/.test(key??''))return Response.json({error:'Open your workspace before checking admission.'},{status:400,headers});
  try{
   const binding=await sha(key),owner='workspace:'+binding;

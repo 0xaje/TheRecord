@@ -10,7 +10,7 @@ try {
   // client spreading the sample across many minute windows.
   for (let batch = 0; batch < 2 && !limited; batch++) {
     const results = await Promise.allSettled(Array.from({ length: 31 }, async () => {
-      const response = await fetch(base + '/api/drafts', { method: 'POST', headers: { Origin: base, 'Content-Type': 'application/json', 'X-Record-Workspace': key }, body: JSON.stringify({ title: '', terms: 'Non-sensitive invalid limit check.' }), signal: AbortSignal.timeout(15000) });
+      const response = await fetch(base + '/api/drafts', { method: 'POST', headers: { Origin: base, 'Content-Type': 'application/json', Authorization: 'Bearer workspace:' + key }, body: JSON.stringify({ title: '', terms: 'Non-sensitive invalid limit check.' }), signal: AbortSignal.timeout(15000) });
       const result = { status: response.status, retryAfter: response.headers.get('Retry-After') };
       await response.text(); return result;
     }));
@@ -23,7 +23,7 @@ try {
   }
   assert.ok(limited, 'No 429 observed within bounded sample.');
   assert.ok(Number(limited.retryAfter) > 0);
-  const read = await fetch(base + '/api/drafts', { headers: { 'X-Record-Workspace': key }, signal: AbortSignal.timeout(15000) });
+  const read = await fetch(base + '/api/drafts', { headers: { Authorization: 'Bearer workspace:' + key }, signal: AbortSignal.timeout(15000) });
   assert.equal(read.status, 200); assert.deepEqual(await read.json(), []);
   console.log(JSON.stringify({ testedAt: new Date().toISOString(), origin: base, result: 'PASS', requests: statuses.length, limitResponses: statuses.filter(s => s === 429).length, retryAfter: limited.retryAfter, readsStillWork: true, note: 'Dedicated random workspace. No documents created, no wallet operation, no credentials retained.' }, null, 2));
 } catch (error) {

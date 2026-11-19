@@ -1,3 +1,4 @@
+import { workspaceCredential } from "./workspace-credential.js";
 import { admitNewWorkspace, AdmissionError } from "./admission.js";
 const headers = { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" };
 const reply = (body, status = 200) => Response.json(body, { status, headers });
@@ -112,7 +113,7 @@ async function handlePrivateAgreements(request, db, env) {
   }
   // Trust this header only behind Sites dispatch, which provides sign-in identity.
   const legacyOwner = request.headers.get("oai-authenticated-user-id");
-  const workspaceKey = request.headers.get("X-Record-Workspace");
+  const workspaceKey = workspaceCredential(request);
   if (workspaceKey !== null && !tokenPattern.test(workspaceKey)) {
     return reply({ error: "Invalid workspace key." }, 400);
   }

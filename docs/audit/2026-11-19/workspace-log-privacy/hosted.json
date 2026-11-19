@@ -1,0 +1,47 @@
+{
+  "deployment": {
+    "id": "appgdep_6afec52c62c08191846b4d9a29e1cc5f",
+    "project_id": "appgprj_6af8daf3a96c81918026a69ec89cfb47",
+    "title": "The Record · Diana Verifier",
+    "version_id": "appgprj_6af8daf3a96c81918026a69ec89cfb47~appgver_74286c7714ac8191875459ff2d7c4087",
+    "type": "publish",
+    "status": "succeeded",
+    "url": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+    "has_mcp": false,
+    "screenshot_asset_pointer": null,
+    "provider_deployment_id": "release---6af8db1e502c81918ce735d8bb2c965a",
+    "failure_message": null,
+    "env_set_revision": 9,
+    "updated_at": "2026-11-19T09:45:30.043685+00:00"
+  },
+  "hosted": {
+    "checkedAt": "2026-11-19T09:45:50.841Z",
+    "policyStatus": 200,
+    "mode": "enforce",
+    "required": true,
+    "missingProofStatus": 403,
+    "readStatus": 200,
+    "draftCount": 0
+  },
+  "logs": {
+    "matchingRequests": 3,
+    "credentialPresentInReturnedLogs": false,
+    "authorizationHeaderObservations": [
+      {
+        "redacted": true,
+        "valueClass": "redacted-marker"
+      },
+      {
+        "redacted": true,
+        "valueClass": "redacted-marker"
+      },
+      {
+        "redacted": true,
+        "valueClass": "redacted-marker"
+      }
+    ]
+  },
+  "ownerExistingDraftAcceptance": false,
+  "legacyFallbackRetained": true,
+  "historicalLogsRemoved": false
+}

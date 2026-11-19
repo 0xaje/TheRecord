@@ -10,7 +10,7 @@ async function loadWidget(){
 }
 export async function collectAdmissionToken(key){
  const preview=new URLSearchParams(location.search).get('admission-test')==='1';
- const response=await fetch('/api/admission/policy'+(preview?'?preview=1':''),{headers:{'X-Record-Workspace':key},signal:AbortSignal.timeout(10000)});
+ const response=await fetch('/api/admission/policy'+(preview?'?preview=1':''),{headers:{Authorization:'Bearer workspace:'+key},signal:AbortSignal.timeout(10000)});
  const policy=await response.json();if(!response.ok)throw new Error(policy.error??'The new-workspace check could not be loaded.');
  if(!policy.sitekey || (!policy.required && !(preview && policy.mode==='preview')))return undefined;
  await loadWidget();
