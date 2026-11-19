@@ -745,3 +745,6 @@ Owner explicitly requires all future pulls/pushes on main, no new feature branch
 
 ### README publication verification
 README commit 8fa51308dda54e517a75d901019d974759f248d3 is on main; GitHub check and solidity jobs both succeeded. Public GitHub rendering verified all seven images loaded and workflow Mermaid rendered. Public event timeline shows both merge8545f47 and README8fa5130. Feature branch has zero unique commits beyond main. Local build/check:81 passed. Main-only policy active. Listing About/How-made still planning; manual My space update READY, NOT POSTED. Next: owner listing copy/update and remaining independent-user/provider/relay-source gates.
+
+## 2026-11-19 Walkthrough chapters8–10 illustrations
+Requested video reviewed; existing OpenMoji illustrations added with visible labels to all nine cards across history, Trash/deletion and files/recovery. 81 checks pass. Site58/sourcee5019e19ffc8e42b17e9be4d0e8d161a6ceba897/env9 published; desktop Chrome images/layout pass. Responsive rules retained; fresh physical mobile visual acceptance open. Evidence walkthrough-illustrations/. Update READY, NOT POSTED. Ship Weeks private Check unobserved. Main-only source update; no wallet/database change. Next: phone visual confirmation and existing listing/audit gates.
