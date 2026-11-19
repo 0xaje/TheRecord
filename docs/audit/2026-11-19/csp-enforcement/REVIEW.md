@@ -1,0 +1,14 @@
+# A15 resource/script CSP enforcement — compatibility OPEN
+
+Promoted the previously observed candidate policy from report-only to enforced. Existing protections remain; Cloudflare script/frame/connect, Diana EVM RPC, self API/resources, Google fonts, inline styles and data/blob images explicitly allowed. No inline script or unsafe-eval allowance. No report collector receives private URLs. MIME/referrer/feature and authenticated API caching protections preserved. No contract/database/identity changes.
+
+76 regression checks pass; policy/status/body/MIME/download/cursor coverage retained, with report-only removed. Local tests do not prove wallet injection or Cloudflare completion under enforcement. Actual browser match/mismatch/download/render checks are recorded separately; QoreX, fresh real human-check save, owner draft read and authorized embedding remain acceptance gates. Do not submit a paid transaction merely to test headers. Read-only QoreX account inspection can test wallet bridge if the owner chooses; do not open an EVM window or request an approval.
+
+Rollback: redeploy saved Site55 (prior report-only policy) with current env9 if a real functional break is reproduced. Do not weaken policy broadly without identifying the blocked resource and trust boundary. Earlier policy reference and evidence remain under security-headers.
+
+Event: protects the working Post-Quantum dApp; no new Diana approval or scoped-window evidence claimed. Ship Weeks fresh Check not observed, no Q-Day entry. Public update draft READY, NOT POSTED: Enforced the previously staged browser resource policy;76 checks pass, with real browser and owner compatibility acceptance tracked separately. Overall audit and other open gates remain open.
+
+## Actual browser and hosted results
+Site56/env9 published. Effective full CSP matches source on HTML, JS, original download and API404; report-only absent. Cloud Chrome renders landing/ten walkthrough chapters/Blog, downloads both real samples, original matches finalized Diana version1/two approvals, changed copy mismatches same version. No CSP warnings in inspected flows. A summary-selector wait did not match despite rendered content; numeric AX controls completed the test, no functional/CSP cause inferred. No simulated verification or new signing used. Evidence hosted.json/browser.json.
+
+Blunt review: enforcement and read-only desktop compatibility pass, but QoreX wallet bridge, fresh real human-check save, existing draft continuity and authorized embedding remain unverified under this new policy. Owner should refresh QoreX, verify original demo/open saved draft, and use the existing read-only Inspect QoreX test account control (no window opening/approval); separately close all Incognito windows and test a fresh human-check/save. Do not mark full A15 closed before those observations.

@@ -1,6 +1,5 @@
 // Keep Sites embedding available while excluding arbitrary framing origins.
-export const enforcedPolicy = "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com";
-export const candidatePolicy = [
+export const enforcedPolicy = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -19,9 +18,8 @@ export function secureResponse(request, response) {
   headers.set("Referrer-Policy", "no-referrer");
   headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
   headers.set("Content-Security-Policy", enforcedPolicy);
-  // Not enforcement. Browser console warnings are inspected during compatibility QA.
-  // No violation-report endpoint: avoid collecting private URLs/document data.
-  headers.set("Content-Security-Policy-Report-Only", candidatePolicy);
+  // Enforced after report-only browser and owner checks; no private violation-report collector.
+  headers.delete("Content-Security-Policy-Report-Only");
   if (new URL(request.url).protocol === "https:") headers.set("Strict-Transport-Security", "max-age=15552000");
   if (new URL(request.url).pathname.startsWith("/api/")) headers.set("Cache-Control", "no-store");
   else if (headers.get("Content-Type")?.startsWith("text/html")) headers.set("Cache-Control", "no-cache");

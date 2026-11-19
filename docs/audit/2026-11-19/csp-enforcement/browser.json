@@ -1,0 +1,23 @@
+{
+  "siteVersion": 56,
+  "environmentRevision": 9,
+  "hostingCommit": "22d81534d9b9260bd7825451161295f30bd36738",
+  "enforcementActive": true,
+  "landingRendered": true,
+  "walkthroughChaptersRendered": 10,
+  "blogRendered": true,
+  "downloads": {
+    "original": true,
+    "changed": true
+  },
+  "realDianaVersion": 1,
+  "agreementId": "0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e",
+  "originalResult": "File matches the finalized version.",
+  "changedResult": "File does not match this version.",
+  "approvalState": "Finalized \u00b7 2 of 2 approvals recorded",
+  "cspWarningsInInspectedFlows": [],
+  "noTransactionSent": true,
+  "ownerQorexAcceptance": false,
+  "freshHumanCheckUnderEnforcement": false,
+  "authorizedEmbeddingObserved": false
+}

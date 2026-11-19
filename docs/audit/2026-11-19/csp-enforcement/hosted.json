@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-11-19T10:51:32.413Z",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "policyMatches": true,
+      "reportOnly": false,
+      "mime": "text/html; charset=utf-8"
+    },
+    {
+      "path": "/verify.js",
+      "status": 200,
+      "policyMatches": true,
+      "reportOnly": false,
+      "mime": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "/demo/agreement-v1.txt",
+      "status": 200,
+      "policyMatches": true,
+      "reportOnly": false,
+      "mime": "text/plain; charset=utf-8"
+    },
+    {
+      "path": "/api/diana/forbidden",
+      "status": 404,
+      "policyMatches": true,
+      "reportOnly": false,
+      "mime": null
+    }
+  ]
+}
