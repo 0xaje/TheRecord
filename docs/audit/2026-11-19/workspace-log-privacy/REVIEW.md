@@ -7,3 +7,6 @@ New browser code and operational test scripts send the workspace code through Au
 Scope limits: old already-open clients may still send the custom header until refreshed. Historical logs are not erased or retroactively redacted by this patch. No real user workspace key was used in testing. Do not publish raw platform logs or credentials. Fresh live log redaction observation and owner existing-draft acceptance are tracked separately in evidence/progress.
 
 Event: backend privacy work, no contract change or new Diana proof. Ship Weeks Check not re-observed. No additional Q-Day entry. Public update draft READY, NOT POSTED: Updated workspace credential transport while preserving stored drafts; 65 tests pass and live API checks preserve mandatory proof enforcement. Final user continuity check pending.
+
+## Owner continuity acceptance — PASS
+Owner confirms saved draft access works after the requested hard refresh. Combined with65 local checks and three live redacted Authorization observations, the updated-client transport repair passes its bounded acceptance. Historical logs and older unrefreshed clients remain limitations; no deletion of historical logs or comprehensive incident closure claimed. Public update READY, NOT POSTED.

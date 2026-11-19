@@ -706,3 +706,6 @@ Owner confirmed requested fresh-browser enforced first save and persistence afte
 
 ## 2026-11-19 Workspace header privacy repair
 Site52 hosting5fe19052b4fcb7e44bd464cdc13bf78617236b37/env9 preserves enforcement. Browser/scripts use Authorization workspace credential; owner hashes/recovery codes unchanged, legacy cached-client compatibility retained, conflicts rejected. 65 tests pass. Live policy200/enforce-required, missing proof403 and zero drafts; three matching hosted log events redact Authorization and contain no disposable test code. Raw logs/credentials not saved. Historical logs unchanged; old tabs must refresh. Owner existing-draft continuity after hard refresh remains OPEN. Next: owner hard-refresh normal browser and open saved draft. Update READY, NOT POSTED; no new Diana claim, Ship Weeks Check unobserved.
+
+## 2026-11-19 Workspace transport owner continuity PASS
+Owner confirmed draft still opens after requested refresh. Updated-client privacy fix accepted:65 tests, three live redacted-header observations, real owner continuity. Code5debeb859d8755191768ed6c742624977b51367e / Site52/env9. Historical logs and legacy cached clients remain caveats. Public update READY, NOT POSTED. Next: revisit combined correction plan for next open audit item; do not declare overall audit complete.
