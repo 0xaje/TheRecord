@@ -694,3 +694,6 @@ Owner probe confirmed fetch TypeError. Safe hosted diagnostic isolated redirect 
 
 ## 2026-11-19 Owner desktop human-check/save PASS
 Owner confirmed real human check followed by successful private draft save after redirect repair f2b7682e32aa6bf01e8b92bd70e1b5d2b9449ca6 / Site51. Owner report, no screenshot supplied. Mobile QoreX and enforcement remain OPEN. Next action: new harmless draft through explicit preview-test URL on QoreX, then refresh and confirm persistence. Public update draft READY, NOT POSTED.
+
+## 2026-11-19 QoreX save and persistence owner PASS
+Owner confirmed mobile draft saved and survived refresh. Desktop and mobile owner acceptance now recorded; independent-user test remains separate/open. Admission still preview. Next: enforce and verify direct-API refusal without proof, existing-workspace continuity and real new-workspace acceptance. Update READY, NOT POSTED. No new Diana transaction claimed; Ship Weeks fresh Check unobserved.

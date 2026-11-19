@@ -24,3 +24,6 @@ Updated My space draft — READY, NOT POSTED: Fixed a live server connection fai
 
 ## Owner desktop acceptance
 Owner reports the fresh real human check completed and the private draft saved successfully after Site51 redirect repair. This is owner-reported real desktop acceptance, not an independently captured receipt or mobile acceptance. QoreX mobile real challenge/save and enforcement remain open. Next: repeat the explicit preview-test flow in QoreX with a new harmless draft; confirm saved draft survives refresh.
+
+## Owner QoreX acceptance
+Owner reports the mobile draft saved successfully and remained available after refresh. Desktop real challenge/save was previously confirmed. These are owner-reported results; mobile screenshot capture is unavailable. Do not describe this as independent-user acceptance. Enforcement remains in preview and the direct-API missing/invalid-proof rejection check under enforce is still pending. Next: enable enforce within approved admission scope, verify new-workspace missing/invalid proof fails closed and existing workspace reads remain available, then collect real new-workspace acceptance.
