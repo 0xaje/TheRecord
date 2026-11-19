@@ -1,5 +1,7 @@
 # Build, run and prepare a deployment
 
+Current source: main. The previously tested working history was merged through PR #1. All future work stays on main. See [current status](CURRENT_STATUS.md).
+
 ## Verified environment
 
 Ubuntu/Linux or Ubuntu in WSL, Node **24.22.3** (`.nvmrc`), npm 11.9.0.
@@ -9,7 +11,7 @@ is needed for the checks below. Dependency versions/integrities are locked in
 `package-lock.json`; `npm ci` must succeed without modifying it.
 
 ```sh
-git clone https://github.com/0xaje/TheRecord.git
+git clone --branch main --single-branch https://github.com/0xaje/TheRecord.git
 cd TheRecord
 # If nvm is installed:
 nvm install
@@ -26,7 +28,7 @@ It strips caller-supplied `oai-authenticated-user-id`; use workspace recovery
 codes for local drafts. Do not expose this development server publicly.
 
 Local drafts persist in `.record-local/drafts.sqlite`, which Git ignores.
-Eight SQL migrations are applied at startup, outside request handling. A local
+Eleven SQL migrations are applied at startup, outside request handling. A local
 migration ledger checks SHA-256 before skipping applied migrations; changed
 migration files fail startup. Migration application is transactional. Never
 edit applied SQL. Append the next numbered migration and matching journal entry.
@@ -65,7 +67,7 @@ DIANA_RPC_URL=https://evm-testnet.qore.host forge test -vv
 
 See `AUDIT.md` for historical results and limitations. Foundry is not installed
 in the current work environment, so no fresh Solidity test result is claimed
-for this build milestone. The JavaScript CI does not cover contract tests.
+for this build milestone. The separate Solidity CI job runs pinned Foundry state-rule tests; its local precompile fixtures are not live Diana execution.
 
 ## Prepare the existing Sites/Worker deployment format
 
@@ -86,7 +88,7 @@ compiled Worker and immutable migration copies; it is not a second source UI.
    ```
 
 4. The output includes `.openai/hosting.json` (`project_id` and `d1: DB`),
-   `dist/server/index.js`, `drizzle/0001…0008*.sql`, and
+   `dist/server/index.js`, `drizzle/0001…0011*.sql`, and
    `drizzle/meta/_journal.json`. The journal preserves the live deployment's
    existing immutable entries. `build-hashes.json` records compiled/migration
    hashes. Existing output paths are rejected to avoid replacing identities.
@@ -117,8 +119,7 @@ record the actual Actions result separately. No auto-deployment is configured.
 
 Evidence in `docs/audit/2026-11-18/` distinguishes the local run, fresh dependency
 installation, compiled asset hashes and any observed GitHub Actions run.
-Independent user testing, accepted Stage 2 audit and scoped EVM-window evidence
-remain separate release gates.
+Independent user testing and organizer audit-stage acceptance remain separate release gates. Real scoped-window evidence is linked in [current status](CURRENT_STATUS.md).
 
 Official implementation references: [Node SQLite API](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html),
 [GitHub Node build/test guide](https://docs.github.com/en/actions/tutorials/build-and-test-code/nodejs),

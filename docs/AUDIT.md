@@ -1,5 +1,7 @@
 # The Record — QCAI audit response
 
+For current deployment, verification and open release gates, start with [CURRENT_STATUS.md](CURRENT_STATUS.md). Dated sections below preserve historical results; the V2 finding response is [here](withdrawal/AUDIT_RESPONSE.md).
+
 Stage 1 was run on 16 November 2026 against `contracts/TheRecord.sol` using the auditor’s Ethereum setting. It returned 65/100, Medium risk, and five findings. Quantum readiness was unscored in that setting.
 
 | Stage 1 finding | Disposition |

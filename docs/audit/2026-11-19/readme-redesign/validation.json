@@ -1,0 +1,11 @@
+{
+  "repositoryTargetsChecked": 46,
+  "missing": [],
+  "readmeWords": 1292,
+  "diagramCount": 2,
+  "svgValid": true,
+  "bannerSha256": "b97f9c9a59d4aecce06e68eaf0325cb55edfff4d8e37d5c82962de95e9c04f11",
+  "cleanMainTests": 81,
+  "merge": "8545f47061a5912245362aa87b30cf41aaaefba7",
+  "runtimeChanged": false
+}

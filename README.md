@@ -1,195 +1,151 @@
-# The Record
+![The Record — Know exactly which version both parties approved. Built on QoreChain Diana Testnet.](https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/assets/readme-banner.png)
 
-The Record lets two parties review an agreement, approve the same version on QoreChain Diana testnet, and verify a copy against its finalized fingerprint. The full text stays off-chain.
+<p align="center">
+  <a href="https://build.qorechain.io/p/the-record"><img alt="Built on QoreChain — official project badge" src="https://build.qorechain.io/badge/the-record.svg"></a>
+  <img alt="Post-Quantum dApp track" src="https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/assets/badge-track.svg">
+  <a href="https://github.com/0xaje/TheRecord/blob/main/LICENSE"><img alt="MIT license" src="https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/assets/badge-license.svg"></a>
+  <a href="https://github.com/0xaje/TheRecord/actions/workflows/check.yml"><img alt="Working-branch build and regression CI" src="https://github.com/0xaje/TheRecord/actions/workflows/check.yml/badge.svg?branch=main"></a>
+</p>
 
-## Try the workflow
+**The Record lets two parties review a document, approve its exact version on QoreChain Diana Testnet, and verify a copy later.** Document bytes stay off-chain; private drafts are a separate service-storage feature.
 
-1. Open Drafts and save a private draft. Create an invitation and share its link and access code with the reviewer.
-2. Open the invitation with the code and download the reviewed revision.
-3. Use the exported file to create a Diana record with two registered signer addresses. Each signer verifies the same exported file and approves the same version. In QoreX Browse, use **Approve with QoreX**.
-4. Verify the exported file against the finalized version. An amendment needs two fresh approvals.
+**[Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Try the demo](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title) · [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md)**
 
-[Live testnet app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Judge walkthrough](docs/judge-walkthrough.md) · [Diana evidence](docs/diana-evidence.md)
+Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **81 checks passed, 19 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-[QCAI audit reports and regression evidence](docs/AUDIT.md)
+[Problem](#the-problem) · [Working proof](#working-proof) · [QoreChain integration](#built-on-qorechain) · [Architecture](#architecture) · [Run locally](#run-locally) · [Limits](#security-and-limits)
 
-## Build
+## Try it without a wallet
 
-From the repository root in Ubuntu/WSL, using Node.js 24.22.3:
+1. Open **Try the demo**, then expand **Try the demo without a wallet**.
+2. Download the original, choose that file and select **Verify file** with **version 1**.
+3. Expect **File matches the finalized version** and **2 of 2 approvals**.
+4. Choose the changed copy while keeping **version 1**. Expect **File does not match this version**.
 
-```sh
-npm ci
+This hashes the actual selected file locally and reads Diana. Failed lookups show an error rather than a recorded success. File checking needs no wallet, payment or document upload. Creating records and approving them require funded, eligible Diana accounts.
+
+## The problem
+
+A document says **Friday**. A later copy says **Monday**. Which exact file did both people approve?
+
+Shared files, chat acknowledgements and revisions can leave people reconstructing the terms later. The Record links an exact file fingerprint to two designated signing accounts, a version and inspectable approval history.
+
+Our [research review](https://github.com/0xaje/TheRecord/blob/main/docs/research/WHY_THE_RECORD.md) includes primary sources from the UK and Canada, freelancer-payment reporting in the US, and Nigerian contracting-record context. It distinguishes documented facts from our interpretation, compares existing signing tools, and records what is unvalidated. These examples explain the need for clearer records; they do not prove this app would prevent those disputes or establish customer demand.
+
+## How it works
+
+~~~mermaid
+flowchart TD
+  A["Draft and review the terms"] --> B["Record the agreed file fingerprint"]
+  B --> C["Both designated accounts approve this version"]
+  C --> D["Diana finalizes the version"]
+  D --> E["Check a copy locally against the record"]
+  D --> F["Propose an amendment"]
+  F --> G["Fresh approvals for the new version"]
+  F --> H["V2: withdraw a pending amendment"]
+  H --> I["Re-propose with a new version number"]
+  I --> G
+~~~
+
+Saved draft revisions are private workspace history. Diana agreement versions are public records created separately. In the withdrawal-enabled contract, withdrawing a pending amendment preserves its history; its approvals do not transfer to a correction. Earlier finalized versions remain verifiable.
+
+## Working proof
+
+| Demonstrated result | Inspect the evidence |
+| --- | --- |
+| Two distinct signer approvals and finalized original | [Diana evidence](https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md) |
+| Original matches; changed copy fails | [Captured original](https://github.com/0xaje/TheRecord/blob/main/docs/evidence/demo-original-match.png), [changed copy](https://github.com/0xaje/TheRecord/blob/main/docs/evidence/demo-changed-mismatch.png), [latest browser/phone checks](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/verifier-errors/REVIEW.md) |
+| V1 finalized, V2 withdrawn, V3 freshly approved | [Lifecycle and receipts](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/LIVE_ACCEPTANCE.md), [V3 finalization receipt](https://dashboard.qorechain.io/explorer/tx/0xab11d9e3409fd974af93039a7d30abee1f409027c183cdbb1e61ad8c32086960) |
+| Restricted EVM window admits permitted contract and refuses outside recipient | [V2 scope proof and limits](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/SCOPED_WINDOW_LIVE.md) |
+| Deployed V2 runtime matches its source-bound artifact | [Deployment verification](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/deployment-verified.json) |
+| Saved revisions, Trash/deletion, limits, recovery and human-check acceptance | [Engineering evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md#engineering-checkpoints) |
+
+<table>
+  <tr>
+    <td><a href="https://github.com/0xaje/TheRecord/blob/main/docs/evidence/demo-original-match.png"><img width="360" alt="Captured original-file match against finalized version 1" src="https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/evidence/demo-original-match.png"></a><br>Captured original-file match</td>
+    <td><a href="https://github.com/0xaje/TheRecord/blob/main/docs/evidence/demo-changed-mismatch.png"><img width="360" alt="Captured changed-copy rejection against the same version" src="https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/evidence/demo-changed-mismatch.png"></a><br>Captured changed-copy rejection</td>
+  </tr>
+</table>
+
+The owner operated both distinct wallets. **Independent two-person full-workflow testing remains pending.** Mobile screenshots were unavailable in QoreX, so phone results are identified as owner reports. Automated failure fixtures, real receipts and browser observations are labelled separately.
+
+## Built on QoreChain
+
+| Component | Actual role |
+| --- | --- |
+| **QoreChain Diana Testnet** | Records fingerprints, designated accounts, versions, approvals and finalization. EVM chain ID **9800**. |
+| **QoreX** | Connects the user's account and requests the agreement-approval signature inside the wallet. |
+| **ML-DSA-87 / pqcVerify** | Contract checks approval bound to chain, contract, agreement, version, fingerprint and signer. Registered-key and proof-of-possession checks precede approval. |
+| **QoreChain SDK / scoped EVM window** | Disposable-account SDK test proves target admission and outside-target refusal on Diana. The website's advanced window page is inspect/check-only. |
+| **QoreChain Explorer** | Public receipt inspection. |
+| **QCAIA auditor** | Source-matched generated reports and a finding-response ledger; formal finding closure/event acceptance remain open. |
+
+An ordinary EVM transaction signature, its PQ-authorized access window, and the agreement's PQ approval verification are distinct layers. A window alone does not prove agreement approval.
+
+## Architecture
+
+~~~mermaid
+flowchart LR
+  subgraph Device["User device"]
+    F["Selected file"] --> H["Local SHA-256 comparison"]
+    W["QoreX wallet"]
+  end
+  subgraph Service["Private draft service"]
+    API["Worker API"] --> DB["D1 drafts and revisions"]
+  end
+  D["Diana agreement contract"]
+  H -->|"Read recorded fingerprint"| D
+  W -->|"Submit approval"| D
+  B["Draft editor"] -->|"Save or coded review"| API
+~~~
+
+Verification does not upload the selected file. Saving a private draft sends its text to the service. The contract stores fingerprints and public approval metadata, not document text. Private drafts are **not end-to-end encrypted**.
+
+| Deployment | Address / source |
+| --- | --- |
+| Original contract; default wallet-free demo | <code>0x25721b3be0f24438da7daed4c800b073ef9bb802</code> · [TheRecord.sol](https://github.com/0xaje/TheRecord/blob/main/contracts/TheRecord.sol) |
+| Withdrawal-enabled V2; explicit deployment links | <code>0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f</code> · [TheRecordV2.sol](https://github.com/0xaje/TheRecord/blob/main/contracts/TheRecordV2.sol) |
+
+Keep the correct deployment in agreement links. [Open the V2 lifecycle history](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/history?deployment=withdrawal-v2&id=0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b).
+
+## Run locally
+
+Use **Ubuntu/Linux or Ubuntu in WSL**, Node **24.22.3**, and the main branch. Run the build inside Ubuntu; it uses the Linux cp command.
+
+~~~sh
+git clone --branch main --single-branch https://github.com/0xaje/TheRecord.git
+cd TheRecord
+# With nvm installed:
+nvm install
+nvm use
+npm ci --include=dev
 npm run check
 npm run start:local
-```
+~~~
 
-Open **http://127.0.0.1:8788/**. See [build and deployment instructions](docs/BUILD_AND_DEPLOY.md) for database migration, identity boundaries, CI and deployment packaging.
+Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; public verification still reads real Diana. These commands need no wallet secret and submit no transaction. See [build/deployment guide](https://github.com/0xaje/TheRecord/blob/main/docs/BUILD_AND_DEPLOY.md) for environment and identity boundaries.
 
-The browser build is in `dist/` and the Worker entry point is `dist/server/index.js`. The hosted draft workspace needs a D1 binding named `DB`, the SQL migrations in `migrations/`. The reviewer uses the invitation link and code.
+## Testing and audits
 
-## Diana deployment
+**npm run check** builds the browser/Worker and runs **81 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-- Network: QoreChain Diana testnet, EVM chain ID 9800
-- Contract: `0x25721b3Be0F24438DA7DAEd4C800B073ef9BB802`
-- [Deployment receipt](https://dashboard.qorechain.io/explorer/tx/0x0cee4b8ec137fa45d2b765ddf2eaff928cd7571a02a9369eb5bff0b7ad9bfbfd)
-- [Contract source](contracts/TheRecord.sol)
+The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Open**. Our [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) explains tests, disputed findings and residual risks. It does not change the auditor's status or certify the application. [All audit reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
 
-Signer key registration and approvals use `@qorechain/qoresign` 0.2.0. The app also uses viem for EVM operations, cosmjs-types for native transaction encoding, and esbuild for bundling.
+## Security and limits
 
-The hosted workflow has been tested with two distinct wallets operated by one tester. Independent co-signer testing on the public site is in progress.
+- Anyone holding a workspace recovery code can access that workspace. Keep it private and keep a copy outside the browser.
+- New workspaces complete server-validated human verification before their first hosted save. Existing recognised workspaces do not need a challenge for every save.
+- API controls bound writes, workspace quotas and retained application text. The **64 MiB application-text budget** excludes physical database/index space, backups and provider billing.
+- Private draft deletion removes live-service rows; downloaded copies, on-chain records and potentially hosting backups remain.
+- Public fingerprints are not encryption or proof of legal identity, informed consent, delivery or payment.
+- Provider storage/cost monitoring, trusted-source relay abuse controls and independent full-workflow testing remain open. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-## License
+## Documentation and project status
 
-[MIT](LICENSE)
+[Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Project story/research](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/blog) · [Current evidence/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md) · [Judge guide](https://github.com/0xaje/TheRecord/blob/main/docs/judge-walkthrough.md) · [Progress log](https://github.com/0xaje/TheRecord/blob/main/docs/progress-log.md)
 
-## Review and regression checks
+The final submission video, saved listing fields and organizer audit acceptance are not yet signed off. Public progress updates are drafted for the owner to review/post. This is a working Diana testnet product, not a claim of production readiness or a completed submission.
 
-[Engineering and judge review — 18 November 2026](docs/audit/2026-11-18/review.md) records passing checks, open risks and release gates.
+## License and credits
 
-Use Node.js 24 for the isolated SQLite backend regression tests:
-
-```sh
-node --test test/private-agreements.test.mjs
-node scripts/check-diana-approvals.mjs
-node scripts/check-history.mjs
-```
-
-The second command makes read-only Diana calls. Solidity test instructions are in [AUDIT.md](docs/AUDIT.md).
-
-Walkthrough illustrations are by [OpenMoji](https://openmoji.org/), used under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). See [asset credits](web/assets/ATTRIBUTION.md).
-
-The [agreement history page](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/history) reads real version and approval events from Diana and checks them against a fixed contract-state snapshot. It requires no wallet. Long scans can be resumed; incomplete results are labelled. Private draft revisions are available separately under Drafts → Saved revisions.
-
-## Saved private revisions
-
-Each new save retains a revision. Under **Drafts → Saved revisions**, open or download an earlier revision without changing the editor. Revision summaries are paginated, and content access uses the same workspace ownership checks as the draft. A workspace recovery code grants access to this history too.
-
-Migration `0005_draft_revisions.sql` adds a table and atomic save triggers without rewriting earlier migrations or backfilling invented history. For existing drafts, the current text is the earliest available baseline; its original save time may be unknown. Text overwritten before this feature cannot be reconstructed. These private revisions are separate from Diana versions and are not end-to-end encrypted.
-
-The optional live regression creates a non-sensitive test draft and requires explicit acknowledgement:
-
-```sh
-node scripts/check-private-revisions.mjs --live-write
-```
-
-No wallet or chain transaction is used. See the [live revision evidence](docs/audit/2026-11-18/live-revision-checks.json).
-
-## Draft service limits and access boundary
-
-Draft lists use 20-item pages; **Load older drafts** retrieves the next page.
-Existing owners can still open a selected older draft after saving it.
-The service permits up to 50 drafts per workspace, 200 retained revisions per
-draft and 100 invitations per draft. Database triggers enforce these bounds
-atomically. Existing content is not deleted when a limit is reached.
-
-Fixed one-minute windows allow 120 owner reads, 30 owner writes and 30 review
-attempts per invitation; a shared 600-request Draft API ceiling bounds overall
-traffic. A 429 response supplies `Retry-After`. The shared ceiling can affect
-all users under heavy traffic. These are application controls, not proof of
-DDoS resistance; rotating recovery identities does not establish a real person.
-Only expired rate-accounting buckets are cleaned here. Document retention and
-delete/restore policy remain separate work.
-
-Legacy signed-in identity relies on the hosting platform's trusted
-`oai-authenticated-user-id` header. The live anonymous spoof probe returned 401.
-Do not expose this handler through another host that forwards arbitrary caller
-identity headers. Workspace recovery codes remain bearer secrets.
-
-Migration `0006_backend_bounds.sql` is additive. It does not rewrite old
-migrations or remove documents. Storage errors return a generic 503 rather
-than exposing internal SQL details. The explicit live check below sends at most
-63 invalid, non-sensitive requests to one random test workspace and creates no
-records or chain transactions:
-
-```sh
-node scripts/check-backend-bounds.mjs --live-limit-check
-```
-
-
-### Reversible private draft Trash
-
-Use **Move saved draft to Trash** in Drafts. Saved revisions are retained and
-review links are revoked atomically. Open **Trash** to restore; issue a new
-invitation afterward. Nothing is automatically deleted. Trash counts toward the
-50-draft workspace limit. Diana agreement records cannot be deleted this way.
-Permanent deletion is now available inside Trash; see the policy below. Hosting backup retention remains unverified.
-
-Apply additive migration `0007_draft_trash.sql` after migrations 0001–0006.
-Regression: `node --test test/private-agreements.test.mjs`.
-Live acceptance (creates one non-sensitive draft, no wallet action):
-`node scripts/check-draft-trash.mjs --live-write`.
-See `docs/audit/2026-11-18/live-trash-checks.json`. Release 35 API checks passed;
-owner-reported phone Trash/restore acceptance passed. Current visual desktop acceptance has not been independently repeated here.
-
-
-### Browser storage failures
-
-Public file verification initializes even when localStorage access is denied.
-Drafts show a recovery warning. A new workspace, recovery switch or legacy move
-stops if the recovery code cannot be persisted and read back; it does not write
-new drafts under a temporary, unsaved identity. Save your recovery code outside
-the browser: clearing site data can still remove the browser's copy.
-
-Run `npm run build:site` before the combined regression checks:
-
-```sh
-node --test test/private-agreements.test.mjs test/workspace-storage.test.mjs test/verification-storage.test.mjs
-node scripts/check-verifier-storage.mjs
-```
-
-The last command downloads the published JavaScript and checks startup in an
-isolated DOM harness with denied storage. It does not prove visual mobile
-acceptance or simulate a Diana approval. Current evidence is in
-`docs/audit/2026-11-18/`.
-
-
-### Permanent deletion policy (current)
-
-Inside **Trash**, select **Delete permanently** and type `DELETE` in the
-confirmation. The owner-only operation removes the draft, all saved revisions,
-review invitations, legacy invitation codes and feedback from the live database
-in one atomic statement. Cancellation keeps the draft. A changed revision or
-Trash timestamp requires refreshing. Permanent deletion cannot be restored.
-
-Downloaded copies, files already read by reviewers and public Diana records
-remain. Hosting backup and infrastructure log retention/erasure are unverified;
-this feature does not promise erasure of those copies. Request-limit accounting
-is removed separately by bounded expiry cleanup. Nothing is automatically purged.
-
-Apply additive migration `0008_draft_delete.sql` after migrations 0001–0007.
-Checks: `npm run build:site` then the regression commands above.
-The explicit live acceptance command creates one new non-sensitive draft and
-permanently deletes only that disposable draft:
-
-```sh
-node scripts/check-draft-delete.mjs --live-disposable-delete
-```
-
-Do not adapt the script to delete existing user drafts. Deletion tests/evidence
-are stored in `docs/audit/2026-11-18/`. Owner reported the phone Trash/restore
-workflow passed; owner also confirmed permanent deletion worked on the phone. Hosting backup erasure remains unverified.
-
-
-### Restricted-window helper (advanced test)
-
-The real mobile test showed QoreX refuses website `MsgOpenEVMWindow` requests.
-The `/#evm-window` page is now **inspect/check-only**, with no window-signing
-request. It checks public native opening receipts entered by hash. See the
-[Ubuntu disposable-account instructions](docs/compliance/UBUNTU_SCOPED_WINDOW.md)
-for the SDK route. `init`/`plan` print public addresses without signing or sending;
-separate `register`/`open` commands require explicit broadcast/address confirmation.
-No existing QoreX phrase is requested. The owner completed a real scoped opening, permitted The Record creation and outside-recipient rejection on Diana. See the [scoped proof record](docs/compliance/UBUNTU_SCOPED_WINDOW.md#live-owner-result-and-read-only-review--18-november-2026). This SDK proof does not establish website-based QoreX window-opening support. The SDK is a development dependency for the CLI and codec tests.
-
-## Submission readiness
-
-See the [18 November readiness review](docs/compliance/SUBMISSION_READINESS.md) and [ready-to-paste project listing text](docs/compliance/PROJECT_LISTING_COPY.md). The public listing's original planning copy needs updating. Final demo video/listing fields, independent participant testing and exact event audit acceptance remain unverified.
-
-Additional dependencies used in the scoped helper/CLI: @qorechain/evm 0.14.0 and @qorechain/sdk 0.14.0. The latter is development-only. Their use does not imply QoreSeal encryption or smart-account spending rules are implemented by this product.
-
-## Problem evidence
-
-[Why The Record exists](docs/research/WHY_THE_RECORD.md) maps primary court/regulator evidence to the exact-version approval problem, compares existing signing approaches and states what remains unvalidated. [Founder explanation draft](docs/research/FOUNDER_PITCH.md). Technical test results do not establish customer demand or payment enforcement.
-
-## Pending-update withdrawal development
-
-The withdrawal-amendments branch prepares a separate TheRecordV2 deployment. Existing contracts and records remain unchanged. The candidate is not activated on the public site. See [implementation, tests and owner checkpoint](docs/withdrawal/IMPLEMENTATION.md).
+Original project source: [MIT](https://github.com/0xaje/TheRecord/blob/main/LICENSE). Walkthrough illustrations: [OpenMoji, CC BY-SA 4.0](https://github.com/0xaje/TheRecord/blob/main/web/assets/ATTRIBUTION.md). [AI use and banner provenance](https://github.com/0xaje/TheRecord/blob/main/AI_USAGE.md). The reference README informed document structure; its copy/code/artwork was not reused.
