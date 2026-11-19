@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-19T00:28:03.140Z",
+  "bootstrapCredentialStatus": 401,
+  "bootstrapRevocationVerified": true,
+  "ownerPositiveStatus": "pending owner-local status command",
+  "environmentRevision": 4,
+  "deploymentId": "appgdep_6afe4276bc6c81918b78c8d315f024a6",
+  "sourceUnchanged": true,
+  "countersNotReset": true
+}

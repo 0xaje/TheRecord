@@ -57,3 +57,7 @@ Event scope: engineering reliability only; existing Diana/pqcVerify/withdrawal/s
 ## My space update — READY, NOT POSTED
 
 I added an application storage budget and a private usage readout to The Record. Saves that exceed the retained-text budget roll back completely; existing drafts remain readable. All53 automated checks pass, and hosted checks confirm normal saves, revision history, review invitations and Trash still work with reconciled usage accounting. Anti-bot admission and provider billing alerts remain separate open checkpoints. These controls do not change the QoreChain contracts or replace the existing Diana receipts.
+
+### Owner operator credential configured —19November
+
+Owner created their operator file on Ubuntu and supplied only publicTokenSha256. The reviewed public hash was configured in the runtime secret and Site47 redeployed at environment revision4, deployment appgdep_6afe4276bc6c81918b78c8d315f024a6. Source and counters were not changed/reset. A real request using the temporary bootstrap credential now returns401. Positive owner access still needs the owner-local `node scripts/capacity-operator.mjs status` result; the agent does not possess or request that private token. operator-handover.json records the configuration/revocation check. Do not run initialize again. Anti-bot integration/provider alerts remain open.
