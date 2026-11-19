@@ -7,7 +7,7 @@ const origin='https://record.test',request=new Request(origin+'/api/drafts'),has
 const owner='workspace:'+hash('a'.repeat(64));
 const env={RECORD_ADMISSION_MODE:'enforce',RECORD_TURNSTILE_SITE_KEY:'fixture-public-site-key',RECORD_TURNSTILE_SECRET:'fixture-private-secret',RECORD_TURNSTILE_HOSTNAME:'record.test'};
 const valid=()=>({success:true,hostname:'record.test',action:'new-workspace',cdata:owner.slice(10),challenge_ts:new Date().toISOString()});
-const fetchFixture=(patch={})=>async(url,options)=>{assert.equal(url,'https://challenges.cloudflare.com/turnstile/v0/siteverify');assert.equal(options.redirect,'error');assert.equal(JSON.parse(options.body).secret,env.RECORD_TURNSTILE_SECRET);assert.equal(Object.hasOwn(JSON.parse(options.body),'remoteip'),false);return Response.json({...valid(),...patch});};
+const fetchFixture=(patch={})=>async(url,options)=>{assert.equal(url,'https://challenges.cloudflare.com/turnstile/v0/siteverify');assert.equal(options.redirect,'manual');assert.equal(JSON.parse(options.body).secret,env.RECORD_TURNSTILE_SECRET);assert.equal(Object.hasOwn(JSON.parse(options.body),'remoteip'),false);return Response.json({...valid(),...patch});};
 
 test('off is inert; preview is opt-in; enforce fails closed without configuration or proof',async()=>{
  const untouched={prepare(){throw Error('Off mode reached database');}};
@@ -102,6 +102,7 @@ test('provider diagnostics classify failures without exposing tokens, secrets or
  const cases=[
   [async()=>{throw Error(secretText);},'AP-CONNECTION'],
   [async()=>new Response(secretText,{status:403}),'AP-HTTP-403'],
+  [async(url,options)=>{assert.equal(options.redirect,'manual');return new Response(null,{status:302,headers:{Location:'https://untrusted.test'}});},'AP-HTTP-302'],
   [async()=>new Response('not-json '+secretText),'AP-JSON'],
   [async()=>new Response('x'.repeat(16385)),'AP-SIZE'],
   [async()=>Response.json(null),'AP-SHAPE'],

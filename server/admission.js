@@ -35,7 +35,7 @@ export async function admitNewWorkspace(request,db,env,owner,token,fetcher=fetch
  const binding=owner.slice('workspace:'.length);
  const provider=await requestSiteverify(env,token,fetcher);
  if(!provider.ok){
-  console.error('admission_provider_failure',JSON.stringify({code:provider.code,stage:provider.stage,httpStatus:provider.httpStatus??null}));
+  console.error('admission_provider_failure',JSON.stringify({code:provider.code,stage:provider.stage,reason:provider.reason??null,httpStatus:provider.httpStatus??null}));
   throw new AdmissionError('The new-workspace check could not be confirmed. No draft was saved. Check reference: '+provider.code+'.',503,provider.code);
  }
  const verified=provider.data;
@@ -53,7 +53,7 @@ export async function admitNewWorkspace(request,db,env,owner,token,fetcher=fetch
 export async function requestSiteverify(env,token,fetcher=fetch){
  let stage='fetch',httpStatus,responseFormat;
  try{
-  const response=await fetcher('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',redirect:'error',headers:{'Content-Type':'application/json'},body:JSON.stringify({secret:env.RECORD_TURNSTILE_SECRET,response:token}),signal:AbortSignal.timeout(10000)});
+  const response=await fetcher('https://challenges.cloudflare.com/turnstile/v0/siteverify',{method:'POST',redirect:'manual',headers:{'Content-Type':'application/json'},body:JSON.stringify({secret:env.RECORD_TURNSTILE_SECRET,response:token}),signal:AbortSignal.timeout(10000)});
   httpStatus=response.status;stage='http';const type=response.headers.get('Content-Type')??'';responseFormat=type.startsWith('application/json')?'json':type.startsWith('text/html')?'html':'other';
   if(!response.ok)return{ok:false,code:'AP-HTTP-'+httpStatus,stage,httpStatus,responseFormat};
   stage='body';const reader=response.body.getReader(),decoder=new TextDecoder();let text='',size=0;
@@ -62,8 +62,10 @@ export async function requestSiteverify(env,token,fetcher=fetch){
   if(!data || typeof data!=='object' || Array.isArray(data) || typeof data.success!=='boolean')return{ok:false,code:'AP-SHAPE',stage,httpStatus};
   return{ok:true,data,httpStatus};
  }catch(error){
+  const detail=String(error?.message??'');
+  const reason=/AbortSignal.*timeout|timeout.*not a function/i.test(detail)?'timeout-api':/illegal invocation|incorrect.*this|bound.*context/i.test(detail)?'fetch-binding':/redirect/i.test(detail)?'redirect':/blocked|not allowed|denied|allowlist/i.test(detail)?'network-policy':/dns|resolve|hostname/i.test(detail)?'dns':/certificate|tls|ssl/i.test(detail)?'tls':'unclassified';
   const code=stage==='fetch'?(['TimeoutError','AbortError'].includes(error?.name)?'AP-TIMEOUT':'AP-CONNECTION'):stage==='body'?'AP-BODY':'AP-JSON';
-  return{ok:false,code,stage,errorType:['Error','TypeError','SyntaxError','TimeoutError','AbortError'].includes(error?.name)?error.name:'Other',...(httpStatus===undefined?{}:{httpStatus}),...(responseFormat?{responseFormat}:{})};
+  return{ok:false,code,stage,reason,errorType:['Error','TypeError','SyntaxError','TimeoutError','AbortError'].includes(error?.name)?error.name:'Other',...(httpStatus===undefined?{}:{httpStatus}),...(responseFormat?{responseFormat}:{})};
  }
 }
 export async function admissionProviderProbe(request,env,fetcher=fetch){

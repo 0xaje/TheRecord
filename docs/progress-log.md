@@ -688,3 +688,6 @@ Owner-local status confirmed initialized/reconciled/normal, completing operator 
 
 ## 2026-11-19 Admission failure investigation
 Real completed widget followed by save HTTP503; no draft saved. Added safe provider references and protected no-save diagnostic; 64 local checks pass. Root cause and real desktop/QoreX acceptance OPEN. Owner probe is next. See admission-diagnostics/REVIEW.md. Public update READY, not posted. Platform custom workspace-header logging is an additional open privacy finding.
+
+## 2026-11-19 Admission redirect repair
+Owner probe confirmed fetch TypeError. Safe hosted diagnostic isolated redirect handling; manual redirect mode repairs transport while non-2xx redirects remain rejected. Site51 hosting aded582fe2db640bcc9b36d5ab346c78e28f1fec, env revision8/preview unchanged. 64 checks pass; real hosted invalid token now403 and zero saved drafts. Owner real human-check/save and QoreX acceptance remain OPEN. Evidence admission-diagnostics/redirect-fix.json; progress update READY, NOT POSTED.
