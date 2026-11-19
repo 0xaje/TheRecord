@@ -9,5 +9,12 @@
   "manualProgressPosted": false,
   "listingAboutHowMadeStillPlanning": true,
   "shipWeeksPrivateCheckObserved": false,
-  "oldMilestoneBranchUniqueCommits": 0
+  "oldMilestoneBranchUniqueCommits": 0,
+  "observedReadmeCommit": "8fa51308dda54e517a75d901019d974759f248d3",
+  "readmeCommitVisibleInEventTimeline": true,
+  "readmeImagesLoaded": 7,
+  "githubWorkflowMermaidRendered": true,
+  "mainCheck": "success",
+  "mainSolidity": "success",
+  "withdrawalBranchUniqueCommits": 0
 }
