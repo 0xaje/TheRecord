@@ -6,13 +6,13 @@ import { INITIALIZE_SQL } from '../server/capacity.js';
 import { privateAgreements } from '../server/private-agreements.js';
 
 // Real SQLite with the D1 statement interface; isolated from hosted drafts.
-function database({ legacy = false } = {}) {
+function database({ legacy = false, before = legacy ? 5 : Infinity } = {}) {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec('PRAGMA foreign_keys = ON');
   for (const file of readdirSync(new URL('../migrations/', import.meta.url)).sort()) {
-    if (!legacy || Number(file.slice(0,4)) < 5) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
+    if (Number(file.slice(0,4)) < before) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
   }
-  if(!legacy)sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
+  if(before===Infinity)sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
   return { sqlite, prepare(sql) { return { bind(...args) {
     const statement = sqlite.prepare(sql);
     return {
@@ -364,5 +364,37 @@ test('redacted transport preserves workspace identity, recovery and isolation; c
   assert.equal((await request(owner,owner)).status,200);
   const updated=await privateAgreements(new Request(origin+'/api/drafts',{method:'POST',headers:{Origin:origin,Authorization:'Bearer workspace:'+owner},body:JSON.stringify({...draft,title:'Updated',terms:'Same owner updated.'})}),db);
   assert.equal(updated.status,200);assert.equal((await (await call(db)).json())[0].title,'Updated');
+ }finally{db.sqlite.close();}
+});
+
+
+test('pre-access-code invitation migration stays closed; owner can issue a fresh usable invitation',async()=>{
+ const db=database({before:3});
+ try{
+  const hash=async text=>Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))).toString('hex');
+  const id=crypto.randomUUID(),token='c'.repeat(64),code='d'.repeat(24),title='Legacy fixture',terms='Private legacy fixture text';
+  const ownerId='workspace:'+await hash(owner),tokenHash=await hash(token);
+  db.sqlite.prepare('INSERT INTO drafts(id,owner,title,terms) VALUES(?,?,?,?)').run(id,ownerId,title,terms);
+  db.sqlite.prepare('INSERT INTO shares(token_hash,draft_id,revision,reviewer_email,reviewer_id,title,terms,fingerprint,expires) VALUES(?,?,1,?,?,?,?,?,?)')
+   .run(tokenHash,id,'fixture@example.test','old-reviewer',title,terms,await hash(title+'\n\n'+terms),Date.now()+86400000);
+  db.sqlite.prepare('INSERT INTO invite_codes(token_hash,code_hash,expires,sent_at,sends) VALUES(?,?,?,?,1)')
+   .run(tokenHash,await hash(code),Date.now()+86400000,Date.now());
+  for(const file of readdirSync(new URL('../migrations/',import.meta.url)).sort())
+   if(Number(file.slice(0,4))>=3)db.sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
+  db.sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
+  assert.equal(db.sqlite.prepare('SELECT access_code_hash FROM shares WHERE token_hash=?').get(tokenHash).access_code_hash,null);
+  for(const input of [{token},{token,code},{token,code:'0'.repeat(24)}]){
+   const response=await call(db,'/review',input,null,{'oai-authenticated-user-id':'old-reviewer'});
+   assert.equal(response.status,input.code?404:400);
+   assert.equal((await response.text()).includes(terms),false);
+  }
+  assert.equal((await call(db,'/feedback',{token,code,note:'Must stay blocked'},null)).status,409);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM review_feedback').get().n,0);
+  const freshResponse=await call(db,'/share',{id,revision:1});assert.equal(freshResponse.status,200);
+  const fresh=await freshResponse.json();
+  const review=await call(db,'/review',fresh,null);assert.equal(review.status,200);assert.equal((await review.json()).terms,terms);
+  assert.equal((await call(db,'/feedback',{...fresh,note:'Fresh coded review works'},null)).status,201);
+  assert.equal(db.sqlite.prepare('SELECT access_code_hash FROM shares WHERE token_hash=?').get(tokenHash).access_code_hash,null);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts').get().n,1);
  }finally{db.sqlite.close();}
 });
