@@ -11,7 +11,7 @@ Prepared 19 November 2026 after reviewing the entire 30.6-second owner video, fr
 | Category | Keep Post-Quantum dApp. AI-Native is a separate optional award, not a category change. |
 | Description | Replace all future/planning language with the Description below. |
 | How it's made | Replace all planning copy with the technical narrative below. |
-| Cover image | Current image is valid and usable. Recommended replacement: docs/assets/project-cover-v2.png, freshly generated in the README's mint/charcoal/yellow identity (1672×941pixels,1260229bytes; approximately16:9). Upload only a 16:9 cover, minimum 1200×675, up to 5 MB JPG/PNG/WebP. The README banner is2172×724 (3:1): do not upload it directly or stretch it. Brand artwork is not a captured UI or security certification. |
+| Cover image | Current image is valid and usable. Recommended replacement: docs/assets/project-cover-v3.png, corrected from the original black build-page cover to match the verified app palette: near-black, neutral grey, white and small mint accents. The previous green-tinted/yellow proposal is superseded. Upload only a 16:9 cover, minimum 1200×675, up to 5 MB JPG/PNG/WebP. The README now uses the same corrected cover. The old3:1banner is superseded. Brand artwork is not a captured UI or security certification. |
 | Public GitHub repository | Keep https://github.com/0xaje/TheRecord — canonical owner0xaje, public main, rootMIT licence. |
 | Video | Currently empty in video. Add only the final publicly accessible videoURL, actual duration of no more than 3 minutes. Do not paste this 30.6-second form-inspection recording as the product demo or leave a fakeURL. This remains pending. |
 | Demo | Keep https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/ . |
@@ -65,7 +65,9 @@ AI disclosure: https://github.com/0xaje/TheRecord/blob/main/AI_USAGE.md
 
 ## Cover asset
 
-Recommended upload: [project-cover-v2.png](../assets/project-cover-v2.png). Generated brand artwork, not a screenshot. The earlier cover remains unchanged on the portal until you upload/save this one.
+The original build-page cover remains valid and owner-preferred. The new corrected alternative keeps that visual direction; the application background is #09090b, not green. Mint #b4efce is used only as an accent.
+
+Recommended upload: [project-cover-v3.png](../assets/project-cover-v3.png). Generated brand artwork, not a screenshot. The earlier cover remains unchanged on the portal until you upload/save this one.
 
 ## Testnet addresses — paste one per line
 

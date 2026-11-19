@@ -1,4 +1,4 @@
-![The Record — Know exactly which version both parties approved. Built on QoreChain Diana Testnet.](https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/assets/readme-banner.png)
+![The Record — Proof of the version you agreed to. Black and neutral-grey design preview matching the product.](https://raw.githubusercontent.com/0xaje/TheRecord/main/docs/assets/project-cover-v3.png)
 
 <p align="center">
   <a href="https://build.qorechain.io/p/the-record"><img alt="Built on QoreChain — official project badge" src="https://build.qorechain.io/badge/the-record.svg"></a>

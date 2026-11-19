@@ -6,13 +6,13 @@ AI-assisted areas include browser/Worker code, agreement integration and scripts
 
 Tests using RPC/precompile/failure fixtures are separated from genuine Diana receipts and historical calls. The founder operated both test wallets; independent-user acceptance remains pending. Passing tests do not establish universal correctness.
 
-## README cover
+## README and project cover
 
-docs/assets/readme-banner.png was generated using the built-in image-generation tool, then copied unchanged into the repository. It is brand artwork, not a screenshot, certification or on-chain evidence. The founder approved a charcoal/mint/yellow direction. No official QoreChain logo was fabricated.
+The current README uses docs/assets/project-cover-v3.png, generated with the built-in image tool from the original black build-page cover as the reference. The founder corrected the previous generated green-tinted/yellow artwork and requested the product's actual visual identity. The palette is taken from web/index.html: near-black #09090b background, neutral dark-grey #151517 panels, white #fafafa text, muted grey #b8b8c0 and small mint #b4efce accents. Green is an accent, not the background. No yellow decoration is part of the current direction.
 
-Prompt: original wide GitHub banner, charcoal background, pale mint and restrained yellow accents, layered document illustration and verification seal; exact text “THE RECORD”, “Know exactly which version both parties approved.” and “Built on QoreChain Diana Testnet”; no fake UI, coins or certification claims.
+The artwork depicts a conceptual agreement panel, visibly labelled Design preview. It is not a captured product screen, transaction receipt, certification or proof of chain behavior. No official QoreChain logo was fabricated. Earlier readme-banner.png and project-cover-v2.png are superseded iterations and should not be used as the current palette reference.
 
-The track/licence badges are repository-native SVG graphics; the official event badge is served by the organizer. [Full banner prompt](docs/assets/README_BANNER_PROMPT.md). Mermaid diagrams describe implementation and are not execution traces.
+The track/licence badges are repository-native SVG graphics; the official event badge is served by the organizer. [Current cover prompt](docs/assets/README_BANNER_PROMPT.md). Mermaid diagrams describe implementation and are not execution traces.
 
 ## Reference and third-party work
 
@@ -32,16 +32,14 @@ I am the solo founder of The Record. ChatGPT/Codex assisted the build; AI is not
 | Tests and debugging | Generated isolated migration, failure, concurrency, replay and guard tests; interpreted logs and proposed repairs. | I ran owner-side commands where keys or local tooling were required, checked real app behavior and provided raw results. Local fixtures are labelled separately from chain execution. |
 | Audit response | Compared source-bound QoreChain AI reports with source and evidence; drafted finding-level responses. | I reviewed the conclusions and retained disputed findings and limitations. Original auditor scores/statuses remain unchanged. See docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md. |
 | Research and writing | Assisted primary-source research synthesis, README, walkthrough, listing copy and documentation. | I supplied the product direction and reviewed what I publish. Referenced materials are credited; user demand and independent adoption are not invented. |
-| Visuals | Generated the README banner and a proposed 16:9listing-cover refresh using the same identity. | I requested and review the visual direction. Generated branding is not a screenshot or proof of chain behavior. OpenMoji illustrations are separately licensed assets. |
+| Visuals | Generated cover iterations, then refined the original black build-page artwork to match the verified product palette after founder feedback. | I requested and review the visual direction. Generated branding is not a screenshot or proof of chain behavior. OpenMoji illustrations are separately licensed assets. |
 
 Known AI-assisted corrections include replacing unsupported website EVM-window opening with an honest inspect-only screen and documented SDK route; correcting the relay's input/output/time-limit and access boundaries; and classifying verifier lookup failures separately from a genuine changed-file mismatch. These are recorded as fixes and observed limitations, not a claim that generated code was correct on first output.
 
 As of 19 November 2026, the repository records 89 build/Node checks, 24 Foundry tests and 16 historical Diana signature regression checks. They have different scopes. The owner operated both signer wallets; independent participant acceptance is pending. Reproducible source and retained evidence matter more than model-generated confidence or repeated audit scores.
 
-## Proposed listing-cover refresh
+## Listing-cover correction
 
-The existing project cover remains valid. A new 16:9 brand-artwork proposal follows the README's charcoal/mint/yellow identity and uses only these words: THE RECORD; Proof of the version you agreed to; Built on QoreChain Diana Testnet. It is a proposed replacement, not a claim the portal image has been changed. The original 3:1 README banner is not stretched into 16:9.
+The original black project cover remains a valid choice. The current corrected alternative, docs/assets/project-cover-v3.png, preserves its black-and-white composition and uses only subtle product-mint accents. The same asset is used in the README so the two surfaces stay consistent. Generating and committing it does not replace the cover in the owner's portal; that upload/save remains an owner action.
 
 The complete portal copy and exact declarations are in docs/compliance/PROJECT_LISTING_COPY.md. A draft in GitHub is not evidence of a saved portal checkbox or award acceptance.
-
-The proposed listing cover is saved as docs/assets/project-cover-v2.png. It was generated from the inspected README banner as a style reference. Prompt: recompose into a spacious 16:9 charcoal/mint/yellow cover with only “THE RECORD”, “Proof of the version you agreed to” and “Built on QoreChain Diana Testnet”; retain a conceptual layered-document illustration, generous safe margins and no fake receipts, UI panels, official logos, coins or certification claims. The existing portal cover is not replaced by committing this asset.
