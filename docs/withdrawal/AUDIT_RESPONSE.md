@@ -1,5 +1,7 @@
 # V2 QCAIA report: source binding and finding response
 
+**Current assessment checkpoint:** [19 November project assessment](../audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) completes our finding review with explicit dispositions. Auditor-issued status remains Open; this is not independent clearance. Dated next steps below are historical.
+
 Reviewed19November2026 WAT. Report [QCAIA-1795043785188-4A004387](https://qorechain-audit-reports-362958365954.s3.amazonaws.com/audits/QCAIA-1795043785188-4A004387/report.html). Unchanged local [HTML](QCAIA-1795043785188-4A004387.html) and owner-exported [PDF](QCAIA-1795043785188-4A004387.pdf) retained. Report prints audit date18November; PDF generated timestamp prints19November00:17. Do not infer a source discrepancy from those displayed dates.
 
 ## Source and report status
@@ -36,7 +38,7 @@ A cooperative proposer can now correct a mistaken pending amendment. A malicious
 
 Source-matched report retention/review is complete; **event acceptance of the draft-remediation-final audit trail remains unverified**. Old reports bind the old source; this one binds V2. Preserve original source/report, changes/tests, V2 source/report and this ledger. Do not claim clean audit or closed High findings. Do not pay for repeated identical audits just to seek a different number; a concrete overlooked exploit should drive further code changes.
 
-Other open work: scoped window admission/refusal evidence for the NEW contract, independent users, and the backend/frontend findings in the combined plan. The old contract's scoped proof is not proof for the new recipient address. PR1 stays draft until release gates are judged explicitly.
+Other open work: scoped window admission/refusal evidence for the NEW contract, independent users, and the backend/frontend findings in the combined plan. The old contract's scoped proof is not proof for the new recipient address. PR1 was subsequently merged into main; see CURRENT_STATUS.md for current release gates.
 
 ## Judge review and next step
 

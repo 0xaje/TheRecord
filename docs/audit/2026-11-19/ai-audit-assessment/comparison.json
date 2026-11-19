@@ -1,0 +1,49 @@
+{
+  "reviewDate": "2026-11-19",
+  "retainedHtmlReportsCompared": [
+    {
+      "file": "docs/audit/2026-11-16-stage-1.html",
+      "fileSha256": "b74e7b802239c1f35998e2c4a035f6bc81ca5624a994a3e53ea10fcc4fef5d3d",
+      "sourceHash": "b681ec487f2254dabb3d9ba61da4c93ef73a82e69c44b99fce05937c9b0bf05e",
+      "findings": [
+        "Missing Access Control on Amendment Function",
+        "Potential Overflow in Version Increment",
+        "Unchecked Return Values from PQC Interfaces",
+        "Front-Running Vulnerability in Approval Process",
+        "Unbounded Storage Mapping Usage"
+      ],
+      "score": 65
+    },
+    {
+      "file": "docs/audit/2026-11-18/QCAIA-1794963565431-6D3EAE14.html",
+      "fileSha256": "4639cf5cbe788cbccef657c677a9483bce42820f7835923dfa498bbc3fac9b71",
+      "sourceHash": "b681ec487f2254dabb3d9ba61da4c93ef73a82e69c44b99fce05937c9b0bf05e",
+      "findings": [
+        "Missing Access Control on Amendment Function",
+        "Potential Overflow in Version Increment",
+        "Unchecked Return Values from PQC Interface Calls",
+        "Front-Running Vulnerability in Approval Process",
+        "Unbounded Mapping Access"
+      ],
+      "score": 65
+    },
+    {
+      "file": "docs/withdrawal/QCAIA-1795043785188-4A004387.html",
+      "fileSha256": "687d0dacbde5840dd4ac0f80ef588ae1c142a52a6cab9623cd9133abe9f554cd",
+      "sourceHash": "688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df3193980",
+      "findings": [
+        "Missing Access Control on Withdrawal Function",
+        "Potential Overflow in Version Increment",
+        "Front-Running Vulnerability in Approval Process",
+        "Unbounded Mapping Access",
+        "No ERC Standard Implementation"
+      ],
+      "score": 65
+    }
+  ],
+  "sourceBindingVerified": true,
+  "contractChanged": false,
+  "newTransactionsSent": false,
+  "freshSolidityRun": false,
+  "evidenceBasis": "Current source inspection and previously retained Solidity/Diana outputs; no fresh contract test run claimed."
+}

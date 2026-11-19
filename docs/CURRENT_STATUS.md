@@ -52,7 +52,7 @@ Private drafts are stored on the service without end-to-end encryption. Recovery
 
 ## Audit and submission gates still open
 
-- **QCAIA findings remain formally Open.** Latest V2 report 65/100, HIGH risk; [finding ledger/source binding](withdrawal/AUDIT_RESPONSE.md). Disputed findings and successful tests do not alter auditor status. Organizer acceptance of the staged audit chain remains unverified.
+- **Project assessment of all five V2 AI findings is complete:** [comparison and dispositions](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md). **QCAIA findings remain formally Open.** Latest V2 report 65/100, HIGH risk; [finding ledger/source binding](withdrawal/AUDIT_RESPONSE.md). Disputed findings and successful tests do not alter auditor status. Organizer acceptance of the staged audit chain remains unverified.
 - Independent participants have not yet completed the full two-person workflow. Owner switching wallets is not independent-user acceptance.
 - Provider physical-storage/billing monitoring, alerts and backup erasure/retention remain unverified. Application text counters do not replace those.
 - Trustworthy source-aware relay rate control remains unestablished; arbitrary caller IP headers are not trusted.

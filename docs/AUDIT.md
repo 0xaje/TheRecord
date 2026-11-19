@@ -1,5 +1,7 @@
 # The Record — QCAI audit response
 
+**Project review completed:** [AI audit comparison and dispositions](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md). Original auditor statuses and scores are preserved. Project assessment closure is separate from auditor clearance and event acceptance.
+
 For current deployment, verification and open release gates, start with [CURRENT_STATUS.md](CURRENT_STATUS.md). Dated sections below preserve historical results; the V2 finding response is [here](withdrawal/AUDIT_RESPONSE.md).
 
 Stage 1 was run on 16 November 2026 against `contracts/TheRecord.sol` using the auditor’s Ethereum setting. It returned 65/100, Medium risk, and five findings. Quantum readiness was unscored in that setting.

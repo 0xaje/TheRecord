@@ -129,7 +129,7 @@ Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; publi
 
 **npm run check** builds the browser/Worker and runs **81 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Open**. Our [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) explains tests, disputed findings and residual risks. It does not change the auditor's status or certify the application. [All audit reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
+The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Open**. Our [completed project assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) compares the reports and records each disposition. Our [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) explains tests, disputed findings and residual risks. It does not change the auditor's status or certify the application. [All audit reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
 
 ## Security and limits
 
