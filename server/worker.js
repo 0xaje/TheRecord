@@ -1,3 +1,4 @@
+import { admissionPolicy } from "./admission.js";
 import { capacityOperations } from "./capacity.js";
 import { relayRegistration } from "./registration-relay.js";
 import { privateAgreements } from "./private-agreements.js";
@@ -5,8 +6,9 @@ import { privateAgreements } from "./private-agreements.js";
 export default {
   fetch(request, env) {
     const { pathname } = new URL(request.url);
+    if (pathname === "/api/admission/policy" && request.method === "GET") return admissionPolicy(request, env);
     if (pathname.startsWith("/api/operations/")) return capacityOperations(request, env);
-    if (pathname === "/api/drafts" || pathname.startsWith("/api/drafts/")) return privateAgreements(request, env.DB);
+    if (pathname === "/api/drafts" || pathname.startsWith("/api/drafts/")) return privateAgreements(request, env.DB, env);
     if (pathname.startsWith("/api/diana/")) return relayRegistration(request);
     const sampleFiles = {
       "/demo/agreement-v1.txt": "The Record test agreement: deliver one draft by Friday.\n",

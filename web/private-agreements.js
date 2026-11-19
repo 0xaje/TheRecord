@@ -1,3 +1,4 @@
+import { collectAdmissionToken } from "./admission.js";
 import { readWorkspaceKey, saveWorkspaceKey } from "./workspace-storage.js";
 const query = new URLSearchParams(location.search);
 const invitation = new URLSearchParams(location.hash.slice(1)).get("invite");
@@ -169,7 +170,8 @@ draftForm.addEventListener("submit", event => {
   submit(draftForm, async () => {
     const { title, terms } = draftForm.elements;
     if (!workspaceKey && !hasLegacyDrafts) rememberKey(newWorkspaceKey());
-    const saved = await api("", { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value });
+    const admissionToken = !current?.id && workspaceKey ? await collectAdmissionToken(workspaceKey) : undefined;
+    const saved = await api("", { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value, admissionToken });
     await loadDrafts(saved.id);
     return "Private draft saved.";
   });

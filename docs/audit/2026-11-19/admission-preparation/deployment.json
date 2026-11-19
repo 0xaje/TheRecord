@@ -1,0 +1,19 @@
+{
+  "testedAt": "2026-11-19T00:41:38.243Z",
+  "siteVersion": 48,
+  "hostingSource": "b3704cc58489df690976c6a7aa10ccd88289e6ed",
+  "versionId": "appgprj_6af8daf3a96c81918026a69ec89cfb47~appgver_177eb762192481918e3a0774660534fd",
+  "deploymentId": "appgdep_6afe45970f1c8191890fb23841c701c6",
+  "environmentRevision": 4,
+  "policy": {
+    "mode": "off",
+    "required": false
+  },
+  "files": {
+    "dist/server/index.js": "8d005e25b6c9e6f2f1c3f003d27c8266bdc50ebd8b143a5d203f364cb9d1a5f6",
+    "migrations/0011_workspace_admission.sql": "a40178a9b83cb81f5d43e2fb242e0a42bf615f86e4061fea3239ce9561595580",
+    "deploy/migration-journal.json": "d4665ef152b729c030af312fd986df2104a35369d59319130f53f3294ed0114f"
+  },
+  "realWidgetConfigured": false,
+  "liveAntiBotProof": false
+}

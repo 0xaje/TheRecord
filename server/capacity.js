@@ -1,3 +1,4 @@
+import { admissionMode } from "./admission.js";
 const limit = 2000;
 const tables = [
   ['drafts','drafts','length(CAST(title AS BLOB)) + length(CAST(terms AS BLOB))'],
@@ -9,7 +10,7 @@ const tables = [
 export const INVENTORY_SQL = 'SELECT ' + tables.flatMap(([name,table,bytes])=>[
   `(SELECT COUNT(*) FROM (SELECT 1 FROM ${table} LIMIT ${limit+1})) AS ${name}_count`,
   `(SELECT COALESCE(SUM(bytes),0) FROM (SELECT ${bytes} AS bytes FROM ${table} LIMIT ${limit+1})) AS ${name}_bytes`,
-]).concat(['request_limits','invite_codes'].map(table=>`(SELECT COUNT(*) FROM (SELECT 1 FROM ${table} LIMIT 4097)) AS ${table}_count`)).join(', ');
+]).concat(['request_limits','invite_codes','workspace_admissions'].map(table=>`(SELECT COUNT(*) FROM (SELECT 1 FROM ${table} LIMIT 4097)) AS ${table}_count`)).join(', ');
 const payloadNames=tables.map(([name])=>name);
 export const INITIALIZE_SQL = `INSERT INTO service_capacity(id,limit_bytes,used_bytes,drafts_count,revisions_count,shares_count,feedback_count,initialized_at)
   SELECT 1, ?, ${payloadNames.map(n=>n+'_bytes').join('+')}, ${payloadNames.map(n=>n+'_count').join(',')}, ?
@@ -46,9 +47,9 @@ export async function capacityOperations(request,env) {
     const exhaustive=payloadNames.every(n=>inventory[n+'_count']<=limit);
     const scannedBytes=payloadNames.reduce((sum,n)=>sum+Number(inventory[n+'_bytes']),0);
     const reconciled=capacity && exhaustive ? scannedBytes===capacity.used_bytes && payloadNames.every(n=>capacity[n+'_count']===inventory[n+'_count']) : null;
-    return response({checkedAt:new Date().toISOString(),initialized:!!capacity,capacity,inventory,inventoryExhaustive:exhaustive,counterCountsExhaustive:inventory.request_limits_count<=4096 && inventory.invite_codes_count<=4096,reconciled,
+    return response({checkedAt:new Date().toISOString(),initialized:!!capacity,capacity,inventory,inventoryExhaustive:exhaustive,counterCountsExhaustive:inventory.request_limits_count<=4096 && inventory.invite_codes_count<=4096 && inventory.workspace_admissions_count<=4096,reconciled,
       status:!capacity?'initialization-required':reconciled===false?'accounting-mismatch':!exhaustive?'inventory-incomplete':capacity.used_bytes>=capacity.limit_bytes?'full':capacity.used_bytes>=capacity.limit_bytes*.9?'review':capacity.used_bytes>=capacity.limit_bytes*.8?'warning':'normal',
-      measurement:'UTF-8 application text in drafts, saved revisions, invitation snapshots and feedback. Excludes database pages/indexes/metadata, counter records, invite_codes, backups and provider billing.',
-      antiBotGateEnabled:false,providerMonitoringVerified:false});
+      measurement:'UTF-8 application text in drafts, saved revisions, invitation snapshots and feedback. Excludes database pages/indexes/metadata, counter/admission records, invite_codes, backups and provider billing.',
+      antiBotGateEnabled:admissionMode(env)==='enforce',antiBotMode:admissionMode(env),providerMonitoringVerified:false});
   } catch {return response({error:'Usage service temporarily unavailable.'},503);}
 }

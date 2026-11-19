@@ -1,3 +1,4 @@
+import { admitNewWorkspace, AdmissionError } from "./admission.js";
 const headers = { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" };
 const reply = (body, status = 200) => Response.json(body, { status, headers });
 const uuid = /^[a-f0-9-]{36}$/;
@@ -48,10 +49,11 @@ const limitWrites = async db => {
   return limitRequests(db, "service:write", 600);
 };
 
-export async function privateAgreements(request, db) {
+export async function privateAgreements(request, db, env = {}) {
   try {
-    return await handlePrivateAgreements(request, db);
+    return await handlePrivateAgreements(request, db, env);
   } catch (error) {
+    if(error instanceof AdmissionError)return reply({error:error.message},error.status);
     if (error instanceof RequestLimit) return Response.json({ error: error.message }, {
       status: 429, headers: { ...headers, "Retry-After": String(error.retryAfter) },
     });
@@ -67,7 +69,7 @@ export async function privateAgreements(request, db) {
   }
 }
 
-async function handlePrivateAgreements(request, db) {
+async function handlePrivateAgreements(request, db, env) {
   const url = new URL(request.url);
   const readRoutes = ["/api/drafts", "/api/drafts/trash", "/api/drafts/item", "/api/drafts/revisions", "/api/drafts/revision", "/api/drafts/feedback"];
   const writeRoutes = ["/api/drafts", "/api/drafts/trash", "/api/drafts/restore", "/api/drafts/delete", "/api/drafts/move", "/api/drafts/share", "/api/drafts/revoke", "/api/drafts/review", "/api/drafts/feedback"];
@@ -223,6 +225,7 @@ async function handlePrivateAgreements(request, db) {
       return reply({ error: "Enter a title and agreement terms within the limits." }, 400);
     }
     if (id == null) {
+      await admitNewWorkspace(request,db,env,workspaceOwner,input.admissionToken);
       await limitWrites(db);
       const draftId = crypto.randomUUID();
       await db.prepare("INSERT INTO drafts (id, owner, title, terms) VALUES (?, ?, ?, ?)").bind(draftId, user, title.trim(), terms).run();
