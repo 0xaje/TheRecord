@@ -1,9 +1,11 @@
+import { capacityOperations } from "./capacity.js";
 import { relayRegistration } from "./registration-relay.js";
 import { privateAgreements } from "./private-agreements.js";
 
 export default {
   fetch(request, env) {
     const { pathname } = new URL(request.url);
+    if (pathname.startsWith("/api/operations/")) return capacityOperations(request, env);
     if (pathname === "/api/drafts" || pathname.startsWith("/api/drafts/")) return privateAgreements(request, env.DB);
     if (pathname.startsWith("/api/diana/")) return relayRegistration(request);
     const sampleFiles = {

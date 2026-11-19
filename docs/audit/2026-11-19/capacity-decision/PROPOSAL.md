@@ -59,3 +59,5 @@ A06 remains OPEN. No new live result or score is claimed. This supports engineer
 The WebView requirements do not establish QoreX compatibility. That is a required real-device checkpoint.
 
 Public progress: no new implementation result; no additional My space post claimed. The prior backend-fix update remains READY, NOT POSTED. This decision document is planning evidence only.
+
+Approval/implementation update: owner replied “proceed” on19November. Application capacity and private readout are implemented in ../capacity-implementation/REVIEW.md. The historical decision request above has been satisfied for this package; do not ask again for the same architecture approval. Anti-bot and provider monitoring gates remain open as listed there.

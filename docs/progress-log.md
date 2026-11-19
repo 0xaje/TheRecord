@@ -675,3 +675,9 @@ blocked website action and added a disposable-account Ubuntu route with explicit
 broadcast confirmation. All24localchecks pass; live scope proof is still pending.
 Exact next owner checkpoint: freshcheckout, npmci, CLIinit; sharepublicaddresses
 only. Do not fund or sign anything until those addresses/plan are reviewed.
+
+## 19 November 2026 — approved application capacity checkpoint
+
+Current hosted Site47 (hosting source ca5e632eb4e4f078cc67cb6cf785e55f7460b18a) enforces a64MiB retained-application-text budget through atomic metering triggers. Private operator readout and4096 request-scope bound added. All53 checks pass, actual hosted aggregate inventory fit the budget, one initialization reconciled, and the bounded fresh-workspace lifecycle/reconciliation passed. Existing data preserved; no contract/wallet change or new audit payment. See [current capacity review](audit/2026-11-19/capacity-implementation/REVIEW.md) and raw evidence there.
+
+Working source remains on withdrawal-amendments/draftPR1; publicmain is not the latest working branch. Owner architecture approval recorded. Next: owner creates their own local operator credential with scripts/capacity-operator.mjs init and shares only the public hash for runtime handover; do not initialize hosted counters again. Real anti-bot admission/widget/QoreX acceptance and provider storage/cost monitoring remain open, as do other queued audit corrections and independent-user acceptance. Prior V2 audit/scoped-window evidence remains under docs/withdrawal. My space update READY, NOT POSTED; Ship Weeks four owner-reported completions/freshCheck-unobserved; no Q-Day entry claimed.

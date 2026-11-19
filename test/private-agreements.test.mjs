@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { INITIALIZE_SQL } from '../server/capacity.js';
 import { privateAgreements } from '../server/private-agreements.js';
 
 // Real SQLite with the D1 statement interface; isolated from hosted drafts.
@@ -11,6 +12,7 @@ function database({ legacy = false } = {}) {
   for (const file of readdirSync(new URL('../migrations/', import.meta.url)).sort()) {
     if (!legacy || Number(file.slice(0,4)) < 5) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
   }
+  if(!legacy)sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
   return { sqlite, prepare(sql) { return { bind(...args) {
     const statement = sqlite.prepare(sql);
     return {
@@ -129,6 +131,8 @@ test('additive migration preserves a legacy current revision without inventing o
     db.sqlite.exec(readFileSync(new URL('../migrations/0007_draft_trash.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0008_draft_delete.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0009_owner_transfer_quota.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0010_service_capacity.sql', import.meta.url), 'utf8'));
+    db.sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
     const before = await (await call(db, '/revisions?id=' + draft.id)).json();
     assert.deepEqual(before.revisions.map(r => r.revision), [5]);
     assert.equal(before.revisions[0].saved_at, null);

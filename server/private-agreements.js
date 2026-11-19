@@ -35,14 +35,18 @@ class RequestLimit extends Error {
 async function limitRequests(db, scope, maximum) {
   const now = Date.now();
   const window = Math.floor(now / 60000) * 60000;
+  await db.prepare("DELETE FROM request_limits WHERE scope IN (SELECT scope FROM request_limits WHERE window_start < ? LIMIT 100)")
+    .bind(now - 3600000).run();
   const row = await db.prepare(`INSERT INTO request_limits(scope, window_start, hits) VALUES (?, ?, 1)
     ON CONFLICT(scope) DO UPDATE SET hits = CASE WHEN window_start = excluded.window_start THEN hits + 1 ELSE 1 END,
     window_start = excluded.window_start RETURNING hits`).bind(scope, window).first();
   if (row.hits > maximum) throw new RequestLimit(Math.max(1, Math.ceil((window + 60000 - now) / 1000)));
-  await db.prepare("DELETE FROM request_limits WHERE scope IN (SELECT scope FROM request_limits WHERE window_start < ? LIMIT 100)")
-    .bind(now - 3600000).run();
 }
-const limitWrites = db => limitRequests(db, "service:write", 600);
+const limitWrites = async db => {
+  const ready=await db.prepare("SELECT id FROM service_capacity WHERE id=1").bind().first();
+  if(!ready)throw new Error('service_capacity_not_initialized');
+  return limitRequests(db, "service:write", 600);
+};
 
 export async function privateAgreements(request, db) {
   try {
@@ -52,6 +56,9 @@ export async function privateAgreements(request, db) {
       status: 429, headers: { ...headers, "Retry-After": String(error.retryAfter) },
     });
     const message = String(error.message ?? "");
+    if(message.includes('service_text_capacity'))return reply({error:'Draft storage is full right now. Your saved drafts are still available. You can open or download them and try saving again later.',code:'CAPACITY_FULL'},503);
+    if(message.includes('service_capacity_not_initialized'))return reply({error:'Draft saving is temporarily paused while storage usage is checked. Your saved drafts are still available.',code:'CAPACITY_INITIALIZING'},503);
+    if(message.includes('request_scope_capacity'))return Response.json({error:'Request capacity is temporarily full. Please try again later.'},{status:429,headers:{...headers,'Retry-After':'60'}});
     const quota = message.includes("workspace_draft_quota") ? "This workspace has reached its 50-draft limit. Existing drafts are still available."
       : message.includes("draft_invitation_quota") ? "This draft has reached its 100-invitation limit. Existing invitations are unchanged."
       : message.includes("draft_revision_quota") ? "This draft has reached its 200-revision limit. Saved revisions are still available." : null;
