@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-11-19T09:36:10.064Z",
+  "mode": "enforce",
+  "challengeRequired": true,
+  "policyStatus": 200,
+  "rejections": [
+    {
+      "case": "missing-proof",
+      "status": 403,
+      "message": "Complete the new-workspace check before saving."
+    },
+    {
+      "case": "invalid-proof",
+      "status": 403,
+      "message": "The new-workspace check expired or did not match. Complete a fresh check."
+    }
+  ],
+  "readStatus": 200,
+  "draftCount": 0,
+  "realHumanEnforcedSaveVerified": false,
+  "existingOwnerContinuity": "Owner confirmation pending; no owner credentials accessed."
+}

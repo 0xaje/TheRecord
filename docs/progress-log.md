@@ -697,3 +697,6 @@ Owner confirmed real human check followed by successful private draft save after
 
 ## 2026-11-19 QoreX save and persistence owner PASS
 Owner confirmed mobile draft saved and survived refresh. Desktop and mobile owner acceptance now recorded; independent-user test remains separate/open. Admission still preview. Next: enforce and verify direct-API refusal without proof, existing-workspace continuity and real new-workspace acceptance. Update READY, NOT POSTED. No new Diana transaction claimed; Ship Weeks fresh Check unobserved.
+
+## 2026-11-19 Admission enforcement enabled
+Site51 redeployed with environment revision9/enforce, deployment appgdep_6afec2e28d2881919e6ce3e24918d063. Live missing/invalid-proof refusals and zero-draft evidence in admission-enforcement/hosted-check.json. Owner preview desktop/QoreX save/persistence confirmed previously. Existing saved-draft continuity and a fresh real enforced first save remain OPEN; next use a separate private window without altering the normal workspace. Independent-user test separate. Update READY, NOT POSTED; Ship Weeks Check unobserved, no new Diana claims.
