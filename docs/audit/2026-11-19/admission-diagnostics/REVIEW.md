@@ -21,3 +21,6 @@ Runtime failure category identified redirect handling. Replaced `redirect:error`
 Actual hosted invalid-token request now returns403 from the semantic validation path rather than503/AP-CONNECTION, and GET confirms zero drafts for the disposable test workspace. This proves the transport failure is repaired, not that a real human challenge/save succeeds or that the configured key pair is valid. Owner must refresh the explicit preview-test URL, complete a fresh challenge and verify a successful save; QoreX acceptance and enforcement still pending. No wallet, token funding or audit payment needed.
 
 Updated My space draft — READY, NOT POSTED: Fixed a live server connection failure in new-workspace human verification. Invalid tokens are rejected without saving drafts; 64 automated checks pass. Real human-check/save acceptance is next.
+
+## Owner desktop acceptance
+Owner reports the fresh real human check completed and the private draft saved successfully after Site51 redirect repair. This is owner-reported real desktop acceptance, not an independently captured receipt or mobile acceptance. QoreX mobile real challenge/save and enforcement remain open. Next: repeat the explicit preview-test flow in QoreX with a new harmless draft; confirm saved draft survives refresh.

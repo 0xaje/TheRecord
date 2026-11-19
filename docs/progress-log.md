@@ -691,3 +691,6 @@ Real completed widget followed by save HTTP503; no draft saved. Added safe provi
 
 ## 2026-11-19 Admission redirect repair
 Owner probe confirmed fetch TypeError. Safe hosted diagnostic isolated redirect handling; manual redirect mode repairs transport while non-2xx redirects remain rejected. Site51 hosting aded582fe2db640bcc9b36d5ab346c78e28f1fec, env revision8/preview unchanged. 64 checks pass; real hosted invalid token now403 and zero saved drafts. Owner real human-check/save and QoreX acceptance remain OPEN. Evidence admission-diagnostics/redirect-fix.json; progress update READY, NOT POSTED.
+
+## 2026-11-19 Owner desktop human-check/save PASS
+Owner confirmed real human check followed by successful private draft save after redirect repair f2b7682e32aa6bf01e8b92bd70e1b5d2b9449ca6 / Site51. Owner report, no screenshot supplied. Mobile QoreX and enforcement remain OPEN. Next action: new harmless draft through explicit preview-test URL on QoreX, then refresh and confirm persistence. Public update draft READY, NOT POSTED.
