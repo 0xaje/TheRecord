@@ -50,14 +50,17 @@ The 64 MiB budget measures retained UTF-8 application text in drafts/revisions/i
 
 Private drafts are stored on the service without end-to-end encryption. Recovery codes are bearer secrets. Downloaded/reviewer copies, public chain metadata and provider backups are outside the live-row deletion guarantee. A lost document cannot be recreated from its fingerprint.
 
-## Audit and submission gates still open
+Deferred operational work for the current hackathon build: automatic alerts and tested service-wide database recovery remain disclosed limitations, not additional organizer submission requirements. The owner redirected work toward the listing, demo and actual participant acceptance. Storage/readout verification is complete.
+
+- [Provider storage/recovery review](audit/2026-11-19/provider-storage/REVIEW.md) is PARTIAL: live meter7139retained-text bytes/64MiB, protected D1 size readout owner-verified at159744bytes (156KiB), initialized/reconciled/normal. Automatic notifications and provider backup retention/restore remain unverified. Current official Plus/Pro hosting inclusion and published10GB database limit are documented; account-specific quota/billing not inspected. Source rollback is not database recovery.
+
+## Remaining acceptance and submission work
 
 - **Project assessment of all five V2 AI findings is complete:** [comparison and dispositions](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md). **QCAIA findings remain formally Open.** Latest V2 report 65/100, HIGH risk; [finding ledger/source binding](withdrawal/AUDIT_RESPONSE.md). Disputed findings and successful tests do not alter auditor status. Organizer acceptance of the staged audit chain remains unverified.
 - Independent participants have not yet completed the full two-person workflow. Owner switching wallets is not independent-user acceptance.
-- [Provider storage/recovery review](audit/2026-11-19/provider-storage/REVIEW.md) is PARTIAL: live meter7139retained-text bytes/64MiB, protected D1 size readout owner-verified at159744bytes (156KiB), initialized/reconciled/normal. Automatic notifications and provider backup retention/restore remain unverified. Current official Plus/Pro hosting inclusion and published10GB database limit are documented; account-specific quota/billing not inspected. Source rollback is not database recovery.
 - Relay abuse protection is deployed: provider-verified short-lived access with atomic session/service budgets, no trusted caller IP assumption. [Live desktop/refusal evidence](audit/2026-11-19/relay-access/REVIEW.md) passes; **owner-reported QoreX browser-check acceptance passes**. Provider-level DDoS protection/fairness is not claimed.
 - Authorized embedding has not been independently observed with the enforced CSP.
-- Final video of no more than three minutes, saved project listing/address fields and final public read-back remain unsigned-off. No placeholder video is presented as a deliverable.
+- [Complete field-by-field listing refresh](compliance/PROJECT_LISTING_COPY.md), [AI disclosure](../AI_USAGE.md) and [proposed cover](assets/project-cover-v2.png) are ready; portal save/read-back remains pending. Final video of no more than three minutes, saved project listing/address fields and final public read-back remain unsigned-off. No placeholder video is presented as a deliverable.
 - The public hackathon timeline was freshly observed showing main merge8545f47 on19November. The connected repository URL is correct; no GitHub App repair was needed. Public About/How it is made still use planning copy and need owner editing. Portal VERIFIED feature badges are not proof of every product capability.
 - Public My space updates are **READY / NOT POSTED** unless explicitly recorded otherwise. Ship Weeks four completions are owner-reported; fresh official Check is unobserved. Q-Day registration deadline passed without confirmed entry.
 - Application history is now merged into main. This resolves the prior branch divergence; hackathon timeline display must still be observed separately.

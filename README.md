@@ -11,7 +11,7 @@
 
 **[Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Try the demo](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title) · [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md)**
 
-Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **81 checks passed, 19 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **89 checks passed, 19 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 [Problem](#the-problem) · [Working proof](#working-proof) · [QoreChain integration](#built-on-qorechain) · [Architecture](#architecture) · [Run locally](#run-locally) · [Limits](#security-and-limits)
 
@@ -127,7 +127,7 @@ Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; publi
 
 ## Testing and audits
 
-**npm run check** builds the browser/Worker and runs **81 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+**npm run check** builds the browser/Worker and runs **89 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Open**. Our [completed project assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) compares the reports and records each disposition. Our [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) explains tests, disputed findings and residual risks. It does not change the auditor's status or certify the application. [All audit reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
 
@@ -138,7 +138,7 @@ The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Op
 - API controls bound writes, workspace quotas and retained application text. The **64 MiB application-text budget** excludes physical database/index space, backups and provider billing.
 - Private draft deletion removes live-service rows; downloaded copies, on-chain records and potentially hosting backups remain.
 - Public fingerprints are not encryption or proof of legal identity, informed consent, delivery or payment.
-- Provider storage/cost monitoring, trusted-source relay abuse controls and independent full-workflow testing remain open. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+- The protected live usage readout reports a156KiB database and reconciled retained-text accounting. Relay access limits are deployed and owner-tested in QoreX. Automatic alerts, tested database-backup recovery and independent full-workflow testing remain unverified. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 ## Documentation and project status
 
