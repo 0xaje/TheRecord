@@ -1,0 +1,14 @@
+{
+  "updatedAt": "2026-11-19T08:37:21.868703+00:00",
+  "siteVersion": 48,
+  "environmentRevision": 5,
+  "deploymentId": "appgdep_6afeb53467c0819183208c936357e392",
+  "configuredPublicFields": ["RECORD_TURNSTILE_SITE_KEY", "RECORD_TURNSTILE_HOSTNAME"],
+  "hostname": "the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "mode": "off",
+  "secretConfigured": false,
+  "publicPolicyConfirmedOff": true,
+  "sourceChanged": false,
+  "liveProviderValidation": false,
+  "remainingBlocker": "Owner must enter RECORD_TURNSTILE_SECRET through a supported secure runtime settings surface; do not request it in chat or invent an unverified UI route. Preview remains off until configuration is complete."
+}

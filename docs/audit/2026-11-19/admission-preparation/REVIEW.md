@@ -54,3 +54,7 @@ Official references:
 - https://developers.cloudflare.com/turnstile/get-started/mobile-implementation/
 
 My space draft — READY, NOT POSTED: The Record's storage/operator checkpoint is confirmed, and the next-workspace admission integration is prepared with62 passing automated checks. Enforcement remains off until the real widget and QoreX acceptance pass. This is preparation evidence, not a claim of live bot protection.
+
+### Public widget configuration received —19November09:37WAT
+
+Owner supplied the public Site key after creating the widget. Configured RECORD_TURNSTILE_SITE_KEY and the exact hostname in runtime revision5; preserved RECORD_ADMISSION_MODE=off and all existing secrets. Redeployed the unchanged saved Site48, deployment appgdep_6afeb53467c0819183208c936357e392. Live public policy remains200/off/required=false. No provider validation claimed. RECORD_TURNSTILE_SECRET is still absent. Secure owner entry is the blocker: available native tools accept a value but expose no hidden secret-entry elicitation, and no owner-facing settings route has yet been inspected. Ask for the site-management settings screen with secrets hidden; do not invent a menu path or ask for the Secret key in chat. public-configuration.json records status only. Keep enforcement OFF until real preview/QoreX acceptance.
