@@ -709,3 +709,6 @@ Site52 hosting5fe19052b4fcb7e44bd464cdc13bf78617236b37/env9 preserves enforcemen
 
 ## 2026-11-19 Workspace transport owner continuity PASS
 Owner confirmed draft still opens after requested refresh. Updated-client privacy fix accepted:65 tests, three live redacted-header observations, real owner continuity. Code5debeb859d8755191768ed6c742624977b51367e / Site52/env9. Historical logs and legacy cached clients remain caveats. Public update READY, NOT POSTED. Next: revisit combined correction plan for next open audit item; do not declare overall audit complete.
+
+## 2026-11-19 A11 relay hardening — partial
+Site53 hostingaf8991adbe99a01e4038d007f9625242204fc1ca/env9 deploys bounded input/output streaming, exact JSON envelope type, safe upstream errors, manual redirect rejection and uncertain-broadcast receipt guidance without retry. 69 tests pass with dedicated fixture relay coverage. Live node-info/invalid-request checks saved under relay-hardening; no transaction broadcast. A11 remains OPEN for trusted-source rate/abuse control because no trustworthy edge identity or provider rule is established; do not trust arbitrary forwarded headers. Provider monitoring, independent users, A15 headers and A17 workspace timeouts remain queued. Public update READY, NOT POSTED. Ship Weeks fresh Check unobserved, no new Diana agreement proof.
