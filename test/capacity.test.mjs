@@ -155,3 +155,19 @@ test('provider probe requires operator authorization and explicit confirmation, 
   assert.equal(response.status,200);const p=await response.json();assert.equal(p.invalidTokenRejected,true);assert.equal(p.admissionGranted,false);assert.equal(p.draftSaved,false);
  }finally{globalThis.fetch=original;}
 });
+
+test('operator database-size readout allows only valid provider bytes; missing metadata stays unknown',async()=>{
+ const db=openLocalDatabase(':memory:');try{
+  await call(db,'',{title:'Private title',terms:'Private terms'});
+  const before=snapshot(db);
+  for(const value of [1048576,undefined,null,0,-1,1.5,'1048576',Infinity,Number.MAX_SAFE_INTEGER+1]){
+   const decorated={prepare(sql){const prepared=db.prepare(sql);return{bind(...args){const statement=prepared.bind(...args);return{...statement,async all(){return{...await statement.all(),meta:{size_after:value,private_provider_field:'must-not-leak'}};}};}};}};
+   const response=await ops(decorated);assert.equal(response.status,200);const result=await response.json();
+   assert.equal(result.databaseStorage.reportedSizeBytes,value===1048576?1048576:null);
+   assert.equal(result.databaseStorage.providerQuotaBytes,null);
+   assert.equal(result.operations.automaticAlertDelivery,'not-configured');assert.equal(result.operations.backupRetentionVerified,false);assert.equal(result.providerMonitoringVerified,false);
+   const json=JSON.stringify(result);for(const secret of ['must-not-leak','Private title','Private terms'])assert.equal(json.includes(secret),false);
+  }
+  assert.deepEqual(snapshot(db),before);
+ }finally{db.sqlite.close();}
+});

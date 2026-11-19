@@ -1,0 +1,14 @@
+{
+  "date": "2026-11-19",
+  "source": "Native Sites read-only DB service_capacity table, one row",
+  "applicationTextLimitBytes": 67108864,
+  "applicationTextUsedBytes": 7139,
+  "draftCount": 27,
+  "revisionCount": 26,
+  "shareCount": 19,
+  "feedbackCount": 2,
+  "physicalDatabaseSizeMeasured": false,
+  "accountBillingInspected": false,
+  "providerRestoreTested": false,
+  "scope": "Aggregate meter only; no private document rows or credentials accessed. Does not establish reconciliation or physical/provider usage."
+}

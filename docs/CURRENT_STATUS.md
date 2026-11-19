@@ -5,12 +5,12 @@ Checked **19 November 2026**. This is the current index; dated reports and the a
 ## Source and hosted build
 
 - Public source: [main](https://github.com/0xaje/TheRecord/tree/main). Working history merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1), merge commit 8545f47061a5912245362aa87b30cf41aaaefba7. Owner requires all future work/pushes on main; no new feature branches.
-- [Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/), **Site59**, runtime environment revision9.
-- Hosting source commit: **d6b21e08644460ff8343ca48dc917a73de90b4e7**. The hosting repository contains the compiled Worker and immutable migration copies, not a separately maintained UI.
+- [Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/), **Site60**, runtime environment revision9.
+- Hosting source commit: **24695b3714a5332a24abab0a1b7bfeac6d50af99**. The hosting repository contains the compiled Worker and immutable migration copies, not a separately maintained UI.
 - Published browser bundle SHA-256: **ed955c2c8b440ce92299f0fdc0be057f4040640a97213125dfffa7ffb8c9c5fd**; [parity evidence](audit/2026-11-19/relay-access/hosted.json).
-- Latest implementation: [relay access protection](audit/2026-11-19/relay-access/REVIEW.md), deployed Site59. Owner confirmed its QoreX browser-access check works. Previous verifier mobile acceptance remains recorded in [41f1d7e](https://github.com/0xaje/TheRecord/commit/41f1d7e1f0cb0a58780efe4f536016613512ff2d).
-- **88 local build/Node checks pass** for the relay-access checkpoint ([latest log](audit/2026-11-19/relay-access/check.txt)). Historical verifier result: **81 checks**. [Raw log](audit/2026-11-19/verifier-errors/check.txt). A completed [GitHub Actions run](https://github.com/0xaje/TheRecord/actions/runs/44513386377) passed for 41f1d7e. New commits require their own CI result; the README badge follows main.
-- Latest deployment adds relay access controls and additive session migration0012. Contract, existing agreement data, secrets and runtime environment revision9 are unchanged.
+- Latest operational change: [protected database-size readout](audit/2026-11-19/provider-storage/REVIEW.md), deployed Site60; owner read-back pending. Completed prior implementation: [relay access protection](audit/2026-11-19/relay-access/REVIEW.md), deployed Site59. Owner confirmed its QoreX browser-access check works. Previous verifier mobile acceptance remains recorded in [41f1d7e](https://github.com/0xaje/TheRecord/commit/41f1d7e1f0cb0a58780efe4f536016613512ff2d).
+- **89 local build/Node checks pass** ([latest log](audit/2026-11-19/provider-storage/check.txt)). Prior relay-access checkpoint:88 checks. Historical verifier result: **81 checks**. [Raw log](audit/2026-11-19/verifier-errors/check.txt). A completed [GitHub Actions run](https://github.com/0xaje/TheRecord/actions/runs/44513386377) passed for 41f1d7e. New commits require their own CI result; the README badge follows main.
+- Latest deployment improves the protected aggregate readout with validated D1 size metadata and explicit unknown operational states. No schema/public UI/contract/data/secret change; environment revision9 unchanged.
 
 ## Real Diana agreement evidence
 
@@ -54,7 +54,7 @@ Private drafts are stored on the service without end-to-end encryption. Recovery
 
 - **Project assessment of all five V2 AI findings is complete:** [comparison and dispositions](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md). **QCAIA findings remain formally Open.** Latest V2 report 65/100, HIGH risk; [finding ledger/source binding](withdrawal/AUDIT_RESPONSE.md). Disputed findings and successful tests do not alter auditor status. Organizer acceptance of the staged audit chain remains unverified.
 - Independent participants have not yet completed the full two-person workflow. Owner switching wallets is not independent-user acceptance.
-- Provider physical-storage/billing monitoring, alerts and backup erasure/retention remain unverified. Application text counters do not replace those.
+- [Provider storage/recovery review](audit/2026-11-19/provider-storage/REVIEW.md) is PARTIAL: live meter7139retained-text bytes/64MiB, protected D1 size readout deployed (owner read-back pending). Automatic notifications and provider backup retention/restore remain unverified. Current official Plus/Pro hosting inclusion and published10GB database limit are documented; account-specific quota/billing not inspected. Source rollback is not database recovery.
 - Relay abuse protection is deployed: provider-verified short-lived access with atomic session/service budgets, no trusted caller IP assumption. [Live desktop/refusal evidence](audit/2026-11-19/relay-access/REVIEW.md) passes; **owner-reported QoreX browser-check acceptance passes**. Provider-level DDoS protection/fairness is not claimed.
 - Authorized embedding has not been independently observed with the enforced CSP.
 - Final video of no more than three minutes, saved project listing/address fields and final public read-back remain unsigned-off. No placeholder video is presented as a deliverable.

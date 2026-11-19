@@ -45,7 +45,13 @@ export async function capacityOperations(request,env) {
     }
     // Meter and aggregate are read in one SQLite snapshot, avoiding false drift during writes.
     const fields=['limit_bytes','used_bytes','drafts_count','revisions_count','shares_count','feedback_count','initialized_at'];
-    const row=await env.DB.prepare(`SELECT i.*, ${fields.map(f=>'c.'+f+' AS capacity_'+f).join(', ')} FROM (${INVENTORY_SQL}) i LEFT JOIN service_capacity c ON c.id=1`).bind().first();
+    const result=await env.DB.prepare(`SELECT i.*, ${fields.map(f=>'c.'+f+' AS capacity_'+f).join(', ')} FROM (${INVENTORY_SQL}) i LEFT JOIN service_capacity c ON c.id=1`).bind().all();
+    if(result.success===false || !result.results?.[0])throw new Error('usage_read_unavailable');
+    const row=result.results[0];
+    // D1 documents size_after in query metadata. Never substitute application-text
+    // counts or expose the whole provider metadata object when it is absent.
+    const reportedSize=result.meta?.size_after;
+    const databaseSizeBytes=Number.isSafeInteger(reportedSize) && reportedSize>0 ? reportedSize : null;
     const capacity=row.capacity_initialized_at===null?null:Object.fromEntries(fields.map(f=>[f,row['capacity_'+f]]));
     const inventory=Object.fromEntries(Object.entries(row).filter(([key])=>!key.startsWith('capacity_')));
     const exhaustive=payloadNames.every(n=>inventory[n+'_count']<=limit);
@@ -54,6 +60,9 @@ export async function capacityOperations(request,env) {
     return response({checkedAt:new Date().toISOString(),initialized:!!capacity,capacity,inventory,inventoryExhaustive:exhaustive,counterCountsExhaustive:inventory.request_limits_count<=4096 && inventory.invite_codes_count<=4096 && inventory.workspace_admissions_count<=4096 && inventory.relay_sessions_count<=4096,reconciled,
       status:!capacity?'initialization-required':reconciled===false?'accounting-mismatch':!exhaustive?'inventory-incomplete':capacity.used_bytes>=capacity.limit_bytes?'full':capacity.used_bytes>=capacity.limit_bytes*.9?'review':capacity.used_bytes>=capacity.limit_bytes*.8?'warning':'normal',
       measurement:'UTF-8 application text in drafts, saved revisions, invitation snapshots and feedback. Excludes database pages/indexes/metadata, counter/admission/relay-session records, invite_codes, backups and provider billing.',
-      antiBotGateEnabled:admissionMode(env)==='enforce',antiBotMode:admissionMode(env),providerMonitoringVerified:false});
+      antiBotGateEnabled:admissionMode(env)==='enforce',antiBotMode:admissionMode(env),providerMonitoringVerified:false,
+      databaseStorage:{reportedSizeBytes:databaseSizeBytes,measurement:databaseSizeBytes===null?'unavailable':'D1 query metadata size_after',providerQuotaBytes:null,
+        note:'Database size reported for this query. Excludes backup copies and is not a billing total or a configured spending cap.'},
+      operations:{monitoring:'manual-operator-readout',automaticAlertDelivery:'not-configured',billingVerified:false,backupRetentionVerified:false,providerRestoreTested:false}});
   } catch {return response({error:'Usage service temporarily unavailable.'},503);}
 }

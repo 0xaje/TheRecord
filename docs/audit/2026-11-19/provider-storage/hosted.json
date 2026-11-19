@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-19T14:49:51.336Z",
+  "siteVersion": 60,
+  "hostingSource": "24695b3714a5332a24abab0a1b7bfeac6d50af99",
+  "environmentRevision": 9,
+  "deploymentSucceeded": true,
+  "checks": [
+    {
+      "path": "/api/operations/capacity",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "path": "/verify.js",
+      "status": 200,
+      "expected": 200,
+      "pass": true,
+      "matchesUnchangedBrowserBuild": true
+    }
+  ],
+  "operatorPositiveReadback": "pending owner-held credential",
+  "schemaChanged": false,
+  "privateDataExported": false
+}
