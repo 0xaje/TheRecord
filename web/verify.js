@@ -1,4 +1,5 @@
-import { resolveDeployment, agreementQuery, versionPresentation } from "./deployments.js";
+import { verifyAgreementFile, verificationErrorMessage } from "./file-verification.js";
+import { resolveDeployment, agreementQuery } from "./deployments.js";
 import { encodeFunctionData, parseAbi } from "viem";
 import "./blog.js";
 import "./walkthrough.js";
@@ -13,8 +14,6 @@ try { deployment = resolveDeployment(location.search); } catch { /* Explicit for
 const contract = deployment?.address;
 const versionAbi = parseAbi(['function getVersionState(bytes32,uint256) view returns (bytes32,uint8,bool,bool)']);
 const rpcUrl = "https://evm-testnet.qore.host";
-const versionSelector = "0xaf904a06";
-const zeroFingerprint = "0".repeat(64);
 
 async function rpc(method, params) {
   if (!deployment) throw new Error("Unknown agreement contract. Open a verified agreement link.");
@@ -64,51 +63,25 @@ form.addEventListener("submit", async (event) => {
   resultPanel.hidden = false;
   delete resultPanel.dataset.state;
   const { id, version, file } = form.elements;
-  const selectedFile = file.files[0];
-  const agreementId = id.value;
-  const versionWord = BigInt(version.value).toString(16);
-  if (versionWord.length > 64) {
-    output.textContent = "Enter a smaller version number.";
-    return;
-  }
-
   button.disabled = true;
   output.textContent = "Checking Diana…";
   try {
-    if (await rpc("eth_chainId", []) !== "0x2648") throw new Error("Unexpected network");
-    const data = deployment?.withdrawals ? encodeFunctionData({ abi: versionAbi, functionName: "getVersionState", args: [agreementId, BigInt(version.value)] }) : versionSelector + agreementId.slice(2) + versionWord.padStart(64, "0");
-    const record = await rpc("eth_call", [{ to: contract, data }, "latest"]);
-    if (!(deployment.withdrawals ? /^0x[0-9a-fA-F]{256}$/ : /^0x[0-9a-fA-F]{192}$/).test(record)) throw new Error("Unexpected response");
+    const state = await verifyAgreementFile({deployment,id:id.value,version:version.value,file:file.files[0]});
     if (revision !== reviewRevision) return;
-    const fingerprint = record.slice(2, 66).toLowerCase();
-    if (fingerprint === zeroFingerprint) {
-      output.textContent = "Agreement version not found.";
-      return;
-    }
-    const digest = await crypto.subtle.digest("SHA-256", await selectedFile.arrayBuffer());
-    const local = toHex(new Uint8Array(digest));
-    if (revision !== reviewRevision) return;
-    const approvals = BigInt("0x" + record.slice(66, 130));
-    const finalizedWord = BigInt("0x" + record.slice(130, 194));
-    if (approvals > 3n || finalizedWord !== (approvals === 3n ? 1n : 0n)) {
-      throw new Error("Unexpected approval state");
-    }
-    const withdrawnWord = deployment.withdrawals ? BigInt("0x" + record.slice(194, 258)) : 0n;
-    if (withdrawnWord > 1n) throw new Error("Unexpected withdrawal state");
-    const state = versionPresentation({ matches: local === fingerprint, approvals: Number(approvals), finalized: finalizedWord === 1n, withdrawn: withdrawnWord === 1n });
     approvalStatus.textContent = state.status;
     approvalStatus.hidden = false;
     approvalProgress.value = state.count;
-    approvalProgress.hidden = withdrawnWord === 1n;
+    approvalProgress.hidden = state.withdrawn;
     if (state.canApprove) {
-      verifiedVersion = { id: agreementId, version: BigInt("0x" + versionWord), fingerprint };
+      verifiedVersion = { id:state.id, version:state.version, fingerprint:state.fingerprint };
       approvalSection.hidden = false;
     }
-    resultPanel.dataset.state = local === fingerprint ? "match" : "mismatch";
+    resultPanel.dataset.state = state.matches ? "match" : "mismatch";
     output.textContent = state.message;
-  } catch {
+  } catch (error) {
     if (revision !== reviewRevision) return;
-    output.textContent = "Could not verify this file. Check your connection and try again.";
+    resultPanel.dataset.state = "error";
+    output.textContent = verificationErrorMessage(error);
   } finally {
     button.disabled = false;
   }
