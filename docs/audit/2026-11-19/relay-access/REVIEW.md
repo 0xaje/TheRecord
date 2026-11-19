@@ -1,5 +1,7 @@
 # A11 registration relay abuse protection
 
+**Acceptance update — 19 November 2026:** Owner replied “WORK” after the requested QoreX browser-access check. Recorded as owner-reported mobile acceptance, without a screenshot or new transaction receipt. A11 application-level relay-protection checkpoint is CLOSED with the limitations below retained. Build/Node88 and both GitHub check/solidity jobs passed for80ea4ae6c0774c4cf7715db0857b08d2693dcd6d ([CI](https://github.com/0xaje/TheRecord/actions/runs/44546476392)). Dated pending statements below describe the pre-confirmation state. No additional registration or payment was requested.
+
 19 November 2026. Implemented and deployed as Site59, hosting source d6b21e08644460ff8343ca48dc917a73de90b4e7, environment revision9. Public audience preserved. Only this checkpoint is addressed; no contract, signature, paid service, wallet transaction or existing private agreement was changed.
 
 ## Acceptance and behavior
@@ -43,3 +45,7 @@ Next owner action: hard-refresh the live app in QoreX, open #signer-setup, tap *
 My space update — READY, NOT POSTED: I added temporary, human-checked access and atomic request limits to The Record's Diana registration relay. All88 build/Node checks pass; live desktop access and unverified-request refusals are recorded. No signing file or transaction was needed for the access check. Phone compatibility is the remaining acceptance step; the contract and original audit reports are unchanged.
 
 Ship Weeks: fresh official Check remains unobserved; no new challenge completion claimed. Q-Day entry remains unconfirmed. GitHub push and hackathon timeline display are tracked separately.
+
+## Current next step
+
+The browser-access implementation/desktop verification and owner-reported QoreX acceptance are complete. Next separate milestone: provider storage/billing monitoring, alerts and backup retention/recovery verification. Public update READY, NOT POSTED: I verified The Record’s protected Diana relay on desktop and confirmed the QoreX browser-access check on my phone. Temporary verified access and request limits are deployed; all88 build/Node checks and both CI jobs pass. This does not claim provider-level DDoS protection or new registration receipts.
