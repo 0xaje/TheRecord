@@ -1,3 +1,5 @@
+import { createWorkspaceApi } from "./workspace-api.js";
+import { collectAdmissionToken } from "./admission.js";
 import { readWorkspaceKey, saveWorkspaceKey } from "./workspace-storage.js";
 const query = new URLSearchParams(location.search);
 const invitation = new URLSearchParams(location.hash.slice(1)).get("invite");
@@ -31,21 +33,28 @@ function newWorkspaceKey() {
   return Array.from(crypto.getRandomValues(new Uint8Array(32)), b => b.toString(16).padStart(2, "0")).join("");
 }
 
-async function api(path = "", body, key = workspaceKey) {
-  const headers = {};
-  if (!invitation && key) headers["X-Record-Workspace"] = key;
-  const options = { headers };
-  if (body !== undefined) {
-    headers["Content-Type"] = "application/json";
-    options.method = "POST";
-    options.body = JSON.stringify(body);
-  }
-  const response = await fetch("/api/drafts" + path, options);
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.error ?? "Request failed.");
-  if (Array.isArray(data)) data.nextCursor = response.headers.get("X-Next-Draft");
-  return data;
-}
+const api = createWorkspaceApi({ getKey: () => workspaceKey, invitation });
+const checkState = document.createElement("button");
+checkState.type = "button"; checkState.className = "secondary";
+checkState.textContent = "Check saved state";
+draftForm.append(checkState);
+checkState.addEventListener("click", async () => {
+  checkState.disabled = true;
+  const status = draftForm.querySelector("output");
+  try {
+    const page = await api();
+    if (current?.id) {
+      const saved = await api("/item?" + new URLSearchParams({id:current.id}));
+      const same = saved.title === draftForm.elements.title.value && saved.terms === draftForm.elements.terms.value;
+      status.textContent = "Server currently has revision " + saved.revision + ". " + (same ? "Its text matches your editor." : "Its text differs from your editor.") + " Your editor has not changed. Reload before making another change.";
+    } else {
+      status.textContent = "Read-only check: " + page.length + " draft(s) on this page" + (page.nextCursor ? "; more pages exist" : "") + ". " +
+        (page.some(d => d.title === draftForm.elements.title.value && d.terms === draftForm.elements.terms.value) ? "A draft with matching text exists; this does not prove which request created it. " : "No matching text on this page; an interrupted write may still complete. ") +
+        "Your editor has not changed. Keep a copy of unsaved text, then reload and inspect Saved drafts before saving again.";
+    }
+  } catch (error) { status.textContent = error.message; }
+  finally { checkState.disabled = false; }
+});
 
 function clearLink() {
   invite.elements.access.value = "";
@@ -114,7 +123,8 @@ async function loadDrafts(id) {
 
 async function submit(form, run) {
   const status = form.querySelector("output");
-  const controls = [...form.querySelectorAll("button")];
+  const controls = [...form.querySelectorAll("button,input,textarea,select")];
+  const disabled = controls.map(control => control.disabled);
   controls.forEach(button => { button.disabled = true; });
   status.textContent = "Working…";
   try {
@@ -122,7 +132,7 @@ async function submit(form, run) {
   } catch (error) {
     status.textContent = error.message;
   } finally {
-    controls.forEach(button => { button.disabled = false; });
+    controls.forEach((control, index) => { control.disabled = disabled[index]; });
   }
 }
 
@@ -169,8 +179,13 @@ draftForm.addEventListener("submit", event => {
   submit(draftForm, async () => {
     const { title, terms } = draftForm.elements;
     if (!workspaceKey && !hasLegacyDrafts) rememberKey(newWorkspaceKey());
-    const saved = await api("", { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value });
-    await loadDrafts(saved.id);
+    const admissionToken = !current?.id && workspaceKey ? await collectAdmissionToken(workspaceKey) : undefined;
+    const payload = { id: current?.id, revision: current?.revision, title: title.value, terms: terms.value, admissionToken };
+    const saved = await api("", payload);
+    // Keep the acknowledged identity even if the follow-up read fails.
+    current = { id: saved.id, revision: saved.revision, title: payload.title, terms: payload.terms };
+    try { await loadDrafts(saved.id); }
+    catch { return "Private draft saved, but its display could not be refreshed. Keep your editor text and reload to open the saved draft."; }
     return "Private draft saved.";
   });
 });

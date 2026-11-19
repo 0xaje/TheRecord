@@ -1,0 +1,27 @@
+# Backend availability and owner-transfer quota
+
+19 November 2026 WAT. A04/A05 corrections deployed on Site46. Hosting source fae0a2785cf1d5ddf542e499190482a667bded20; deployment appgdep_6afe3c33d39481919fef3b9edb4a5a1c succeeded. No agreement contract or wallet transaction changed.
+
+## Reproduce, fix, verify
+
+Before changes, isolated SQLite reproduced both original failures: 600 invalid anonymous routes made an unrelated owner read return429; moving two legacy drafts into a full50-draft workspace succeeded and left52. before.json records the observed baseline. These were local reproductions, not a hosted saturation test or public identity-header exploit.
+
+A04: validate route/method and POST origin before database accounting. Keep existing120/minute owner reads,30/minute owner writes and30/minute invitation attempts. Invalid routes do not touch the database; invalid workspace identities and anonymous operations do not consume a global budget. Validly shaped but invalid-content owner writes still use that owner's own write allowance. Reads and invitation review no longer share the old600/minute global counter. Retain a separate600/minute emergency mutation ceiling after payload guards; it cannot block draft/revision/invitation reads. Expired counter cleanup stays bounded to100 entries per admitted limiter call. Basic validation is not proof of a legitimate person; see A06 below.
+
+A05: append schema-only migration0009_owner_transfer_quota. Its BEFORE UPDATE OF owner trigger enforces the same50-draft cap as inserts. RAISE(ABORT) reverses the entire multi-row UPDATE, including already moved rows, if any row would overflow. It includes trashed drafts in the count. No old migrations modified, no rows backfilled or deleted, and no move creates revisions or changes invitation state.
+
+Verification: all43 automated checks pass. Added isolatedSQLite cases cover650 invalid routes plus650 bad-content owner requests with an unrelated user's read/save still available, emergency write-cap read/review availability, exact-fit48+2 move,49+2 and50+2 rollback, unchanged revisions/invitations, and competing49+1+1 moves with one refusal and no lost row. The competing-call test uses one real SQLite connection/serialized statements; it is not a multi-region D1 load test. Existing additive legacy-data migration fixture now applies0009 too. after.json shows the original reproducer returning200 for unrelated reads and409/count50 for the over-quota move.
+
+Hosted acceptance: ten bounded requests against one new disposable workspace passed unknown-route and cross-origin refusal, create, revise, both saved revisions, invitation review, Trash, invitation revocation and readable Trash. One harmless draft remains in recoverable Trash. Recovery key is stored privately under ignored .record-local and never printed or committed. No permanent deletion, mass move, existing-owner data inspection, public flood or wallet operation performed. hosted-acceptance.json records results. deployment.json verifies tested Worker/new SQL/journal equal packaged files; it does not independently read hosted schema metadata. Successful native publication applied the pending schema migration before Worker upload.
+
+## Blunt review and open operational gate
+
+The two reproduced defects are corrected, tested and deployed. Normal hosted workspace flow also passes. This does NOT close A06: per-workspace limits do not prevent creation of many recovery identities; random well-formed invitation attempts can still create request-limit scopes, and validly shaped mutation attempts from many identities can reach the shared emergency write ceiling. At that ceiling writes intentionally return429 while reads remain independently limited. The ceiling is a request limit, not a disk, cost or real-person admission guarantee.
+
+The complete backend-hardening milestone remains OPEN for a verified trusted-edge/source abuse control and an explicit monitored service storage/cost budget. Available Sites tools expose no configurable WAF/rate-limit/budget-alarm control; no client-supplied forwarded/IP header is trusted as a substitute. Platform limits/alerts and backup retention must be confirmed with the hosting provider before claiming production-scale protection. Introducing mandatory sign-in, a challenge service or paid infrastructure would change onboarding/architecture and needs the owner's decision; none was silently added. A11 relay regressions, A15 headers and A17 request timeout/recovery remain separate queued corrections, not fixed here.
+
+Event relevance: engineering reliability and a functioning dApp; this adds no Diana approval or cryptography claim. Ship Weeks four owner-reported completions, fresh Check unobserved. No new challenge completion or Q-Day entry claimed. Publicmain still unchanged; working fixes stay on withdrawal-amendments/draftPR1 until release gates pass.
+
+## My space update — READY, NOT POSTED
+
+I fixed two backend issues in The Record: invalid requests can no longer consume the shared allowance used by other people's draft reads, and moving older drafts now respects the50-draft limit atomically. All43 automated checks pass, including rollback and ownership tests. A bounded hosted check also passed saving, revisions, review invitations and Trash. Broader abuse admission, storage monitoring and independent-user acceptance remain open; these fixes are not a claim of production-scale security.

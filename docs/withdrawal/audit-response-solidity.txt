@@ -1,0 +1,36 @@
+Compiling 1 files with Solc 0.8.28
+Solc 0.8.28 finished in 68.86ms
+Compiler run successful!
+2026-11-18T23:19:35.133216Z  WARN evm::traces::external: etherscan config not found
+
+Ran 18 tests for test/TheRecordV2.t.sol:TheRecordV2Test
+[PASS] testCannotApproveWithdrawn() (gas: 54156)
+[PASS] testCannotProposeCurrentFinalizedFileAgain() (gas: 51574)
+[PASS] testCannotReplacePendingWithoutWithdrawal() (gas: 51061)
+[PASS] testCannotWithdrawFinalized() (gas: 17746)
+[PASS] testCannotWithdrawFinalizedAmendment() (gas: 54216)
+[PASS] testCannotWithdrawInitialAgreement() (gas: 16540)
+[PASS] testCannotWithdrawTwice() (gas: 54103)
+[PASS] testChainBindingChangesWithdrawalPayload() (gas: 58551)
+[PASS] testCorrectionApprovalPayloadDiffers() (gas: 89346)
+[PASS] testCorrectionStartsFreshAndPreservesBothRecords() (gas: 88561)
+[PASS] testDelayedWithdrawalCannotTargetOldVersion() (gas: 80465)
+[PASS] testMalformedWithdrawalSignatureFails() (gas: 53018)
+[PASS] testOnlyProposerCanWithdraw() (gas: 51824)
+[PASS] testOriginalContractRemainsIndependent() (gas: 1471510)
+[PASS] testOutsiderCannotProposeCorrection() (gas: 51226)
+[PASS] testVersionOverflowRevertsWithCheckedArithmetic() (gas: 23448)
+[PASS] testWithdrawalDomainDiffersFromApproval() (gas: 57963)
+[PASS] testWithdrawnApprovalDataUnavailable() (gas: 53612)
+Suite result: ok. 18 passed; 0 failed; 0 skipped; finished in 2.23ms (2.79ms CPU time)
+
+Ran 6 tests for test/TheRecord.t.sol:TheRecordTest
+[PASS] testApprovalPayloadBindsSigner() (gas: 17683)
+[PASS] testDianaFinalizedAmendmentPreservesOriginal() (gas: 21459)
+[PASS] testOutsiderCannotProposeAmendment() (gas: 13859)
+[PASS] testProposerCannotAmendPendingVersion() (gas: 17706)
+[PASS] testRejectsMalformedSignature() (gas: 18813)
+[PASS] testRejectsUndesignatedSigner() (gas: 20811)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 7.63s (7.63s CPU time)
+
+Ran 2 test suites in 7.63s (7.63s CPU time): 24 tests passed, 0 failed, 0 skipped (24 total tests)

@@ -7,7 +7,7 @@ const stranger = randomBytes(32).toString('hex');
 const checks = [];
 async function api(label, path, body, expected, workspace = key) {
   const response = await fetch(base + '/api/drafts' + path, { method: body === undefined ? 'GET' : 'POST', headers: {
-    Origin: base, 'Content-Type': 'application/json', ...(workspace ? { 'X-Record-Workspace': workspace } : {}),
+    Origin: base, 'Content-Type': 'application/json', ...(workspace ? { Authorization: 'Bearer workspace:' + workspace } : {}),
   }, ...(body === undefined ? {} : { body: JSON.stringify(body) }), signal: AbortSignal.timeout(20000) });
   assert.equal(response.status, expected, label);
   const data = await response.json(); checks.push({ check: label, http: response.status, result: 'PASS' }); return data;

@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-11-19",
+  "siteVersion": 55,
+  "environmentRevision": 9,
+  "hostingCommit": "6c68b1fc384087d6c9f2f81b47a9bd087aa81609",
+  "browser": "Cloud Chrome; originating extension unavailable",
+  "landingRendered": true,
+  "walkthroughChaptersRendered": 10,
+  "blogRendered": true,
+  "blogAnchorNavigation": true,
+  "originalDownloadedAndVerified": "File matches the finalized version. Finalized \u00b7 2 of 2 approvals recorded",
+  "changedDownloadedAndVerified": "File does not match this version. Finalized \u00b7 2 of 2 approvals recorded",
+  "agreementId": "0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e",
+  "version": 1,
+  "cspWarningsInInspectedFlows": [],
+  "humanChallengeUnderHeadersVerified": false,
+  "qorexWalletCompatibilityVerified": false,
+  "noTransactionSent": true
+}

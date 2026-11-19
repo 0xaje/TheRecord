@@ -1,0 +1,113 @@
+{
+  "checkedAt": "2026-11-18T23:20:02.175Z",
+  "chainId": 9800,
+  "address": "0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "sourceSha256": "688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df3193980",
+  "transactions": {
+    "oldApproval": "0xc9ba6c589f633389b2beed378833726b5b432eb7ec5d8be0a7448aaa6225a581",
+    "withdrawal": "0x7b41df12ed1e2dee4ddc680b13cc35cbece6c48d3af7102074838b3f2f2b465e",
+    "freshApproval": "0x372faa2a576cfd57dc06d272139254b5e8d52e50e2e942ff3e1db7013b383d7d",
+    "finalization": "0xab11d9e3409fd974af93039a7d30abee1f409027c183cdbb1e61ad8c32086960"
+  },
+  "checks": [
+    {
+      "label": "valid original version2 approval",
+      "block": "10340967",
+      "expected": "accepted",
+      "result": "PASS"
+    },
+    {
+      "label": "valid withdrawal with proposer PQ signature",
+      "block": "10341212",
+      "expected": "accepted",
+      "result": "PASS"
+    },
+    {
+      "label": "valid fresh version3 approval",
+      "block": "10341666",
+      "expected": "accepted",
+      "result": "PASS"
+    },
+    {
+      "label": "version2 signature rejected for version3 despite identical file hash",
+      "block": "10341666",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    },
+    {
+      "label": "approval signature cannot authorize withdrawal",
+      "block": "10341212",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    },
+    {
+      "label": "withdrawal signature cannot authorize approval",
+      "block": "10340967",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    },
+    {
+      "label": "altered full-length withdrawal signature rejected",
+      "block": "10341212",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    },
+    {
+      "label": "other designated signer cannot withdraw",
+      "block": "10341212",
+      "expected": "InvalidAgreement",
+      "result": "PASS"
+    },
+    {
+      "label": "second withdrawal rejected",
+      "block": "10341213",
+      "expected": "InvalidVersion",
+      "result": "PASS"
+    },
+    {
+      "label": "withdrawn latest version cannot receive approval",
+      "block": "10341213",
+      "expected": "InvalidVersion",
+      "result": "PASS"
+    },
+    {
+      "label": "delayed withdrawal cannot target superseded version2",
+      "block": "10341666",
+      "expected": "InvalidVersion",
+      "result": "PASS"
+    },
+    {
+      "label": "duplicate fresh approval rejected",
+      "block": "10341667",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    },
+    {
+      "label": "finalized correction cannot be withdrawn",
+      "block": "10341772",
+      "expected": "InvalidVersion",
+      "result": "PASS"
+    },
+    {
+      "label": "original finalized version cannot be withdrawn",
+      "block": "10341772",
+      "expected": "InvalidVersion",
+      "result": "PASS"
+    },
+    {
+      "label": "valid approval may be relayed without changing its signed meaning",
+      "block": "10341666",
+      "expected": "accepted",
+      "result": "PASS"
+    },
+    {
+      "label": "relayer cannot substitute the other designated signer",
+      "block": "10341666",
+      "expected": "InvalidApproval",
+      "result": "PASS"
+    }
+  ],
+  "passed": 16,
+  "scope": "Read-only historical calls against real deployed Diana contract and PQ precompiles using publicly recorded signatures. No new transactions, mocked precompiles, keys or signatures generated. Not an independent security certification."
+}

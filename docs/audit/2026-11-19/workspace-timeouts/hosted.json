@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-11-19T10:00:05.309Z",
+  "bundleStatus": 200,
+  "bundleMatches": true,
+  "bundleSha256": "843e732a7ebf77316ccd57cad89db7b626cca6849eff63db70833cd921e71fd8",
+  "readStatus": 200,
+  "emptyWorkspace": true,
+  "ownerUiAcceptance": false,
+  "noWriteSent": true
+}

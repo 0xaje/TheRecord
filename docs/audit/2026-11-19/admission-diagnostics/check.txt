@@ -1,0 +1,98 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 check
+> npm run build:site && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build:site
+> npm run build && node scripts/build-worker.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build
+> esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html
+
+
+  dist/verify.js  1.3mb ⚠️
+
+⚡ Done in 97ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 test
+> node --test test/*.test.mjs
+
+✔ off is inert; preview is opt-in; enforce fails closed without configuration or proof (27.538028ms)
+admission_provider_failure {"code":"AP-CONNECTION","stage":"fetch","reason":"unclassified","httpStatus":null}
+admission_provider_failure {"code":"AP-SIZE","stage":"body","reason":null,"httpStatus":200}
+✔ existing and trashed workspaces preserve access without a new challenge (12.4215ms)
+✔ server validation binds hostname, action, age and workspace; errors never admit (13.884842ms)
+✔ successful adapter fixture stores only hashes, bounds replay and preserves an admission (18.405052ms)
+✔ admissions have a bounded row ceiling and expiry frees space without evicting active records (72.097888ms)
+✔ public policy exposes only configured sitekey and binding, not provider secret; rejects dummy keys (6.621281ms)
+✔ browser helper does not load a widget in off mode and does not retry a failed policy (3.137306ms)
+✔ opt-in preview on an existing workspace really validates with provider instead of bypassing it (8.023986ms)
+✔ misspelled admission mode cannot silently disable a configured gate (5.96254ms)
+✔ provider diagnostics classify failures without exposing tokens, secrets or response bodies (2.677546ms)
+✔ Blog reading location follows down, up, long sections and gaps (1.13179ms)
+✔ operator authentication fails before DB access and never exposes workspace content (22.994548ms)
+✔ bounded baseline initializes existing rows atomically, cannot reset, and requires explicit confirmation (10.920893ms)
+✔ exact-fit budget, UTF-8 accounting and revision overflow roll back the whole save (9.857396ms)
+✔ snapshots and feedback are metered; Trash, restore, transfer and deletion stay consistent (21.481441ms)
+✔ failure in dependent deletion rolls back capacity decrements and all private rows (11.567079ms)
+✔ existing over-budget data remains intact and readable; competing growth cannot overspend (12.836096ms)
+✔ request scopes are bounded without evicting live limits; stale cleanup admits a new scope (30.363724ms)
+✔ operator CLI init is offline, private, non-replacing and never prints its token (1.875474ms)
+✔ bounded inventory refuses oversized initialization without changing existing records (34.09388ms)
+✔ operator readout flags counter drift instead of describing it as normal (7.042513ms)
+✔ provider probe requires operator authorization and explicit confirmation, with no DB mutation (3.400609ms)
+✔ built Worker serves pages and persistent private drafts with real local SQLite (153.454128ms)
+✔ draft, review, feedback, revision isolation and revocation (56.139649ms)
+✔ expiry, malformed requests, origins and storage failures (15.179162ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (17.736672ms)
+✔ revision pages have no overlap and do not expose full text in lists (43.264794ms)
+✔ additive migration preserves a legacy current revision without inventing old text (21.755515ms)
+✔ workspace write throttle returns Retry-After without blocking reads (25.641288ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (21.389122ms)
+✔ retained revision and invitation quotas are atomic (41.802778ms)
+✔ review throttling and temporary storage failures fail safely (33.175533ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (34.583369ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (28.941094ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (8.151588ms)
+✔ invalid traffic cannot consume another workspace read or write allowance (447.034292ms)
+✔ shared emergency write ceiling preserves owner and invitation reads (8.770594ms)
+✔ legacy ownership moves are all-or-nothing at quota and preserve revisions and invitations (67.674846ms)
+✔ competing legacy moves cannot exceed the shared destination quota (13.466009ms)
+✔ disposable CLI creates a private file without printing secrets or replacing an account (169.944937ms)
+✔ registration includes a valid address-bound possession proof and signs offline only (47.441169ms)
+✔ paired proof fixes zero-value scope targets and requires the exact successful proposal event (11.385104ms)
+✔ Diana allowed-recipient rejection is recognized without accepting unrelated failures (0.189045ms)
+✔ read-only review requires live matching snapshots and retains original evidence (0.510562ms)
+✔ V2 scope stays bound to its verified deployment and rejects legacy receipts (2.181287ms)
+✔ V2 offline plan preserves old evidence and never calls the network (117.025744ms)
+✔ scoped request bytes exactly match official SDK, with no key derivation or signing (4.694344ms)
+✔ receipt validation refuses unscoped, failed, mismatched and non-hybrid fixtures (0.42995ms)
+✔ read-back distinguishes live restriction from expired or replaced window fixtures (0.304951ms)
+✔ built verifier initializes its controls when storage access throws (138.839103ms)
+✔ expanded walkthrough keeps chapter links, active step count and menu controls aligned (5.187058ms)
+✔ Blog chapter anchors resolve without colliding with application screen routes (1.061334ms)
+✔ legacy links stay pinned and unknown deployments never fall back (2.105191ms)
+✔ matching withdrawn file is never approvable or finalized (0.670443ms)
+✔ history retains original, withdrawal receipt and fresh zero-approval correction (1.958219ms)
+✔ history rejects missing withdrawal evidence and post-withdrawal approvals (0.868443ms)
+✔ deployment artifact is source-bound and preserves the legacy source (1.219092ms)
+✔ owner deployment plan is offline, one creation transaction, and never changes legacy routing (551.672593ms)
+✔ verified V2 receipt activates only explicit V2 links; original default is preserved (0.42345ms)
+✔ blocked storage access and reads do not throw during module setup (1.392915ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (1.228086ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (0.78695ms)
+✔ successful persistence reads back the exact recovery code before returning (0.355207ms)
+✔ failed read-back attempts to restore the previously saved identity (0.35109ms)
+ℹ tests 64
+ℹ suites 0
+ℹ pass 64
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1274.998781

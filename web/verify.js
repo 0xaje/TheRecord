@@ -1,17 +1,22 @@
+import { verifyAgreementFile, verificationErrorMessage } from "./file-verification.js";
+import { resolveDeployment, agreementQuery } from "./deployments.js";
+import { encodeFunctionData, parseAbi } from "viem";
 import "./blog.js";
 import "./walkthrough.js";
 import "./history.js";
 import "./private-agreements.js";
 import "./scoped-window.js";
-import { generateTestSigner, SignerReadinessError, submitApproval } from "./approve.js";
+import { generateTestSigner, SignerReadinessError, submitApproval, submitWithdrawal } from "./approve.js";
 import { registerSigner } from "./register.js";
 
-const contract = "0x25721b3be0f24438da7daed4c800b073ef9bb802";
+let deployment;
+try { deployment = resolveDeployment(location.search); } catch { /* Explicit form error below; never silently choose another contract. */ }
+const contract = deployment?.address;
+const versionAbi = parseAbi(['function getVersionState(bytes32,uint256) view returns (bytes32,uint8,bool,bool)']);
 const rpcUrl = "https://evm-testnet.qore.host";
-const versionSelector = "0xaf904a06";
-const zeroFingerprint = "0".repeat(64);
 
 async function rpc(method, params) {
+  if (!deployment) throw new Error("Unknown agreement contract. Open a verified agreement link.");
   const response = await fetch(rpcUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -58,54 +63,25 @@ form.addEventListener("submit", async (event) => {
   resultPanel.hidden = false;
   delete resultPanel.dataset.state;
   const { id, version, file } = form.elements;
-  const selectedFile = file.files[0];
-  const agreementId = id.value;
-  const versionWord = BigInt(version.value).toString(16);
-  if (versionWord.length > 64) {
-    output.textContent = "Enter a smaller version number.";
-    return;
-  }
-
   button.disabled = true;
   output.textContent = "Checking Diana…";
   try {
-    if (await rpc("eth_chainId", []) !== "0x2648") throw new Error("Unexpected network");
-    const data = versionSelector + agreementId.slice(2) + versionWord.padStart(64, "0");
-    const record = await rpc("eth_call", [{ to: contract, data }, "latest"]);
-    if (!/^0x[0-9a-fA-F]{192}$/.test(record)) throw new Error("Unexpected response");
+    const state = await verifyAgreementFile({deployment,id:id.value,version:version.value,file:file.files[0]});
     if (revision !== reviewRevision) return;
-    const fingerprint = record.slice(2, 66).toLowerCase();
-    if (fingerprint === zeroFingerprint) {
-      output.textContent = "Agreement version not found.";
-      return;
-    }
-    const digest = await crypto.subtle.digest("SHA-256", await selectedFile.arrayBuffer());
-    const local = toHex(new Uint8Array(digest));
-    if (revision !== reviewRevision) return;
-    const approvals = BigInt("0x" + record.slice(66, 130));
-    const finalizedWord = BigInt("0x" + record.slice(130));
-    if (approvals > 3n || finalizedWord !== (approvals === 3n ? 1n : 0n)) {
-      throw new Error("Unexpected approval state");
-    }
-    const finalized = finalizedWord === 1n;
-    const count = approvals === 0n ? 0 : finalized ? 2 : 1;
-    approvalStatus.textContent = finalized
-      ? "Finalized · 2 of 2 approvals recorded"
-      : `Awaiting approval · ${count} of 2 approvals recorded`;
+    approvalStatus.textContent = state.status;
     approvalStatus.hidden = false;
-    approvalProgress.value = count;
-    approvalProgress.hidden = false;
-    if (local === fingerprint && !finalized) {
-      verifiedVersion = { id: agreementId, version: BigInt("0x" + versionWord), fingerprint };
+    approvalProgress.value = state.count;
+    approvalProgress.hidden = state.withdrawn;
+    if (state.canApprove) {
+      verifiedVersion = { id:state.id, version:state.version, fingerprint:state.fingerprint };
       approvalSection.hidden = false;
     }
-    resultPanel.dataset.state = local === fingerprint ? "match" : "mismatch";
-    output.textContent = local === fingerprint
-      ? (finalized ? "File matches the finalized version." : "File matches. This version is awaiting approval.")
-      : "File does not match this version.";
-  } catch {
+    resultPanel.dataset.state = state.matches ? "match" : "mismatch";
+    output.textContent = state.message;
+  } catch (error) {
     if (revision !== reviewRevision) return;
-    output.textContent = "Could not verify this file. Check your connection and try again.";
+    resultPanel.dataset.state = "error";
+    output.textContent = verificationErrorMessage(error);
   } finally {
     button.disabled = false;
   }
@@ -168,7 +144,7 @@ async function submitProposal(form, file, prefix, id) {
       try {
         await rpc("eth_call", [{ from, to: contract, data }, "latest"]);
       } catch {
-        throw new Error("Could not prepare the amendment. Use the original proposer’s wallet, check that the latest version is finalized, and select a changed file.");
+        throw new Error("Could not prepare the amendment. Use the original proposer’s wallet, check that the latest version is finalized or (on the withdrawal contract) withdrawn, and select a changed file.");
       }
     }
     createOutput.textContent = "Review and confirm the transaction in your wallet.";
@@ -203,7 +179,8 @@ async function submitProposal(form, file, prefix, id) {
     if (!proposed) throw new Error("Diana confirmed the transaction. The agreement event could not be verified.");
     const version = BigInt(proposed.topics[2]).toString();
     const link = new URL(location.href);
-    link.search = new URLSearchParams({ id: proposed.topics[1], version }).toString();
+    link.pathname = "/";
+    link.search = agreementQuery(deployment, proposed.topics[1], version).toString();
     link.hash = "";
     agreementLink.href = link.href;
     agreementLink.hidden = false;
@@ -337,7 +314,7 @@ window.matchMedia("(max-width: 600px)").addEventListener("change", () => setMenu
 
 if (query.has("id")) {
   for (const link of navLinks) {
-    if (new URL(link.href).pathname === "/history") link.href = "/history?" + new URLSearchParams({ id: query.get("id") });
+    if (new URL(link.href).pathname === "/history") link.href = "/history?" + new URLSearchParams({ ...(deployment?.id !== "legacy" ? { deployment: deployment?.id } : {}), id: query.get("id") });
     if (["#verify-title", "#amend-title"].includes(link.hash)) {
       link.href = location.pathname + location.search + link.hash;
     }
@@ -355,6 +332,8 @@ function showScreen() {
         : page === "/walkthrough" ? "walkthrough"
         : page === "/blog" || hash === "guide" ? "blog"
           : query.has("id") ? "verify-title" : "landing";
+  const startup = document.querySelector("#app-startup");
+  if (startup) startup.hidden = true;
   landing.hidden = screen !== "landing";
   for (const panel of screens) panel.hidden = panel.dataset.screen !== screen;
   for (const link of navLinks) {
@@ -369,3 +348,56 @@ function showScreen() {
 
 showScreen();
 window.addEventListener("hashchange", showScreen);
+
+const withdrawalForm = document.querySelector('#withdraw-update');
+const withdrawalInfo = document.querySelector('#withdrawal-availability');
+withdrawalForm.elements.id.value = query.get('id') ?? '';
+withdrawalForm.elements.version.value = query.get('version') ?? '';
+withdrawalForm.hidden = !deployment?.withdrawals;
+withdrawalInfo.textContent = deployment?.withdrawals
+  ? 'You can withdraw a pending amendment with the original proposer’s QoreX account. Any correction needs two fresh approvals. Finalized versions cannot be withdrawn.'
+  : 'This agreement uses the original contract, which cannot withdraw updates. Existing records stay on their original contract and remain verifiable.';
+withdrawalForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!deployment?.withdrawals) return;
+  const status = withdrawalForm.querySelector('output');
+  const button = withdrawalForm.querySelector('button');
+  const link = withdrawalForm.querySelector('a');
+  const id = withdrawalForm.elements.id.value.trim();
+  const version = BigInt(withdrawalForm.elements.version.value);
+  if (!window.confirm('Withdraw this pending update? Any approvals stay in history but cannot approve a correction. The corrected version will need two fresh approvals.')) return;
+  button.disabled = true; link.hidden = true;
+  status.textContent = 'Checking the pending update on Diana…';
+  try {
+    const data = encodeFunctionData({ abi: versionAbi, functionName: 'getVersionState', args: [id, version] });
+    const record = await rpc('eth_call', [{ to: contract, data }, 'latest']);
+    if (!/^0x[0-9a-fA-F]{256}$/.test(record) || /^0+$/.test(record.slice(2,66)) || version <= 1n || BigInt('0x'+record.slice(130,194)) !== 0n || BigInt('0x'+record.slice(194,258)) !== 0n) throw new Error('Select a pending amendment that has not been withdrawn.');
+    await submitWithdrawal({ rpcUrl, contract, id, version, fingerprint: record.slice(2,66).toLowerCase(), onSubmitted(hash) {
+      link.href = 'https://dashboard.qorechain.io/explorer/tx/' + hash; link.hidden = false;
+      status.textContent = 'Withdrawal submitted. Waiting for Diana…';
+    } });
+    status.textContent = 'Withdrawal confirmed. The earlier finalized version is unchanged. Propose the corrected file as a new version.';
+  } catch (error) {
+    status.textContent = !link.hidden ? 'Check the withdrawal transaction before retrying.' : error.shortMessage ?? error.message;
+  } finally { button.disabled = false; }
+});
+for (const link of navLinks) {
+  if (deployment && deployment.id !== 'legacy') {
+    const target = new URL(link.href);
+    target.searchParams.set('deployment', deployment.id);
+    link.href = target.href;
+  }
+}
+if (!deployment) {
+  for (const f of [form, createForm, amendForm, approveForm, withdrawalForm]) {
+    f.querySelectorAll('button').forEach(button => { button.disabled = true; });
+    const message = f.querySelector('output');
+    if (message) message.textContent = 'Unknown agreement contract. Use a verified agreement link.';
+  }
+}
+
+const context = document.querySelector('#deployment-context');
+if (deployment?.withdrawals) {
+  context.hidden = false;
+  context.textContent = 'Withdrawal test contract on Diana. New workflow acceptance is in progress. Existing agreement links keep using their original contract.';
+}

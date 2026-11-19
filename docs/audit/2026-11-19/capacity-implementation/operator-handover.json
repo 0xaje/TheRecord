@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-19T00:28:03.140Z",
+  "bootstrapCredentialStatus": 401,
+  "bootstrapRevocationVerified": true,
+  "ownerPositiveStatus": "PASS: owner-local status output supplied",
+  "environmentRevision": 4,
+  "deploymentId": "appgdep_6afe4276bc6c81918b78c8d315f024a6",
+  "sourceUnchanged": true,
+  "countersNotReset": true,
+  "ownerCheckedAt": "2026-11-19T00:30:00.518Z",
+  "ownerInitialized": true,
+  "ownerReconciled": true,
+  "ownerStatus": "normal",
+  "ownerEvidenceScope": "Owner supplied authenticated CLI output. Raw aggregate totals not republished; private operator token remains owner-local."
+}

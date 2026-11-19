@@ -1,0 +1,13 @@
+{
+  "testedAt": "2026-11-19T00:02:10.008Z",
+  "siteVersion": 46,
+  "hostingSource": "fae0a2785cf1d5ddf542e499190482a667bded20",
+  "deployment": "appgdep_6afe3c33d39481919fef3b9edb4a5a1c",
+  "files": {
+    "dist/server/index.js": "8ee7a20364c5134b4278308b80e6f200768998d880f86cef4092cc57aad0b9c8",
+    "migrations/0009_owner_transfer_quota.sql": "c154c7d7ac14db1ef2d585d8dc65933853193ee6dc0a997637a643d49d9e8e93",
+    "deploy/migration-journal.json": "217d5ee031af470b5a6e9d54b186177448ba75ef6fcc219d7ea17a5817e6dbc2"
+  },
+  "oldMigrationsChanged": false,
+  "scope": "Hosting package contains this tested Worker, appended migration and journal. Native deployment succeeded; this is not an independent read of hosted database metadata."
+}

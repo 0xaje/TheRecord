@@ -1,0 +1,71 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 check
+> npm run build:site && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build:site
+> npm run build && node scripts/build-worker.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 build
+> esbuild web/verify.js --bundle --preserve-symlinks --platform=browser --format=esm --outfile=dist/verify.js && cp web/index.html dist/index.html
+
+
+  dist/verify.js  1.3mb ⚠️
+
+⚡ Done in 84ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> the-record@1.0.0 test
+> node --test test/*.test.mjs
+
+✔ Blog reading location follows down, up, long sections and gaps (6.175596ms)
+✔ built Worker serves pages and persistent private drafts with real local SQLite (141.876368ms)
+✔ draft, review, feedback, revision isolation and revocation (59.580971ms)
+✔ expiry, malformed requests, origins and storage failures (15.540449ms)
+✔ saved revisions retain exact text, fingerprint and owner scope (20.836905ms)
+✔ revision pages have no overlap and do not expose full text in lists (26.505754ms)
+✔ additive migration preserves a legacy current revision without inventing old text (6.493207ms)
+✔ workspace write throttle returns Retry-After without blocking reads (53.196709ms)
+✔ draft quota and keyset pagination preserve ownership and existing records (19.832955ms)
+✔ retained revision and invitation quotas are atomic (25.748138ms)
+✔ review throttling and temporary storage failures fail safely (38.685367ms)
+✔ Trash is owner-scoped, revokes invitations atomically and restores every revision (27.364744ms)
+✔ permanent deletion requires owner, Trash snapshot and confirmation; removes only its private rows (19.239107ms)
+✔ permanent deletion rolls back dependent removals when final delete fails (8.536549ms)
+✔ disposable CLI creates a private file without printing secrets or replacing an account (218.599167ms)
+✔ registration includes a valid address-bound possession proof and signs offline only (69.690891ms)
+✔ paired proof fixes zero-value scope targets and requires the exact successful proposal event (7.905484ms)
+✔ Diana allowed-recipient rejection is recognized without accepting unrelated failures (0.247405ms)
+✔ read-only review requires live matching snapshots and retains original evidence (0.519957ms)
+✔ V2 scope stays bound to its verified deployment and rejects legacy receipts (2.327212ms)
+✔ V2 offline plan preserves old evidence and never calls the network (144.508211ms)
+✔ scoped request bytes exactly match official SDK, with no key derivation or signing (5.846522ms)
+✔ receipt validation refuses unscoped, failed, mismatched and non-hybrid fixtures (0.591846ms)
+✔ read-back distinguishes live restriction from expired or replaced window fixtures (0.296589ms)
+✔ built verifier initializes its controls when storage access throws (126.865531ms)
+✔ expanded walkthrough keeps chapter links, active step count and menu controls aligned (4.365798ms)
+✔ Blog chapter anchors resolve without colliding with application screen routes (0.735443ms)
+✔ legacy links stay pinned and unknown deployments never fall back (2.052497ms)
+✔ matching withdrawn file is never approvable or finalized (0.647791ms)
+✔ history retains original, withdrawal receipt and fresh zero-approval correction (1.867196ms)
+✔ history rejects missing withdrawal evidence and post-withdrawal approvals (0.701111ms)
+✔ deployment artifact is source-bound and preserves the legacy source (0.824468ms)
+✔ owner deployment plan is offline, one creation transaction, and never changes legacy routing (569.305278ms)
+✔ verified V2 receipt activates only explicit V2 links; original default is preserved (0.451904ms)
+✔ blocked storage access and reads do not throw during module setup (1.453861ms)
+✔ empty, invalid and valid persisted workspace codes are distinguished (2.583369ms)
+✔ denied and silently dropped writes cannot replace an in-memory identity (4.535354ms)
+✔ successful persistence reads back the exact recovery code before returning (0.312413ms)
+✔ failed read-back attempts to restore the previously saved identity (0.327405ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1184.931154

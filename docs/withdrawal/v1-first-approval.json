@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-11-18T22:23:18.558Z",
+  "nativeHash": "ABF459C1093C9561CE6C6EEB4C7E02FA71270C5EF59E5A1D2EEA6B7A4D2FA40E",
+  "nativeCode": 0,
+  "block": "10340424",
+  "approvals": [
+    {
+      "id": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+      "version": "1",
+      "signer": "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+      "evmHash": "0x47dfd1fe5912ca1484f33b8759e17958d18e65d7bee92c6c319e8e9159948774"
+    }
+  ],
+  "state": {
+    "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+    "approvalMask": 1,
+    "finalized": false,
+    "withdrawn": false
+  },
+  "note": "Event verified at native receipt block; block-level match, not independent native-to-EVM hash mapping."
+}

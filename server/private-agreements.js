@@ -1,3 +1,5 @@
+import { workspaceCredential } from "./workspace-credential.js";
+import { admitNewWorkspace, AdmissionError } from "./admission.js";
 const headers = { "Cache-Control": "no-store", "Referrer-Policy": "no-referrer" };
 const reply = (body, status = 200) => Response.json(body, { status, headers });
 const uuid = /^[a-f0-9-]{36}$/;
@@ -35,25 +37,31 @@ class RequestLimit extends Error {
 async function limitRequests(db, scope, maximum) {
   const now = Date.now();
   const window = Math.floor(now / 60000) * 60000;
+  await db.prepare("DELETE FROM request_limits WHERE scope IN (SELECT scope FROM request_limits WHERE window_start < ? LIMIT 100)")
+    .bind(now - 3600000).run();
   const row = await db.prepare(`INSERT INTO request_limits(scope, window_start, hits) VALUES (?, ?, 1)
     ON CONFLICT(scope) DO UPDATE SET hits = CASE WHEN window_start = excluded.window_start THEN hits + 1 ELSE 1 END,
     window_start = excluded.window_start RETURNING hits`).bind(scope, window).first();
   if (row.hits > maximum) throw new RequestLimit(Math.max(1, Math.ceil((window + 60000 - now) / 1000)));
 }
+const limitWrites = async db => {
+  const ready=await db.prepare("SELECT id FROM service_capacity WHERE id=1").bind().first();
+  if(!ready)throw new Error('service_capacity_not_initialized');
+  return limitRequests(db, "service:write", 600);
+};
 
-export async function privateAgreements(request, db) {
+export async function privateAgreements(request, db, env = {}) {
   try {
-    if (db) {
-      await limitRequests(db, "service", 600);
-      await db.prepare("DELETE FROM request_limits WHERE scope IN (SELECT scope FROM request_limits WHERE window_start < ? LIMIT 100)")
-        .bind(Date.now() - 3600000).run();
-    }
-    return await handlePrivateAgreements(request, db);
+    return await handlePrivateAgreements(request, db, env);
   } catch (error) {
+    if(error instanceof AdmissionError)return reply({error:error.message,...(error.code?{code:error.code}:{})},error.status);
     if (error instanceof RequestLimit) return Response.json({ error: error.message }, {
       status: 429, headers: { ...headers, "Retry-After": String(error.retryAfter) },
     });
     const message = String(error.message ?? "");
+    if(message.includes('service_text_capacity'))return reply({error:'Draft storage is full right now. Your saved drafts are still available. You can open or download them and try saving again later.',code:'CAPACITY_FULL'},503);
+    if(message.includes('service_capacity_not_initialized'))return reply({error:'Draft saving is temporarily paused while storage usage is checked. Your saved drafts are still available.',code:'CAPACITY_INITIALIZING'},503);
+    if(message.includes('request_scope_capacity'))return Response.json({error:'Request capacity is temporarily full. Please try again later.'},{status:429,headers:{...headers,'Retry-After':'60'}});
     const quota = message.includes("workspace_draft_quota") ? "This workspace has reached its 50-draft limit. Existing drafts are still available."
       : message.includes("draft_invitation_quota") ? "This draft has reached its 100-invitation limit. Existing invitations are unchanged."
       : message.includes("draft_revision_quota") ? "This draft has reached its 200-revision limit. Saved revisions are still available." : null;
@@ -62,8 +70,12 @@ export async function privateAgreements(request, db) {
   }
 }
 
-async function handlePrivateAgreements(request, db) {
+async function handlePrivateAgreements(request, db, env) {
   const url = new URL(request.url);
+  const readRoutes = ["/api/drafts", "/api/drafts/trash", "/api/drafts/item", "/api/drafts/revisions", "/api/drafts/revision", "/api/drafts/feedback"];
+  const writeRoutes = ["/api/drafts", "/api/drafts/trash", "/api/drafts/restore", "/api/drafts/delete", "/api/drafts/move", "/api/drafts/share", "/api/drafts/revoke", "/api/drafts/review", "/api/drafts/feedback"];
+  if (!(request.method === "GET" ? readRoutes : request.method === "POST" ? writeRoutes : []).includes(url.pathname)) return reply({ error: "Page not found." }, 404);
+  if (request.method === "POST" && request.headers.get("origin") !== url.origin) return reply({ error: "Request blocked." }, 403);
   if (url.pathname === "/api/drafts/review" || (url.pathname === "/api/drafts/feedback" && request.method === "POST")) {
     if (request.method !== "POST") return reply({ error: "Page not found." }, 404);
     if (request.headers.get("origin") !== url.origin) return reply({ error: "Request blocked." }, 403);
@@ -79,6 +91,11 @@ async function handlePrivateAgreements(request, db) {
     if (url.pathname === "/api/drafts/feedback") {
       const note = typeof input.note === "string" ? input.note.trim() : "";
       if (!note || note.length > 2000) return reply({ error: "Enter a change request up to 2,000 characters." }, 400);
+      const validShare = await db.prepare(`SELECT s.token_hash FROM shares s JOIN drafts d ON d.id = s.draft_id
+        WHERE s.token_hash = ? AND s.access_code_hash = ? AND s.revoked = 0 AND s.expires > ? AND s.revision = d.revision AND d.trashed_at IS NULL`)
+        .bind(tokenHash, codeHash, Date.now()).first();
+      if (!validShare) return reply({ error: "This invitation is unavailable or a request was already sent." }, 409);
+      await limitWrites(db);
       const saved = await db.prepare(`INSERT INTO review_feedback (token_hash, note, created_at)
         SELECT s.token_hash, ?, ? FROM shares s JOIN drafts d ON d.id = s.draft_id
         WHERE s.token_hash = ? AND s.access_code_hash = ? AND s.revoked = 0
@@ -96,7 +113,7 @@ async function handlePrivateAgreements(request, db) {
   }
   // Trust this header only behind Sites dispatch, which provides sign-in identity.
   const legacyOwner = request.headers.get("oai-authenticated-user-id");
-  const workspaceKey = request.headers.get("X-Record-Workspace");
+  const workspaceKey = workspaceCredential(request);
   if (workspaceKey !== null && !tokenPattern.test(workspaceKey)) {
     return reply({ error: "Invalid workspace key." }, 400);
   }
@@ -175,6 +192,7 @@ async function handlePrivateAgreements(request, db) {
       || !Number.isSafeInteger(input.trashedAt) || input.trashedAt <= 0 || input.confirmation !== "DELETE") {
       return reply({ error: "Open Trash and confirm permanent deletion by typing DELETE." }, 400);
     }
+    await limitWrites(db);
     // Dependent private rows are removed by the trigger in this atomic statement.
     const deleted = await db.prepare(`DELETE FROM drafts WHERE id = ? AND owner = ?
       AND revision = ? AND trashed_at = ? RETURNING id`)
@@ -186,6 +204,7 @@ async function handlePrivateAgreements(request, db) {
     if (typeof input.id !== "string" || !uuid.test(input.id) || !Number.isSafeInteger(input.revision)) {
       return reply({ error: "Invalid draft." }, 400);
     }
+    await limitWrites(db);
     const trashing = url.pathname === "/api/drafts/trash";
     const changed = await db.prepare(`UPDATE drafts SET trashed_at = ?
       WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS ${trashing ? "" : "NOT "}NULL RETURNING id`)
@@ -195,6 +214,7 @@ async function handlePrivateAgreements(request, db) {
 
   if (url.pathname === "/api/drafts/move") {
     if (!legacyOwner || !workspaceOwner) return reply({ error: "Open your original signed-in browser to move these drafts." }, 403);
+    await limitWrites(db);
     const result = await db.prepare("UPDATE drafts SET owner = ? WHERE owner = ?").bind(workspaceOwner, legacyOwner).run();
     return reply({ moved: result.meta.changes });
   }
@@ -206,11 +226,14 @@ async function handlePrivateAgreements(request, db) {
       return reply({ error: "Enter a title and agreement terms within the limits." }, 400);
     }
     if (id == null) {
+      await admitNewWorkspace(request,db,env,workspaceOwner,input.admissionToken);
+      await limitWrites(db);
       const draftId = crypto.randomUUID();
       await db.prepare("INSERT INTO drafts (id, owner, title, terms) VALUES (?, ?, ?, ?)").bind(draftId, user, title.trim(), terms).run();
       return reply({ id: draftId, revision: 1 }, 201);
     }
     if (typeof id !== "string" || !uuid.test(id) || !Number.isSafeInteger(revision)) return reply({ error: "Invalid draft." }, 400);
+    await limitWrites(db);
     const updated = await db.prepare("UPDATE drafts SET title = ?, terms = ?, revision = revision + 1 WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS NULL RETURNING revision")
       .bind(title.trim(), terms, id, user, revision).first();
     if (!updated) return reply({ error: "Draft unavailable or changed. Reopen it and try again." }, 409);
@@ -224,6 +247,7 @@ async function handlePrivateAgreements(request, db) {
     }
     const draft = await db.prepare("SELECT title, terms FROM drafts WHERE id = ? AND owner = ? AND revision = ? AND trashed_at IS NULL").bind(id, user, revision).first();
     if (!draft) return reply({ error: "Draft unavailable or changed. Reopen it first." }, 409);
+    await limitWrites(db);
     const token = hex(crypto.getRandomValues(new Uint8Array(32)));
     const code = hex(crypto.getRandomValues(new Uint8Array(12)));
     const fingerprint = await digest(draft.title + "\n\n" + draft.terms);
@@ -236,6 +260,7 @@ async function handlePrivateAgreements(request, db) {
 
   if (url.pathname === "/api/drafts/revoke") {
     if (typeof input.id !== "string" || !uuid.test(input.id)) return reply({ error: "Invalid draft." }, 400);
+    await limitWrites(db);
     await db.prepare("UPDATE shares SET revoked = 1 WHERE draft_id IN (SELECT id FROM drafts WHERE id = ? AND owner = ?)")
       .bind(input.id, user).run();
     return reply({ ok: true });

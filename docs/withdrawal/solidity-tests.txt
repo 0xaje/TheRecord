@@ -1,0 +1,36 @@
+Compiling 1 files with Solc 0.8.28
+Solc 0.8.28 finished in 40.82ms
+Compiler run successful!
+2026-11-18T21:55:17.484846Z  WARN evm::traces::external: etherscan config not found
+
+Ran 17 tests for test/TheRecordV2.t.sol:TheRecordV2Test
+[PASS] testCannotApproveWithdrawn() (gas: 54067)
+[PASS] testCannotProposeCurrentFinalizedFileAgain() (gas: 51574)
+[PASS] testCannotReplacePendingWithoutWithdrawal() (gas: 51061)
+[PASS] testCannotWithdrawFinalized() (gas: 17768)
+[PASS] testCannotWithdrawFinalizedAmendment() (gas: 54238)
+[PASS] testCannotWithdrawInitialAgreement() (gas: 16540)
+[PASS] testCannotWithdrawTwice() (gas: 54103)
+[PASS] testChainBindingChangesWithdrawalPayload() (gas: 58551)
+[PASS] testCorrectionApprovalPayloadDiffers() (gas: 89368)
+[PASS] testCorrectionStartsFreshAndPreservesBothRecords() (gas: 88561)
+[PASS] testDelayedWithdrawalCannotTargetOldVersion() (gas: 80465)
+[PASS] testMalformedWithdrawalSignatureFails() (gas: 53018)
+[PASS] testOnlyProposerCanWithdraw() (gas: 51846)
+[PASS] testOriginalContractRemainsIndependent() (gas: 1471510)
+[PASS] testOutsiderCannotProposeCorrection() (gas: 51226)
+[PASS] testWithdrawalDomainDiffersFromApproval() (gas: 57963)
+[PASS] testWithdrawnApprovalDataUnavailable() (gas: 53612)
+Suite result: ok. 17 passed; 0 failed; 0 skipped; finished in 3.59ms (11.43ms CPU time)
+2026-11-18T21:55:26.984642Z  WARN foundry_fork_db::cache: Failed to read cache file err=Os { code: 2, kind: NotFound, message: "No such file or directory" } path="/home/agent/.foundry/cache/rpc/9800/10163721"
+
+Ran 6 tests for test/TheRecord.t.sol:TheRecordTest
+[PASS] testApprovalPayloadBindsSigner() (gas: 17683)
+[PASS] testDianaFinalizedAmendmentPreservesOriginal() (gas: 21459)
+[PASS] testOutsiderCannotProposeAmendment() (gas: 13859)
+[PASS] testProposerCannotAmendPendingVersion() (gas: 17706)
+[PASS] testRejectsMalformedSignature() (gas: 18813)
+[PASS] testRejectsUndesignatedSigner() (gas: 20811)
+Suite result: ok. 6 passed; 0 failed; 0 skipped; finished in 10.54s (10.54s CPU time)
+
+Ran 2 test suites in 10.54s (10.54s CPU time): 23 tests passed, 0 failed, 0 skipped (23 total tests)

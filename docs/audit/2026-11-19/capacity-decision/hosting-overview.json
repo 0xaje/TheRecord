@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-19",
+  "project_id": "appgprj_6af8daf3a96c81918026a69ec89cfb47",
+  "selected_binding_name": "DB",
+  "tables": [
+    "draft_revisions",
+    "drafts",
+    "invite_codes",
+    "request_limits",
+    "review_feedback",
+    "shares"
+  ],
+  "scope": "Schema names only; no row contents, database size, query cost or billing metrics retrieved."
+}

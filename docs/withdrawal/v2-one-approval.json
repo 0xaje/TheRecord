@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-18T22:36:19.960Z",
+  "nativeHash": "A04B861B76D318B30F0E1B4A2CBF8BA60A834D00857D7E1FE1FAB84416D27676",
+  "block": "10340968",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "version": 2,
+  "signer": "0xe84A1B8C20b1E33Fc1D6dD4650Af53783F2911eD",
+  "evmHash": "0xc9ba6c589f633389b2beed378833726b5b432eb7ec5d8be0a7448aaa6225a581",
+  "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+  "approvalMask": 1,
+  "finalized": false,
+  "withdrawn": false,
+  "scope": "Successful native receipt and matching approval at receipt block, plus current state. No independent native-to-EVM hash mapping asserted."
+}

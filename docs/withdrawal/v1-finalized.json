@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-11-18T22:27:17.252Z",
+  "nativeHash": "00436E1571A8CE75B17953D897143BAA7F408A47A2B56F6B31E2A17223C8B48C",
+  "block": "10340599",
+  "nativeCode": 0,
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "version": 1,
+  "events": [
+    {
+      "event": "Approved",
+      "signer": "0xebfd0C31BC2Ac2529c5C51aE7Bc2c3337F79B44A",
+      "evmHash": "0xc9d91701e992c49a951c0a82057623d9cf105a8c8256fcfe8da464e9f52078b1"
+    },
+    {
+      "event": "Finalized",
+      "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+      "evmHash": "0xc9d91701e992c49a951c0a82057623d9cf105a8c8256fcfe8da464e9f52078b1"
+    }
+  ],
+  "state": {
+    "fingerprint": "0x265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd",
+    "approvalMask": 3,
+    "finalized": true,
+    "withdrawn": false
+  },
+  "scope": "Native receipt and matching block-level V2 events/state independently checked; no independent native-to-EVM hash mapping asserted."
+}

@@ -1,0 +1,21 @@
+{
+  "basis": "Conservative input-limit arithmetic only; no production document rows read",
+  "perWorkspaceTextBytesUpperEstimate": {
+    "drafts": 1024000,
+    "revisions": 204800000,
+    "shares": 102400000,
+    "feedback": 40000000,
+    "total": 348224000
+  },
+  "exclusions": [
+    "indexes",
+    "row metadata",
+    "request_limits",
+    "invite_codes",
+    "backups",
+    "SQLite pages"
+  ],
+  "notMeasuredUsage": true,
+  "proposedPayloadBudgetBytes": 67108864,
+  "implemented": false
+}

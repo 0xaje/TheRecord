@@ -1,0 +1,15 @@
+[
+  {
+    "test": "Unauthenticated requests affect unrelated owner",
+    "status": 200,
+    "retryAfter": null
+  },
+  {
+    "test": "Trusted legacy migration exceeds 50 draft limit",
+    "status": 409,
+    "body": {
+      "error": "This workspace has reached its 50-draft limit. Existing drafts are still available."
+    },
+    "count": 50
+  }
+]

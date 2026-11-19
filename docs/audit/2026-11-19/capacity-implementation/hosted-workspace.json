@@ -1,0 +1,19 @@
+{
+  "testedAt": "2026-11-19T00:21:58.596Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "result": "PASS",
+  "checks": [
+    "unknown route refused",
+    "cross-origin write refused",
+    "draft created",
+    "draft revised",
+    "both saved revisions retained",
+    "invitation review works",
+    "own test draft moved to recoverable Trash",
+    "Trash revokes invitation",
+    "Trash remains readable"
+  ],
+  "requests": 10,
+  "recoveryFile": ".record-local/backend-acceptance-1795047678415.secret",
+  "scope": "Fresh own disposable workspace only. Recovery key and invitation secrets are never printed. Quota rollback and cross-user saturation tested in isolated SQLite, not by flooding this service. No permanent deletion or wallet transaction."
+}

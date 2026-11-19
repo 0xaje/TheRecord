@@ -1,0 +1,16 @@
+PASS: valid original version2 approval 10340967
+PASS: valid withdrawal with proposer PQ signature 10341212
+PASS: valid fresh version3 approval 10341666
+PASS: version2 signature rejected for version3 despite identical file hash 10341666
+PASS: approval signature cannot authorize withdrawal 10341212
+PASS: withdrawal signature cannot authorize approval 10340967
+PASS: altered full-length withdrawal signature rejected 10341212
+PASS: other designated signer cannot withdraw 10341212
+PASS: second withdrawal rejected 10341213
+PASS: withdrawn latest version cannot receive approval 10341213
+PASS: delayed withdrawal cannot target superseded version2 10341666
+PASS: duplicate fresh approval rejected 10341667
+PASS: finalized correction cannot be withdrawn 10341772
+PASS: original finalized version cannot be withdrawn 10341772
+PASS: valid approval may be relayed without changing its signed meaning 10341666
+PASS: relayer cannot substitute the other designated signer 10341666

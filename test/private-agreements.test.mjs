@@ -2,15 +2,17 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync } from 'node:fs';
+import { INITIALIZE_SQL } from '../server/capacity.js';
 import { privateAgreements } from '../server/private-agreements.js';
 
 // Real SQLite with the D1 statement interface; isolated from hosted drafts.
-function database({ legacy = false } = {}) {
+function database({ legacy = false, before = legacy ? 5 : Infinity } = {}) {
   const sqlite = new DatabaseSync(':memory:');
   sqlite.exec('PRAGMA foreign_keys = ON');
   for (const file of readdirSync(new URL('../migrations/', import.meta.url)).sort()) {
-    if (!legacy || (!file.startsWith('0005') && !file.startsWith('0006') && !file.startsWith('0007') && !file.startsWith('0008'))) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
+    if (Number(file.slice(0,4)) < before) sqlite.exec(readFileSync(new URL('../migrations/' + file, import.meta.url), 'utf8'));
   }
+  if(before===Infinity)sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
   return { sqlite, prepare(sql) { return { bind(...args) {
     const statement = sqlite.prepare(sql);
     return {
@@ -128,6 +130,10 @@ test('additive migration preserves a legacy current revision without inventing o
     db.sqlite.exec(readFileSync(new URL('../migrations/0006_backend_bounds.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0007_draft_trash.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0008_draft_delete.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0009_owner_transfer_quota.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0010_service_capacity.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0011_workspace_admission.sql', import.meta.url), 'utf8'));
+    db.sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
     const before = await (await call(db, '/revisions?id=' + draft.id)).json();
     assert.deepEqual(before.revisions.map(r => r.revision), [5]);
     assert.equal(before.revisions[0].saved_at, null);
@@ -277,4 +283,118 @@ test('permanent deletion rolls back dependent removals when final delete fails',
     assert.equal((await call(db, '/delete', { ...d, trashedAt: trash.trashed_at, confirmation: 'DELETE' })).status, 503);
     for (const table of ['drafts', 'shares', 'draft_revisions']) assert.equal(db.sqlite.prepare('SELECT COUNT(*) AS n FROM ' + table).get().n, 1);
   } finally { db.sqlite.close(); }
+});
+
+test('invalid traffic cannot consume another workspace read or write allowance',async()=>{
+ const db=database();try{
+  const untouched={prepare(){throw new Error('Invalid route or origin reached database');}};
+  assert.equal((await call(untouched,'/not-a-route')).status,404);
+  assert.equal((await call(untouched,'',{title:'T',terms:'Text'},owner,{origin:'https://other.test'})).status,403);
+  for(let n=0;n<650;n++) assert.equal((await call(db,'/not-a-route')).status,404);
+  for(let n=0;n<650;n++) assert.ok([400,429].includes((await call(db,'',{title:'',terms:'Invalid'},owner)).status));
+  assert.equal(db.sqlite.prepare("SELECT hits FROM request_limits WHERE scope='service:write'").get(),undefined);
+  assert.equal((await call(db,'',undefined,stranger)).status,200);
+  assert.equal((await call(db,'',{title:'Unaffected user',terms:'Saved correctly'},stranger)).status,201);
+ }finally{db.sqlite.close();}
+});
+
+test('shared emergency write ceiling preserves owner and invitation reads',async()=>{
+ const db=database();try{
+  const draft=await (await call(db,'',{title:'Existing',terms:'Readable'})).json();
+  const invite=await (await call(db,'/share',draft)).json();
+  db.sqlite.prepare("INSERT INTO request_limits(scope,window_start,hits) VALUES('service:write',?,600) ON CONFLICT(scope) DO UPDATE SET window_start=excluded.window_start,hits=600").run(Math.floor(Date.now()/60000)*60000);
+  const limited=await call(db,'',{title:'At capacity',terms:'Not written'},stranger);
+  assert.equal(limited.status,429); assert.ok(Number(limited.headers.get('Retry-After'))>0);
+  assert.equal((await call(db,'',undefined,stranger)).status,200);
+  assert.equal((await call(db,'/item?id='+draft.id)).status,200);
+  assert.equal((await call(db,'/review',invite,null)).status,200);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts').get().n,1);
+ }finally{db.sqlite.close();}
+});
+
+test('legacy ownership moves are all-or-nothing at quota and preserve revisions and invitations',async()=>{
+ for(const existing of [48,49,50]){
+  const db=database();try{
+   const legacy={'oai-authenticated-user-id':'legacy-move-owner'};
+   const first=await (await call(db,'',{title:'Legacy original',terms:'Friday'},null,legacy)).json();
+   await call(db,'',{...first,title:'Legacy revised',terms:'Monday'},null,legacy);
+   const invite=await (await call(db,'/share',{id:first.id,revision:2},null,legacy)).json();
+   await call(db,'',{title:'Second legacy',terms:'Kept too'},null,legacy);
+   const ownerHash=Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(owner))).toString('hex');
+   const destination='workspace:'+ownerHash;
+   for(let n=0;n<existing;n++) db.sqlite.prepare('INSERT INTO drafts(id,owner,title,terms) VALUES(?,?,?,?)').run(crypto.randomUUID(),destination,'Existing '+n,'Retained');
+   const before=db.sqlite.prepare('SELECT * FROM drafts ORDER BY rowid').all();
+   const revisions=db.sqlite.prepare('SELECT * FROM draft_revisions ORDER BY rowid').all();
+   const shares=db.sqlite.prepare('SELECT * FROM shares ORDER BY rowid').all();
+   const moved=await call(db,'/move',{},owner,legacy);
+   assert.equal(moved.status,existing===48?200:409);
+   assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts WHERE owner=?').get(destination).n,existing===48?50:existing);
+   assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts WHERE owner=?').get('legacy-move-owner').n,existing===48?0:2);
+   assert.deepEqual(db.sqlite.prepare('SELECT * FROM draft_revisions ORDER BY rowid').all(),revisions);
+   assert.deepEqual(db.sqlite.prepare('SELECT * FROM shares ORDER BY rowid').all(),shares);
+   if(existing!==48)assert.deepEqual(db.sqlite.prepare('SELECT * FROM drafts ORDER BY rowid').all(),before);
+   assert.equal((await call(db,'/review',invite,null)).status,200);
+  }finally{db.sqlite.close();}
+ }
+});
+
+test('competing legacy moves cannot exceed the shared destination quota',async()=>{
+ const db=database();try{
+  const ownerHash=Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(owner))).toString('hex');
+  const destination='workspace:'+ownerHash;
+  for(const[who,count]of [[destination,49],['legacy-a',1],['legacy-b',1]])for(let n=0;n<count;n++)db.sqlite.prepare('INSERT INTO drafts(id,owner,title,terms) VALUES(?,?,?,?)').run(crypto.randomUUID(),who,'Concurrent','Kept');
+  const responses=await Promise.all(['legacy-a','legacy-b'].map(who=>call(db,'/move',{},owner,{'oai-authenticated-user-id':who})));
+  assert.deepEqual(responses.map(r=>r.status).sort(),[200,409]);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts WHERE owner=?').get(destination).n,50);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts WHERE owner IN (?,?)').get('legacy-a','legacy-b').n,1);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts').get().n,51);
+ }finally{db.sqlite.close();}
+});
+
+test('redacted transport preserves workspace identity, recovery and isolation; conflicts fail closed',async()=>{
+ const db=database();
+ try{
+  const created=await call(db,'',{title:'Transport test',terms:'Same private owner.'});
+  const draft=await created.json();
+  const request=(key,legacy)=>privateAgreements(new Request(origin+'/api/drafts',{headers:{Authorization:'Bearer workspace:'+key,...(legacy?{'X-Record-Workspace':legacy}:{})}}),db);
+  const recovered=await request(owner);assert.equal(recovered.status,200);assert.equal((await recovered.json())[0].id,draft.id);
+  assert.deepEqual(await (await request(stranger)).json(),[]);
+  assert.equal((await request(owner,stranger)).status,400);
+  assert.equal((await request('invalid',owner)).status,400);
+  assert.equal((await request(owner,owner)).status,200);
+  const updated=await privateAgreements(new Request(origin+'/api/drafts',{method:'POST',headers:{Origin:origin,Authorization:'Bearer workspace:'+owner},body:JSON.stringify({...draft,title:'Updated',terms:'Same owner updated.'})}),db);
+  assert.equal(updated.status,200);assert.equal((await (await call(db)).json())[0].title,'Updated');
+ }finally{db.sqlite.close();}
+});
+
+
+test('pre-access-code invitation migration stays closed; owner can issue a fresh usable invitation',async()=>{
+ const db=database({before:3});
+ try{
+  const hash=async text=>Buffer.from(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text))).toString('hex');
+  const id=crypto.randomUUID(),token='c'.repeat(64),code='d'.repeat(24),title='Legacy fixture',terms='Private legacy fixture text';
+  const ownerId='workspace:'+await hash(owner),tokenHash=await hash(token);
+  db.sqlite.prepare('INSERT INTO drafts(id,owner,title,terms) VALUES(?,?,?,?)').run(id,ownerId,title,terms);
+  db.sqlite.prepare('INSERT INTO shares(token_hash,draft_id,revision,reviewer_email,reviewer_id,title,terms,fingerprint,expires) VALUES(?,?,1,?,?,?,?,?,?)')
+   .run(tokenHash,id,'fixture@example.test','old-reviewer',title,terms,await hash(title+'\n\n'+terms),Date.now()+86400000);
+  db.sqlite.prepare('INSERT INTO invite_codes(token_hash,code_hash,expires,sent_at,sends) VALUES(?,?,?,?,1)')
+   .run(tokenHash,await hash(code),Date.now()+86400000,Date.now());
+  for(const file of readdirSync(new URL('../migrations/',import.meta.url)).sort())
+   if(Number(file.slice(0,4))>=3)db.sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
+  db.sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
+  assert.equal(db.sqlite.prepare('SELECT access_code_hash FROM shares WHERE token_hash=?').get(tokenHash).access_code_hash,null);
+  for(const input of [{token},{token,code},{token,code:'0'.repeat(24)}]){
+   const response=await call(db,'/review',input,null,{'oai-authenticated-user-id':'old-reviewer'});
+   assert.equal(response.status,input.code?404:400);
+   assert.equal((await response.text()).includes(terms),false);
+  }
+  assert.equal((await call(db,'/feedback',{token,code,note:'Must stay blocked'},null)).status,409);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM review_feedback').get().n,0);
+  const freshResponse=await call(db,'/share',{id,revision:1});assert.equal(freshResponse.status,200);
+  const fresh=await freshResponse.json();
+  const review=await call(db,'/review',fresh,null);assert.equal(review.status,200);assert.equal((await review.json()).terms,terms);
+  assert.equal((await call(db,'/feedback',{...fresh,note:'Fresh coded review works'},null)).status,201);
+  assert.equal(db.sqlite.prepare('SELECT access_code_hash FROM shares WHERE token_hash=?').get(tokenHash).access_code_hash,null);
+  assert.equal(db.sqlite.prepare('SELECT COUNT(*) n FROM drafts').get().n,1);
+ }finally{db.sqlite.close();}
 });

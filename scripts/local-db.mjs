@@ -1,3 +1,4 @@
+import { INITIALIZE_SQL } from '../server/capacity.js';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -21,6 +22,8 @@ export function openLocalDatabase(filename) {
         sqlite.exec('COMMIT');
       } catch (error) { sqlite.exec('ROLLBACK'); throw error; }
     }
+    // Local development only: initialize a bounded aggregate, never reset an existing counter.
+    sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
     return { sqlite, prepare(sql) { return { bind(...args) {
       const statement = sqlite.prepare(sql);
       return {

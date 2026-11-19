@@ -1,0 +1,18 @@
+{
+  "siteVersion": 57,
+  "environmentRevision": 9,
+  "hostingCommit": "f376a2d259766a4bcf336ca123357f3e081c3c6a",
+  "browser": "Actual cloud Chrome",
+  "agreementId": "0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e",
+  "versionOneOriginal": "File matches the finalized version.",
+  "versionOneChanged": "File does not match this version.",
+  "finalizedApprovals": 2,
+  "nonexistentVersion": "9999999991",
+  "nonexistentResult": "Agreement version not found. Check the agreement ID, version and contract link.",
+  "missingRecordDataset": "error",
+  "missingRecordApprovalHidden": true,
+  "returnedDemoVersion": "1",
+  "cspWarnings": [],
+  "noWalletTransaction": true,
+  "ownerMobileRetest": false
+}

@@ -20,3 +20,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+
+  solidity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: foundry-rs/foundry-toolchain@dba66c27052e63476d886f22216e119ba7e615bf
+        with:
+          version: v1.5.1
+      # Local state-rule tests only; no claimed execution of Diana precompiles.
+      - run: forge test --no-match-test testDianaFinalizedAmendmentPreservesOriginal -vv

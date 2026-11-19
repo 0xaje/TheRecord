@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-18T22:32:09.874Z",
+  "nativeHash": "3572D8922BA1E85C71CEC4DA69E9E94E95D4D4465D202F89FDE1F6FC5D87B532",
+  "block": "10340772",
+  "agreementId": "0x2152af51be0fa909eb937df619ee19e62f7ad49f4e8ea84f92a7273d9977cd7b",
+  "version": 2,
+  "evmHash": "0x54d47c78bfb3e13e80ece88f3a180b260fe6793517b1dd99c0460787e0637579",
+  "fingerprint": "0x66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0",
+  "approvals": 0,
+  "finalized": false,
+  "withdrawn": false,
+  "originalStillFinalized": true,
+  "scope": "Successful native receipt, matching V2 Proposed event at receipt block and contract states checked; native-to-EVM hash mapping not separately asserted."
+}

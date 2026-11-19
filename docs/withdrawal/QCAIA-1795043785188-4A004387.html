@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QoreChain Security Audit - TheRecordV2 — Pending Amendment Withdrawal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      line-height: 1.6;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #00d4aa, #7c3aed, #f59e0b);
+    }
+
+    .cover-header {
+      padding: 40px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #00d4aa, #7c3aed);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00d4aa, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 60px;
+    }
+
+    .cover-title {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .cover-title span {
+      background: linear-gradient(90deg, #00d4aa, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cover-subtitle {
+      font-size: 24px;
+      color: #9ca3af;
+      margin-bottom: 60px;
+    }
+
+    .cover-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 500px;
+    }
+
+    .meta-item {
+      padding: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .meta-label {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #00d4aa;
+    }
+
+    .cover-visual {
+      position: absolute;
+      right: 60px;
+      bottom: 60px;
+      width: 400px;
+      height: 400px;
+      opacity: 0.1;
+      background: radial-gradient(circle, #00d4aa 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* Content Pages */
+    .content-page {
+      padding: 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      border-bottom: 2px solid #00d4aa;
+      padding-bottom: 20px;
+      margin-bottom: 40px;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #00d4aa;
+    }
+
+    /* Document Info Table */
+    .doc-info {
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 40px;
+    }
+
+    .doc-info table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .doc-info tr {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .doc-info tr:last-child {
+      border-bottom: none;
+    }
+
+    .doc-info td {
+      padding: 16px 24px;
+    }
+
+    .doc-info td:first-child {
+      width: 200px;
+      font-weight: 600;
+      color: #9ca3af;
+    }
+
+    .doc-info td:last-child {
+      color: #e5e5e5;
+    }
+
+    /* Audit Summary */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .summary-card {
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .summary-number {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .summary-label {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* Score Circle */
+    .score-section {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding: 40px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .score-circle {
+      width: 160px;
+      height: 160px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .score-circle svg {
+      width: 160px;
+      height: 160px;
+      transform: rotate(-90deg);
+    }
+
+    .score-circle .score-track {
+      fill: none;
+      stroke: rgba(255,255,255,0.1);
+      stroke-width: 10;
+    }
+
+    .score-circle .score-progress {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .score-circle-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .score-value {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .score-text {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .score-details h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .risk-badge {
+      display: inline-block;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 14px;
+      color: white;
+    }
+
+    /* Severity Table */
+    .severity-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+    }
+
+    .severity-table th,
+    .severity-table td {
+      padding: 16px 24px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .severity-table th {
+      color: #00d4aa;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .severity-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Findings */
+    .finding {
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .finding-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .finding-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .finding-id {
+      font-family: monospace;
+      color: #00d4aa;
+      font-size: 14px;
+    }
+
+    .finding-name {
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .finding-body {
+      padding: 24px;
+    }
+
+    .finding-section {
+      margin-bottom: 20px;
+    }
+
+    .finding-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .finding-section-title {
+      font-size: 12px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .finding-section-content {
+      color: #d1d5db;
+    }
+
+    /* Classification Table */
+    .classification {
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 16px;
+    }
+
+    .classification-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .classification-item {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .classification-label {
+      color: #6b7280;
+    }
+
+    .classification-value {
+      font-weight: 600;
+    }
+
+    /* Recommendations */
+    .recommendation-box {
+      background: rgba(0, 212, 170, 0.1);
+      border-left: 4px solid #00d4aa;
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Footer */
+    .page-footer {
+      padding: 40px 60px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #6b7280;
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cover-content { padding: 0 24px; }
+      .cover-title { font-size: 36px; }
+      .content-page { padding: 24px; }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .score-section { flex-direction: column; text-align: center; }
+      .classification-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .cover-page { page-break-after: always; }
+      .content-page { page-break-inside: avoid; }
+      .finding { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cover Page -->
+  <div class="cover-page">
+    <div class="cover-header">
+      <div class="logo">
+        <div class="logo-icon">Q</div>
+        <div class="logo-text">QoreChain</div>
+      </div>
+    </div>
+    <div class="cover-content">
+      <h1 class="cover-title">
+        Smart Contract<br>
+        <span>Security Audit Report</span>
+      </h1>
+      <p class="cover-subtitle">AI-Powered Code Review and Vulnerability Analysis</p>
+      <div class="cover-meta">
+        <div class="meta-item">
+          <div class="meta-label">Contract</div>
+          <div class="meta-value">TheRecordV2 — Pending Amendment Withdrawal</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Date</div>
+          <div class="meta-value">18/11/2026</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Blockchain</div>
+          <div class="meta-value">Ethereum</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Audit ID</div>
+          <div class="meta-value">QCAIA-1795043785188-4A004387</div>
+        </div>
+      </div>
+    </div>
+    <div class="cover-visual"></div>
+  </div>
+
+  <!-- Document Info -->
+  <div class="content-page">
+    <div class="page-header">
+      <h2 class="page-title">Document Information</h2>
+    </div>
+    
+    <div class="doc-info">
+      <table>
+        <tr>
+          <td>Report Name</td>
+          <td>Smart Contract Security Audit Report for TheRecordV2 — Pending Amendment Withdrawal</td>
+        </tr>
+        <tr>
+          <td>Audit ID</td>
+          <td>QCAIA-1795043785188-4A004387</td>
+        </tr>
+        <tr>
+          <td>Audited By</td>
+          <td>QCAIA - QoreChain AI Security Engine</td>
+        </tr>
+        <tr>
+          <td>Blockchain</td>
+          <td>Ethereum</td>
+        </tr>
+        <tr>
+          <td>Language</td>
+          <td>solidity</td>
+        </tr>
+        <tr>
+          <td>Framework</td>
+          <td>EVM/Solidity</td>
+        </tr>
+        <tr>
+          <td>Code Hash (SHA-256)</td>
+          <td><code style="font-size: 12px;">688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df3193980</code></td>
+        </tr>
+        <tr>
+          <td>Audit Date</td>
+          <td>18/11/2026</td>
+        </tr>
+        <tr>
+          <td>Processing Time</td>
+          <td>20.88 seconds</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Audit Summary -->
+  <div class="content-page">
+    <div class="page-header">
+      <h2 class="page-title">Audit Summary</h2>
+    </div>
+
+    <div class="score-section">
+      <div class="score-circle">
+        <svg viewBox="0 0 160 160">
+          <circle class="score-track" cx="80" cy="80" r="68"></circle>
+          <circle class="score-progress" cx="80" cy="80" r="68" stroke="#eab308" stroke-dasharray="427.2566008882119" stroke-dashoffset="149.53981031087415"></circle>
+        </svg>
+        <div class="score-circle-content">
+          <div class="score-value" style="color: #eab308">65</div>
+          <div class="score-text">Security<br>Score</div>
+        </div>
+      </div>
+      <div class="score-details">
+        <h3>Overall Risk Assessment</h3>
+        <span class="risk-badge" style="background: #f97316">HIGH</span>
+        
+        <p style="margin-top: 16px; color: #9ca3af;">The contract implements a system for managing agreements with version control and approval mechanisms. It includes features for proposing amendments, approving versions, and withdrawing proposals. However, there are several critical and high-risk issues including missing access controls, potential front-running vulnerabilities, and lack of input validation. These issues pose significant risks to the integrity and security of the agreement system.</p>
+      </div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-number">5</div>
+        <div class="summary-label">Total Findings</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-number" style="color: #ef4444">1</div>
+        <div class="summary-label">Critical + High</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-number" style="color: #eab308">2</div>
+        <div class="summary-label">Medium</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-number" style="color: #3b82f6">2</div>
+        <div class="summary-label">Low + Info</div>
+      </div>
+    </div>
+
+    <h3 style="margin-bottom: 16px; color: #00d4aa;">Findings by Severity</h3>
+    <table class="severity-table">
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="severity-badge" style="background: #dc2626">CRITICAL</span></td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td><span class="severity-badge" style="background: #ea580c">HIGH</span></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><span class="severity-badge" style="background: #ca8a04">MEDIUM</span></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td><span class="severity-badge" style="background: #2563eb">LOW</span></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><span class="severity-badge" style="background: #6b7280">INFO</span></td>
+          <td>1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Detailed Findings -->
+  <div class="content-page">
+    <div class="page-header">
+      <h2 class="page-title">Detailed Findings</h2>
+    </div>
+
+    
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">
+          <span class="finding-id">ETH-001</span>
+          <span class="finding-name">Missing Access Control on Withdrawal Function</span>
+        </div>
+        <span class="severity-badge" style="background: #ea580c">HIGH</span>
+      </div>
+      <div class="finding-body">
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Category</div>
+          <div class="finding-section-content">Access Control</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Description</div>
+          <div class="finding-section-content">The `withdraw` function allows any proposer to withdraw a version, but it does not validate that the caller has the right to perform the withdrawal operation. This could allow unauthorized users to withdraw versions.</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Location</div>
+          <div class="finding-section-content"><code>TheRecordV2.sol:67</code></div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Impact</div>
+          <div class="finding-section-content">Unauthorized withdrawal of versions can lead to data loss or manipulation of the agreement state.</div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Recommendation</div>
+          <div class="recommendation-box">Add proper access control checks to ensure only authorized parties can initiate withdrawals.</div>
+        </div>
+        
+        <div class="classification">
+          <div class="classification-grid">
+            <div class="classification-item">
+              <span class="classification-label">Severity</span>
+              <span class="classification-value">HIGH</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Status</span>
+              <span class="classification-value">Open</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Finding ID</span>
+              <span class="classification-value">ETH-001</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">
+          <span class="finding-id">ETH-002</span>
+          <span class="finding-name">Potential Overflow in Version Increment</span>
+        </div>
+        <span class="severity-badge" style="background: #ca8a04">MEDIUM</span>
+      </div>
+      <div class="finding-body">
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Category</div>
+          <div class="finding-section-content">Integer Safety</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Description</div>
+          <div class="finding-section-content">In the `propose` function, `agreement.latest` is incremented using `++agreement.latest`. While Solidity 0.8.x prevents overflow by default, it&#039;s still risky to rely on unchecked increments without bounds checking.</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Location</div>
+          <div class="finding-section-content"><code>TheRecordV2.sol:42</code></div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Impact</div>
+          <div class="finding-section-content">Although unlikely due to Solidity 0.8.x protections, potential issues may arise with very large values.</div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Recommendation</div>
+          <div class="recommendation-box">Ensure that version numbers are bounded and validated before incrementing.</div>
+        </div>
+        
+        <div class="classification">
+          <div class="classification-grid">
+            <div class="classification-item">
+              <span class="classification-label">Severity</span>
+              <span class="classification-value">MEDIUM</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Status</span>
+              <span class="classification-value">Open</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Finding ID</span>
+              <span class="classification-value">ETH-002</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">
+          <span class="finding-id">ETH-003</span>
+          <span class="finding-name">Front-Running Vulnerability in Approval Process</span>
+        </div>
+        <span class="severity-badge" style="background: #ca8a04">MEDIUM</span>
+      </div>
+      <div class="finding-body">
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Category</div>
+          <div class="finding-section-content">Logic Flaws</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Description</div>
+          <div class="finding-section-content">The approval process relies on external verification via PQC signatures. If an attacker observes the transaction before it&#039;s mined, they might front-run and submit their own approval, potentially changing the outcome of the agreement.</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Location</div>
+          <div class="finding-section-content"><code>TheRecordV2.sol:79</code></div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Impact</div>
+          <div class="finding-section-content">Front-running can manipulate the approval process and compromise the integrity of the agreement.</div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Recommendation</div>
+          <div class="recommendation-box">Implement mechanisms such as commit-reveal schemes or use time-based locks to prevent front-running.</div>
+        </div>
+        
+        <div class="classification">
+          <div class="classification-grid">
+            <div class="classification-item">
+              <span class="classification-label">Severity</span>
+              <span class="classification-value">MEDIUM</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Status</span>
+              <span class="classification-value">Open</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Finding ID</span>
+              <span class="classification-value">ETH-003</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">
+          <span class="finding-id">ETH-004</span>
+          <span class="finding-name">Unbounded Mapping Access</span>
+        </div>
+        <span class="severity-badge" style="background: #2563eb">LOW</span>
+      </div>
+      <div class="finding-body">
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Category</div>
+          <div class="finding-section-content">Gas &amp; DoS</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Description</div>
+          <div class="finding-section-content">The contract uses mappings like `mapping(uint256 =&gt; Version)` which can grow indefinitely. While not directly causing DoS, excessive growth could lead to high gas costs during iteration or retrieval.</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Location</div>
+          <div class="finding-section-content"><code>TheRecordV2.sol:15</code></div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Impact</div>
+          <div class="finding-section-content">High gas consumption when accessing large mappings.</div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Recommendation</div>
+          <div class="recommendation-box">Consider implementing limits or cleanup mechanisms for mappings to avoid excessive storage usage.</div>
+        </div>
+        
+        <div class="classification">
+          <div class="classification-grid">
+            <div class="classification-item">
+              <span class="classification-label">Severity</span>
+              <span class="classification-value">LOW</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Status</span>
+              <span class="classification-value">Open</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Finding ID</span>
+              <span class="classification-value">ETH-004</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="finding">
+      <div class="finding-header">
+        <div class="finding-title">
+          <span class="finding-id">ETH-005</span>
+          <span class="finding-name">No ERC Standard Implementation</span>
+        </div>
+        <span class="severity-badge" style="background: #6b7280">INFO</span>
+      </div>
+      <div class="finding-body">
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Category</div>
+          <div class="finding-section-content">ERC Standards Compliance</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Description</div>
+          <div class="finding-section-content">This contract does not implement any standard interfaces like ERC-20, ERC-721, etc., which makes it incompatible with standard tooling and wallets.</div>
+        </div>
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Location</div>
+          <div class="finding-section-content"><code>TheRecordV2.sol</code></div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Impact</div>
+          <div class="finding-section-content">Limited interoperability with existing ecosystems.</div>
+        </div>
+        
+        
+        <div class="finding-section">
+          <div class="finding-section-title">Recommendation</div>
+          <div class="recommendation-box">Consider implementing relevant ERC standards if compatibility is required.</div>
+        </div>
+        
+        <div class="classification">
+          <div class="classification-grid">
+            <div class="classification-item">
+              <span class="classification-label">Severity</span>
+              <span class="classification-value">INFO</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Status</span>
+              <span class="classification-value">Open</span>
+            </div>
+            <div class="classification-item">
+              <span class="classification-label">Finding ID</span>
+              <span class="classification-value">ETH-005</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Best Practices & Recommendations -->
+  
+  <div class="content-page">
+    <div class="page-header">
+      <h2 class="page-title">Recommendations</h2>
+    </div>
+
+    
+    <h3 style="margin-bottom: 16px; color: #f59e0b;">⚡ Gas Optimizations</h3>
+    <ul style="margin-bottom: 32px; padding-left: 24px;">
+      <li style="margin-bottom: 8px; color: #d1d5db;">Use of `++agreement.latest` can be replaced with explicit assignment to reduce risk of unexpected behavior.</li><li style="margin-bottom: 8px; color: #d1d5db;">Consider caching frequently accessed values like `agreement.latest` into local variables to save gas.</li><li style="margin-bottom: 8px; color: #d1d5db;">Avoid redundant checks in functions like `getVersionState` and `getVersion` by combining logic where possible.</li>
+    </ul>
+    
+
+    
+    <h3 style="margin-bottom: 16px; color: #3b82f6;">📋 Best Practices</h3>
+    <ul style="margin-bottom: 32px; padding-left: 24px;">
+      <li style="margin-bottom: 8px; color: #d1d5db;">Use immutable constants for addresses and domain hashes to improve readability and maintainability.</li><li style="margin-bottom: 8px; color: #d1d5db;">Implement proper event emission for all state changes to enable off-chain monitoring.</li><li style="margin-bottom: 8px; color: #d1d5db;">Utilize SafeMath or similar libraries for integer arithmetic in older Solidity versions.</li><li style="margin-bottom: 8px; color: #d1d5db;">Ensure that all external calls are made with appropriate gas limits and error handling.</li>
+    </ul>
+    
+
+    
+    <h3 style="margin-bottom: 16px; color: #00d4aa;">💡 General Recommendations</h3>
+    <ul style="margin-bottom: 32px; padding-left: 24px;">
+      <li style="margin-bottom: 8px; color: #d1d5db;">Implement strict access controls for all sensitive operations, especially withdrawal.</li><li style="margin-bottom: 8px; color: #d1d5db;">Add additional checks to prevent front-running attacks.</li><li style="margin-bottom: 8px; color: #d1d5db;">Validate all inputs thoroughly, particularly those derived from external calls.</li><li style="margin-bottom: 8px; color: #d1d5db;">Consider adding rate limiting or other anti-abuse measures.</li><li style="margin-bottom: 8px; color: #d1d5db;">Implement proper error handling and logging for debugging purposes.</li>
+    </ul>
+    
+
+    
+    <h3 style="margin-bottom: 16px; color: #22c55e;">✅ Positive Aspects</h3>
+    <ul style="padding-left: 24px;">
+      <li style="margin-bottom: 8px; color: #d1d5db;">Clear separation of concerns between different functionalities like proposing, approving, and withdrawing.</li><li style="margin-bottom: 8px; color: #d1d5db;">Use of domain-specific hash constants improves clarity and reduces collision risks.</li><li style="margin-bottom: 8px; color: #d1d5db;">Implementation of PQC verification adds a layer of quantum-resistant security.</li><li style="margin-bottom: 8px; color: #d1d5db;">Well-defined structs and mappings make the data structure easy to understand.</li>
+    </ul>
+    
+  </div>
+  
+
+  <!-- Disclaimer -->
+  <div class="content-page">
+    <div class="page-header">
+      <h2 class="page-title">Disclaimer</h2>
+    </div>
+    
+    <div style="background: rgba(255,255,255,0.02); border-radius: 16px; padding: 32px; border: 1px solid rgba(255,255,255,0.1);">
+      <h3 style="color: #00d4aa; margin-bottom: 16px;">QoreChain AI Audit Disclaimer</h3>
+      <p style="color: #9ca3af; margin-bottom: 16px;">
+        This security audit was performed by QCAIA (QoreChain AI Assistant), an AI-powered security engine 
+        using advanced machine learning models. While our AI auditor is trained on extensive security patterns and 
+        vulnerability databases, it should be used as part of a comprehensive security strategy.
+      </p>
+      <p style="color: #9ca3af; margin-bottom: 16px;">
+        <strong style="color: #e5e5e5;">This audit does not guarantee:</strong>
+      </p>
+      <ul style="color: #9ca3af; padding-left: 24px; margin-bottom: 16px;">
+        <li>Complete identification of all vulnerabilities</li>
+        <li>Bug-free status of the code</li>
+        <li>Protection against future attacks or exploits</li>
+        <li>Compliance with any specific regulatory requirements</li>
+      </ul>
+      <p style="color: #9ca3af; margin-bottom: 16px;">
+        <strong style="color: #e5e5e5;">We recommend:</strong>
+      </p>
+      <ul style="color: #9ca3af; padding-left: 24px;">
+        <li>Additional manual review by experienced security auditors</li>
+        <li>Comprehensive testing including fuzzing and formal verification</li>
+        <li>Bug bounty programs for production deployments</li>
+        <li>Regular re-audits as the codebase evolves</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <div>
+      <div class="logo" style="margin-bottom: 8px;">
+        <div class="logo-icon" style="width: 24px; height: 24px; font-size: 12px;">Q</div>
+        <span style="font-weight: 600; color: #00d4aa;">QoreChain</span>
+      </div>
+      <div>Quantum-Safe Blockchain Infrastructure</div>
+    </div>
+    <div style="text-align: right;">
+      <div>Report ID: QCAIA-1795043785188-4A004387</div>
+      <div>Generated: 18/11/2026</div>
+      <div><a href="https://qorechain.io" style="color: #00d4aa; text-decoration: none;">https://qorechain.io</a></div>
+    </div>
+  </div>
+</body>
+</html>

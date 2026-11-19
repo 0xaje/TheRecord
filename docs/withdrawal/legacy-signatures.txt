@@ -1,0 +1,4 @@
+PASS: recorded version 2 approval verifies before inclusion 10135459
+PASS: altered signature of valid length 10135459
+PASS: version 1 signature reused for version 2 10135459
+PASS: duplicate approval 10135460

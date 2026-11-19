@@ -7,7 +7,7 @@ const key = randomBytes(32).toString('hex');
 async function call(path = '', body, alternate = key) {
   const response = await fetch(origin + '/api/drafts' + path, {
     method: body === undefined ? 'GET' : 'POST',
-    headers: { origin, 'Content-Type': 'application/json', 'X-Record-Workspace': alternate },
+    headers: { origin, 'Content-Type': 'application/json', Authorization: 'Bearer workspace:' + alternate },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }), signal: AbortSignal.timeout(20000),
   });
   return { status: response.status, data: await response.json() };

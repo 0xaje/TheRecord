@@ -163,3 +163,33 @@ node scripts/scoped-window-proof.mjs review
 It writes scoped-proof-reviewed.json alongside the original, checks matching live snapshots, unchanged usage and target-specific refusal, and never repeats the live run. These results are owner-supplied, not an independent fresh endpoint retrieval. Judge review: scoped admission behavior demonstrated in supplied evidence; no claim that this test finalized an agreement or proves mobile provider support. Earlier two-wallet agreement evidence is separate. Stage 2 audit acceptance and independent friend testing remain open.
 
 My space update draft READY, NOT POSTED: The Record passed a real Diana scoped-window test: its allowed contract call succeeded, while a signed zero-value transaction outside the allowed recipient list was rejected. The opening and permitted transaction receipts are listed above. The checker wording bug was corrected without repeating transactions.
+
+## V2-specific scoped-window checkpoint — 19 November 2026
+
+The earlier successful proof targets the original contract. It is retained unchanged and is not a proof for V2. This checkpoint addresses the category requirement “Scoped EVM window”; it does not establish event acceptance of the separate audit requirements.
+
+Acceptance: open a hybrid-signed window allowing only verified V2 address `0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f`, create one disposable public test record there, then obtain a recipient-specific refusal for a zero-value self-transfer while the window retains time, transaction and value capacity. Save the successful native opening, permitted EVM receipt/Proposed event, exact outside RPC refusal, and live before/after snapshots with unchanged usage. No agreement approval or existing agreement edit is involved. This replaces any previous window for the disposable account. It does not restrict individual functions on the allowed contract.
+
+Start with the offline plan only:
+
+```bash
+cd ~/TheRecord-window-test
+git pull --ff-only origin withdrawal-amendments
+node scripts/scoped-window-proof.mjs plan --deployment withdrawal-v2
+```
+
+Expected account: `0x4B1666D805A7879Aa8599DDD58606c0FCc303A1f`; native `qor1fvtxdkq957re42zenhw4scrvplxrqwslf6lt4v`. Expected bounds: 600 blocks, 5 transactions, 1 test QOR allowance, separate 0.08 test QOR opening fee and maximum 0.1 test QOR EVM fee per attempt. Review the public plan before broadcasting. Do not initialize a replacement account or paste the secret file.
+
+After confirming that plan, the owner-run command is:
+
+```bash
+node scripts/scoped-window-proof.mjs run --deployment withdrawal-v2 --broadcast --confirm-address 0x4B1666D805A7879Aa8599DDD58606c0FCc303A1f
+```
+
+The new evidence files are `scoped-proof-withdrawal-v2.json`, `scoped-proof-started-withdrawal-v2.json`, and (if reviewed) `scoped-proof-reviewed-withdrawal-v2.json`, in the same private account directory. The native pending-transaction lock remains shared, preventing overlapping submissions. Opening receipt is separately named `open-withdrawal-v2-receipt.json`. Existing legacy proof/marker/review/open-receipt names stay unchanged. Missing deployment flags still select legacy; unknown deployment IDs are refused. Never delete markers to repeat an uncertain run.
+
+Local verification: build and 39 automated tests pass, including V2/legacy receipt separation, wrong-target refusal, unchanged old evidence, and offline plan/no-broadcast checks. Contract source is unchanged. Live V2 run is PENDING; do not count local fixtures as Diana proof.
+
+Judge review: tooling is ready, but this checkpoint stays OPEN until the owner supplies the V2-specific live result. Independent participant testing and audit/event acceptance also remain open. Ship Weeks: four completions were previously reported by owner; a fresh event Check has not been observed, and no new challenge completion is claimed here. Q-Day registration is past; no entry claimed.
+
+My space draft — READY, NOT POSTED: Prepared a separate scoped-window proof for TheRecordV2, preserving the original-contract evidence. The build and all 39 automated checks pass. Live V2 allowed-call and outside-recipient evidence is the next checkpoint; no live success claimed yet. Attach the preparation commit when publishing.

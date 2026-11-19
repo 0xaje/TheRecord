@@ -1,10 +1,11 @@
+import { deploymentArgument, proofDeployment } from './scoped-window-target.mjs';
 import { generateMnemonic, deriveUnifiedAccount, derivePqcCanonical, openEvmWindowMsg, buildRegisterPqcKeyMsg, signProofOfPossession, EthNativeSigner, fetchPqcStatus, isRegisteredPqcKey } from '@qorechain/sdk';
 import { readFileSync, writeFileSync, mkdirSync, lstatSync, existsSync, unlinkSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
-import { WINDOW_CHAIN, WINDOW_CONTRACT, WINDOW_POLICY, verifyWindowReceipt, verifyWindowReadback } from '../web/scoped-window-data.js';
+import { WINDOW_CHAIN, WINDOW_POLICY, verifyWindowReceipt, verifyWindowReadback } from '../web/scoped-window-data.js';
 const REST = 'https://api-testnet.qore.host';
 const EVM = 'https://evm-testnet.qore.host';
 export const defaultSecret = join(homedir(), '.local/share/the-record-window-test/account.secret');
@@ -29,9 +30,9 @@ export async function loadAccount(filename = defaultSecret) {
   catch { throw new Error('The local disposable account file is invalid. No transaction was sent.'); }
   return account;
 }
-export function publicPlan(account) {
+export function publicPlan(account, deployment = proofDeployment()) {
   return { chainId: WINDOW_CHAIN, nativeAddress: account.cosmos, evmAddress: account.evm,
-    onlyAllowedContract: WINDOW_CONTRACT, blocks: WINDOW_POLICY.blocks, maxTransactions: WINDOW_POLICY.maxTxs,
+    deployment: deployment.id, onlyAllowedContract: deployment.address, blocks: WINDOW_POLICY.blocks, maxTransactions: WINDOW_POLICY.maxTxs,
     windowAllowanceUqor: WINDOW_POLICY.maxValue, fees, extraRegistrationChargePossible: 'The chain may charge its registration price in addition to the explicit transaction fee.',
     note: 'Testnet-only disposable account. Native registration/opening are separate paid transactions. This plan does not sign or broadcast. No agreement approval is performed.' };
 }
@@ -72,15 +73,15 @@ async function resolvePending(filename, account) {
   const summary = { ...pending, committed: true, code: Number(r.code), height: String(r.height) };
   if (Number(r.code) === 0) {
     if (pending.kind === 'open') {
-      summary.opening = verifyWindowReceipt(data, account.cosmos, pending.hash);
-      summary.windowLive = verifyWindowReadback(await json('/qorechain/pqc/v1/evm_window/' + account.cosmos), summary.opening);
+      summary.opening = verifyWindowReceipt(data, account.cosmos, pending.hash, proofDeployment(pending.deployment).address);
+      summary.windowLive = verifyWindowReadback(await json('/qorechain/pqc/v1/evm_window/' + account.cosmos), summary.opening, proofDeployment(pending.deployment).address);
     } else if (data.tx?.body?.messages?.length !== 1 || data.tx.body.messages[0]['@type'] !== '/qorechain.pqc.v1.MsgRegisterPQCKeyV2' || data.tx.body.messages[0].sender !== account.cosmos) throw new Error('Registration receipt did not match the expected account.');
   }
-  writeFileSync(join(dirname(filename), pending.kind + '-receipt.json'), JSON.stringify(summary, null, 2) + '\n', { mode: 0o600 });
+  writeFileSync(join(dirname(filename), pending.kind + (pending.deployment && pending.deployment !== 'legacy' ? '-' + proofDeployment(pending.deployment).id : '') + '-receipt.json'), JSON.stringify(summary, null, 2) + '\n', { mode: 0o600 });
   unlinkSync(path);
   return summary;
 }
-async function broadcast(kind, account, filename, args) {
+async function broadcast(kind, account, filename, args, deployment) {
   const at = args.indexOf('--confirm-address');
   if (!args.includes('--broadcast') || at < 0 || args[at + 1]?.toLowerCase() !== account.evm.toLowerCase()) throw new Error('No transaction sent. Review plan, then pass --broadcast --confirm-address with this disposable account’s EVM address.');
   if (existsSync(pendingPath(filename))) throw new Error('An earlier transaction is unresolved. Run status; do not submit another.');
@@ -97,12 +98,12 @@ async function broadcast(kind, account, filename, args) {
   if (base?.address !== account.cosmos || base.account_number == null || base.sequence == null) throw new Error('Could not read the funded account sequence.');
   const signer = new EthNativeSigner(account, { signMode: kind === 'register' ? 'classical' : 'hybrid', rest: REST, fetch: timedFetch });
   const signed = signer.sign({ chainId: WINDOW_CHAIN, accountNumber: BigInt(base.account_number), sequence: BigInt(base.sequence),
-    messages: [kind === 'register' ? registrationMessage(account) : openEvmWindowMsg({ sender: account.cosmos, ...WINDOW_POLICY, allowedTargets: [WINDOW_CONTRACT] })],
+    messages: [kind === 'register' ? registrationMessage(account) : openEvmWindowMsg({ sender: account.cosmos, ...WINDOW_POLICY, allowedTargets: [deployment.address] })],
     fee: fees[kind], memo: 'The Record disposable scoped-window test',
     ...(kind === 'open' ? { signBytesVersion: await signer.resolveSignBytesVersion(WINDOW_CHAIN) } : {}),
   });
   const hash = createHash('sha256').update(signed.txRawBytes).digest('hex').toUpperCase();
-  writeFileSync(pendingPath(filename), JSON.stringify({ kind, hash, sender: account.cosmos, createdAt: new Date().toISOString() }) + '\n', { flag: 'wx', mode: 0o600 });
+  writeFileSync(pendingPath(filename), JSON.stringify({ kind, hash, deployment: deployment.id, sender: account.cosmos, createdAt: new Date().toISOString() }) + '\n', { flag: 'wx', mode: 0o600 });
   let data;
   try {
     const response = await timedFetch(REST + '/cosmos/tx/v1beta1/txs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tx_bytes: Buffer.from(signed.txRawBytes).toString('base64'), mode: 'BROADCAST_MODE_SYNC' }) });
@@ -115,12 +116,13 @@ async function broadcast(kind, account, filename, args) {
 }
 export async function main(args = process.argv.slice(2), filename = defaultSecret) {
   const command = args[0];
+  const deployment = deploymentArgument(args);
   if (!['init','plan','status','register','open'].includes(command)) throw new Error('Commands: init, plan, status, register, open. Writes require separate --broadcast --confirm-address flags.');
   if (command === 'init') initAccount(filename);
   const account = await loadAccount(filename);
-  if (command === 'init' || command === 'plan') return { ...publicPlan(account), secretFile: filename, transactionSent: false, reminder: 'Keep account.secret private. Share only the public addresses, never this file.' };
-  if (command === 'status') { await checkNetwork(); const pending = await resolvePending(filename, account); return { ...publicPlan(account), ...(await chainStatus(account)), pending, transactionSent: false }; }
-  return broadcast(command, account, filename, args);
+  if (command === 'init' || command === 'plan') return { ...publicPlan(account, deployment), secretFile: filename, transactionSent: false, reminder: 'Keep account.secret private. Share only the public addresses, never this file.' };
+  if (command === 'status') { await checkNetwork(); const pending = await resolvePending(filename, account); return { ...publicPlan(account, deployment), ...(await chainStatus(account)), pending, transactionSent: false }; }
+  return broadcast(command, account, filename, args, deployment);
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   main().then(result => console.log(JSON.stringify(result, null, 2))).catch(error => { console.error(error.message); process.exitCode = 1; });

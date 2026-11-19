@@ -1,0 +1,13 @@
+{
+  "testedAt": "2026-11-19T00:22:30.038Z",
+  "result": "PASS",
+  "initialized": true,
+  "reconciled": true,
+  "positiveUsageGrowthObserved": true,
+  "budgetBytes": 67108864,
+  "status": "normal",
+  "rawUsageRedacted": true,
+  "antiBotGateEnabled": false,
+  "providerMonitoringVerified": false,
+  "scope": "Actual hosted meter reconciles against one-snapshot bounded aggregate after the controlled workspace lifecycle. No usage totals, private records or operator secret published."
+}

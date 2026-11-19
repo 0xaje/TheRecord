@@ -1,0 +1,1 @@
+[{"test":"Invalid unauthenticated traffic blocks unrelated owner","invalidRequests":600,"ownerStatus":429,"retryAfter":"60"},{"test":"Legacy move exceeds quota","destinationBefore":50,"incoming":2,"status":200,"moved":2,"destinationAfter":52}]
