@@ -146,6 +146,23 @@ The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Op
 
 The final submission video, saved listing fields and organizer audit acceptance are not yet signed off. Public progress updates are drafted for the owner to review/post. This is a working Diana testnet product, not a claim of production readiness or a completed submission.
 
+## Roadmap
+
+Capture an agreement, understand its changes, approve the exact version and keep evidence you can check later.
+
+| Working now — Diana Testnet | Next — proposed priorities | Future exploration — validate first |
+| --- | --- | --- |
+| Private drafts, saved revisions and coded review invitations. | Phone scanning: capture, crop/arrange and approve one final digital copy of a paper agreement. | Text extraction from scans, including investigation of handwriting support, with user review before approval. |
+| Two-account approval with post-quantum signature checks. | Clearer version comparison to help people review what changed. | Agreement templates and multiple-party approval policies. |
+| Local file verification against a recorded fingerprint. | A downloadable evidence pack containing the exact approved file, version and receipt references. | Encrypted private storage, safer recovery and tested backups. |
+| Amendment history and withdrawal of pending amendments. | Improve onboarding through independent participant testing. | Notifications, integrations and focused pilots with freelancers, clients and small teams. |
+
+**Next and Future exploration are proposed directions, not delivered features or promised release dates.** Finish the current hackathon release and validate needs before expanding the build. Existing owner-operated two-wallet evidence is not independent participant acceptance.
+
+For paper capture, both parties would approve and retain the same final digital copy. A new photograph of the same sheet produces a different file; matching fresh photographs is a separate research problem. Any extracted text needs human review before approval. An evidence pack would record wallet-key approvals and file integrity, not certify legal identity or enforce payment.
+
+[See the roadmap on the landing page](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/#roadmap).
+
 ## License and credits
 
 Original project source: [MIT](https://github.com/0xaje/TheRecord/blob/main/LICENSE). Walkthrough illustrations: [OpenMoji, CC BY-SA 4.0](https://github.com/0xaje/TheRecord/blob/main/web/assets/ATTRIBUTION.md). [AI use and banner provenance](https://github.com/0xaje/TheRecord/blob/main/AI_USAGE.md). The reference README informed document structure; its copy/code/artwork was not reused.

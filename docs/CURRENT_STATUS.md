@@ -5,12 +5,12 @@ Checked **19 November 2026**. This is the current index; dated reports and the a
 ## Source and hosted build
 
 - Public source: [main](https://github.com/0xaje/TheRecord/tree/main). Working history merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1), merge commit 8545f47061a5912245362aa87b30cf41aaaefba7. Owner requires all future work/pushes on main; no new feature branches.
-- [Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/), **Site60**, runtime environment revision9.
-- Hosting source commit: **24695b3714a5332a24abab0a1b7bfeac6d50af99**. The hosting repository contains the compiled Worker and immutable migration copies, not a separately maintained UI.
-- Published browser bundle SHA-256: **ed955c2c8b440ce92299f0fdc0be057f4040640a97213125dfffa7ffb8c9c5fd**; [parity evidence](audit/2026-11-19/relay-access/hosted.json).
+- [Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/), **Site61**, runtime environment revision9.
+- Hosting source commit: **498bd300f47098d63805bcd38fc6de20af9ab8a8**. The hosting repository contains the compiled Worker and immutable migration copies, not a separately maintained UI.
+- Published browser bundle SHA-256: **60937147790e82b4689606186c115e0c7ffb5e7e6b8e7910685a7e22e9b2d03c**; [parity evidence](audit/2026-11-19/roadmap/hosted.json).
 - Latest operational change: [protected database-size readout](audit/2026-11-19/provider-storage/REVIEW.md), deployed Site60; owner read-back PASS ([status](audit/2026-11-19/provider-storage/owner-status.json)): database159744bytes/156KiB, initialized/reconciled/normal. Completed prior implementation: [relay access protection](audit/2026-11-19/relay-access/REVIEW.md), deployed Site59. Owner confirmed its QoreX browser-access check works. Previous verifier mobile acceptance remains recorded in [41f1d7e](https://github.com/0xaje/TheRecord/commit/41f1d7e1f0cb0a58780efe4f536016613512ff2d).
-- **89 local build/Node checks pass** ([latest log](audit/2026-11-19/provider-storage/check.txt)). Prior relay-access checkpoint:88 checks. Historical verifier result: **81 checks**. [Raw log](audit/2026-11-19/verifier-errors/check.txt). A completed [GitHub Actions run](https://github.com/0xaje/TheRecord/actions/runs/44513386377) passed for 41f1d7e. New commits require their own CI result; the README badge follows main.
-- Latest deployment improves the protected aggregate readout with validated D1 size metadata and explicit unknown operational states. No schema/public UI/contract/data/secret change; environment revision9 unchanged.
+- **89 local build/Node checks pass** ([latest log](audit/2026-11-19/roadmap/check.txt)). Prior relay-access checkpoint:88 checks. Historical verifier result: **81 checks**. [Raw log](audit/2026-11-19/verifier-errors/check.txt). A completed [GitHub Actions run](https://github.com/0xaje/TheRecord/actions/runs/44513386377) passed for 41f1d7e. New commits require their own CI result; the README badge follows main.
+- Latest deployment adds the [roadmap](audit/2026-11-19/roadmap/REVIEW.md) above the landing-page footer, with matching README content. Proposed work has no promised dates. No schema/contract/data/secret change; environment revision9 unchanged.
 
 ## Real Diana agreement evidence
 

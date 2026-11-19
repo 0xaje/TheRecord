@@ -265,6 +265,18 @@ main{padding-inline:1rem;padding-bottom:2rem}
 .blog-toc a{padding:.55rem .75rem;border-radius:.5rem}
 .blog-toc a[aria-current="location"]{background:#21382c;color:var(--accent);font-weight:700}
 @media(max-width:760px){.blog-navigation{top:0;z-index:5;padding:.45rem 0;background:#09090bf5;margin-bottom:1rem}.blog-menu-toggle{display:block;width:100%;text-align:left;min-height:48px}.blog-navigation .blog-toc{display:none;margin:.4rem 0 0;max-height:55dvh;overflow-y:auto}.blog-navigation[data-open="true"] .blog-toc{display:grid}}
+
+.roadmap{margin-top:clamp(2.5rem,6vw,4rem);padding-top:2rem;border-top:1px solid var(--line);scroll-margin-top:1.5rem}
+.roadmap>h2{margin:.45rem 0 .85rem}.roadmap-intro{max-width:66ch}
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:1.5rem}
+.roadmap-card{min-width:0;padding:1.35rem;background:var(--panel);border:1px solid var(--line);border-radius:.8rem}
+.roadmap-card:first-child{border-top:2px solid var(--accent)}
+.roadmap-status{display:block;font-size:.875rem;color:var(--muted);margin-bottom:.55rem}
+.roadmap-card:first-child .roadmap-status{color:var(--accent)}
+.roadmap-card h3{font-size:1.2rem}.roadmap-card ul{margin:1rem 0 0;padding-left:1.2rem;color:var(--muted)}
+.roadmap-card li{padding:.3rem 0;line-height:1.65}.roadmap-note{font-size:.9rem;margin-top:1rem;max-width:80ch}
+@media(max-width:760px){.roadmap-grid{grid-template-columns:minmax(0,1fr)}.roadmap-card{padding:1.15rem}}
+
 </style>
 <main>
 <p id="app-startup" role="status">Loading The Record. If this message stays here, reload the page. If it still does not open, please report the page address and error.</p>
@@ -320,6 +332,45 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <article><h3>Approve with QoreX</h3><p>Each person signs the same version through their own wallet. Diana checks the ML-DSA-87 approval.</p></article>
 <article><h3>Check the evidence</h3><p>Verify your copy locally, follow the transaction in QoreChain Explorer, and keep earlier versions available after an amendment.</p></article>
 </div><a href="/blog#qorechain">Read how The Record uses QoreChain</a>
+</section>
+
+<section class="roadmap" id="roadmap" aria-labelledby="roadmap-title">
+<p class="eyebrow">The product journey</p>
+<h2 id="roadmap-title">Roadmap</h2>
+<p class="roadmap-intro">Capture an agreement, understand its changes, approve the exact version and keep evidence you can check later.</p>
+<div class="roadmap-grid">
+<article class="roadmap-card">
+<span class="roadmap-status">Available on Diana Testnet</span>
+<h3>Working now</h3>
+<ul>
+<li>Private drafts, saved revisions and coded review invitations.</li>
+<li>Two-account approval with post-quantum signature checks.</li>
+<li>Local file verification against a recorded fingerprint.</li>
+<li>Amendment history and withdrawal of pending amendments.</li>
+</ul>
+</article>
+<article class="roadmap-card">
+<span class="roadmap-status">Proposed priorities</span>
+<h3>Next</h3>
+<ul>
+<li>Phone scanning: capture, arrange and approve one final digital copy of a paper agreement.</li>
+<li>Clearer version comparison to help people review what changed.</li>
+<li>A downloadable evidence pack with the approved file, version and receipt references.</li>
+<li>Improve onboarding through independent participant testing.</li>
+</ul>
+</article>
+<article class="roadmap-card">
+<span class="roadmap-status">Directions to validate</span>
+<h3>Future exploration</h3>
+<ul>
+<li>Text extraction from scans, with user review before approval.</li>
+<li>Agreement templates and multiple-party approval policies.</li>
+<li>Encrypted private storage, safer recovery and tested backups.</li>
+<li>Notifications, integrations and focused pilots with freelancers, clients and small teams.</li>
+</ul>
+</article>
+</div>
+<p class="roadmap-note">Next and Future exploration describe proposed work, not available features or promised release dates. A scanned agreement would use one retained digital copy; a fresh photograph is a different file.</p>
 </section>
 </section>
 <div class="screen" data-screen="workspace" hidden>
@@ -636,7 +687,7 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <div class="footer-grid">
 <div class="footer-about"><a class="brand" href="/">The Record</a><p>Review the terms.<br>Approve the version.<br>Keep the proof.</p><p class="footer-network">Built on QoreChain Diana Testnet.</p></div>
 <div class="footer-links"><h2>Use The Record</h2><a href="/#workspace">Drafts</a><a href="/walkthrough">Walkthrough</a><a href="/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&amp;version=1#verify-title">Demo</a><a href="/blog">Blog</a></div>
-<div class="footer-links"><h2>Project</h2><a href="https://github.com/0xaje/TheRecord">GitHub</a><a href="https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md">Diana evidence</a><a href="https://github.com/0xaje/TheRecord/blob/main/LICENSE">MIT license</a><a href="/credits">Credits</a></div>
+<div class="footer-links"><h2>Project</h2><a href="/#roadmap">Roadmap</a><a href="https://github.com/0xaje/TheRecord">GitHub</a><a href="https://github.com/0xaje/TheRecord/blob/main/docs/diana-evidence.md">Diana evidence</a><a href="https://github.com/0xaje/TheRecord/blob/main/LICENSE">MIT license</a><a href="/credits">Credits</a></div>
 <div class="footer-links"><h2>Built on QoreChain</h2><a href="https://build.qorechain.io">Build Before Q-Day</a><a href="https://dashboard.qorechain.io/explorer">QoreChain Explorer</a><a href="/blog#qorechain">Diana and QoreX</a></div>
 </div>
 <div class="footer-wordmark" aria-hidden="true">The Record</div>
