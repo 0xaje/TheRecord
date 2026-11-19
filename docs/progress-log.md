@@ -685,3 +685,6 @@ Working source remains on withdrawal-amendments/draftPR1; publicmain is not the 
 ## 19 November2026 — operator accepted, admission prepared but OFF
 
 Owner-local status confirmed initialized/reconciled/normal, completing operator handover without sharing the private token. Site48 (hosting source b3704cc58489df690976c6a7aa10ccd88289e6ed) prepares bounded hashed workspace admission and server/client challenge handling. All62 checks pass; provider responses in adapter tests are fixtures, not live proof. Enforcement remains OFF until real widget keys, secure runtime secret setup and desktop/QoreX acceptance. No counters reset, wallet action or paid account created. See [admission preparation](audit/2026-11-19/admission-preparation/REVIEW.md). Next owner action is real Cloudflare widget setup/public Site key only; never share Secret key. Provider monitoring/A06 and other audit gates remain open. Update draft READY, NOT POSTED.
+
+## 2026-11-19 Admission failure investigation
+Real completed widget followed by save HTTP503; no draft saved. Added safe provider references and protected no-save diagnostic; 64 local checks pass. Root cause and real desktop/QoreX acceptance OPEN. Owner probe is next. See admission-diagnostics/REVIEW.md. Public update READY, not posted. Platform custom workspace-header logging is an additional open privacy finding.

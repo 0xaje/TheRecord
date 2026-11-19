@@ -95,3 +95,21 @@ test('misspelled admission mode cannot silently disable a configured gate',async
   const policy=await admissionPolicy(new Request(origin+'/api/admission/policy',{headers:{'X-Record-Workspace':'a'.repeat(64)}}),{...invalid,DB:db});assert.equal(policy.status,503);
  }finally{db.sqlite.close();}
 });
+
+test('provider diagnostics classify failures without exposing tokens, secrets or response bodies',async()=>{
+ const {requestSiteverify,admissionProviderProbe}=await import('../server/admission.js');
+ const secretText='never-print-this-private-provider-message';
+ const cases=[
+  [async()=>{throw Error(secretText);},'AP-CONNECTION'],
+  [async()=>new Response(secretText,{status:403}),'AP-HTTP-403'],
+  [async()=>new Response('not-json '+secretText),'AP-JSON'],
+  [async()=>new Response('x'.repeat(16385)),'AP-SIZE'],
+  [async()=>Response.json(null),'AP-SHAPE'],
+ ];
+ for(const[fetcher,code]of cases){
+  const r=await requestSiteverify(env,'sensitive-challenge-token',fetcher);assert.equal(r.ok,false);assert.equal(r.code,code);
+  const text=JSON.stringify(r);for(const hidden of [secretText,env.RECORD_TURNSTILE_SECRET,'sensitive-challenge-token'])assert.equal(text.includes(hidden),false);
+ }
+ const result=await admissionProviderProbe(request,env,async()=>Response.json({success:false,'error-codes':['invalid-input-response',secretText],secret:secretText,hostname:'private.example'}));
+ assert.equal(result.connectionConfirmed,true);assert.equal(result.invalidTokenRejected,true);assert.deepEqual(result.providerCodes,['invalid-input-response']);assert.equal(result.admissionGranted,false);assert.equal(result.draftSaved,false);assert.equal(JSON.stringify(result).includes(secretText),false);
+});

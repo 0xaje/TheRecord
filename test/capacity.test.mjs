@@ -143,3 +143,15 @@ test('operator readout flags counter drift instead of describing it as normal',a
   const stats=await (await ops(db)).json();assert.equal(stats.reconciled,false);assert.equal(stats.status,'accounting-mismatch');
  }finally{db.sqlite.close();}
 });
+
+test('provider probe requires operator authorization and explicit confirmation, with no DB mutation',async()=>{
+ const untouched={prepare(){throw Error('Provider probe must not read private rows');}};
+ const original=globalThis.fetch;
+ try{
+  assert.equal((await ops(untouched,'/provider-probe','POST',{Authorization:''})).status,401);
+  assert.equal((await ops(untouched,'/provider-probe','POST')).status,403);
+  globalThis.fetch=async()=>Response.json({success:false,'error-codes':['invalid-input-response']});
+  const response=await capacityOperations(new Request(origin+'/api/operations/capacity/provider-probe',{method:'POST',headers:{Authorization:'Bearer '+token,Origin:origin,'X-Record-Operation':'probe-no-save'}}),{...env(untouched),RECORD_TURNSTILE_SITE_KEY:'fixture-public-site-key',RECORD_TURNSTILE_SECRET:'fixture-private-secret',RECORD_TURNSTILE_HOSTNAME:'record.test'});
+  assert.equal(response.status,200);const p=await response.json();assert.equal(p.invalidTokenRejected,true);assert.equal(p.admissionGranted,false);assert.equal(p.draftSaved,false);
+ }finally{globalThis.fetch=original;}
+});

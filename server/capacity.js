@@ -1,4 +1,4 @@
-import { admissionMode } from "./admission.js";
+import { admissionMode, admissionProviderProbe } from "./admission.js";
 const limit = 2000;
 const tables = [
   ['drafts','drafts','length(CAST(title AS BLOB)) + length(CAST(terms AS BLOB))'],
@@ -20,7 +20,7 @@ const response=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Con
 const hash=async value=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value))),b=>b.toString(16).padStart(2,'0')).join('');
 export async function capacityOperations(request,env) {
   const path=new URL(request.url).pathname;
-  if (!(request.method==='GET' && path==='/api/operations/capacity') && !(request.method==='POST' && path==='/api/operations/capacity/initialize')) return response({error:'Page not found.'},404);
+  if (!(request.method==='GET' && path==='/api/operations/capacity') && !(request.method==='POST' && ['/api/operations/capacity/initialize','/api/operations/capacity/provider-probe'].includes(path))) return response({error:'Page not found.'},404);
   const expected=env.RECORD_OPERATIONS_TOKEN_SHA256;
   const supplied=request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
   if(!/^[a-f0-9]{64}$/.test(expected??'') || !supplied) return response({error:'Operator authorization required.'},401);
@@ -29,6 +29,10 @@ export async function capacityOperations(request,env) {
   if(mismatch)return response({error:'Operator authorization required.'},401);
   if(!env.DB)return response({error:'Usage service unavailable.'},503);
   try {
+    if(path.endsWith('/provider-probe')) {
+      if(request.headers.get('Origin')!==new URL(request.url).origin || request.headers.get('X-Record-Operation')!=='probe-no-save')return response({error:'Explicit same-origin probe confirmation required.'},403);
+      return response(await admissionProviderProbe(request,env));
+    }
     if(request.method==='POST') {
       if(request.headers.get('Origin')!==new URL(request.url).origin || request.headers.get('X-Record-Operation')!=='initialize-64MiB')return response({error:'Explicit same-origin initialization required.'},403);
       // One SQLite statement snapshots existing text and initializes metering atomically.

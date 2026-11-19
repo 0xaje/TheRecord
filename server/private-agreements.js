@@ -53,7 +53,7 @@ export async function privateAgreements(request, db, env = {}) {
   try {
     return await handlePrivateAgreements(request, db, env);
   } catch (error) {
-    if(error instanceof AdmissionError)return reply({error:error.message},error.status);
+    if(error instanceof AdmissionError)return reply({error:error.message,...(error.code?{code:error.code}:{})},error.status);
     if (error instanceof RequestLimit) return Response.json({ error: error.message }, {
       status: 429, headers: { ...headers, "Retry-After": String(error.retryAfter) },
     });
