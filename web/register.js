@@ -1,18 +1,22 @@
+import { ensureRelaySession, relayFetch } from "./relay-access.js";
 import { buildRegisterPqKeyMessage, deriveCanonicalPqKey, signHybrid, toBase64 } from "@qorechain/qoresign";
 import { AuthInfo, TxBody } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 import { PubKey } from "cosmjs-types/cosmos/crypto/secp256k1/keys";
 import { deriveSigner } from "./approve.js";
 
-const rest = "/api/diana";
 const chainId = "qorechain-diana";
 
 async function request(path, options) {
-  const response = await fetch(rest + path, { ...options, signal: AbortSignal.timeout(15000) });
-  if (!response.ok) throw new Error(`Diana returned HTTP ${response.status}.`);
+  const response = await relayFetch(path, options);
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw Object.assign(new Error(data.error ?? `Diana returned HTTP ${response.status}.`), { broadcastSubmitted: data.broadcastSubmitted });
+  }
   return response.json();
 }
 
 export async function registerSigner(file, expectedAddress, onAccepted) {
+  await ensureRelaySession();
   const mnemonic = (await file.text()).trim();
   const { classicalKey, signer } = deriveSigner(mnemonic);
   if (signer !== expectedAddress) throw new Error("The signing file belongs to a different Diana address.");
@@ -54,7 +58,8 @@ export async function registerSigner(file, expectedAddress, onAccepted) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ tx_bytes: toBase64(txBytes), mode: "BROADCAST_MODE_SYNC" }),
-  }).catch(() => {
+  }).catch(error => {
+    if (error.broadcastSubmitted === false) throw new Error(error.message + " No registration was submitted.");
     throw new Error(`Broadcast outcome unknown. Check Diana for ${hash} before retrying.`);
   });
   const accepted = broadcast.tx_response;
@@ -64,9 +69,7 @@ export async function registerSigner(file, expectedAddress, onAccepted) {
 
   onAccepted(hash);
   for (let attempt = 0; attempt < 12; attempt++) {
-    const response = await fetch(`${rest}/cosmos/tx/v1beta1/txs/${hash}`, {
-      signal: AbortSignal.timeout(10000),
-    });
+    const response = await relayFetch(`/cosmos/tx/v1beta1/txs/${hash}`);
     if (response.ok) {
       const { tx_response: receipt } = await response.json();
       if (receipt?.txhash === hash && BigInt(receipt.height) > 0n) {

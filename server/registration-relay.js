@@ -1,3 +1,5 @@
+import { boundedText } from "./bounded-stream.js";
+import { authorizeRelay } from "./relay-access.js";
 import { TxBody, TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx";
 
 const upstream = "https://api-testnet.qore.host";
@@ -9,10 +11,12 @@ const paths = [
 ];
 const broadcast = "/cosmos/tx/v1beta1/txs";
 
-export async function relayRegistration(request, { fetcher = fetch, timeoutMs = 12000 } = {}) {
+export async function relayRegistration(request, { fetcher = fetch, timeoutMs = 12000, env = {} } = {}) {
   const url = new URL(request.url);
   const path = url.pathname.slice("/api/diana".length);
   if (request.method === "GET" && paths.some(pattern => pattern.test(path))) {
+    const denied = await authorizeRelay(request, env, "read");
+    if (denied) return denied;
     return forward(path, undefined, fetcher, timeoutMs);
   }
   if (request.method !== "POST" || path !== broadcast) {
@@ -25,6 +29,8 @@ export async function relayRegistration(request, { fetcher = fetch, timeoutMs = 
   if (request.headers.get("Content-Type")?.split(";")[0].trim().toLowerCase() !== "application/json") {
     return Response.json({ error: "Expected a JSON registration envelope." }, { status: 415 });
   }
+  const denied = await authorizeRelay(request, env, "broadcast");
+  if (denied) return denied;
   let body;
   try { body = await boundedText(request.body, 16000, timeoutMs); }
   catch (error) {
@@ -53,26 +59,6 @@ export async function relayRegistration(request, { fetcher = fetch, timeoutMs = 
   }, fetcher, timeoutMs);
 }
 
-async function boundedText(stream, maximum, timeoutMs) {
-  if (!stream) throw Object.assign(new Error(), { code: "BODY" });
-  const reader = stream.getReader(), decoder = new TextDecoder("utf-8", { fatal: true });
-  let timer, bytes = 0, text = "";
-  try {
-    return await Promise.race([
-      (async () => {
-        for (;;) {
-          const { done, value } = await reader.read();
-          if (done) return text + decoder.decode();
-          bytes += value.length;
-          if (bytes > maximum) throw Object.assign(new Error(), { code: "SIZE" });
-          text += decoder.decode(value, { stream: true });
-        }
-      })(),
-      new Promise((_, reject) => { timer = setTimeout(() => reject(Object.assign(new Error(), { code: "TIMEOUT" })), timeoutMs); }),
-    ]);
-  } catch (error) { void reader.cancel().catch(() => {}); throw error; }
-  finally { clearTimeout(timer); }
-}
 
 async function forward(path, options, fetcher, timeoutMs) {
   const controller = new AbortController();

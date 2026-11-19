@@ -1,7 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {TxBody,TxRaw} from 'cosmjs-types/cosmos/tx/v1beta1/tx';
-import {relayRegistration} from '../server/registration-relay.js';
+import {relayRegistration as actualRelay} from '../server/registration-relay.js';
+import {openLocalDatabase} from '../scripts/local-db.mjs';
+import {createHash} from 'node:crypto';
+// Locally seeded access isolates existing transport tests; not live anti-bot proof.
+async function relayRegistration(request, options={}) {
+ const db=openLocalDatabase(':memory:');
+ const key='a'.repeat(64), binding=createHash('sha256').update(key).digest('hex');
+ db.sqlite.prepare('INSERT INTO relay_sessions(binding,proof_hash,expires_at) VALUES(?,?,?)').run(binding,'transport-fixture',Date.now()+60000);
+ const headers=new Headers(request.headers); headers.set('Authorization','Bearer relay:'+key);
+ try {return await actualRelay(new Request(request,{headers}),{...options,env:{DB:db}});} finally {db.sqlite.close();}
+}
 const origin='https://record.test',route='/api/diana/cosmos/tx/v1beta1/txs';
 const encode=(type='/qorechain.pqc.v1.MsgRegisterPQCKeyV2',extra={})=>Buffer.from(TxRaw.encode(TxRaw.fromPartial({bodyBytes:TxBody.encode(TxBody.fromPartial({messages:[{typeUrl:type,value:new Uint8Array()}],...extra})).finish(),signatures:[new Uint8Array([1])]})).finish()).toString('base64');
 const req=(body,headers={})=>new Request(origin+route,{method:'POST',headers:{Origin:origin,'Content-Type':'application/json',...headers},body:typeof body==='string'?body:JSON.stringify(body)});

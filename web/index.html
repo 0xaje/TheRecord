@@ -520,6 +520,9 @@ main{padding-inline:1rem;padding-bottom:2rem}
 <button id="generate-signer" type="button">Generate signing file</button>
 <a id="download-signer" hidden>Download private signing file</a>
 <output id="signer-status" role="status"></output>
+<p>Browser access to Diana requires a short human check and lasts 15 minutes.</p>
+<button id="check-relay-access" type="button" class="secondary">Check browser access</button>
+<output id="relay-access-status" role="status"></output>
 <form id="register-signer">
 <label>Funded Diana address <input name="address" required pattern="qor1[0-9a-z]{38}" spellcheck="false"></label>
 <label>Your private test signing file <input name="key" type="file" required></label>

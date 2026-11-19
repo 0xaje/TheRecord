@@ -1,3 +1,4 @@
+import { relayFetch } from "./relay-access.js";
 import { createPublicClient, http } from 'viem';
 import { checkSignerReadiness } from './approve.js';
 import { WINDOW_CHAIN, WINDOW_CONTRACT, qorToEvm, verifyWindowReceipt, verifyWindowReadback } from './scoped-window-data.js';
@@ -12,7 +13,7 @@ let account;
 let submitted;
 let busy = false;
 async function read(path) {
-  const r = await fetch('/api/diana' + path, { signal: AbortSignal.timeout(15000) });
+  const r = await relayFetch(path);
   if (!r.ok) throw new Error('Diana receipt/read-back unavailable. Check the saved transaction before retrying.');
   return r.json();
 }

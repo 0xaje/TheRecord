@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-11-19T14:39:23.239Z",
+  "origin": "https://the-record-diana-verifier.flutteringpeach8.chatgpt.site",
+  "results": [
+    {
+      "name": "unverified read refused",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "spoofed forwarding identity refused by app or hosting edge",
+      "status": 403,
+      "expected": [
+        401,
+        403
+      ],
+      "pass": true
+    },
+    {
+      "name": "unverified random session refused",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "unverified broadcast refused before parsing/forwarding",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "wrong-origin broadcast refused",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "name": "non-allowlisted route refused",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "name": "public configuration available",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "policy binds the random credential and purpose",
+      "pass": true
+    },
+    {
+      "name": "invalid provider proof refused",
+      "status": 403,
+      "expected": 403,
+      "pass": true
+    },
+    {
+      "name": "rejected proof cannot authorize access",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "published browser bundle available",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "published browser bundle matches checked source",
+      "pass": true,
+      "sha256": "ed955c2c8b440ce92299f0fdc0be057f4040640a97213125dfffa7ffb8c9c5fd"
+    },
+    {
+      "name": "landing remains available",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "public demo download remains available",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    }
+  ],
+  "broadcastsSubmitted": 0,
+  "validHumanChecksCompleted": 0,
+  "scope": "Bounded refusal, invalid-provider-proof, public UI and build-parity checks only. Positive human/browser acceptance remains separate."
+}

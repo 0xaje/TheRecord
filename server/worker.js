@@ -1,3 +1,4 @@
+import { relayAccess } from "./relay-access.js";
 import { secureResponse } from "./security-headers.js";
 import { admissionPolicy } from "./admission.js";
 import { capacityOperations } from "./capacity.js";
@@ -10,7 +11,8 @@ const routes = {
     if (pathname === "/api/admission/policy" && request.method === "GET") return admissionPolicy(request, env);
     if (pathname.startsWith("/api/operations/")) return capacityOperations(request, env);
     if (pathname === "/api/drafts" || pathname.startsWith("/api/drafts/")) return privateAgreements(request, env.DB, env);
-    if (pathname.startsWith("/api/diana/")) return relayRegistration(request);
+    if (pathname.startsWith("/api/relay/")) return relayAccess(request, env);
+    if (pathname.startsWith("/api/diana/")) return relayRegistration(request, { env });
     const sampleFiles = {
       "/demo/agreement-v1.txt": "The Record test agreement: deliver one draft by Friday.\n",
       "/demo/agreement-v2.txt": "The Record test agreement: deliver one draft by Monday.\n",

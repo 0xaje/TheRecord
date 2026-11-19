@@ -133,6 +133,7 @@ test('additive migration preserves a legacy current revision without inventing o
     db.sqlite.exec(readFileSync(new URL('../migrations/0009_owner_transfer_quota.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0010_service_capacity.sql', import.meta.url), 'utf8'));
     db.sqlite.exec(readFileSync(new URL('../migrations/0011_workspace_admission.sql', import.meta.url), 'utf8'));
+    db.sqlite.exec(readFileSync(new URL('../migrations/0012_relay_sessions.sql', import.meta.url), 'utf8'));
     db.sqlite.prepare(INITIALIZE_SQL).get(67108864,Date.now());
     const before = await (await call(db, '/revisions?id=' + draft.id)).json();
     assert.deepEqual(before.revisions.map(r => r.revision), [5]);

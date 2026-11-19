@@ -1,3 +1,4 @@
+import { relayFetch } from "./relay-access.js";
 import { verifyAgreementFile, verificationErrorMessage } from "./file-verification.js";
 import { resolveDeployment, agreementQuery } from "./deployments.js";
 import { encodeFunctionData, parseAbi } from "viem";
@@ -263,6 +264,20 @@ document.querySelector("#generate-signer").addEventListener("click", () => {
   } catch {
     signerStatus.textContent = "Could not generate a test signing file.";
   }
+});
+
+document.querySelector("#check-relay-access").addEventListener("click", async event => {
+  const button = event.currentTarget, status = document.querySelector("#relay-access-status");
+  button.disabled = true;
+  status.textContent = "Checking browser access…";
+  try {
+    const response = await relayFetch("/cosmos/base/tendermint/v1beta1/node_info");
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error ?? "Diana access is unavailable.");
+    if (data.default_node_info?.network !== "qorechain-diana") throw new Error("Expected Diana Testnet.");
+    status.textContent = "Browser access confirmed for Diana Testnet. No signing file was read and no transaction was submitted.";
+  } catch (error) { status.textContent = error.message; }
+  finally { button.disabled = false; }
 });
 
 const registerForm = document.querySelector("#register-signer");
