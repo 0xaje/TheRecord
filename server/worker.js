@@ -1,9 +1,10 @@
+import { secureResponse } from "./security-headers.js";
 import { admissionPolicy } from "./admission.js";
 import { capacityOperations } from "./capacity.js";
 import { relayRegistration } from "./registration-relay.js";
 import { privateAgreements } from "./private-agreements.js";
 
-export default {
+const routes = {
   fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (pathname === "/api/admission/policy" && request.method === "GET") return admissionPolicy(request, env);
@@ -35,3 +36,5 @@ export default {
     return new Response(null, { status: 404 });
   },
 };
+
+export default { async fetch(request, env) { return secureResponse(request, await routes.fetch(request, env)); } };

@@ -1,0 +1,87 @@
+{
+  "checkedAt": "2026-11-19T10:16:22.897Z",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-type": "text/html; charset=utf-8",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    },
+    {
+      "path": "/walkthrough",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-type": "text/html; charset=utf-8",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "headers": {
+        "cache-control": "no-cache",
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-type": "text/html; charset=utf-8",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    },
+    {
+      "path": "/verify.js",
+      "status": 200,
+      "headers": {
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-type": "text/javascript; charset=utf-8",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    },
+    {
+      "path": "/demo/agreement-v1.txt",
+      "status": 200,
+      "headers": {
+        "content-disposition": "attachment; filename=\"agreement-v1.txt\"",
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-type": "text/plain; charset=utf-8",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    },
+    {
+      "path": "/api/diana/forbidden",
+      "status": 404,
+      "headers": {
+        "cache-control": "no-store",
+        "content-security-policy": "base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "content-security-policy-report-only": "default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://evm-testnet.qore.host https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; form-action 'self'; frame-ancestors 'self' https://chatgpt.com https://*.chatgpt.com",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "no-referrer",
+        "strict-transport-security": "max-age=15552000",
+        "x-content-type-options": "nosniff"
+      }
+    }
+  ]
+}
