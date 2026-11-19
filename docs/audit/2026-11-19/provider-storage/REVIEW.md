@@ -1,5 +1,7 @@
 # Provider storage, hosting cost and recovery checkpoint
 
+**Owner read-back PASS — 19 November2026,14:51:58UTC:** Owner supplied status from the updated main checkout. [Aggregate JSON](owner-status.json) reports initialized:true, reconciled:true, status:normal, all inventory bounds exhaustive, mandatory admission enforced, retained text7139/67108864bytes and actual D1-reported database size159744bytes (156KiB). This verifies the protected live readout using the owner-held credential; no secret or private document was supplied. Source pull log/prompt omitted from retained evidence. Size/readout checkpoint CLOSED; automatic alert delivery and backup/restore assurance remain OPEN. Dated pending statements below describe the earlier state. Both GitHub check and solidity jobs passed for67e29eaa277dcb21b6bc1d21d3870eb84e03193f ([CI](https://github.com/0xaje/TheRecord/actions/runs/44548149386)).
+
 19 November 2026. PARTIAL: safe aggregate inspection and protected readout improvement completed; actual provider size read-back, automatic alerts and database backup/restore assurance remain open. This is an operational review, not a new contract or a new product feature.
 
 Deployed **Site60**, hosting source24695b3714a5332a24abab0a1b7bfeac6d50af99, environment revision9. [Hosted operator-auth refusal, public availability and unchanged browser parity](hosted.json) pass. Operator positive read-back remains pending; deployment success is not that read-back.
@@ -47,3 +49,7 @@ Provider-level recovery remains a real operational limitation; this is not descr
 My space update — READY, NOT POSTED: I checked The Record's live aggregate storage meter and added provider-reported database size to the existing private operator readout, with explicit unknown states. All89 build/Node checks pass. Site source rollback is documented separately from database recovery; automatic alerts and backup/restore assurance are not claimed.
 
 Ship Weeks fresh official Check remains unobserved. No new challenge completion, Q-Day entry or Diana transaction is claimed. GitHub source publication does not itself prove the public event timeline updated.
+
+## Current next action
+
+Do not rerun initialization. Current usage is small and accounting is consistent; no cleanup, paid storage upgrade or hosting migration is justified by this snapshot. Monitoring is still manual, and successful source updates/status reads do not establish backup recoverability. Next separate work is an owner-controlled recovery design and delivered alerts; retain these gaps rather than closing the entire operational milestone. Public My space update READY, NOT POSTED: I verified the protected live database-size readout from Ubuntu. The database reports156KiB, retained-text accounting reconciles, and admission remains enforced. Automatic alerts and tested data recovery remain disclosed operational gaps.

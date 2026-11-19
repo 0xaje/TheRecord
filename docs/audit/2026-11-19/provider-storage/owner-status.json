@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-11-19T14:51:58.343Z",
+  "initialized": true,
+  "capacity": {
+    "limit_bytes": 67108864,
+    "used_bytes": 7139,
+    "drafts_count": 27,
+    "revisions_count": 26,
+    "shares_count": 19,
+    "feedback_count": 2,
+    "initialized_at": 1795047654771
+  },
+  "inventory": {
+    "drafts_count": 27,
+    "drafts_bytes": 1769,
+    "revisions_count": 26,
+    "revisions_bytes": 986,
+    "shares_count": 19,
+    "shares_bytes": 4328,
+    "feedback_count": 2,
+    "feedback_bytes": 56,
+    "request_limits_count": 6,
+    "invite_codes_count": 1,
+    "workspace_admissions_count": 6,
+    "relay_sessions_count": 2
+  },
+  "inventoryExhaustive": true,
+  "counterCountsExhaustive": true,
+  "reconciled": true,
+  "status": "normal",
+  "measurement": "UTF-8 application text in drafts, saved revisions, invitation snapshots and feedback. Excludes database pages/indexes/metadata, counter/admission/relay-session records, invite_codes, backups and provider billing.",
+  "antiBotGateEnabled": true,
+  "antiBotMode": "enforce",
+  "providerMonitoringVerified": false,
+  "databaseStorage": {
+    "reportedSizeBytes": 159744,
+    "measurement": "D1 query metadata size_after",
+    "providerQuotaBytes": null,
+    "note": "Database size reported for this query. Excludes backup copies and is not a billing total or a configured spending cap."
+  },
+  "operations": {
+    "monitoring": "manual-operator-readout",
+    "automaticAlertDelivery": "not-configured",
+    "billingVerified": false,
+    "backupRetentionVerified": false,
+    "providerRestoreTested": false
+  }
+}
