@@ -32,3 +32,5 @@ Next owner checkpoint: in QoreX Diana browser, open /walkthrough directly, scrol
 ## My space draft — READY, NOT POSTED
 
 I completed the next usability corrections for The Record: readable font loading, a clear storage/recovery warning beside the draft editor, and startup guidance if the interface fails to open. All 39 automated checks pass, and the published HTML and script match the tested build. Fresh desktop checks show all ten walkthrough chapters and working chapter navigation. QoreX phone acceptance is the next check; the earlier reported blank page was not reproduced in this desktop session. The V2 Diana transaction evidence remains separately documented.
+
+Owner acceptance update: owner replied “they are correct” after the requested QoreX walkthrough/Blog/Drafts checks. Record this as owner-reported phone acceptance, not an independent device inspection or screenshot. The UI checkpoint is now complete; the historical blank-page root cause remains unconfirmed. Backend A04/A05 work may proceed.
