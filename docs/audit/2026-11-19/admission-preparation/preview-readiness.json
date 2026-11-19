@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-19T08:55:36.320Z",
+  "environmentRevision": 8,
+  "deploymentId": "appgdep_6afeb94c5fa48191ace9d12a8c14153d",
+  "secretPresentAndMasked": true,
+  "policyStatus": 200,
+  "mode": "preview",
+  "requiredForOrdinaryUsers": false,
+  "publicSitekeyPresent": true,
+  "workspaceBindingVerified": true,
+  "action": "new-workspace",
+  "realProviderValidation": "pending desktop and QoreX tests",
+  "scope": "Real policy readiness only; no challenge completed, admission created or draft saved."
+}
