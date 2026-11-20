@@ -9,11 +9,19 @@
 
 **The Record lets two parties review a document, approve its exact version on QoreChain Diana Testnet, and verify a copy later.** Document bytes stay off-chain; private drafts are a separate service-storage feature.
 
-**[Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Try the demo](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title) · [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md)**
+**[Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Watch demo on YouTube](https://youtu.be/Q-D4JEWY2oo) · [Try the demo](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title) · [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md)**
 
-Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **89 checks passed, 19 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **89 checks passed, 20 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 [Problem](#the-problem) · [Working proof](#working-proof) · [QoreChain integration](#built-on-qorechain) · [Architecture](#architecture) · [Run locally](#run-locally) · [Limits](#security-and-limits)
+
+## Watch the demo
+
+[**Watch The Record on YouTube**](https://youtu.be/Q-D4JEWY2oo)
+
+The video explains the problem and demonstrates drafts, saved revisions, original/changed file verification and agreement history. It uses a new demonstration draft and previously recorded Diana Testnet approvals. Both distinct signer wallets in those tests were operated by the creator; this is not an independent two-person signing session.
+
+Prefer to explore directly? [Try it yourself](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title).
 
 ## Try it without a wallet
 

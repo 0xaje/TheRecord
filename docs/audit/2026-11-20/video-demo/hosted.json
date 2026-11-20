@@ -1,0 +1,11 @@
+{
+  "site": 62,
+  "environmentRevision": 9,
+  "hostingSource": "4cbe2b8005a2868fe9d3467f5f9c8cb8512aefa2",
+  "video": "https://youtu.be/Q-D4JEWY2oo",
+  "publicHtmlContainsVideo": true,
+  "demoSection": true,
+  "watchAndTry": true,
+  "bundleSha256": "31e3fd683524cac8e06cf887bf7d1078bd20ef88a2a97bc2eab77e0a251b8221",
+  "localBundleSha256": "31e3fd683524cac8e06cf887bf7d1078bd20ef88a2a97bc2eab77e0a251b8221"
+}
