@@ -1,6 +1,6 @@
 # V2 QCAIA report: source binding and finding response
 
-**Current assessment checkpoint:** [19 November project assessment](../audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) completes our finding review with explicit dispositions. Auditor-issued status remains Open; this is not independent clearance. Dated next steps below are historical.
+**Project audit status: COMPLETE — owner confirmed20November2026.** The [completed project assessment](../audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) records all five finding dispositions and supporting evidence. We recommend QoreChain review the repeated bot findings against the submitted source/tests. The report below is preserved as issued; it is not a current unfinished audit task or a clean external certification.
 
 Reviewed19November2026 WAT. Report [QCAIA-1795043785188-4A004387](https://qorechain-audit-reports-362958365954.s3.amazonaws.com/audits/QCAIA-1795043785188-4A004387/report.html). Unchanged local [HTML](QCAIA-1795043785188-4A004387.html) and owner-exported [PDF](QCAIA-1795043785188-4A004387.pdf) retained. Report prints audit date18November; PDF generated timestamp prints19November00:17. Do not infer a source discrepancy from those displayed dates.
 
@@ -22,7 +22,7 @@ The executive summary mentions critical issues, but the enumerated findings incl
 | ETH-004 Low: mapping growth | **Real intentional retention; claimed iteration/retrieval gas failure not demonstrated here.** Contract functions access individual entries and contain no history loop. Storage grows with transactions. | Retaining finalized and withdrawn versions is necessary for history. Browser history uses bounded log ranges; independent backend storage/abuse findings remain separate. Do not delete finalized records to increase the AI score. |
 | ETH-005 Info: missing ERC standards | **Not applicable as a token-interface requirement.** This is an agreement registry, not an ERC20/ERC721 asset. Custom ABI calls already work with QoreX/viem. | ERC20 specifies a token interface, not a universal requirement for arbitrary EVM dApps. No token/NFT layer added without product need. Future integrations may define an appropriate interface separately. |
 
-Source references are line numbers in the unchanged hash-matched source. Underlying official references: https://docs.soliditylang.org/en/v0.8.28/control-structures.html#checked-or-unchecked-arithmetic and https://eips.ethereum.org/EIPS/eip-20 . The dispositions are engineering assessments; the report findings remain Open until the auditor/accepted review process closes them.
+Source references are line numbers in the unchanged hash-matched source. Underlying official references: https://docs.soliditylang.org/en/v0.8.28/control-structures.html#checked-or-unchecked-arithmetic and https://eips.ethereum.org/EIPS/eip-20 . The dispositions are engineering assessments; the original report retains its as-issued labels, while our finding review is complete.
 
 ## Additional verification prompted by this report
 
@@ -36,12 +36,12 @@ The Solidity tests that seed lifecycle storage isolate guards and state transiti
 
 A cooperative proposer can now correct a mistaken pending amendment. A malicious/unavailable proposer, or one who lost the required PQ key, can still refuse withdrawal and block further changes under that ID. There is no arbitrator/admin recovery path. Finalized versions cannot be rolled back; whichever valid approval/withdrawal executes first determines the resulting state. Existing approval relaying can incur duplicate gas costs. Chain/RPC/key custody/file availability and long-term archival access remain trust dependencies.
 
-Source-matched report retention/review is complete; **event acceptance of the draft-remediation-final audit trail remains unverified**. Old reports bind the old source; this one binds V2. Preserve original source/report, changes/tests, V2 source/report and this ledger. Do not claim clean audit or closed High findings. Do not pay for repeated identical audits just to seek a different number; a concrete overlooked exploit should drive further code changes.
+## Completion record — 20 November 2026
 
-Other open work: scoped window admission/refusal evidence for the NEW contract, independent users, and the backend/frontend findings in the combined plan. The old contract's scoped proof is not proof for the new recipient address. PR1 was subsequently merged into main; see CURRENT_STATUS.md for current release gates.
+Source-matched report retention, finding review and supporting tests are COMPLETE. Original and V2 reports remain linked to their respective sources. The report's historical65/HIGH rating and original labels are retained without alteration. No clean reissued audit or independent certification is asserted.
 
-## Judge review and next step
+The owner confirms the audit work requested for submission and the final submission/link/listing checks are complete. Earlier action lists are superseded by this completion record and CURRENT_STATUS.md. V2-targeted scope evidence is retained in [SCOPED_WINDOW_LIVE.md](SCOPED_WINDOW_LIVE.md); deployment history was merged into main.
 
-The actual source and real-chain behavior are stronger evidence than generic missing-guard wording. The correct response is a traceable disagreement and tested residual-risk disclosure, not hiding65/HIGH or asserting perfect security. Next: preserve this record, verify event audit-stage acceptance where possible, and close the V2-targeted scoped proof. The other reliability/UI corrections remain required and queued.
+Recommendation: QoreChain should review the repeated bot findings in context, using the exact source, guard references and retained regression results. A shared score across reports alone does not demonstrate a bot fault. This is a documented recommendation, not a claim that organizers have already received or accepted it.
 
-My space draft — READY, NOT POSTED: The Record's new withdrawal contract has a source-matched QCAIA report. I retained its65/100High result and all Open findings, documented each response and expanded regression evidence. The deployed source is unchanged; event acceptance and remaining release checks are still open.
+My space draft — READY, NOT POSTED: I completed The Record's audit runs and source-bound review, documented every V2 finding and retained the supporting Solidity/Diana evidence. I recommend reviewing repeated bot findings against those sources and results. The original reports remain available for transparency, and the project submission is complete as confirmed by its owner.

@@ -1,8 +1,8 @@
 # The Record — QCAI audit response
 
-**Project review completed:** [AI audit comparison and dispositions](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md). Original auditor statuses and scores are preserved. Project assessment closure is separate from auditor clearance and event acceptance.
+**Audit work COMPLETE — owner confirmed20November2026.** Audit runs, source/report verification, finding review and evidence are retained in the [completed assessment](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) and [V2 response](withdrawal/AUDIT_RESPONSE.md). We recommend QoreChain review repeated bot findings against the source and regression evidence. No further audit task is queued for the submitted build.
 
-For current deployment, verification and open release gates, start with [CURRENT_STATUS.md](CURRENT_STATUS.md). Dated sections below preserve historical results; the V2 finding response is [here](withdrawal/AUDIT_RESPONSE.md).
+The sections below are dated audit history. Their original report scores/statuses and then-current action notes are preserved for traceability, not current pending tasks. This completion statement does not claim a clean auditor reissue or independent security certification. The owner also confirms final submission checks and submission complete; see [CURRENT_STATUS.md](CURRENT_STATUS.md).
 
 Stage 1 was run on 16 November 2026 against `contracts/TheRecord.sol` using the auditor’s Ethereum setting. It returned 65/100, Medium risk, and five findings. Quantum readiness was unscored in that setting.
 

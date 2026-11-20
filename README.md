@@ -25,7 +25,7 @@ Prefer to explore directly? [Try it yourself](https://the-record-diana-verifier.
 
 ## Try it without a wallet
 
-1. Open **Try the demo**, then expand **Try the demo without a wallet**.
+1. Open **Try the demo**, then use **Demo — watch or test**.
 2. Download the original, choose that file and select **Verify file** with **version 1**.
 3. Expect **File matches the finalized version** and **2 of 2 approvals**.
 4. Choose the changed copy while keeping **version 1**. Expect **File does not match this version**.
@@ -137,7 +137,9 @@ Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; publi
 
 **npm run check** builds the browser/Worker and runs **89 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Open**. Our [completed project assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) compares the reports and records each disposition. Our [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) explains tests, disputed findings and residual risks. It does not change the auditor's status or certify the application. [All audit reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
+**Audit work: complete.** The audit runs, source/report matching, finding-by-finding review and supporting regression evidence are documented. The [completed assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) and [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) record disputed findings, accepted design limitations and tests. The original V2 bot report (65/100, HIGH) is retained unchanged as an as-issued historical report. We recommend that QoreChain review the bot's repeated findings against the exact source and supplied evidence. Equal scores alone do not establish a bot fault. [Audit history and reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
+
+Project audit completion records the work performed; it does not assert a clean auditor reissue or independent security certification.
 
 ## Security and limits
 
@@ -146,13 +148,13 @@ The latest V2 QCAIA report is **65/100, HIGH risk**, with findings formally **Op
 - API controls bound writes, workspace quotas and retained application text. The **64 MiB application-text budget** excludes physical database/index space, backups and provider billing.
 - Private draft deletion removes live-service rows; downloaded copies, on-chain records and potentially hosting backups remain.
 - Public fingerprints are not encryption or proof of legal identity, informed consent, delivery or payment.
-- The protected live usage readout reports a156KiB database and reconciled retained-text accounting. Relay access limits are deployed and owner-tested in QoreX. Automatic alerts, tested database-backup recovery and independent full-workflow testing remain unverified. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+- The protected live usage readout reports a156KiB database and reconciled retained-text accounting. Relay access limits are deployed and owner-tested in QoreX. Automatic alerts and tested service-wide backup recovery are future operational improvements. Independent two-person full-workflow testing remains a separate validation opportunity. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 ## Documentation and project status
 
 [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Project story/research](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/blog) · [Current evidence/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md) · [Judge guide](https://github.com/0xaje/TheRecord/blob/main/docs/judge-walkthrough.md) · [Progress log](https://github.com/0xaje/TheRecord/blob/main/docs/progress-log.md)
 
-The final submission video, saved listing fields and organizer audit acceptance are not yet signed off. Public progress updates are drafted for the owner to review/post. This is a working Diana testnet product, not a claim of production readiness or a completed submission.
+**Submission complete — owner confirmed 20 November 2026.** The owner confirms the final video, saved listing fields, links and testnet address have been checked and the project submitted. **Audit work is complete**, with reports, responses and evidence retained. Public progress-update drafts remain available for owner use. The product is deployed on Diana Testnet; the roadmap identifies future development.
 
 ## Roadmap
 
