@@ -356,7 +356,8 @@ function showScreen() {
     else link.removeAttribute("aria-current");
   }
   if (screen === "signer-setup") document.querySelector("#signer-setup").open = true;
-  const articleSection = (screen === "blog" || screen === "walkthrough" || (screen === "landing" && ["roadmap", "demo"].includes(hash))) && hash ? document.getElementById(hash) : null;
+  if (screen === "verify-title" && hash === "verification-demo") document.querySelector("#verification-demo").open = true;
+  const articleSection = (screen === "blog" || screen === "walkthrough" || (screen === "landing" && hash === "roadmap")) && hash ? document.getElementById(hash) : null;
   if (articleSection) articleSection.scrollIntoView();
   else window.scrollTo(0, 0);
 }

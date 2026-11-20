@@ -789,3 +789,8 @@ My space update draft — READY, NOT POSTED: I added The Record’s product road
 Owner supplied Q-D4JEWY2oo. Added YouTube link and dedicated README section, landing Demo section with Watch demo / Try it yourself, hero/footer/Blog actions and verifier help. Labels disclose previously recorded approvals and creator-operated wallets. Site62/source4cbe2b8005a2868fe9d3467f5f9c8cb8512aefa2/env9 deployed.89 checks pass; public HTML and bundle parity pass. Browser visual QA and YouTube playback/duration not independently verified. Portal video field, event timeline and fresh Ship Weeks Check unobserved. No new transaction, contract, schema or secret change.
 
 My space update — READY, NOT POSTED: The Record’s video demonstration is now linked from the website and README. Visitors can watch the workflow on YouTube or try the original/changed-file checks themselves without connecting a wallet. The demonstration distinguishes new drafts from previously recorded Diana approvals. Video: https://youtu.be/Q-D4JEWY2oo
+
+
+## 2026-11-20 Demo grouping corrected to owner preference
+
+Site63/source0dcc15b73a832becaf002e1f2275777bed83e866/env9. Removed new landing section and separate Watch/Try entries; single Demo entry opens existing verifier disclosure with Watch video and Test the demo together.89 checks and public HTML/bundle parity pass. No browser visual QA, wallet/contract/schema change. My space draft READY, NOT POSTED: I grouped the video and interactive check under The Record’s existing Demo entry so visitors can choose either in one place. Portal/timeline/Ship Weeks Check unobserved.

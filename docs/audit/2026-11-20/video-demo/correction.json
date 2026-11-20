@@ -1,0 +1,8 @@
+{
+  "site": 63,
+  "hostingSource": "0dcc15b73a832becaf002e1f2275777bed83e866",
+  "bundleSha256": "39a5051eb0d6e0bf2b4aa755a1f89c82cef404a8b51d0d60ca0154d4112609b0",
+  "extraLandingSectionRemoved": true,
+  "singleDemoEntry": true,
+  "watchAndTestTogether": true
+}
