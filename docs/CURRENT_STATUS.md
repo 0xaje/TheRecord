@@ -1,6 +1,6 @@
 # The Record — current status and evidence
 
-Checked **20 November 2026**. This is the current index; dated reports and the append-only progress log retain earlier results. It is not an independent security certification or final submission sign-off.
+Engineering evidence checked **20 November 2026**; owner completion clarification recorded **22 November 2026**. This is the current index; dated reports and the append-only progress log retain earlier results. It is not an independent security certification or final submission sign-off.
 
 ## Source and hosted build
 
@@ -42,6 +42,10 @@ V2 source SHA-256 **688545ad745ece328b60f61d6348e1744b093359bd0eb2d7e02a306df319
 | Legacy invitations | [Migration regression](audit/2026-11-19/legacy-invitations/REVIEW.md). NULL-code legacy links fail closed; owner can issue a fresh coded invitation. No live bulk revocation. |
 | File verification | [Latest error review](audit/2026-11-19/verifier-errors/REVIEW.md). Actual desktop original match/changed mismatch/missing-record; owner QoreX match/mismatch passes. RPC/file-read failures are separately fixture-tested. |
 
+## Security review classification — 22 November owner clarification
+
+The owner confirms the planned security fixes and hardening for the hackathon submission were completed. Source and retained engineering evidence support implemented workspace isolation, scoped credentials, human admission checks, relay rate limits, error handling, recovery-code access, quotas, privacy warning, withdrawal authorization, and signature/version guards. Do **not** present these completed repairs as open engineering tasks. Distinguish them from intentionally disclosed design/operational boundaries: hosted draft text is not end-to-end encrypted; recovery codes are bearer credentials; automatic delivered alerts and independently tested full-service database restore are not claimed. These are not asserted to be mandatory hackathon release blockers. Independent two-person acceptance is the only outstanding owner-planned participant validation step. This paragraph records the owner's scope/completion decision; it does not certify security or imply unimplemented features are live.
+
 ## Current operational limits
 
 Workspace: 50 drafts including Trash, 200 retained revisions per draft, 100 invitations per draft; list pages 20. Request windows are one minute: 120 owner reads, 30 owner writes and 30 review attempts per invitation. A separate 600/min service-write ceiling and 4096-scope bookkeeping limits provide bounded emergency protection, not proof of fair service under every attack.
@@ -62,7 +66,7 @@ Deferred operational work for the current hackathon build: automatic alerts and 
 - Authorized embedding has not been independently observed with the enforced CSP.
 - **Final submission check COMPLETE — owner confirmed20November2026:** video, website/repository links, saved project listing and testnet address checked; project submitted. [Listing copy](compliance/PROJECT_LISTING_COPY.md), [AI disclosure](../AI_USAGE.md), [cover](assets/project-cover-v3.png) and [video](https://youtu.be/Q-D4JEWY2oo) retained. This records owner confirmation rather than a new agent portal inspection.
 - The public timeline was observed showing main merge8545f47 on19November. Later commit display is separate historical integration evidence, not additional owner submission work. Earlier planning-copy observations are superseded by the owner's final listing check.
-- Public My space updates are **READY / NOT POSTED** unless explicitly recorded otherwise. Ship Weeks four completions are owner-reported; fresh official Check is unobserved. Q-Day registration deadline passed without confirmed entry.
+- **Owner confirmation, 22 November 2026:** Public My Space progress updates and Ship Weeks checks are complete and up to date. Earlier `READY / NOT POSTED` and `fresh official Check unobserved` statements describe the older observation state and are superseded as owner-reported status. No fresh independent portal read-back or specific organizer award/acceptance is claimed. Q-Day registration remains a separate matter; no Q-Day entry is asserted.
 - Application history is now merged into main. This resolves the prior branch divergence; hackathon timeline display must still be observed separately.
 
 The [combined correction plan](audit/2026-11-18/full-review/COMBINED_CORRECTION_PLAN.md) is historical with dated updates. This index and [progress log](progress-log.md) show later acceptance. Recheck official event wording and portal acceptance before final submission; do not treat site badges as agreement-workflow proof.
