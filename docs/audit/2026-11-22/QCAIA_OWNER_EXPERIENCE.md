@@ -2,17 +2,17 @@
 
 **Recorded:** 22 November 2026  
 **TheRecord project audit task:** COMPLETE (previously closed 20 November 2026)  
-**QCAIA platform concern:** Reported for organizer investigation; not independently confirmed as a platform defect.
+**QCAIA platform concern:** **User-reproduced payment validation bug report** — observed repeatedly by the owner; underlying cause and official fee rules await organizer investigation.
 
 ## My experience
 
 I ran QCAIA audits during development of TheRecord, including on the original contract and the separately deployed withdrawal-enabled V2 contract.
 
-The initial audit cost me **150 QOR** and returned a **65/100 score, HIGH risk and five findings**. I reviewed the results and ran a further audit on the earlier version. During that repeat attempt, the interface generated an audit result without deducting the expected 150 QOR. At the time, my wallet did not hold enough QOR to cover that amount. I did not receive an insufficient-balance warning or a request to fund the wallet. This is my observed experience; the underlying platform payment records and fee rules have not been independently inspected, so I cannot conclude why a result was returned without a charge.
+The initial audit cost me **150 QOR** and returned a **65/100 score, HIGH risk and five findings**. I reviewed the results and ran a further audit on the earlier version. During approximately three or four repeat attempts, I clicked the Pay action and the interface continued scanning and generated audit results without deducting the expected 150 QOR. At the time, my wallet did not hold enough QOR to cover that amount. I did not receive an insufficient-balance warning or a request to fund the wallet on those attempts. This is my observed experience; the underlying platform payment records and fee rules have not been independently inspected, so I cannot conclude why a result was returned without a charge.
 
-I subsequently made changes, deployed **TheRecordV2** and **paid another 150 QOR** for its audit. That audit also returned **65/100 with five findings**. I ran and reviewed additional audits during the investigation. My recollection is that I attempted approximately five audits overall; the project assessment independently compared three retained HTML reports. I am not presenting uninspected attempts as verified report artifacts.
+I subsequently made changes, deployed **TheRecordV2** and **paid another 150 QOR** for its audit. That audit also returned **65/100 with five findings**. I ran and reviewed additional audits during the investigation. My recollection is that I attempted approximately five or six audits overall; the project assessment independently compared three retained HTML reports. I am not presenting uninspected attempts as verified report artifacts.
 
-Seeing the same numerical score after material contract changes raised concerns for me about whether the auditing system was consistently analyzing the submitted source. The findings were **not all identical** across the retained reports: the V2 report addressed withdrawal authorization and added a missing-ERC-interface item, whereas the earlier reports covered different access/PQC topics. Therefore, identical scores alone do not prove cached results, a broken model or a billing defect.
+Seeing the same numerical score after material contract changes raised concerns for me about whether the auditing system was consistently analyzing the submitted source. The findings were **not all identical** across the retained reports: the V2 report addressed withdrawal authorization and added a missing-ERC-interface item, whereas the earlier reports covered different access/PQC topics. Therefore, identical scores alone do not prove cached results or a broken model. Separately, I classify the repeated no-charge Pay-and-scan behavior as a user-reproduced payment validation bug; the precise cause and whether any fee waiver was intended require platform investigation.
 
 ## What we checked
 
@@ -28,7 +28,7 @@ I did **not** repeat the audit through a new user account or a fresh independent
 
 Please review the QCAIA report-generation and fee-validation experience, especially why an audit result appeared when my wallet balance was below the expected fee without an insufficient-funds prompt. Please also compare the source-bound audit reports and their findings against the actual contract versions and supporting evidence, including repeated 65/100 scores and inaccurate or inconsistent report descriptions.
 
-I am **not claiming QCAIA is definitively faulty** or asking that the original report be silently changed. I am documenting the experience so the team can investigate and improve the tool if necessary.
+I **am reporting the repeated insufficient-balance payment behavior as a bug observed in normal use**. I am not claiming to have identified the underlying implementation defect, or asking that the original audit report be silently changed. I am documenting the experience so the team can investigate and improve the tool if necessary.
 
 ## Closure and evidence
 
@@ -38,4 +38,4 @@ I am **not claiming QCAIA is definitively faulty** or asking that the original r
 - [V2 finding-by-finding response](../../withdrawal/AUDIT_RESPONSE.md)
 - [Project status](../../CURRENT_STATUS.md)
 
-**Evidence limitation:** The 150 QOR payment and no-charge observations above are owner-reported. Wallet transaction receipts, balance snapshots, and backend fee records were not independently inspected for this review.
+**Evidence limitation:** The 150 QOR payments and three-or-four no-charge observations above are owner-reported. Wallet transaction receipts, balance snapshots, and backend fee records were not independently inspected for this review.
