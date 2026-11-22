@@ -1,5 +1,8 @@
 # Withdrawal lifecycle: owner-run acceptance
 
+> **Current status — 22 November 2026:** The lifecycle and evidence below remain valid historical records. The “OPEN” list, draft-PR statement, new-source audit preparation and pending V2 scoped-window tasks were **subsequently resolved** as documented in [CURRENT_STATUS.md](../CURRENT_STATUS.md), [completed V2 audit response](AUDIT_RESPONSE.md), and [V2 scoped-window evidence](SCOPED_WINDOW_LIVE.md). They must not be read as current release blockers. Owner confirms submission/My Space/Ship Weeks complete; independent two-person testing remains pending. Original audit report labels are unchanged.
+
+
 Recorded 19 November 2026 WAT; transactions occurred 18 November UTC. Owner operated both distinct signer wallets. This is not independent two-person usability testing.
 
 Contract: `0xf2dba66fcb0e4e1aa619a2cea981935f5b38fd0f`, Diana9800.
