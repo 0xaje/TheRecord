@@ -1,5 +1,8 @@
 # Exact V2 audit input and remediation record
 
+> **Current status — 22 November 2026:** This is an archived preparation/handoff record, not an instruction to submit or pay for another audit. The owner paid 150 QOR for the V2 audit, and its source-matched report and finding review are complete: [V2 audit response](AUDIT_RESPONSE.md). The V2 scoped-window proof is also complete: [live evidence](SCOPED_WINDOW_LIVE.md). Earlier “still open,” draft-post and branch-checkout instructions below are historical. The owner confirms My Space/Ship Weeks updates and submission complete; independent two-person participant testing remains pending. No independent organizer award or clean audit certificate is claimed.
+
+
 Current update19November: new source-matched report QCAIA-1795043785188-4A004387 has been provided and reviewed. See [finding response and retained reports](AUDIT_RESPONSE.md). Earlier submission instructions below are historical preparation; no automatic rerun/payment is needed. Event acceptance is still unverified.
 
 Prepared19November2026 WAT. No audit was submitted or paid for by the agent.
