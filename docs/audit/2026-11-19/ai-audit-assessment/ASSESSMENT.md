@@ -1,5 +1,8 @@
 # Project assessment of AI-generated contract audits
 
+> **Current note — 22 November 2026:** Project audit work remains complete. The owner additionally documented a [repeated payment-validation bug report](../2026-11-22/QCAIA_OWNER_EXPERIENCE.md) after observing Pay-and-scan results without sufficient QOR on approximately three or four attempts; the V2 audit was paid (150 QOR). This user-observed platform behavior is distinct from whether identical numeric scores imply identical findings. Historical “READY, NOT POSTED” copy below is superseded by owner-confirmed My Space updates and submission. No clean auditor reissue is claimed.
+
+
 **Status: COMPLETE — project audit work and finding review.** Reviewed19November; closure confirmed by owner20November2026. Audit runs, source binding, five V2 dispositions and supporting tests are complete. Original reports are retained unchanged as historical artifacts. This is a project engineering assessment, not an independent human security certification or a clean auditor reissue.
 
 ## What was compared
