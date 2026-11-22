@@ -1,5 +1,8 @@
 # The Record progress
 
+> **Current-status notice — 22 November 2026:** This is an append-only chronological development log, not a current task list. Its initial “Open work,” “Next action,” draft-post and unobserved-Check statements are older checkpoints and have been superseded where later evidence or owner confirmation exists. For current status use [CURRENT_STATUS.md](CURRENT_STATUS.md). The owner confirms final submission, My Space updates and Ship Weeks checks complete; security hardening and project audit work are closed for this submission. The remaining owner-planned validation is an independent two-person participant test. Earlier wallet warnings, audit work, V2 scoped-window tasks and publication steps should not be reopened solely because they appear below as historical notes.
+
+
 ## Last verified result
 
 The laptop demo screenshots confirm the original matches finalized version 1
