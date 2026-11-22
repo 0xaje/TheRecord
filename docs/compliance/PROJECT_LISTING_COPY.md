@@ -1,5 +1,8 @@
 # The Record — complete project-form update
 
+> **Current status — 22 November 2026:** This document is the **19 November form-edit preparation snapshot**, not the current portal state. Its “READY TO PASTE; NOT SAVED” and draft-update statements are preserved as historical context. The owner subsequently confirmed the final listing, video, repository links, testnet address, My Space updates and submission completed. See [CURRENT_STATUS.md](../CURRENT_STATUS.md). The SDK language declarations were subsequently corrected by the owner; the updated dashboard verification count has not been independently observed. Do not resubmit this older proposed copy or treat it as proof of current portal field values. Independent two-person participant testing remains pending.
+
+
 Prepared 19 November 2026 after reviewing the entire 30.6-second owner video, frames 0–30.5s, current main README/AI disclosure/source/evidence and freshly retrieved official Rules/Prizes/Kits/public project page. **READY TO PASTE; NOT SAVED TO THE PORTAL.** The connected browser editor was unavailable in this conversation. Public read-back still shows planning copy. Plain text fields render line breaks, not Markdown/HTML: follow the README's problem → working flow → implementation → proof structure without pasting badges, Mermaid, HTML or Markdown tables into those fields.
 
 ## Field map in video order
