@@ -11,7 +11,7 @@
 
 **[Live app](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/) · [Watch demo on YouTube](https://youtu.be/Q-D4JEWY2oo) · [Try the demo](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/?id=0x9544256601f5e7ac4e4fc33e45688be912e50395ca0b826a55aea7209f81954e&version=1#verify-title) · [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md)**
 
-Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **89 checks passed, 20 November 2026**. See [current status and open gates](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+Current source: **[main](https://github.com/0xaje/TheRecord/tree/main)**. The verified working history was merged through [PR #1](https://github.com/0xaje/TheRecord/pull/1). Latest local regression: **89 checks passed, 20 November 2026**. See [current evidence and status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 [Problem](#the-problem) · [Working proof](#working-proof) · [QoreChain integration](#built-on-qorechain) · [Architecture](#architecture) · [Run locally](#run-locally) · [Limits](#security-and-limits)
 
@@ -138,8 +138,6 @@ Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; publi
 **npm run check** builds the browser/Worker and runs **89 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 **QCAIA audit requirements: COMPLETE.** The required audit runs and source-matched finding review are finished. All five V2 findings have documented assessments, contract references, **24 passing Foundry tests**, and **16 historical Diana regression checks**. The review distinguishes findings disputed using source/test evidence from accepted design limitations. Original auditor reports, including their issued scores, severity ratings and finding statuses, remain unchanged and accessible for transparency. This completed project review does not imply a clean auditor reissue or independent security certification. [Completed audit assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) · [Finding-by-finding response](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) · [Original reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
-
-Project audit completion records the work performed; it does not assert a clean auditor reissue or independent security certification.
 
 ## Security and limits
 
