@@ -75,7 +75,7 @@ Saved draft revisions are private workspace history. Diana agreement versions ar
   </tr>
 </table>
 
-The owner operated both distinct wallets. **Independent two-person full-workflow testing remains pending.** Mobile screenshots were unavailable in QoreX, so phone results are identified as owner reports. Automated failure fixtures, real receipts and browser observations are labelled separately.
+The owner operated both distinct wallets. **Independent two-person full-workflow testing remains pending.** Mobile screenshots were unavailable in QoreX, so phone results are identified as owner reports. **Owner reconfirmation, 23 November 2026:** the current public site's drafts, verification page and walkthrough were personally tested on phone and worked as expected; this is owner-reported, not an independent third-party device test. Automated failure fixtures, real receipts and browser observations are labelled separately.
 
 ## Built on QoreChain
 
