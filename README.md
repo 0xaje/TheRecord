@@ -148,13 +148,13 @@ Project audit completion records the work performed; it does not assert a clean 
 - API controls bound writes, workspace quotas and retained application text. The **64 MiB application-text budget** excludes physical database/index space, backups and provider billing.
 - Private draft deletion removes live-service rows; downloaded copies, on-chain records and potentially hosting backups remain.
 - Public fingerprints are not encryption or proof of legal identity, informed consent, delivery or payment.
-- The protected live usage readout reports a156KiB database and reconciled retained-text accounting. Relay access limits are deployed and owner-tested in QoreX. Automatic alerts and tested service-wide backup recovery are future operational improvements. Independent two-person full-workflow testing remains a separate validation opportunity. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
+- The protected live usage readout reports a156KiB database and reconciled retained-text accounting. Relay access limits are deployed and owner-tested in QoreX. Automatic alerts and tested service-wide backup recovery are disclosed future operational improvements, not unresolved hackathon implementation tasks. Implemented hardening and fixes are documented in the evidence index. Independent two-person full-workflow testing is the remaining owner-planned participant validation. [Detailed current limits/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
 ## Documentation and project status
 
 [Walkthrough](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/walkthrough) · [Project story/research](https://the-record-diana-verifier.flutteringpeach8.chatgpt.site/blog) · [Current evidence/status](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md) · [Judge guide](https://github.com/0xaje/TheRecord/blob/main/docs/judge-walkthrough.md) · [Progress log](https://github.com/0xaje/TheRecord/blob/main/docs/progress-log.md)
 
-**Submission complete — owner confirmed 20 November 2026.** The owner confirms the final video, saved listing fields, links and testnet address have been checked and the project submitted. **Audit work is complete**, with reports, responses and evidence retained. Public progress-update drafts remain available for owner use. The product is deployed on Diana Testnet; the roadmap identifies future development.
+**Submission complete — owner confirmed 20 November 2026.** The owner confirms the final video, saved listing fields, links and testnet address have been checked and the project submitted. **Audit work is complete**, with reports, responses and evidence retained. **Owner update, 22 November 2026:** My Space progress updates and Ship Weeks checks are confirmed complete and current by the owner; independent portal read-back is not recorded in this repository. The product is deployed on Diana Testnet; the roadmap identifies future development.
 
 ## Roadmap
 
