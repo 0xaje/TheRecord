@@ -86,7 +86,7 @@ The owner operated both distinct wallets. **Independent two-person full-workflow
 | **ML-DSA-87 / pqcVerify** | Contract checks approval bound to chain, contract, agreement, version, fingerprint and signer. Registered-key and proof-of-possession checks precede approval. |
 | **QoreChain SDK / scoped EVM window** | Disposable-account SDK test proves target admission and outside-target refusal on Diana. The website's advanced window page is inspect/check-only. |
 | **QoreChain Explorer** | Public receipt inspection. |
-| **QCAIA auditor** | Source-matched generated reports and a finding-response ledger; formal finding closure/event acceptance remain open. |
+| **QCAIA auditor** | Required audit runs completed; source-matched reports, finding responses and supporting tests retained. Original auditor findings have not been formally reissued as closed. |
 
 An ordinary EVM transaction signature, its PQ-authorized access window, and the agreement's PQ approval verification are distinct layers. A window alone does not prove agreement approval.
 
@@ -137,7 +137,7 @@ Open **http://127.0.0.1:8788/**. Local drafts use separate SQLite storage; publi
 
 **npm run check** builds the browser/Worker and runs **89 isolated checks** at this checkpoint. Tests include real local SQLite migrations and failure fixtures; they do not prove new chain approvals. [GitHub Actions](https://github.com/0xaje/TheRecord/actions/workflows/check.yml) also runs pinned Foundry contract tests; historical Diana calls and owner-run Solidity results are separately linked in [the evidence index](https://github.com/0xaje/TheRecord/blob/main/docs/CURRENT_STATUS.md).
 
-**Audit work: complete.** The audit runs, source/report matching, finding-by-finding review and supporting regression evidence are documented. The [completed assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) and [source-bound response ledger](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) record disputed findings, accepted design limitations and tests. The original V2 bot report (65/100, HIGH) is retained unchanged as an as-issued historical report. We recommend that QoreChain review the bot's repeated findings against the exact source and supplied evidence. Equal scores alone do not establish a bot fault. [Audit history and reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
+**QCAIA audit requirements: COMPLETE.** The required audit runs and source-matched finding review are finished. All five V2 findings have documented assessments, contract references, **24 passing Foundry tests**, and **16 historical Diana regression checks**. The review distinguishes findings disputed using source/test evidence from accepted design limitations. Original auditor reports, including their issued scores, severity ratings and finding statuses, remain unchanged and accessible for transparency. This completed project review does not imply a clean auditor reissue or independent security certification. [Completed audit assessment](https://github.com/0xaje/TheRecord/blob/main/docs/audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) · [Finding-by-finding response](https://github.com/0xaje/TheRecord/blob/main/docs/withdrawal/AUDIT_RESPONSE.md) · [Original reports](https://github.com/0xaje/TheRecord/blob/main/docs/AUDIT.md).
 
 Project audit completion records the work performed; it does not assert a clean auditor reissue or independent security certification.
 
