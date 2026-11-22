@@ -119,7 +119,7 @@ record the actual Actions result separately. No auto-deployment is configured.
 
 Evidence in `docs/audit/2026-11-18/` distinguishes the local run, fresh dependency
 installation, compiled asset hashes and any observed GitHub Actions run.
-Independent user testing and organizer audit-stage acceptance remain separate release gates. Real scoped-window evidence is linked in [current status](CURRENT_STATUS.md).
+**Current status (22 November 2026):** Audit review, submission, My Space updates and Ship Weeks checks are complete by owner confirmation. Independent two-person participant testing is the remaining owner-planned validation. Historical organizer audit-stage acceptance statements in dated evidence are not an open engineering task. Real scoped-window evidence is linked in [current status](CURRENT_STATUS.md).
 
 Official implementation references: [Node SQLite API](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html),
 [GitHub Node build/test guide](https://docs.github.com/en/actions/tutorials/build-and-test-code/nodejs),
