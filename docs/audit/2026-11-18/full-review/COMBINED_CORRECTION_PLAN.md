@@ -1,5 +1,8 @@
 # Combined audit reconciliation and correction plan
 
+> **Historical baseline — 18 November 2026:** This plan records findings and priorities at Site43 and is **not** the current open-issues list. Later engineering fixes, V2 audit work, scoped-window proof, submission and owner-confirmed My Space/Ship Weeks checks are documented in [CURRENT_STATUS.md](../../CURRENT_STATUS.md). Do not count old A01–A17 action items as currently unimplemented without checking their later resolution evidence. Independent two-person participant validation remains pending. Future notifications and service-wide restore assurance are disclosed roadmap/operational boundaries, not mandatory hackathon blockers.
+
+
 18 November 2026. Baseline: GitHub e08a9a5, public Site 43. Inputs: engineering REPORT.md (74/100) and supplied 11-page Independent Hackathon Judge Review PDF (73/100). The supplied PDF was read in full; its observations are attributed to that review, not automatically treated as independently reproduced here. No application changes, new wallet transaction, live load test or deletion occurred during reconciliation.
 
 ## Conclusion
