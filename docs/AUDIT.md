@@ -1,6 +1,8 @@
 # The Record — QCAI audit response
 
-**Audit work COMPLETE — owner confirmed20November2026.** Audit runs, source/report verification, finding review and evidence are retained in the [completed assessment](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) and [V2 response](withdrawal/AUDIT_RESPONSE.md). We recommend QoreChain review repeated bot findings against the source and regression evidence. No further audit task is queued for the submitted build.
+**Audit work COMPLETE — owner confirmed 20 November 2026; reaffirmed 22 November 2026.** Audit runs, source/report verification, finding review and evidence are retained in the [completed assessment](audit/2026-11-19/ai-audit-assessment/ASSESSMENT.md) and [V2 response](withdrawal/AUDIT_RESPONSE.md). We recommend QoreChain review repeated bot findings against the source and regression evidence. No further audit task is queued for the submitted build.
+
+**Current clarification (22 November):** The project audit task is closed. The owner has separately reported repeated QCAIA Pay-and-scan attempts that returned reports despite insufficient QOR as a user-reproduced payment-validation bug, alongside report-consistency concerns. The V2 audit was paid (150 QOR). See [owner's platform bug report](audit/2026-11-22/QCAIA_OWNER_EXPERIENCE.md). Platform investigation is distinct from reopening TheRecord's audit work. Earlier event-acceptance and posting statements below are historical, not current blockers.
 
 The sections below are dated audit history. Their original report scores/statuses and then-current action notes are preserved for traceability, not current pending tasks. This completion statement does not claim a clean auditor reissue or independent security certification. The owner also confirms final submission checks and submission complete; see [CURRENT_STATUS.md](CURRENT_STATUS.md).
 
