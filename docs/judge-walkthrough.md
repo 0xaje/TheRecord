@@ -2,7 +2,9 @@
 
 The Record anchors agreement fingerprints on Diana. Two designated signer addresses approve each version. The browser hashes the selected file locally.
 
-## Reproduce the verification results
+**Two separate deployments are demonstrated below.** The original-contract file-match example uses one agreement with finalized versions 1 and 2. The withdrawal-enabled V2 example uses a different contract and agreement with its own version history. Do not combine their version numbers or transaction receipts. Both wallet addresses in the recorded approval tests were operated by the project owner; this proves distinct keys, not independent participants.
+
+## Original contract — reproduce file verification
 
 The public verifier is available without signing a transaction.
 
@@ -23,7 +25,7 @@ sha256sum agreement-v1.txt agreement-v2.txt
 - Version 1 SHA-256: `265716da974845a4efb3cac9471865969f22878da81b99e81a8aaa7349e480fd`
 - Version 2 SHA-256: `66007b246f8885ac7bb25c54757d6ee20d619ca148ef85fea64d0f091d713ee0`
 
-## Diana evidence
+## Original contract — Diana transaction evidence
 
 The same two signer addresses approved each version. The amendment started at zero approvals and finalized after two fresh approvals. Version 1 remained finalized and verifiable.
 
@@ -42,6 +44,6 @@ The original contract above remains available for the wallet-free original-versu
 - [V2 finalization receipt](https://dashboard.qorechain.io/explorer/tx/0xab11d9e3409fd974af93039a7d30abee1f409027c183cdbb1e61ad8c32086960)
 - [Current project evidence and completed audit](CURRENT_STATUS.md)
 
-## Acceptance status — 22 November 2026
+## Acceptance status — updated 23 November 2026
 
 The owner reconfirmed on 23 November 2026 that drafts, file verification and walkthrough work on the current public site when tested on phone. This is owner-reported phone acceptance, distinct from independent two-person participant acceptance. The recorded two-wallet workflows were operated by the project owner. **Independent two-person participant testing is pending**, not currently verified or already completed. The owner confirms final submission, My Space updates and Ship Weeks checks complete. These are owner confirmations, not independent portal read-backs. The QCAIA project audit task is complete; the original reports remain preserved. See [audit response](AUDIT.md).
