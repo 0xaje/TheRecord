@@ -1,5 +1,8 @@
 # Ubuntu scoped-window test: disposable account
 
+> **Current status — 22 November 2026:** This is a dated procedure and execution diary. Its opening “live proof still open” and later “PENDING” statements reflect earlier checkpoints and are superseded by the completed [V2 scoped-window live proof](../withdrawal/SCOPED_WINDOW_LIVE.md) and [current status](../CURRENT_STATUS.md). The original and V2 proofs target **different contract addresses** and must not be conflated. Owner confirms My Space/Ship Weeks checks complete; independent two-person participant testing is pending. Do not rerun historical signing/broadcast commands merely to satisfy outdated checkpoints.
+
+
 Status: tool preparation tested locally; **live registration and scoped-window
 proof are still open**. QoreX mobile refused the website's
 `MsgOpenEVMWindow` request with “managed by the wallet itself, not by a website.”
