@@ -1,6 +1,6 @@
 # The Record — current status and evidence
 
-Engineering evidence checked **20 November 2026**; owner completion clarification recorded **22 November 2026**. This is the current index; dated reports and the append-only progress log retain earlier results. It is not an independent security certification or final submission sign-off.
+Engineering evidence checked **20 November 2026**; owner completion clarification recorded **22 November 2026**. This is the current index; dated reports and the append-only progress log retain earlier results. It is not an independent security certification or an independently observed organizer submission sign-off; owner confirmation of completed submission is recorded below.
 
 ## Source and hosted build
 
@@ -69,7 +69,7 @@ Deferred operational work for the current hackathon build: automatic alerts and 
 - **Owner confirmation, 22 November 2026:** Public My Space progress updates and Ship Weeks checks are complete and up to date. Earlier `READY / NOT POSTED` and `fresh official Check unobserved` statements describe the older observation state and are superseded as owner-reported status. No fresh independent portal read-back or specific organizer award/acceptance is claimed. Q-Day registration remains a separate matter; no Q-Day entry is asserted.
 - Application history is now merged into main. This resolves the prior branch divergence; hackathon timeline display must still be observed separately.
 
-The [combined correction plan](audit/2026-11-18/full-review/COMBINED_CORRECTION_PLAN.md) is historical with dated updates. This index and [progress log](progress-log.md) show later acceptance. Recheck official event wording and portal acceptance before final submission; do not treat site badges as agreement-workflow proof.
+The [combined correction plan](audit/2026-11-18/full-review/COMBINED_CORRECTION_PLAN.md) is historical with dated updates. This index and [progress log](progress-log.md) show later acceptance. The owner confirms the final submission and portal checks were completed; a separate independent organizer acceptance/award is not claimed. Do not treat site badges as agreement-workflow proof.
 
 ## Reproduce and inspect
 
