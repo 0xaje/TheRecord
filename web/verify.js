@@ -415,5 +415,5 @@ if (!deployment) {
 const context = document.querySelector('#deployment-context');
 if (deployment?.withdrawals) {
   context.hidden = false;
-  context.textContent = 'Withdrawal test contract on Diana. New workflow acceptance is in progress. Existing agreement links keep using their original contract.';
+  context.textContent = 'Withdrawal-enabled agreement contract on Diana Testnet. Pending amendments can be withdrawn by the original proposer with a valid post-quantum signature; corrections require two fresh approvals. Earlier finalized versions and original-contract links remain verifiable.';
 }
