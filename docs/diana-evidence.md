@@ -1,5 +1,8 @@
 # Diana milestone 1
 
+> **Current reading note — 22 November 2026:** This is a chronological evidence log. Early statements such as “pending,” “open,” “drafted” and “unconfirmed” describe their dates, not the current project status. Original and V2 agreement workflows, V2 withdrawal and scoped-window proof are documented in [CURRENT_STATUS.md](CURRENT_STATUS.md) and [V2 live acceptance](withdrawal/LIVE_ACCEPTANCE.md). Owner confirms final submission, My Space updates and Ship Weeks checks complete; independent two-person participant testing remains pending. Wallet warning was owner-confirmed resolved. Do not interpret earlier pending notes as newly reopened tasks.
+
+
 - Network: QoreChain Diana (9800)
 - Contract: `0x25721b3Be0F24438DA7DAEd4C800B073ef9BB802`
 - Agreement: `0xe44d6037597db50ebada96fc37606bfcab58d75c0ed593aaf7ce7a17af2ecace`
